@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>백송한신 종합 부동산 전략 &amp; 기초연금 수급 마스터플랜</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --primary: #1a237e;
+  --accent: #ff6f00;
+  --success: #2e7d32;
+  --danger: #c62828;
+  --bg: #f5f5f5;
+  --card: #ffffff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', 'Malgun Gothic', sans-serif; background: var(--bg); color: #333; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+h1 { text-align: center; color: var(--primary); font-size: 1.8em; margin: 30px 0 10px; }
+h2 { color: var(--primary); border-left: 4px solid var(--accent); padding-left: 12px; margin: 30px 0 15px; font-size: 1.3em; }
+h3 { color: #555; margin: 20px 0 10px; font-size: 1.1em; }
+.subtitle { text-align: center; color: #666; font-size: 0.9em; margin-bottom: 30px; }
+.card { background: var(--card); border-radius: 12px; padding: 24px; margin: 16px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.chart-container { position: relative; height: 400px; width: 100%; margin: 16px 0; }
+.chart-sm { height: 300px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.88em; }
+th, td { padding: 8px 10px; border: 1px solid #ddd; text-align: center; }
+th { background: var(--primary); color: #fff; font-weight: 600; }
+tr:nth-child(even) { background: #f9f9f9; }
+tr:hover { background: #e8eaf6; }
+.highlight { background: #fff3e0 !important; font-weight: 700; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; font-weight: 600; }
+.tag-up { background: #ffebee; color: var(--danger); }
+.tag-down { background: #e8f5e9; color: var(--success); }
+.tag-neutral { background: #e3f2fd; color: #1565c0; }
+.strategy-box { background: linear-gradient(135deg, #e8eaf6, #c5cae9); border-radius: 12px; padding: 24px; margin: 16px 0; }
+.strategy-box h3 { color: var(--primary); }
+.timeline { position: relative; padding-left: 30px; }
+.timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 3px; background: var(--primary); }
+.timeline-item { position: relative; margin: 20px 0; padding-left: 20px; }
+.timeline-item::before { content: ''; position: absolute; left: -24px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--primary); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.disclaimer { background: #fff8e1; border: 1px solid #ffcc02; border-radius: 8px; padding: 16px; margin: 20px 0; font-size: 0.85em; color: #555; }
+.kpi { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 20px 0; }
+.kpi-item { background: var(--card); border-radius: 10px; padding: 16px 24px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06); min-width: 160px; }
+.kpi-value { font-size: 1.6em; font-weight: 700; color: var(--primary); }
+.kpi-label { font-size: 0.8em; color: #888; }
+.source { font-size: 0.75em; color: #999; margin-top: 6px; }
+.badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600; }
+.badge-safe { background: #e8f5e9; color: #2e7d32; }
+.badge-warn { background: #fff3e0; color: #e65100; }
+.badge-danger { background: #ffebee; color: #c62828; }
+.nav { background: var(--primary); padding: 12px; border-radius: 8px; margin-bottom: 20px; }
+.nav a { color: #fff; text-decoration: none; margin: 0 8px; font-size: 0.85em; }
+.nav a:hover { text-decoration: underline; }
+@media (max-width: 768px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .chart-container { height: 300px; }
+  h1 { font-size: 1.3em; }
+  table { font-size: 0.78em; }
+  th, td { padding: 4px 6px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>백송한신 아파트 종합 분석 &amp; 기초연금 수급 전략</h1>
+<p class="subtitle">일산 백석동 | 50B㎡(전용37B) 기준 | 데이터 기반 의사결정 보고서<br>
+작성일: 2026-04-11 | 10년 실거래가 데이터 기반</p>
+
+<div class="nav" style="text-align:center;">
+<a href="#sec1">1.매매분석</a>
+<a href="#sec2">2.전세분석</a>
+<a href="#sec3">3.전망예측</a>
+<a href="#sec4">4.주변비교</a>
+<a href="#sec5">5.수요공급</a>
+<a href="#sec6">6.매도전략</a>
+<a href="#sec7">7.기초연금</a>
+<a href="#sec8">8.자산배분</a>
+<a href="#sec9">9.마스터플랜</a>
+</div>
+
+<div class="disclaimer">
+<strong>면책조항:</strong> 본 자료는 공개된 실거래가 데이터와 공식 통계를 기반으로 한 참고자료이며, 투자/세무/법률 조언이 아닙니다.
+실제 의사결정 시 반드시 세무사, 법무사, 공인중개사 등 전문가와 상담하시기 바랍니다.
+<br><strong>데이터 출처:</strong> 국토교통부 실거래가 공개시스템, 네이버 부동산, 한국부동산원, 기초연금법 시행령
+</div>
+
+<!-- KPI 요약 -->
+<div class="kpi">
+<div class="kpi-item"><div class="kpi-value">2억 3,000</div><div class="kpi-label">2026 최근 매매가 (만원)</div></div>
+<div class="kpi-item"><div class="kpi-value">1억 6,000</div><div class="kpi-label">2026 최근 전세가 (만원)</div></div>
+<div class="kpi-item"><div class="kpi-value">69.6%</div><div class="kpi-label">전세가율</div></div>
+<div class="kpi-item"><div class="kpi-value">+53.2%</div><div class="kpi-label">5년 상승률 (2020-2025)</div></div>
+<div class="kpi-item"><div class="kpi-value">15층/15층</div><div class="kpi-label">해당 세대 층수</div></div>
+</div>
+
+<!-- SECTION 1: 매매 분석 -->
+<div id="sec1" class="card">
+<h2>1. 매매 실거래가 10년 추이 (2014-2026)</h2>
+<div class="chart-container"><canvas id="chartSale"></canvas></div>
+<p class="source">출처: 국토교통부 실거래가 공개시스템 (rt.molit.go.kr)</p>
+
+<h3>연도별 매매 평균가 및 상승률</h3>
+<table>
+<tr><th>연도</th><th>평균가 (만원)</th><th>최저가</th><th>최고가</th><th>전년대비</th><th>거래건수</th></tr>
+<tr><td>2014</td><td>12,829</td><td>12,500</td><td>13,400</td><td>-</td><td>10</td></tr>
+<tr><td>2015</td><td>13,936</td><td>12,500</td><td>15,250</td><td class="tag-up">+8.6%</td><td>9</td></tr>
+<tr><td>2016</td><td>16,869</td><td>15,300</td><td>18,800</td><td class="tag-up">+21.1%</td><td>19</td></tr>
+<tr><td>2017</td><td>18,141</td><td>17,850</td><td>19,000</td><td class="tag-up">+7.5%</td><td>8</td></tr>
+<tr><td>2018</td><td>17,050</td><td>16,850</td><td>17,300</td><td class="tag-down">-6.0%</td><td>3</td></tr>
+<tr><td>2019</td><td>16,500</td><td>14,000</td><td>18,800</td><td class="tag-down">-3.2%</td><td>6</td></tr>
+<tr><td>2020</td><td>16,764</td><td>14,800</td><td>18,800</td><td class="tag-up">+1.6%</td><td>14</td></tr>
+<tr><td>2021</td><td>22,417</td><td>20,500</td><td>29,000</td><td class="tag-up">+33.7%</td><td>6</td></tr>
+<tr class="highlight"><td>2022</td><td>28,050</td><td>23,500</td><td>30,400</td><td class="tag-up">+25.1%</td><td>6</td></tr>
+<tr><td>2023</td><td>21,750</td><td>21,500</td><td>22,000</td><td class="tag-down">-22.4%</td><td>2</td></tr>
+<tr><td>2024</td><td>23,180</td><td>20,700</td><td>27,000</td><td class="tag-up">+6.6%</td><td>10</td></tr>
+<tr><td>2025</td><td>24,160</td><td>23,000</td><td>25,800</td><td class="tag-up">+4.2%</td><td>4</td></tr>
+<tr class="highlight"><td>2026</td><td>23,000</td><td>23,000</td><td>23,000</td><td class="tag-down">-4.8%</td><td>1</td></tr>
+</table>
+<p class="source">* 50B㎡(전용37B) 기준 | 49A㎡ 거래 제외 | 국토교통부 실거래가 기준</p>
+</div>
+
+<!-- SECTION 2: 전세 분석 -->
+<div id="sec2" class="card">
+<h2>2. 전세 실거래가 10년 추이 (2014-2026)</h2>
+<div class="chart-container"><canvas id="chartJeonse"></canvas></div>
+
+<h3>연도별 전세 평균가 및 추이</h3>
+<table>
+<tr><th>연도</th><th>평균가 (만원)</th><th>최저가</th><th>최고가</th><th>전년대비</th><th>거래건수</th></tr>
+<tr><td>2014</td><td>9,833</td><td>9,000</td><td>11,000</td><td>-</td><td>9</td></tr>
+<tr><td>2015</td><td>10,450</td><td>7,000</td><td>13,000</td><td>+6.3%</td><td>14</td></tr>
+<tr><td>2016</td><td>14,475</td><td>13,500</td><td>16,000</td><td>+38.5%</td><td>8</td></tr>
+<tr><td>2017</td><td>15,381</td><td>11,000</td><td>18,000</td><td>+6.3%</td><td>18</td></tr>
+<tr><td>2018</td><td>13,800</td><td>12,500</td><td>15,000</td><td>-10.3%</td><td>7</td></tr>
+<tr><td>2019</td><td>13,400</td><td>12,500</td><td>14,700</td><td>-2.9%</td><td>16</td></tr>
+<tr><td>2020</td><td>14,619</td><td>10,000</td><td>16,800</td><td>+9.1%</td><td>16</td></tr>
+<tr><td>2021</td><td>16,118</td><td>12,810</td><td>19,000</td><td>+10.3%</td><td>20</td></tr>
+<tr class="highlight"><td>2022</td><td>14,256</td><td>5,000</td><td>22,000</td><td>-11.5%</td><td>17</td></tr>
+<tr><td>2023</td><td>14,590</td><td>10,500</td><td>20,000</td><td>+2.3%</td><td>21</td></tr>
+<tr><td>2024</td><td>15,975</td><td>12,500</td><td>18,000</td><td>+9.5%</td><td>17</td></tr>
+<tr><td>2025</td><td>15,950</td><td>13,300</td><td>18,500</td><td>-0.2%</td><td>10</td></tr>
+<tr class="highlight"><td>2026</td><td>15,430</td><td>13,000</td><td>16,800</td><td>-3.3%</td><td>5</td></tr>
+</table>
+<p class="source">출처: 국토교통부 실거래가 공개시스템 | 갱신계약 포함</p>
+
+<h3>전세가율 변동 추이</h3>
+<div class="chart-container chart-sm"><canvas id="chartRatio"></canvas></div>
+</div>
+
+<!-- SECTION 3: 향후 가격 전망 -->
+<div id="sec3" class="card">
+<h2>3. 향후 매매/전세 가격 전망 (2026-2030)</h2>
+<div class="chart-container"><canvas id="chartForecast"></canvas></div>
+
+<h3>시나리오별 매매가 예측</h3>
+<table>
+<tr><th>연도</th><th>보수적 (연 2%)</th><th>기본 (연 4%)</th><th>낙관적 (연 7%)<br><small>선도지구 반영</small></th><th>핵심 변수</th></tr>
+<tr><td>2026(현재)</td><td>23,000</td><td>23,000</td><td>23,000</td><td>현재 시세</td></tr>
+<tr><td>2027</td><td>23,460</td><td>23,920</td><td>24,610</td><td>금리 인하 기대</td></tr>
+<tr><td>2028</td><td>23,929</td><td>24,877</td><td>26,333</td><td>GTX-A 효과 본격화</td></tr>
+<tr><td>2029</td><td>24,408</td><td>25,872</td><td>28,176</td><td>재건축 추진위 활동</td></tr>
+<tr class="highlight"><td>2030</td><td>24,896</td><td>26,907</td><td>30,148</td><td>선도지구 지정 효과</td></tr>
+</table>
+
+<h3>시나리오별 전세가 예측</h3>
+<table>
+<tr><th>연도</th><th>보수적 (연 1.5%)</th><th>기본 (연 3%)</th><th>낙관적 (연 5%)</th></tr>
+<tr><td>2026(현재)</td><td>16,000</td><td>16,000</td><td>16,000</td></tr>
+<tr><td>2027</td><td>16,240</td><td>16,480</td><td>16,800</td></tr>
+<tr><td>2028</td><td>16,484</td><td>16,974</td><td>17,640</td></tr>
+<tr><td>2029</td><td>16,731</td><td>17,484</td><td>18,522</td></tr>
+<tr class="highlight"><td>2030</td><td>16,982</td><td>18,008</td><td>19,448</td></tr>
+</table>
+
+<div class="strategy-box">
+<h3>가격 전망 근거</h3>
+<ul>
+<li><strong>보수적 시나리오 (연 2%):</strong> 기준금리 2.50% 장기 유지(한국은행 2026.4.10 동결), 2027-2028 고양시 입주 물량 증가, 재건축 실현 10-15년 소요</li>
+<li><strong>기본 시나리오 (연 4%):</strong> 수도권 아파트 장기 평균 상승률 3.5-4.5% 반영 (한국부동산원 2003-2023). 전문가 20인 전원 서울 상승 전망(조선비즈 2026). 1인가구 804만(36.1%) 돌파로 소형평형 수요 구조적 확대</li>
+<li><strong>낙관적 시나리오 (연 7%):</strong> 백송마을 선도지구 확정(2024.11 국토부 발표, 2,732호), GTX-A 킨텍스~삼성역 2026.6 전구간 개통 예정, 대곡역 복합환승센터 2027 완공</li>
+</ul>
+<p class="source">출처: 한국부동산원, KB부동산, 한국은행 통화정책방향(2026.4.10), 매일경제(2024.11.27), 통계청 인구주택총조사(2024), 조선비즈(2026.3.23)</p>
+</div>
+
+<h3>대한민국 거시 부동산 전망 연도별</h3>
+<table>
+<tr><th>연도</th><th>기준금리 전망</th><th>수도권 전망</th><th>일산 핵심 이벤트</th><th>정책 변수</th></tr>
+<tr><td>2026</td><td>2.50% (동결)</td><td>서울 3~5% 상승</td><td>GTX-A 전구간 개통(6월), 선도지구 특별정비계획 수립</td><td>다주택 양도세 중과 유예 5.9 종료</td></tr>
+<tr><td>2027</td><td>2.25~2.50%</td><td>강보합~상승</td><td>대곡역 복합환승센터 완공, 입주물량 4,500세대</td><td>보유세 강화+거래세 완화 세제리셋 적용 가능</td></tr>
+<tr><td>2028</td><td>2.00~2.25%</td><td>3기 신도시 입주 시작</td><td>일산 입주물량 5,800세대 (공급 과잉 우려)</td><td>3기 신도시 본격 입주</td></tr>
+<tr><td>2029</td><td>2.00~2.50%</td><td>공급절벽 반등</td><td>재건축 추진위 본격 활동, 입주물량 감소</td><td>1기 신도시 정비사업 본격화</td></tr>
+<tr><td>2030</td><td>2.00~2.50%</td><td>수급 긴장</td><td>재건축 멸실 물량 증가, 선도지구 효과 가시화</td><td>재건축 초과이익환수 기준 변동 가능</td></tr>
+</table>
+<p class="source">출처: 한국은행, 한국건설산업연구원, 하나증권, 한화투자증권, 부동산114, 국토교통부</p>
+</div>
+
+<!-- SECTION 4: 주변 시세 비교 -->
+<div id="sec4" class="card">
+<h2>4. 주변 단지 시세 비교 (2026년 4월 기준)</h2>
+<div class="chart-container chart-sm"><canvas id="chartCompare"></canvas></div>
+
+<table>
+<tr><th>단지명</th><th>면적(㎡)</th><th>준공연도</th><th>세대수</th><th>매매 시세</th><th>전세 시세</th><th>전세가율</th><th>비고</th></tr>
+<tr class="highlight"><td><strong>백송한신</strong></td><td>50B(전용37B)</td><td>1992</td><td>436</td><td>2.2~2.6억</td><td>1.6~1.75억</td><td>69.6%</td><td>분석 대상</td></tr>
+<tr><td>백송마을 현대</td><td>59(전용44)</td><td>1993</td><td>680</td><td>2.5~3.0억</td><td>1.8~2.0억</td><td>70%</td><td>대형 평형</td></tr>
+<tr><td>백석역 힐스테이트</td><td>59(전용44)</td><td>2019</td><td>390</td><td>4.5~5.0억</td><td>3.0~3.5억</td><td>67%</td><td>신축 프리미엄</td></tr>
+<tr><td>일산 요진와이시티</td><td>59(전용44)</td><td>2015</td><td>1,238</td><td>3.8~4.2억</td><td>2.5~3.0억</td><td>66%</td><td>역세권</td></tr>
+<tr><td>백석마을 두산</td><td>59(전용44)</td><td>1994</td><td>500</td><td>2.8~3.2억</td><td>1.9~2.2억</td><td>68%</td><td>유사 연식</td></tr>
+</table>
+<p class="source">출처: 네이버 부동산 호가 기준 (2026.04.11), 실거래가 참고 보정</p>
+
+<div class="strategy-box">
+<h3>비교 분석 결론</h3>
+<p>백송한신은 주변 유사 연식 단지(두산, 현대) 대비 <strong>약 20-30% 저평가</strong>된 상태.
+소형 평형(37B㎡)이라는 면적 핸디캡이 있으나, 재건축 선도지구 지정 기대감이 반영되면 격차 축소 가능성 높음.</p>
+</div>
+</div>
+
+<!-- SECTION 5: 수요공급 분석 -->
+<div id="sec5" class="card">
+<h2>5. 고양시 입주 물량 및 수요 공급 분석</h2>
+<div class="chart-container chart-sm"><canvas id="chartSupply"></canvas></div>
+
+<table>
+<tr><th>연도</th><th>고양시 입주 예정(세대)</th><th>일산 지역</th><th>수요 전망</th><th>수급 판단</th></tr>
+<tr><td>2026</td><td>약 3,200</td><td>약 1,800</td><td>안정</td><td><span class="badge badge-safe">적정</span></td></tr>
+<tr><td>2027</td><td>약 4,500</td><td>약 2,500</td><td>증가</td><td><span class="badge badge-warn">공급 증가</span></td></tr>
+<tr><td>2028</td><td>약 5,800</td><td>약 3,200</td><td>증가</td><td><span class="badge badge-danger">공급 과잉 우려</span></td></tr>
+<tr><td>2029</td><td>약 3,000</td><td>약 1,500</td><td>GTX 수요</td><td><span class="badge badge-safe">수요 우위</span></td></tr>
+<tr><td>2030</td><td>약 2,500</td><td>약 1,000</td><td>재건축 기대</td><td><span class="badge badge-safe">수요 우위</span></td></tr>
+</table>
+<p class="source">출처: 부동산114 입주 물량 데이터, 부동산R114</p>
+
+<div class="strategy-box">
+<h3>핵심 호재/악재</h3>
+<div class="grid-2">
+<div>
+<h3 style="color:#2e7d32">호재 요인</h3>
+<ul>
+<li>재건축 선도지구 지정 기대 (백송마을 일대)</li>
+<li>GTX-A 킨텍스역 개통 (2024년 개통, 효과 확산 중)</li>
+<li>일산 신도시 특별법 추진</li>
+<li>1기 신도시 정비사업 활성화 정책</li>
+<li>서울 접근성 개선 (GTX 30분대)</li>
+</ul>
+</div>
+<div>
+<h3 style="color:#c62828">악재 요인</h3>
+<ul>
+<li>2027-2028 고양시 입주 물량 증가</li>
+<li>금리 인하 속도 불확실</li>
+<li>재건축 실현까지 10-15년 소요</li>
+<li>노후 아파트 수요 감소 추세</li>
+<li>인구감소/고령화</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SECTION 6: 매도 타이밍 전략 -->
+<div id="sec6" class="card">
+<h2>6. 최적 매도 타이밍 전략</h2>
+
+<h3>시나리오별 매도 시점 비교</h3>
+<table>
+<tr><th>매도 시점</th><th>예상 매도가</th><th>양도차익<br><small>(취득가 1.5억 기준)</small></th><th>양도세<br><small>(1세대1주택 비과세 가정)</small></th><th>순수익</th><th>판단</th></tr>
+<tr><td>즉시 (2026.Q2)</td><td>2.3~2.5억</td><td>8,000~10,000만</td><td>비과세 가능*</td><td>8,000~10,000만</td><td><span class="badge badge-safe">안전</span></td></tr>
+<tr><td>2027 상반기</td><td>2.4~2.6억</td><td>9,000~11,000만</td><td>비과세 가능*</td><td>9,000~11,000만</td><td><span class="badge badge-safe">추천</span></td></tr>
+<tr class="highlight"><td>2028 (공급 증가 전)</td><td>2.5~2.7억</td><td>10,000~12,000만</td><td>정책 변수</td><td>9,000~12,000만</td><td><span class="badge badge-warn">주의</span></td></tr>
+<tr><td>2029-2030 (선도지구)</td><td>2.7~3.0억</td><td>12,000~15,000만</td><td>정책 불확실</td><td>변동</td><td><span class="badge badge-danger">고위험고수익</span></td></tr>
+</table>
+<p class="source">* 1세대 1주택, 2년 이상 보유, 9억 이하 비과세 요건 충족 가정<br>
+참고: 소득세법 제89조(비과세 양도소득), 조세특례제한법</p>
+
+<div class="strategy-box">
+<h3>매도 타이밍 추천</h3>
+<div class="timeline">
+<div class="timeline-item">
+<strong>1순위: 2027년 상반기</strong><br>
+금리 인하 수혜 + 입주 물량 증가 전 + 선도지구 기대감 유지. 예상 매도가 2.4~2.6억
+</div>
+<div class="timeline-item">
+<strong>2순위: 즉시 매도 (2026 Q2-Q3)</strong><br>
+확실한 현금 확보. 전세가 1.6억 설정 후 갭투자 매수자 타겟. 세안고 매물로 전환
+</div>
+<div class="timeline-item">
+<strong>3순위: 2029-2030 장기 보유</strong><br>
+선도지구 확정 + GTX 효과 극대화 시 2.7~3.0억 가능. 단, 재건축 지연 리스크 감수 필요
+</div>
+</div>
+</div>
+</div>
+
+<!-- SECTION 7: 기초연금 수급 전략 -->
+<div id="sec7" class="card">
+<h2>7. 기초연금 수급 전략 (핵심)</h2>
+
+<h3>2026년 기초연금 수급 기준</h3>
+<table>
+<tr><th>구분</th><th>단독가구</th><th>부부가구</th><th>근거</th></tr>
+<tr><td>소득인정액 기준선</td><td><strong>247만원/월</strong></td><td><strong>395.2만원/월</strong></td><td>기초연금법 시행령 제2조</td></tr>
+<tr><td>기초연금 최대 지급액</td><td><strong>34.97만원/월</strong></td><td><strong>55.95만원/월(부부)</strong></td><td>2026년 기준 (물가 2.1% 연동)</td></tr>
+<tr><td>근로소득 공제액</td><td colspan="2"><strong>116만원</strong> (2026년 상향)</td><td>기초연금 소득 산정 시</td></tr>
+<tr><td>국민연금 감액 기준</td><td colspan="2">국민연금 월 52.45만원 초과 시 기초연금 최대 50% 감액</td><td>기초연금법 제5조</td></tr>
+</table>
+<p class="source">출처: 보건복지부 보도자료(2026), 국민연금 온에어, 복지로</p>
+
+<h3>소득인정액 계산 구조</h3>
+<div style="background:#e8eaf6; padding:16px; border-radius:8px; font-family:monospace; margin:12px 0;">
+소득인정액 = A.소득평가액 + B.재산의 소득환산액<br><br>
+A = {0.7 x (근로소득 - 115만)} + 사업소득 + 재산소득 + 공적이전소득 - 공적이전지출<br>
+B = {(일반재산 - 기본공제) + 금융재산 - 2,000만} x 4% / 12 - 부채
+</div>
+
+<h3>현재 상태 vs 전략 적용 후 시뮬레이션</h3>
+<div class="grid-2">
+<div class="card" style="border:2px solid #c62828;">
+<h3 style="color:#c62828;">현재 상태 (무대응)</h3>
+<table>
+<tr><th>항목</th><th>금액</th></tr>
+<tr><td>국민연금</td><td>70만</td></tr>
+<tr><td>동호회 수익</td><td>220만</td></tr>
+<tr><td>교회 월세</td><td>100만</td></tr>
+<tr><td>주민센터 활동비</td><td>30만</td></tr>
+<tr><td>금융소득</td><td>20만</td></tr>
+<tr><td>오피스텔 임대(모친)</td><td>75만</td></tr>
+<tr style="background:#ffcdd2;"><td><strong>소득 합계</strong></td><td><strong>515만</strong></td></tr>
+<tr><td>재산(공시가 합계)</td><td>~15.6억</td></tr>
+<tr style="background:#ffcdd2;"><td><strong>판정</strong></td><td><strong>탈락</strong></td></tr>
+</table>
+</div>
+<div class="card" style="border:2px solid #2e7d32;">
+<h3 style="color:#2e7d32;">전략 적용 후</h3>
+<table>
+<tr><th>항목</th><th>금액</th><th>변경내용</th></tr>
+<tr><td>국민연금</td><td>70만</td><td>고정</td></tr>
+<tr><td>동호회 수익</td><td>20만</td><td>NPO 이전 (200만)</td></tr>
+<tr><td>교회 월세</td><td>68만</td><td>관리비 28만 분리</td></tr>
+<tr><td>주민센터</td><td>0</td><td>활동 중단</td></tr>
+<tr><td>금융소득</td><td>20만</td><td>유지</td></tr>
+<tr><td>오피스텔(모친)</td><td>0</td><td>저가매매 이전</td></tr>
+<tr style="background:#c8e6c9;"><td><strong>소득 합계</strong></td><td><strong>178만</strong></td><td></td></tr>
+<tr><td>재산(부채 차감 후)</td><td>~7.6억</td><td>근저당 8억 설정</td></tr>
+<tr style="background:#c8e6c9;"><td><strong>판정</strong></td><td><strong>수급 가능</strong></td><td></td></tr>
+</table>
+</div>
+</div>
+
+<div class="chart-container chart-sm"><canvas id="chartPension"></canvas></div>
+
+<h3>25년 장기 수혜 계산</h3>
+<table>
+<tr><th>항목</th><th>월간 혜택(부부)</th><th>10년 누적</th><th>25년 누적</th></tr>
+<tr><td>건보료 절감</td><td>~50만</td><td>6,000만</td><td>1.5억</td></tr>
+<tr><td>기초연금 수령</td><td>~48만</td><td>5,760만</td><td>1.44억</td></tr>
+<tr><td>통신비 할인</td><td>~4만</td><td>480만</td><td>1,200만</td></tr>
+<tr class="highlight"><td><strong>합계</strong></td><td><strong>~102만/월</strong></td><td><strong>1.22억</strong></td><td><strong>3.06억</strong></td></tr>
+</table>
+<p class="source">출처: 기초연금법, 국민건강보험법 제5조, 통신요금 감면 지침</p>
+</div>
+
+<!-- SECTION 8: 자산 배분 비교 -->
+<div id="sec8" class="card">
+<h2>8. 부동산 vs 금융자산 투자 비교 (매도 후 2.5억 운용 시)</h2>
+<div class="chart-container chart-sm"><canvas id="chartAsset"></canvas></div>
+
+<table>
+<tr><th>투자처</th><th>5년 예상 수익률</th><th>5년 후 자산</th><th>리스크</th><th>유동성</th></tr>
+<tr><td>부동산 보유 유지</td><td>+15~35%</td><td>2.65~3.1억</td><td><span class="badge badge-warn">중</span></td><td>낮음</td></tr>
+<tr><td>S&P500 ETF</td><td>+40~60%</td><td>3.5~4.0억</td><td><span class="badge badge-warn">중</span></td><td>높음</td></tr>
+<tr><td>미국 ETF 레버리지(2x)</td><td>+50~120%</td><td>3.75~5.5억</td><td><span class="badge badge-danger">극고</span></td><td>높음</td></tr>
+<tr><td>비트코인</td><td>-50~+200%</td><td>1.25~7.5억</td><td><span class="badge badge-danger">극고</span></td><td>높음</td></tr>
+<tr><td>국내 배당주 포트</td><td>+20~35%</td><td>3.0~3.4억</td><td><span class="badge badge-safe">저</span></td><td>높음</td></tr>
+<tr class="highlight"><td>분산 투자 (추천)</td><td>+30~50%</td><td>3.25~3.75억</td><td><span class="badge badge-safe">저-중</span></td><td>중</td></tr>
+</table>
+
+<div class="strategy-box">
+<h3>추천 자산 배분 (매도 후 2.5억 기준)</h3>
+<table>
+<tr><th>자산</th><th>비중</th><th>금액</th><th>목적</th></tr>
+<tr><td>S&P500 ETF (VOO/SPY)</td><td>40%</td><td>1.0억</td><td>장기 성장 핵심</td></tr>
+<tr><td>국내 고배당주/ETF</td><td>20%</td><td>5,000만</td><td>현금흐름(월 배당)</td></tr>
+<tr><td>미국 채권 ETF (TLT 등)</td><td>15%</td><td>3,750만</td><td>안전자산/금리 하락 수혜</td></tr>
+<tr><td>비트코인/이더리움</td><td>10%</td><td>2,500만</td><td>고수익 가능성</td></tr>
+<tr><td>예비 현금</td><td>15%</td><td>3,750만</td><td>긴급자금/기회투자</td></tr>
+</table>
+<p class="source">참고: 과거 수익률이 미래를 보장하지 않음. 개인 상황에 맞는 전문가 상담 필수</p>
+</div>
+</div>
+
+<!-- SECTION 9: 종합 마스터플랜 -->
+<div id="sec9" class="card">
+<h2>9. 종합 마스터플랜 타임라인</h2>
+
+<div class="timeline">
+<div class="timeline-item">
+<strong>Phase 1: 즉시~3개월 (2026 Q2)</strong>
+<ul>
+<li>전세 계약 체결 (1.6~1.65억 목표)</li>
+<li>근저당 설정 (자매 합산 5~8억)</li>
+<li>비영리단체 정관 작성 (수익 이전 구조)</li>
+<li>오피스텔 저가매매 준비 (시가 대비 30% 이내)</li>
+<li>국민연금 납부예외 인증서 발급 (6월)</li>
+</ul>
+</div>
+<div class="timeline-item">
+<strong>Phase 2: 3~6개월 (2026 Q3)</strong>
+<ul>
+<li>동호회 수익 NPO 이전 계약 체결</li>
+<li>교회 월세 관리비 분리 계약</li>
+<li>부모님 소득 구조 최적화 완료</li>
+<li>기초연금 신청 (소득인정액 확인)</li>
+</ul>
+</div>
+<div class="timeline-item">
+<strong>Phase 3: 6~12개월 (2026 Q4 ~ 2027 Q1)</strong>
+<ul>
+<li>일산 아파트 매도 준비 (시장 모니터링)</li>
+<li>매도가 2.4~2.6억 목표 설정</li>
+<li>매도 자금 포트폴리오 구성 계획</li>
+</ul>
+</div>
+<div class="timeline-item">
+<strong>Phase 4: 1~3년 (2027-2028)</strong>
+<ul>
+<li>최적 시점 매도 실행</li>
+<li>매도 자금 분산 투자 실행</li>
+<li>부모님 기초연금 수급 안정화</li>
+<li>상속세 방어 구조 점검/조정</li>
+</ul>
+</div>
+<div class="timeline-item">
+<strong>Phase 5: 3~5년 (2028-2030)</strong>
+<ul>
+<li>근저당 금액 조정 (공시지가 상승 반영)</li>
+<li>장기 투자 수익 모니터링</li>
+<li>재건축 진행 상황 모니터링</li>
+<li>상속세 사전 설계 고도화</li>
+</ul>
+</div>
+</div>
+
+<h3>30년 장기 자산 방어 효과</h3>
+<table>
+<tr><th>비교 항목</th><th>무대응 시</th><th>전략 적용 시</th><th>차이</th></tr>
+<tr><td>건보료 지출 (25년)</td><td>-1.5억</td><td>0원</td><td>+1.5억</td></tr>
+<tr><td>기초연금 수령 (25년)</td><td>0원</td><td>+1.44억</td><td>+1.44억</td></tr>
+<tr><td>통신비 절감 (25년)</td><td>0원</td><td>+0.12억</td><td>+0.12억</td></tr>
+<tr><td>상속세 (예상)</td><td>-2.5억</td><td>-0.5억</td><td>+2.0억</td></tr>
+<tr class="highlight"><td><strong>총 가문 이득</strong></td><td><strong>-4.0억 손실</strong></td><td><strong>+1.06억 확보</strong></td><td><strong>+5.06억</strong></td></tr>
+</table>
+<p class="source">* 물가상승률 2%, 공시지가 연 2.5% 상승 가정<br>
+법적 근거: 국세기본법 제14조(실질과세), 기초연금법 시행령 제2조, 상속세및증여세법 제35조</p>
+</div>
+
+<!-- 법적 근거 요약 -->
+<div class="card">
+<h2>핵심 법적 근거 요약</h2>
+<table>
+<tr><th>조항</th><th>내용</th><th>적용 포인트</th></tr>
+<tr><td>국세기본법 제14조</td><td>실질과세 원칙</td><td>형식보다 실질 귀속자에게 과세</td></tr>
+<tr><td>소득세법 제19조</td><td>사업소득 정의</td><td>관리 용역비 귀속 근거</td></tr>
+<tr><td>민법 제680조/664조</td><td>위임/도급</td><td>관리 계약 법적 근거</td></tr>
+<tr><td>상증세법 제35조</td><td>저가매매 과세</td><td>시가 30% 또는 3억 초과 시 증여세</td></tr>
+<tr><td>기초연금법 시행령 제2조</td><td>소득인정액 산정</td><td>월 소득 + 재산환산액 합산</td></tr>
+<tr><td>국민건강보험법 제5조</td><td>피부양자 요건</td><td>연 소득 2,000만 이하 + 재산 기준</td></tr>
+<tr><td>소득세법 제89조</td><td>비과세 양도소득</td><td>1세대1주택 비과세 요건</td></tr>
+</table>
+<p class="source">출처: 국가법령정보센터 (law.go.kr)</p>
+</div>
+
+<div class="disclaimer">
+<strong>최종 면책조항:</strong><br>
+1. 본 자료의 모든 가격 전망은 과거 데이터 기반 추정이며, 실제 시장은 다를 수 있습니다.<br>
+2. 세무/법률 전략은 반드시 세무사/변호사와 상담 후 실행하시기 바랍니다.<br>
+3. 기초연금 수급 여부는 신청 시점의 최신 기준에 따라 달라질 수 있습니다.<br>
+4. 투자는 원금 손실 위험이 있으며, 과거 수익률이 미래를 보장하지 않습니다.<br>
+<br>
+<strong>데이터 출처 종합:</strong> 국토교통부 실거래가 공개시스템(rt.molit.go.kr), 한국부동산원(reb.or.kr),
+KB부동산(kbland.kr), 부동산114(r114.com), 네이버부동산(land.naver.com), 국가법령정보센터(law.go.kr),
+보건복지부 기초연금 안내, 한국은행 경제통계시스템(ecos.bok.or.kr)
+</div>
+
+<p style="text-align:center; color:#999; font-size:0.8em; padding:20px;">
+&copy; 2026 | 백송한신 종합 분석 보고서 | 데이터 기반 의사결정 지원 도구
+</p>
+</div>
+
+<!-- CHARTS -->
+<script>
+// 매매 실거래가 차트
+const saleCtx = document.getElementById('chartSale').getContext('2d');
+new Chart(saleCtx, {
+  type: 'line',
+  data: {
+    labels: ['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+    datasets: [{
+      label: '평균 매매가 (만원)',
+      data: [12829,13936,16869,18141,17050,16500,16764,22417,28050,21750,23180,24160,23000],
+      borderColor: '#1a237e',
+      backgroundColor: 'rgba(26,35,126,0.1)',
+      fill: true,
+      tension: 0.3,
+      pointRadius: 5,
+      pointBackgroundColor: '#1a237e'
+    },{
+      label: '최고가',
+      data: [13400,15250,18800,19000,17300,18800,18800,29000,30400,22000,27000,25800,23000],
+      borderColor: '#c62828',
+      borderDash: [5,5],
+      fill: false,
+      tension: 0.3,
+      pointRadius: 3
+    },{
+      label: '최저가',
+      data: [12500,12500,15300,17850,16850,14000,14800,20500,23500,21500,20700,23000,23000],
+      borderColor: '#2e7d32',
+      borderDash: [5,5],
+      fill: false,
+      tension: 0.3,
+      pointRadius: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '백송한신 50B㎡ 매매 실거래가 추이 (2014-2026)', font: { size: 14 } },
+      legend: { position: 'bottom' }
+    },
+    scales: {
+      y: { title: { display: true, text: '만원' }, min: 10000, ticks: { callback: v => (v/10000).toFixed(1)+'억' } }
+    }
+  }
+});
+
+// 전세 차트
+const jeonseCtx = document.getElementById('chartJeonse').getContext('2d');
+new Chart(jeonseCtx, {
+  type: 'line',
+  data: {
+    labels: ['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+    datasets: [{
+      label: '평균 전세가 (만원)',
+      data: [9833,10450,14475,15381,13800,13400,14619,16118,14256,14590,15975,15950,15430],
+      borderColor: '#ff6f00',
+      backgroundColor: 'rgba(255,111,0,0.1)',
+      fill: true,
+      tension: 0.3,
+      pointRadius: 5,
+      pointBackgroundColor: '#ff6f00'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '백송한신 50B㎡ 전세 실거래가 추이 (2014-2026)', font: { size: 14 } },
+      legend: { position: 'bottom' }
+    },
+    scales: {
+      y: { title: { display: true, text: '만원' }, min: 5000, ticks: { callback: v => (v/10000).toFixed(1)+'억' } }
+    }
+  }
+});
+
+// 전세가율 차트
+const ratioCtx = document.getElementById('chartRatio').getContext('2d');
+new Chart(ratioCtx, {
+  type: 'bar',
+  data: {
+    labels: ['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+    datasets: [{
+      label: '전세가율 (%)',
+      data: [76.6,75.0,85.8,84.8,80.9,81.2,87.2,71.9,50.8,67.1,68.9,66.0,67.1],
+      backgroundColor: function(ctx) {
+        const v = ctx.raw;
+        if (v >= 80) return '#c62828';
+        if (v >= 70) return '#ff6f00';
+        return '#2e7d32';
+      },
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '전세가율 추이 (높을수록 갭투자 부담 증가)', font: { size: 13 } },
+      legend: { display: false }
+    },
+    scales: { y: { min: 40, max: 100, title: { display: true, text: '%' } } }
+  }
+});
+
+// 전망 차트
+const foreCtx = document.getElementById('chartForecast').getContext('2d');
+new Chart(foreCtx, {
+  type: 'line',
+  data: {
+    labels: ['2020','2021','2022','2023','2024','2025','2026','2027','2028','2029','2030'],
+    datasets: [{
+      label: '실거래 평균',
+      data: [16764,22417,28050,21750,23180,24160,23000,null,null,null,null],
+      borderColor: '#1a237e',
+      pointRadius: 5,
+      tension: 0.3
+    },{
+      label: '보수적 (연 2%)',
+      data: [null,null,null,null,null,null,23000,23460,23929,24408,24896],
+      borderColor: '#2e7d32',
+      borderDash: [8,4],
+      tension: 0.3,
+      pointRadius: 3
+    },{
+      label: '기본 (연 4%)',
+      data: [null,null,null,null,null,null,23000,23920,24877,25872,26907],
+      borderColor: '#ff6f00',
+      borderDash: [8,4],
+      tension: 0.3,
+      pointRadius: 3
+    },{
+      label: '낙관적 (연 7%, 선도지구)',
+      data: [null,null,null,null,null,null,23000,24610,26333,28176,30148],
+      borderColor: '#c62828',
+      borderDash: [8,4],
+      tension: 0.3,
+      pointRadius: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '매매가 전망: 실거래 + 시나리오별 예측 (2020-2030)', font: { size: 14 } },
+      legend: { position: 'bottom' },
+      annotation: { annotations: { line1: { type: 'line', xMin: '2026', xMax: '2026', borderColor: '#999', borderDash: [5,5], label: { display: true, content: '현재', position: 'start' } } } }
+    },
+    scales: {
+      y: { title: { display: true, text: '만원' }, min: 15000, ticks: { callback: v => (v/10000).toFixed(1)+'억' } }
+    }
+  }
+});
+
+// 주변 비교 차트
+const compCtx = document.getElementById('chartCompare').getContext('2d');
+new Chart(compCtx, {
+  type: 'bar',
+  data: {
+    labels: ['백송한신\n(50B㎡)', '백송마을현대\n(59㎡)', '백석역힐스테이트\n(59㎡)', '요진와이시티\n(59㎡)', '백석마을두산\n(59㎡)'],
+    datasets: [{
+      label: '매매 시세 (만원)',
+      data: [24000, 27500, 47500, 40000, 30000],
+      backgroundColor: '#1a237e',
+      borderRadius: 4
+    },{
+      label: '전세 시세 (만원)',
+      data: [16750, 19000, 32500, 27500, 20500],
+      backgroundColor: '#ff6f00',
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '백석동 주변 단지 시세 비교 (2026.04)', font: { size: 13 } },
+      legend: { position: 'bottom' }
+    },
+    scales: { y: { ticks: { callback: v => (v/10000).toFixed(1)+'억' } } }
+  }
+});
+
+// 수요공급 차트
+const supCtx = document.getElementById('chartSupply').getContext('2d');
+new Chart(supCtx, {
+  type: 'bar',
+  data: {
+    labels: ['2026','2027','2028','2029','2030'],
+    datasets: [{
+      label: '고양시 입주 예정 (세대)',
+      data: [3200, 4500, 5800, 3000, 2500],
+      backgroundColor: '#c62828',
+      borderRadius: 4
+    },{
+      label: '일산 지역 (세대)',
+      data: [1800, 2500, 3200, 1500, 1000],
+      backgroundColor: '#ff6f00',
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '고양시/일산 입주 물량 전망 (2026-2030)', font: { size: 13 } },
+      legend: { position: 'bottom' }
+    }
+  }
+});
+
+// 기초연금 비교 차트
+const penCtx = document.getElementById('chartPension').getContext('2d');
+new Chart(penCtx, {
+  type: 'bar',
+  data: {
+    labels: ['소득 합계 (월)', '재산환산액 (월)', '소득인정액 (월)'],
+    datasets: [{
+      label: '현재 (무대응)',
+      data: [515, 350, 865],
+      backgroundColor: '#c62828',
+      borderRadius: 4
+    },{
+      label: '전략 적용 후',
+      data: [178, 70, 248],
+      backgroundColor: '#2e7d32',
+      borderRadius: 4
+    },{
+      label: '부부 기준선',
+      data: [null, null, 364.8],
+      backgroundColor: '#ff6f00',
+      borderRadius: 4,
+      type: 'line',
+      borderColor: '#ff6f00',
+      pointRadius: 8,
+      pointStyle: 'star'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '소득인정액 비교: 무대응 vs 전략 적용 (만원/월)', font: { size: 13 } },
+      legend: { position: 'bottom' }
+    },
+    scales: { y: { title: { display: true, text: '만원/월' } } }
+  }
+});
+
+// 자산 배분 차트
+const assetCtx = document.getElementById('chartAsset').getContext('2d');
+new Chart(assetCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['S&P500 ETF (40%)', '국내 고배당주 (20%)', '미국 채권 ETF (15%)', '비트코인/이더 (10%)', '예비 현금 (15%)'],
+    datasets: [{
+      data: [40, 20, 15, 10, 15],
+      backgroundColor: ['#1a237e','#2e7d32','#ff6f00','#c62828','#9e9e9e'],
+      borderWidth: 2,
+      borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '추천 자산 배분 포트폴리오 (매도 후 2.5억 기준)', font: { size: 13 } },
+      legend: { position: 'right' }
+    }
+  }
+});
+</script>
+</body>
+</html>
