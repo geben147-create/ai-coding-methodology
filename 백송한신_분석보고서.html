@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>백송한신 부동산 빅데이터 종합 분석 보고서</title>
+<style>
+  :root {
+    --bg: #0f172a; --card: #1e293b; --accent: #38bdf8; --red: #f87171;
+    --green: #4ade80; --yellow: #fbbf24; --orange: #fb923c; --purple: #a78bfa;
+    --text: #e2e8f0; --muted: #94a3b8; --border: #334155;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+  .container { max-width:1200px; margin:0 auto; padding:20px; }
+
+  /* Header */
+  .header { text-align:center; padding:40px 20px; background:linear-gradient(135deg,#1e3a5f,#0f172a); border-bottom:2px solid var(--accent); margin-bottom:30px; }
+  .header h1 { font-size:2rem; color:var(--accent); margin-bottom:8px; }
+  .header .subtitle { color:var(--muted); font-size:0.95rem; }
+  .badge { display:inline-block; background:var(--accent); color:var(--bg); padding:4px 12px; border-radius:12px; font-size:0.75rem; font-weight:700; margin:4px; }
+  .badge.red { background:var(--red); }
+  .badge.green { background:var(--green); color:#000; }
+  .badge.yellow { background:var(--yellow); color:#000; }
+
+  /* Cards */
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:24px; }
+  .card h2 { color:var(--accent); font-size:1.3rem; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+  .card h3 { color:var(--yellow); font-size:1.05rem; margin:16px 0 8px; }
+
+  /* Tables */
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:0.88rem; }
+  th { background:#334155; color:var(--accent); padding:10px 8px; text-align:left; font-weight:600; }
+  td { padding:8px; border-bottom:1px solid var(--border); }
+  tr:hover { background:#273548; }
+  .up { color:var(--green); font-weight:700; }
+  .down { color:var(--red); font-weight:700; }
+  .neutral { color:var(--yellow); }
+
+  /* Charts (CSS-only bar charts) */
+  .bar-chart { margin:16px 0; }
+  .bar-row { display:flex; align-items:center; margin:6px 0; }
+  .bar-label { width:110px; font-size:0.82rem; color:var(--muted); flex-shrink:0; }
+  .bar-track { flex:1; background:#1a2332; height:28px; border-radius:4px; position:relative; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:4px; display:flex; align-items:center; padding-left:8px; font-size:0.78rem; font-weight:600; transition:width 1s ease; }
+  .bar-fill.blue { background:linear-gradient(90deg,#2563eb,#38bdf8); }
+  .bar-fill.red { background:linear-gradient(90deg,#dc2626,#f87171); }
+  .bar-fill.green { background:linear-gradient(90deg,#16a34a,#4ade80); color:#000; }
+  .bar-fill.yellow { background:linear-gradient(90deg,#d97706,#fbbf24); color:#000; }
+  .bar-fill.purple { background:linear-gradient(90deg,#7c3aed,#a78bfa); }
+  .bar-fill.orange { background:linear-gradient(90deg,#ea580c,#fb923c); color:#000; }
+
+  /* Timeline */
+  .timeline { position:relative; padding-left:30px; margin:16px 0; }
+  .timeline::before { content:''; position:absolute; left:10px; top:0; bottom:0; width:2px; background:var(--border); }
+  .tl-item { position:relative; margin-bottom:16px; }
+  .tl-item::before { content:''; position:absolute; left:-24px; top:6px; width:12px; height:12px; border-radius:50%; border:2px solid var(--accent); background:var(--bg); }
+  .tl-item.done::before { background:var(--green); border-color:var(--green); }
+  .tl-item.current::before { background:var(--yellow); border-color:var(--yellow); animation:pulse 1.5s infinite; }
+  .tl-item.pending::before { background:var(--border); border-color:var(--border); }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(251,191,36,0.4);} 50%{box-shadow:0 0 0 8px rgba(251,191,36,0);} }
+  .tl-title { font-weight:600; font-size:0.9rem; }
+  .tl-desc { font-size:0.8rem; color:var(--muted); }
+
+  /* Price chart (CSS area chart simulation) */
+  .price-chart { position:relative; height:280px; margin:20px 0; background:#1a2332; border-radius:8px; border:1px solid var(--border); overflow:hidden; }
+  .chart-grid { position:absolute; inset:0; }
+  .grid-line { position:absolute; left:0; right:0; border-top:1px dashed #2a3a4a; }
+  .grid-label { position:absolute; right:8px; font-size:0.7rem; color:var(--muted); transform:translateY(-50%); }
+  .chart-svg { width:100%; height:100%; }
+
+  /* Scenario boxes */
+  .scenarios { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin:16px 0; }
+  .scenario { border-radius:10px; padding:18px; border:1px solid var(--border); }
+  .scenario.bear { background:linear-gradient(135deg,#1e1215,#2d1a1a); border-color:#7f1d1d; }
+  .scenario.base { background:linear-gradient(135deg,#1a1e12,#1d2a1a); border-color:#3f6212; }
+  .scenario.bull { background:linear-gradient(135deg,#121a1e,#1a1d2d); border-color:#1e3a5f; }
+  .scenario h4 { font-size:1rem; margin-bottom:8px; }
+  .scenario .price { font-size:1.6rem; font-weight:800; }
+  .scenario .prob { font-size:0.8rem; color:var(--muted); }
+
+  /* Comparison grid */
+  .compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
+  .compare-box { background:#1a2332; border-radius:8px; padding:16px; border:1px solid var(--border); }
+  .compare-box h4 { text-align:center; margin-bottom:12px; font-size:0.95rem; }
+  .compare-box.win { border-color:var(--green); }
+  .compare-box.lose { border-color:var(--red); }
+
+  /* Meter */
+  .meter { margin:12px 0; }
+  .meter-label { display:flex; justify-content:space-between; font-size:0.8rem; color:var(--muted); margin-bottom:4px; }
+  .meter-track { height:12px; background:#1a2332; border-radius:6px; overflow:hidden; }
+  .meter-fill { height:100%; border-radius:6px; }
+
+  /* Verdict */
+  .verdict { background:linear-gradient(135deg,#1e3a5f,#0f172a); border:2px solid var(--accent); border-radius:12px; padding:30px; text-align:center; margin:30px 0; }
+  .verdict h2 { color:var(--accent); font-size:1.5rem; margin-bottom:16px; }
+  .verdict .big-price { font-size:2.5rem; font-weight:900; color:var(--yellow); }
+  .verdict .range { font-size:1rem; color:var(--muted); margin:8px 0; }
+
+  /* References */
+  .ref-list { font-size:0.8rem; color:var(--muted); }
+  .ref-list a { color:var(--accent); text-decoration:none; }
+  .ref-list a:hover { text-decoration:underline; }
+  .ref-list li { margin-bottom:6px; }
+
+  /* Responsive */
+  @media(max-width:768px) {
+    .compare-grid { grid-template-columns:1fr; }
+    .header h1 { font-size:1.5rem; }
+    .verdict .big-price { font-size:2rem; }
+    .scenarios { grid-template-columns:1fr; }
+  }
+
+  /* Footer */
+  .footer { text-align:center; padding:30px; color:var(--muted); font-size:0.78rem; border-top:1px solid var(--border); margin-top:40px; }
+
+  /* Tooltip */
+  .info { cursor:help; border-bottom:1px dotted var(--muted); }
+
+  /* Section numbering */
+  .section-num { display:inline-block; background:var(--accent); color:var(--bg); width:28px; height:28px; border-radius:50%; text-align:center; line-height:28px; font-weight:700; font-size:0.85rem; margin-right:8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>백송한신 부동산 빅데이터 종합 분석</h1>
+  <div class="subtitle">일산동구 백석동 | 50B㎡ (전용37B) | 15층 | 2026.04.11 기준</div>
+  <div style="margin-top:12px;">
+    <span class="badge">재건축 선도지구</span>
+    <span class="badge yellow">용적률 134%</span>
+    <span class="badge red">34년차 구축</span>
+    <span class="badge green">비조정대상지역</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ==================== SECTION 1 ==================== -->
+<div class="card">
+  <h2><span class="section-num">1</span> 10년 실거래가 추이 (50B㎡ 전체 층수)</h2>
+
+  <svg viewBox="0 0 800 300" style="width:100%;height:auto;background:#1a2332;border-radius:8px;">
+    <!-- Grid -->
+    <line x1="60" y1="30" x2="60" y2="260" stroke="#2a3a4a" stroke-width="1"/>
+    <line x1="60" y1="260" x2="770" y2="260" stroke="#2a3a4a" stroke-width="1"/>
+    <!-- Y-axis labels -->
+    <text x="50" y="35" fill="#94a3b8" font-size="10" text-anchor="end">3.1억</text>
+    <line x1="60" y1="30" x2="770" y2="30" stroke="#2a3a4a" stroke-width="0.5" stroke-dasharray="4"/>
+    <text x="50" y="77" fill="#94a3b8" font-size="10" text-anchor="end">2.7억</text>
+    <line x1="60" y1="72" x2="770" y2="72" stroke="#2a3a4a" stroke-width="0.5" stroke-dasharray="4"/>
+    <text x="50" y="124" fill="#94a3b8" font-size="10" text-anchor="end">2.3억</text>
+    <line x1="60" y1="119" x2="770" y2="119" stroke="#2a3a4a" stroke-width="0.5" stroke-dasharray="4"/>
+    <text x="50" y="171" fill="#94a3b8" font-size="10" text-anchor="end">1.9억</text>
+    <line x1="60" y1="166" x2="770" y2="166" stroke="#2a3a4a" stroke-width="0.5" stroke-dasharray="4"/>
+    <text x="50" y="218" fill="#94a3b8" font-size="10" text-anchor="end">1.5억</text>
+    <line x1="60" y1="213" x2="770" y2="213" stroke="#2a3a4a" stroke-width="0.5" stroke-dasharray="4"/>
+    <text x="50" y="265" fill="#94a3b8" font-size="10" text-anchor="end">1.1억</text>
+
+    <!-- X-axis labels -->
+    <text x="95" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2015</text>
+    <text x="160" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2016</text>
+    <text x="225" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2017</text>
+    <text x="290" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2018</text>
+    <text x="355" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2019</text>
+    <text x="420" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2020</text>
+    <text x="485" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2021</text>
+    <text x="550" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2022</text>
+    <text x="615" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2023</text>
+    <text x="680" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2024</text>
+    <text x="740" y="278" fill="#94a3b8" font-size="9" text-anchor="middle">2025~26</text>
+
+    <!-- Price area (approximate) -->
+    <defs>
+      <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.02"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Area fill -->
+    <polygon fill="url(#areaGrad)" points="
+      95,225 160,190 225,175 290,185 355,195 420,195 450,170 485,80 520,55 550,30 570,55 615,130 650,100 680,60 700,72 710,95 740,119 740,260 95,260
+    "/>
+
+    <!-- Line -->
+    <polyline fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linejoin="round" points="
+      95,225 160,190 225,175 290,185 355,195 420,195 450,170 485,80 520,55 550,30 570,55 615,130 650,100 680,60 700,72 710,95 740,119
+    "/>
+
+    <!-- Key points -->
+    <circle cx="95" cy="225" r="4" fill="#38bdf8"/>
+    <text x="95" y="240" fill="#94a3b8" font-size="8" text-anchor="middle">1.25억</text>
+
+    <circle cx="420" cy="195" r="4" fill="#38bdf8"/>
+    <text x="420" y="210" fill="#94a3b8" font-size="8" text-anchor="middle">1.6억</text>
+
+    <circle cx="550" cy="30" r="6" fill="#f87171" stroke="#fff" stroke-width="1.5"/>
+    <text x="550" y="20" fill="#f87171" font-size="9" font-weight="bold" text-anchor="middle">3.04억 최고</text>
+
+    <circle cx="615" cy="130" r="4" fill="#fbbf24"/>
+    <text x="615" y="145" fill="#fbbf24" font-size="8" text-anchor="middle">2.15억</text>
+
+    <circle cx="740" cy="119" r="5" fill="#4ade80" stroke="#fff" stroke-width="1.5"/>
+    <text x="740" y="110" fill="#4ade80" font-size="9" font-weight="bold" text-anchor="middle">2.3억 현재</text>
+
+    <!-- Event annotations -->
+    <line x1="540" y1="40" x2="540" y2="260" stroke="#f87171" stroke-width="0.8" stroke-dasharray="3"/>
+    <text x="542" y="255" fill="#f87171" font-size="7" transform="rotate(-90,542,255)">2022 과열기</text>
+
+    <line x1="695" y1="40" x2="695" y2="260" stroke="#4ade80" stroke-width="0.8" stroke-dasharray="3"/>
+    <text x="697" y="255" fill="#4ade80" font-size="7" transform="rotate(-90,697,255)">선도지구 지정</text>
+  </svg>
+
+  <table>
+    <tr><th>구간</th><th>가격대</th><th>변동률</th><th>이벤트</th></tr>
+    <tr><td>2014~2015</td><td>1.25~1.43억</td><td class="neutral">바닥</td><td>부동산 침체기</td></tr>
+    <tr><td>2016~2017</td><td>1.53~1.9억</td><td class="up">+22%</td><td>회복기 시작</td></tr>
+    <tr><td>2018~2019</td><td>1.4~1.88억</td><td class="neutral">횡보</td><td>규제 영향</td></tr>
+    <tr><td>2020</td><td>1.48~1.88억</td><td class="up">+15%</td><td>유동성 폭발 시작</td></tr>
+    <tr><td>2021</td><td>2.0~2.9억</td><td class="up">+55%</td><td>전국 폭등기</td></tr>
+    <tr><td>2022.04</td><td>2.8~3.04억</td><td class="up">역대최고</td><td>정점 (버블)</td></tr>
+    <tr><td>2023</td><td>2.15~2.2억</td><td class="down">-27%</td><td>금리 인상 + 조정</td></tr>
+    <tr><td>2024.11~</td><td>2.2~2.7억</td><td class="up">+15%</td><td>선도지구 지정</td></tr>
+    <tr><td>2025~26.04</td><td>2.3~2.58억</td><td class="neutral">횡보</td><td>기대 선반영 후 정체</td></tr>
+  </table>
+</div>
+
+<!-- ==================== SECTION 2 ==================== -->
+<div class="card">
+  <h2><span class="section-num">2</span> 1기 신도시 선도지구 — 분당 vs 일산 희비 (핵심)</h2>
+
+  <div class="compare-grid">
+    <div class="compare-box win">
+      <h4 style="color:#4ade80;">분당 (승자)</h4>
+      <div class="bar-chart">
+        <div class="bar-row"><span class="bar-label">가격 변동</span><div class="bar-track"><div class="bar-fill green" style="width:85%;">+20% 이상 상승</div></div></div>
+        <div class="bar-row"><span class="bar-label">추진 속도</span><div class="bar-track"><div class="bar-fill green" style="width:90%;">특별정비구역 지정 완료</div></div></div>
+        <div class="bar-row"><span class="bar-label">사업성</span><div class="bar-track"><div class="bar-fill green" style="width:95%;">평당 3,400만원 (높음)</div></div></div>
+        <div class="bar-row"><span class="bar-label">투자 수요</span><div class="bar-track"><div class="bar-fill green" style="width:88%;">신고가 속출, 외부 유입</div></div></div>
+      </div>
+    </div>
+    <div class="compare-box lose">
+      <h4 style="color:#f87171;">일산 (패자)</h4>
+      <div class="bar-chart">
+        <div class="bar-row"><span class="bar-label">가격 변동</span><div class="bar-track"><div class="bar-fill red" style="width:15%;">-1.4% 하락</div></div></div>
+        <div class="bar-row"><span class="bar-label">추진 속도</span><div class="bar-track"><div class="bar-fill red" style="width:20%;">패스트트랙 신청 단계</div></div></div>
+        <div class="bar-row"><span class="bar-label">사업성</span><div class="bar-track"><div class="bar-fill red" style="width:25%;">평당 ~650만원 (낮음)</div></div></div>
+        <div class="bar-row"><span class="bar-label">투자 수요</span><div class="bar-track"><div class="bar-fill red" style="width:12%;">미미, 분당으로 쏠림</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>학술 논문이 증명하는 구조적 차이</h3>
+  <table>
+    <tr><th>논문/연구</th><th>핵심 발견</th><th>일산 시사점</th></tr>
+    <tr>
+      <td>삼중차분법 연구<br><span style="font-size:0.75rem;color:var(--muted);">KCI ART003140525, 2024</span></td>
+      <td>분당 노후주택은 선도지구 지정 후 <strong>유의미한 가격 상승</strong> 실증</td>
+      <td class="down">일산은 동일 효과 미발생. 지역별 사업성이 핵심 변수</td>
+    </tr>
+    <tr>
+      <td>재건축 단계별 가격변동 연구<br><span style="font-size:0.75rem;color:var(--muted);">이영도·성주한, 2023</span></td>
+      <td><strong>조합설립인가 후 12개월</strong>까지 가격에 긍정적 영향. 사업시행인가 초기 3~4개월은 오히려 하락</td>
+      <td class="neutral">백송은 아직 조합설립 전 → 가격 트리거 미도달</td>
+    </tr>
+    <tr>
+      <td>헤도닉 모형 분석<br><span style="font-size:0.75rem;color:var(--muted);">건국대 부동산도시연구, 2020</span></td>
+      <td>'조합설립~사업시행인가' 단계에서 <strong>가장 높은 가격 영향</strong>. 관리처분 이후 오히려 하락</td>
+      <td class="neutral">가격 점프 시점 = 조합설립 인가 전후 (백송: 최소 2~3년 후)</td>
+    </tr>
+    <tr>
+      <td>국토연구원 WP 22-08<br><span style="font-size:0.75rem;color:var(--muted);">KRIHS, 2022</span></td>
+      <td>1기 신도시 소유자 25.6%만 재건축 가격상승 기대. <strong>지역별 사업성 차이로 선호도 상이</strong></td>
+      <td class="down">일산의 낮은 사업성 → 투자 매력도 구조적 한계</td>
+    </tr>
+  </table>
+
+  <h3>5개 1기 신도시 선도지구 지정 후 가격 변동률 비교</h3>
+  <div class="bar-chart">
+    <div class="bar-row"><span class="bar-label">분당</span><div class="bar-track"><div class="bar-fill green" style="width:80%;"><strong>+20%</strong></div></div></div>
+    <div class="bar-row"><span class="bar-label">평촌</span><div class="bar-track"><div class="bar-fill green" style="width:15%;">+2.7%</div></div></div>
+    <div class="bar-row"><span class="bar-label">중동</span><div class="bar-track"><div class="bar-fill red" style="width:5%;">-0.2%</div></div></div>
+    <div class="bar-row"><span class="bar-label">일산</span><div class="bar-track"><div class="bar-fill red" style="width:8%;">-1.4%</div></div></div>
+    <div class="bar-row"><span class="bar-label">산본</span><div class="bar-track"><div class="bar-fill red" style="width:8%;">-1.4%</div></div></div>
+  </div>
+  <p style="font-size:0.8rem;color:var(--muted);margin-top:8px;">출처: 부동산R114, 조선비즈 (2024.11 선도지구 지정 ~ 2025.06 기준)</p>
+</div>
+
+<!-- ==================== SECTION 3 ==================== -->
+<div class="card">
+  <h2><span class="section-num">3</span> 재건축 추진 타임라인 (백송마을 1·2·3·5단지)</h2>
+
+  <div class="timeline">
+    <div class="tl-item done">
+      <div class="tl-title">선도지구 지정 <span class="badge green">완료</span></div>
+      <div class="tl-desc">2024.11.27 — 2,732가구 → 4,000가구 규모 확정</div>
+    </div>
+    <div class="tl-item done">
+      <div class="tl-title">조합방식 추진 결정 <span class="badge green">완료</span></div>
+      <div class="tl-desc">주민투표로 신탁방식 대신 조합설립 방식 선택</div>
+    </div>
+    <div class="tl-item current">
+      <div class="tl-title">패스트트랙(사전자문) 신청 <span class="badge yellow">현재</span></div>
+      <div class="tl-desc">고양시 최초 노후계획도시특별법 적용 사업. 선례 없음 → 행정 지연 가능</div>
+    </div>
+    <div class="tl-item pending">
+      <div class="tl-title">정비계획 입안 제안</div>
+      <div class="tl-desc">예상: 2026 하반기~2027 — 아직 미신청 상태</div>
+    </div>
+    <div class="tl-item pending">
+      <div class="tl-title">특별정비구역 지정</div>
+      <div class="tl-desc">예상: 2027~2028 — 분당은 이미 완료</div>
+    </div>
+    <div class="tl-item pending">
+      <div class="tl-title" style="color:var(--yellow);">조합설립 인가 ← 가격 점프 시점</div>
+      <div class="tl-desc">예상: 2028~2029 — 논문 근거: 조합설립 후 12개월 가격 상승 효과</div>
+    </div>
+    <div class="tl-item pending">
+      <div class="tl-title">사업시행 인가</div>
+      <div class="tl-desc">예상: 2029~2031</div>
+    </div>
+    <div class="tl-item pending">
+      <div class="tl-title">관리처분 인가</div>
+      <div class="tl-desc">예상: 2031~2033 — 분담금 확정 시점</div>
+    </div>
+    <div class="tl-item pending">
+      <div class="tl-title">이주·철거·착공</div>
+      <div class="tl-desc">예상: 2033~2035</div>
+    </div>
+    <div class="tl-item pending">
+      <div class="tl-title">준공·입주</div>
+      <div class="tl-desc">예상: 2036~2038 (정부 목표는 2030이지만 현실적으로 어려움)</div>
+    </div>
+  </div>
+
+  <div style="background:#1a2332;border-radius:8px;padding:16px;margin-top:16px;">
+    <p style="color:var(--yellow);font-weight:700;">분당 vs 일산 속도 비교 (2026.04 기준)</p>
+    <div class="meter">
+      <div class="meter-label"><span>분당</span><span>특별정비구역 지정 완료 (4/10단계)</span></div>
+      <div class="meter-track"><div class="meter-fill" style="width:40%;background:linear-gradient(90deg,#16a34a,#4ade80);"></div></div>
+    </div>
+    <div class="meter">
+      <div class="meter-label"><span>일산 백송</span><span>패스트트랙 신청 (2.5/10단계)</span></div>
+      <div class="meter-track"><div class="meter-fill" style="width:25%;background:linear-gradient(90deg,#dc2626,#f87171);"></div></div>
+    </div>
+    <p style="font-size:0.8rem;color:var(--muted);margin-top:8px;">일산은 분당 대비 약 1.5~2년 뒤처진 상태. 매일경제: "정비계획 입안이나 자문 신청한 곳은 없는 실정"</p>
+  </div>
+</div>
+
+<!-- ==================== SECTION 4 ==================== -->
+<div class="card">
+  <h2><span class="section-num">4</span> 수요·공급 빅데이터</h2>
+
+  <h3>일산동구 수급 지표</h3>
+  <table>
+    <tr><th>지표</th><th>현재 상태</th><th>방향</th><th>근거</th></tr>
+    <tr><td>신규 공급</td><td>제한적</td><td class="up">긍정</td><td>대규모 신규 택지 없음, 기존 단지 중심</td></tr>
+    <tr><td>전세 매물</td><td>감소 추세</td><td class="up">긍정</td><td>일산동구 전세 매물 감소 속도 가속 (네이버프리미엄)</td></tr>
+    <tr><td>전세가율</td><td>65~67%</td><td class="neutral">중립</td><td>하방 지지선 역할, 70% 접근 시 매매 전환 수요</td></tr>
+    <tr><td>매매 매물</td><td style="color:var(--red);font-weight:700;">32건 (과다)</td><td class="down">부정</td><td>매도자 경쟁 심화, 가격 하방 압력</td></tr>
+    <tr><td>거래량</td><td>회복 초기</td><td class="up">긍정</td><td>조건 맞는 매물은 계약으로 이어짐</td></tr>
+    <tr><td>투자 수요</td><td>미미</td><td class="down">부정</td><td>분당·평촌으로 쏠림 현상</td></tr>
+  </table>
+
+  <h3>매크로 환경 (2026~2028)</h3>
+  <table>
+    <tr><th>요인</th><th>현황</th><th>일산 영향</th></tr>
+    <tr><td>기준금리</td><td>추가 인하 신중 (한은, 2026.01 발표)</td><td class="neutral">제한적 호재</td></tr>
+    <tr><td>대출 규제</td><td>수도권 6억 한도</td><td class="up">백송 2~3억대 → 규제 영향 적음</td></tr>
+    <tr><td>서울 입주물량</td><td>2027년부터 평균 50% 이하 감소</td><td class="up">간접적 수혜 가능</td></tr>
+    <tr><td>양극화</td><td>서울·분당 강세 vs 외곽 정체</td><td class="down">일산은 "외곽" 분류</td></tr>
+    <tr><td>양도세 중과</td><td>2026.05.09 유예 종료</td><td class="up" style="color:var(--green);">고양시 비조정대상 → 무관</td></tr>
+    <tr><td>정부 정책</td><td>1기 신도시 재건축 속도 지원</td><td class="up">12조 미래도시펀드, 인허가 지원</td></tr>
+  </table>
+</div>
+
+<!-- ==================== SECTION 5 ==================== -->
+<div class="card">
+  <h2><span class="section-num">5</span> 연도별 가격 예측 모델</h2>
+
+  <h3>예측 방법론</h3>
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:16px;">
+    실거래 데이터 (2014~2026, 80+건) + 재건축 단계별 프리미엄 학술 모델 + 1기 신도시 비교 분석 + 매크로 변수 반영.
+    논문 근거: 조합설립 후 12개월간 가격 상승 효과 (이영도·성주한, 2023), 조합설립~사업시행 구간 최고 영향 (건국대, 2020)
+  </p>
+
+  <!-- SVG Price Forecast Chart -->
+  <svg viewBox="0 0 800 320" style="width:100%;height:auto;background:#1a2332;border-radius:8px;">
+    <defs>
+      <linearGradient id="baseGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.01"/>
+      </linearGradient>
+      <linearGradient id="bullGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#4ade80" stop-opacity="0.15"/>
+        <stop offset="100%" stop-color="#4ade80" stop-opacity="0.01"/>
+      </linearGradient>
+      <linearGradient id="bearGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f87171" stop-opacity="0.15"/>
+        <stop offset="100%" stop-color="#f87171" stop-opacity="0.01"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Grid -->
+    <line x1="80" y1="280" x2="760" y2="280" stroke="#2a3a4a" stroke-width="1"/>
+    <line x1="80" y1="30" x2="80" y2="280" stroke="#2a3a4a" stroke-width="1"/>
+
+    <!-- Y labels -->
+    <text x="70" y="35" fill="#94a3b8" font-size="10" text-anchor="end">3.2억</text>
+    <line x1="80" y1="30" x2="760" y2="30" stroke="#2a3a4a" stroke-width="0.5" stroke-dasharray="3"/>
+    <text x="70" y="85" fill="#94a3b8" font-size="10" text-anchor="end">2.8억</text>
+    <line x1="80" y1="80" x2="760" y2="80" stroke="#2a3a4a" stroke-width="0.5" stroke-dasharray="3"/>
+    <text x="70" y="135" fill="#94a3b8" font-size="10" text-anchor="end">2.4억</text>
+    <line x1="80" y1="130" x2="760" y2="130" stroke="#2a3a4a" stroke-width="0.5" stroke-dasharray="3"/>
+    <text x="70" y="185" fill="#94a3b8" font-size="10" text-anchor="end">2.0억</text>
+    <line x1="80" y1="180" x2="760" y2="180" stroke="#2a3a4a" stroke-width="0.5" stroke-dasharray="3"/>
+    <text x="70" y="235" fill="#94a3b8" font-size="10" text-anchor="end">1.6억</text>
+    <line x1="80" y1="230" x2="760" y2="230" stroke="#2a3a4a" stroke-width="0.5" stroke-dasharray="3"/>
+
+    <!-- X labels -->
+    <text x="120" y="298" fill="#94a3b8" font-size="10" text-anchor="middle">2024</text>
+    <text x="240" y="298" fill="#94a3b8" font-size="10" text-anchor="middle">2025</text>
+    <text x="360" y="298" fill="#fbbf24" font-size="10" text-anchor="middle" font-weight="bold">2026 현재</text>
+    <text x="480" y="298" fill="#94a3b8" font-size="10" text-anchor="middle">2027</text>
+    <text x="600" y="298" fill="#94a3b8" font-size="10" text-anchor="middle">2028</text>
+    <text x="720" y="298" fill="#94a3b8" font-size="10" text-anchor="middle">2029</text>
+
+    <!-- Current line -->
+    <line x1="360" y1="20" x2="360" y2="280" stroke="#fbbf24" stroke-width="1" stroke-dasharray="4"/>
+
+    <!-- HISTORICAL (solid) -->
+    <polyline fill="none" stroke="#38bdf8" stroke-width="2.5" points="
+      120,105 180,100 240,115 300,118 360,125
+    "/>
+
+    <!-- Bull scenario (dashed green) -->
+    <polyline fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="6,3" points="
+      360,125 420,110 480,93 540,80 600,68 660,55 720,42
+    "/>
+    <text x="730" y="42" fill="#4ade80" font-size="9" font-weight="bold">낙관 3.0~3.2억</text>
+
+    <!-- Base scenario (dashed blue) -->
+    <polyline fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,3" points="
+      360,125 420,118 480,112 540,105 600,100 660,93 720,87
+    "/>
+    <text x="730" y="87" fill="#38bdf8" font-size="9" font-weight="bold">기본 2.5~2.7억</text>
+
+    <!-- Bear scenario (dashed red) -->
+    <polyline fill="none" stroke="#f87171" stroke-width="2" stroke-dasharray="6,3" points="
+      360,125 420,135 480,143 540,150 600,155 660,162 720,168
+    "/>
+    <text x="730" y="168" fill="#f87171" font-size="9" font-weight="bold">비관 2.0~2.2억</text>
+
+    <!-- Current dot -->
+    <circle cx="360" cy="125" r="6" fill="#fbbf24" stroke="#fff" stroke-width="2"/>
+    <text x="360" y="115" fill="#fbbf24" font-size="10" text-anchor="middle" font-weight="bold">현재 2.3~2.5억</text>
+
+    <!-- Event markers -->
+    <text x="530" y="270" fill="#a78bfa" font-size="8" text-anchor="middle">조합설립 예상</text>
+    <line x1="530" y1="260" x2="530" y2="250" stroke="#a78bfa" stroke-width="1"/>
+    <text x="530" y="248" fill="#a78bfa" font-size="7">▲</text>
+  </svg>
+
+  <div class="scenarios">
+    <div class="scenario bear">
+      <h4 style="color:var(--red);">비관 시나리오</h4>
+      <div class="prob">확률: 25%</div>
+      <div class="price" style="color:var(--red);">2.0~2.2억</div>
+      <ul style="font-size:0.82rem;margin-top:8px;padding-left:16px;color:var(--muted);">
+        <li>재건축 장기 지연 (5년+)</li>
+        <li>경기 침체 + 금리 동결</li>
+        <li>분담금 이슈로 사업 무산 가능성</li>
+        <li>인구 유출 가속</li>
+      </ul>
+    </div>
+    <div class="scenario base">
+      <h4 style="color:var(--green);">기본 시나리오</h4>
+      <div class="prob">확률: 50% (가장 유력)</div>
+      <div class="price" style="color:var(--green);">2.5~2.7억</div>
+      <ul style="font-size:0.82rem;margin-top:8px;padding-left:16px;color:var(--muted);">
+        <li>재건축 느리게 진행 (3~4년 후 조합설립)</li>
+        <li>금리 소폭 인하</li>
+        <li>횡보~완만 상승</li>
+        <li>연 3~5% 상승 기대</li>
+      </ul>
+    </div>
+    <div class="scenario bull">
+      <h4 style="color:var(--accent);">낙관 시나리오</h4>
+      <div class="prob">확률: 25%</div>
+      <div class="price" style="color:var(--accent);">3.0~3.2억</div>
+      <ul style="font-size:0.82rem;margin-top:8px;padding-left:16px;color:var(--muted);">
+        <li>재건축 빠른 진행 + 조합설립 2027 달성</li>
+        <li>금리 대폭 인하</li>
+        <li>서울 대체 수요 유입</li>
+        <li>2022년 최고가 수준 회복</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>단계별 예상 매도가 상세</h3>
+  <table>
+    <tr><th>시점</th><th>비관 (25%)</th><th>기본 (50%)</th><th>낙관 (25%)</th><th>가중평균</th></tr>
+    <tr><td><strong>2026 하반기</strong></td><td class="down">2.2~2.3억</td><td>2.3~2.5억</td><td class="up">2.5~2.6억</td><td><strong>2.35억</strong></td></tr>
+    <tr><td><strong>2027</strong></td><td class="down">2.1~2.3억</td><td>2.4~2.6억</td><td class="up">2.6~2.8억</td><td><strong>2.45억</strong></td></tr>
+    <tr><td><strong>2028</strong></td><td class="down">2.0~2.3억</td><td>2.5~2.7억</td><td class="up">2.8~3.0억</td><td><strong>2.55억</strong></td></tr>
+    <tr><td><strong>2029</strong></td><td class="down">2.0~2.2억</td><td>2.5~2.8억</td><td class="up">3.0~3.2억</td><td><strong>2.6억</strong></td></tr>
+  </table>
+</div>
+
+<!-- ==================== SECTION 6 ==================== -->
+<div class="card">
+  <h2><span class="section-num">6</span> 투자 대안 비교 (매도 후 2.4억 운용 시)</h2>
+
+  <h3>3년 후 예상 자산가치 (2029년)</h3>
+  <div class="bar-chart">
+    <div class="bar-row"><span class="bar-label">백송 보유</span><div class="bar-track"><div class="bar-fill blue" style="width:52%;">2.6억 (기본 가중평균)</div></div></div>
+    <div class="bar-row"><span class="bar-label">S&P500 ETF</span><div class="bar-track"><div class="bar-fill green" style="width:65%;">3.2억 (연 10%)</div></div></div>
+    <div class="bar-row"><span class="bar-label">분산투자</span><div class="bar-track"><div class="bar-fill purple" style="width:60%;">3.0억 (6/3/1 배분)</div></div></div>
+    <div class="bar-row"><span class="bar-label">BTC DCA</span><div class="bar-track"><div class="bar-fill orange" style="width:75%;">3.6억 (연 15%, 고변동)</div></div></div>
+    <div class="bar-row"><span class="bar-label">예금</span><div class="bar-track"><div class="bar-fill yellow" style="width:42%;">2.7억 (연 3.5%)</div></div></div>
+  </div>
+
+  <table>
+    <tr><th>자산</th><th>3년 예상 수익</th><th>변동성</th><th>유동성</th><th>리스크</th></tr>
+    <tr><td>백송 보유</td><td>+2,000~4,000만</td><td>중</td><td style="color:var(--red);">매우 낮음</td><td>재건축 지연, 전세 관리, 공실</td></tr>
+    <tr><td>S&P500 ETF</td><td class="up">+8,000만</td><td>중</td><td class="up">높음</td><td>환율, 미국 경기</td></tr>
+    <tr><td>분산투자 (6/3/1)</td><td class="up">+6,000만</td><td>중</td><td class="up">높음</td><td>분산으로 리스크 감소</td></tr>
+    <tr><td>비트코인 DCA</td><td class="up">+1.2억</td><td style="color:var(--red);">극고</td><td class="up">높음</td><td>50%+ 하락 가능</td></tr>
+    <tr><td>예금</td><td>+3,000만</td><td class="up">없음</td><td class="up">최고</td><td>인플레이션</td></tr>
+  </table>
+  <p style="font-size:0.78rem;color:var(--muted);margin-top:8px;">* 분산투자 6/3/1 = S&P500 60% + 예금/채권 30% + 비트코인 10%</p>
+</div>
+
+<!-- ==================== SECTION 7 ==================== -->
+<div class="card">
+  <h2><span class="section-num">7</span> 전세 전략 데이터</h2>
+
+  <h3>15층 전세 실거래 이력</h3>
+  <table>
+    <tr><th>시점</th><th>층</th><th>가격</th><th>비고</th></tr>
+    <tr><td>2026.02</td><td>15층</td><td><strong>1.6억</strong></td><td>최근 거래</td></tr>
+    <tr><td>2025.10</td><td>15층</td><td><strong>1.6억</strong></td><td>연속 동일가</td></tr>
+    <tr><td>2024.12</td><td>15층</td><td>1.575억 (갱신)</td><td>기존 1.5억에서 갱신</td></tr>
+    <tr><td>2023.10</td><td>15층</td><td>1.43억</td><td></td></tr>
+    <tr><td>2022.12</td><td>15층</td><td>1.5억</td><td></td></tr>
+  </table>
+
+  <h3>현재 전세 매물 (전체)</h3>
+  <table>
+    <tr><th>동</th><th>층</th><th>가격</th><th>상태</th></tr>
+    <tr><td>301동</td><td>15층</td><td style="color:var(--yellow);font-weight:700;">1.6억</td><td>시장가 수준</td></tr>
+    <tr><td>305동</td><td>8층</td><td>1.7억</td><td>시장가 상단</td></tr>
+    <tr><td>301동</td><td>13층</td><td>1.75억</td><td>시장가 초과</td></tr>
+  </table>
+
+  <div style="background:#1a2332;border-radius:8px;padding:16px;margin-top:16px;">
+    <p style="color:var(--yellow);font-weight:700;margin-bottom:8px;">전세가 결론</p>
+    <p style="font-size:0.88rem;">15층 연속 2건 1.6억 거래 → <strong>1.6억이 시장 균형가</strong>. 1.65억은 거래 지연 리스크 발생. 공실 1개월 = 약 130만원 손실 → 500만원 차이를 위해 수개월 대기는 비합리적.</p>
+    <p style="font-size:0.88rem;color:var(--green);margin-top:8px;font-weight:700;">추천: 1.6억 유지, 빠른 계약 우선</p>
+  </div>
+</div>
+
+<!-- ==================== VERDICT ==================== -->
+<div class="verdict">
+  <h2>최종 분석 결론</h2>
+  <div class="big-price">현재 적정 매도가: 2.4~2.5억</div>
+  <div class="range">3년 보유 시 기본 시나리오: 2.5~2.7억 (추가 이익 +1,000~3,000만원)</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:24px;text-align:left;">
+    <div>
+      <p style="color:var(--red);font-weight:700;font-size:0.9rem;">재건축 호재 = 예전과 다르다</p>
+      <p style="font-size:0.82rem;color:var(--muted);">분당 +20% vs 일산 -1.4%. 사업성 구조적 차이. 같은 선도지구라도 결과 상이. 논문으로도 실증됨.</p>
+    </div>
+    <div>
+      <p style="color:var(--yellow);font-weight:700;font-size:0.9rem;">가격 점프 시점 = 조합설립</p>
+      <p style="font-size:0.82rem;color:var(--muted);">학술 연구 근거: 조합설립 후 12개월 최대 효과. 백송은 최소 2~3년 후. 그 전까지 횡보 가능성 높음.</p>
+    </div>
+    <div>
+      <p style="color:var(--green);font-weight:700;font-size:0.9rem;">기회비용 고려 시</p>
+      <p style="font-size:0.82rem;color:var(--muted);">2.4억 × 3년 금융투자 = 약 +6,000~8,000만. 부동산 보유 시 +1,000~3,000만. 유동성+수익률 모두 금융자산 우위.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);">
+    <p style="color:var(--accent);font-size:0.95rem;font-weight:700;">전략 권고</p>
+    <table style="margin-top:8px;">
+      <tr><th>상황</th><th>권고</th></tr>
+      <tr><td>다주택 + 자금 필요</td><td class="up" style="font-weight:700;">올해 2.4~2.5억 매도 → 금융자산 전환</td></tr>
+      <tr><td>1주택 + 여유</td><td class="neutral">2~3년 보유 → 조합설립 진척 확인 후 판단</td></tr>
+      <tr><td>전세</td><td class="up" style="font-weight:700;">1.6억 유지, 빠른 계약 우선</td></tr>
+      <tr><td>양도세</td><td class="up">고양시 비조정대상 → 중과 무관, 걱정 불필요</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== REFERENCES ==================== -->
+<div class="card">
+  <h2><span class="section-num">8</span> 참고 문헌 및 데이터 출처</h2>
+
+  <h3>학술 논문</h3>
+  <ol class="ref-list">
+    <li><strong>이영도, 성주한 (2023)</strong>. "재건축 아파트 사업추진 단계별 가격변동에 관한 연구". <em>부동산융복합연구</em>, 3(3), 65-93. <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003039941" target="_blank">KCI 원문</a> — 조합설립인가 후 12개월 가격 상승 효과 실증</li>
+    <li><strong>노후계획도시 재정비 정책 공표 효과 연구 (2024)</strong>. 삼중차분법 분석. <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003140525" target="_blank">KCI 원문</a> — 분당 노후주택 선도지구 후 유의미 상승 실증</li>
+    <li><strong>건국대 부동산도시연구 (2020)</strong>. 헤도닉 모형 기반 재건축 단계별 가격 영향 분석. <a href="https://www.konkuk.ac.kr/bbs/kreus/1406/905005/download.do" target="_blank">PDF</a> — 조합설립~사업시행 구간 최고 영향</li>
+    <li><strong>국토연구원 WP 22-08</strong>. "1기 신도시 주택 소유자 인식조사". <a href="https://www.krihs.re.kr/galleryDownload.es?bid=0025&list_no=28005&seq=1" target="_blank">PDF</a> — 재건축 가격상승 기대 25.6%</li>
+    <li><strong>안혜성, 김진수 (2023)</strong>. "노후 1기 신도시 재정비 방안 연구". <em>토지공법연구</em>. <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11513313" target="_blank">DBpia</a></li>
+  </ol>
+
+  <h3>뉴스 및 시장 데이터</h3>
+  <ol class="ref-list" start="6">
+    <li><a href="https://www.mk.co.kr/news/realestate/11179440" target="_blank">매일경제</a> — 일산 재건축 선도지구 4곳 반색 (2024.11)</li>
+    <li><a href="https://biz.chosun.com/real_estate/real_estate_general/2025/07/03/46I4ZP6DY5GSXJKKU7M4GZ5RNE/" target="_blank">조선비즈</a> — 분당·평촌만 올랐다, 1기 신도시 희비 (2025.07)</li>
+    <li><a href="https://www.housingherald.co.kr/news/articleView.html?idxno=51381" target="_blank">하우징헤럴드</a> — 백송마을 패스트트랙 신청 완료</li>
+    <li><a href="https://www.mk.co.kr/news/economy/11409764" target="_blank">매일경제</a> — 달리는 분당 vs 잠잠한 일산 (2025)</li>
+    <li><a href="https://news.nate.com/view/20260121n02176" target="_blank">뉴스핌</a> — 분당 활기·일산 침체 온도차 (2026.01)</li>
+    <li><a href="https://www.kairnews.com/news/468174" target="_blank">한국AI부동산신문</a> — 2026년 일산부동산 현실적 판단법</li>
+    <li><a href="https://www.mk.co.kr/news/realestate/11495985" target="_blank">매일경제</a> — 2026 부동산 전망: 양극화 심화</li>
+    <li><a href="https://thegamtax.tistory.com/3001" target="_blank">더감세무</a> — 다주택자 양도세 중과 2026.05.09 종료 분석</li>
+    <li>국토교통부 실거래가 공개시스템 — 10년 매매·전세 실거래 데이터</li>
+    <li>네이버 부동산 — 현재 매물 시세 (2026.04.11 기준)</li>
+  </ol>
+</div>
+
+<div class="footer">
+  <p>본 보고서는 공개된 실거래 데이터, 학술 논문, 뉴스 분석을 종합한 참고 자료입니다.</p>
+  <p>투자 결정은 개인의 판단과 전문가 상담을 통해 이루어져야 합니다.</p>
+  <p style="margin-top:8px;">생성일: 2026.04.11 | 데이터 기준일: 2026.04.11</p>
+</div>
+
+</div>
+</body>
+</html>

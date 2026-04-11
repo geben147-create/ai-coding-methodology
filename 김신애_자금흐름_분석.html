@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김신애 자금흐름 종합 분석 (2009~2013)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+
+  .header { background: linear-gradient(135deg, #1e293b, #334155); padding: 40px; text-align: center; border-bottom: 3px solid #f59e0b; }
+  .header h1 { font-size: 2rem; color: #f59e0b; margin-bottom: 8px; }
+  .header .subtitle { color: #94a3b8; font-size: 0.95rem; }
+  .header .warn { background: #7f1d1d; color: #fca5a5; padding: 10px 20px; border-radius: 8px; display: inline-block; margin-top: 15px; font-size: 0.85rem; }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  .section { background: #1e293b; border-radius: 16px; padding: 30px; margin-bottom: 30px; border: 1px solid #334155; }
+  .section h2 { color: #f59e0b; font-size: 1.4rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #334155; }
+  .section h3 { color: #38bdf8; font-size: 1.1rem; margin: 20px 0 12px; }
+
+  /* 가족 관계도 */
+  .family-tree { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 30px; }
+  .family-row { display: flex; gap: 40px; align-items: center; }
+  .family-card { background: linear-gradient(135deg, #1e3a5f, #1e293b); border: 2px solid #38bdf8; border-radius: 12px; padding: 15px 25px; text-align: center; min-width: 160px; position: relative; }
+  .family-card.dad { border-color: #3b82f6; }
+  .family-card.mom { border-color: #ec4899; }
+  .family-card.me { border-color: #f59e0b; background: linear-gradient(135deg, #422006, #1e293b); }
+  .family-card.sis { border-color: #a78bfa; }
+  .family-card .role { font-size: 0.75rem; color: #94a3b8; }
+  .family-card .name { font-size: 1.2rem; font-weight: bold; margin: 4px 0; }
+  .family-card .note { font-size: 0.75rem; color: #64748b; }
+  .arrow-down { font-size: 2rem; color: #475569; }
+  .connector { width: 2px; height: 30px; background: #475569; }
+  .h-connector { display: flex; align-items: center; gap: 0; }
+  .h-line { width: 40px; height: 2px; background: #475569; }
+
+  /* 자금흐름 다이어그램 */
+  .flow-diagram { display: flex; justify-content: center; gap: 15px; align-items: center; flex-wrap: wrap; padding: 20px; }
+  .flow-box { padding: 12px 20px; border-radius: 10px; text-align: center; font-size: 0.85rem; min-width: 120px; }
+  .flow-box.source { background: #1e3a5f; border: 2px solid #3b82f6; }
+  .flow-box.dest { background: #1a2e05; border: 2px solid #22c55e; }
+  .flow-box.account { background: #422006; border: 2px solid #f59e0b; }
+  .flow-arrow { font-size: 1.5rem; color: #f59e0b; }
+  .flow-amount { font-size: 0.75rem; color: #fbbf24; display: block; margin-top: 4px; }
+
+  /* 테이블 */
+  table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+  th { background: #334155; color: #f59e0b; padding: 12px 10px; text-align: left; font-size: 0.85rem; position: sticky; top: 0; }
+  td { padding: 10px; border-bottom: 1px solid #334155; font-size: 0.85rem; }
+  tr:hover { background: #334155; }
+  .amount-in { color: #4ade80; font-weight: bold; }
+  .amount-out { color: #f87171; }
+  .highlight-row { background: #422006 !important; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
+  .tag-dad { background: #1e3a8a; color: #93c5fd; }
+  .tag-mom { background: #831843; color: #f9a8d4; }
+  .tag-insurance { background: #065f46; color: #6ee7b7; }
+  .tag-living { background: #713f12; color: #fde68a; }
+  .tag-tuition { background: #4c1d95; color: #c4b5fd; }
+  .tag-biz { background: #1e293b; color: #94a3b8; border: 1px solid #475569; }
+
+  /* 차트 컨테이너 */
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+  .chart-box { background: #0f172a; border-radius: 12px; padding: 20px; border: 1px solid #334155; }
+  .chart-box h4 { color: #e2e8f0; margin-bottom: 15px; font-size: 0.95rem; }
+  .chart-box canvas { max-height: 350px; }
+
+  /* 인포그래픽 카드 */
+  .info-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+  .info-card { background: linear-gradient(135deg, #0f172a, #1e293b); border: 1px solid #334155; border-radius: 12px; padding: 20px; text-align: center; }
+  .info-card .label { font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px; }
+  .info-card .value { font-size: 1.8rem; font-weight: bold; }
+  .info-card .sub { font-size: 0.75rem; color: #64748b; margin-top: 5px; }
+  .value-blue { color: #38bdf8; }
+  .value-green { color: #4ade80; }
+  .value-yellow { color: #fbbf24; }
+  .value-red { color: #f87171; }
+  .value-purple { color: #a78bfa; }
+
+  /* 타임라인 */
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: #334155; }
+  .timeline-item { position: relative; margin-bottom: 20px; padding: 15px; background: #0f172a; border-radius: 10px; border: 1px solid #334155; }
+  .timeline-item::before { content: ''; position: absolute; left: -24px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; }
+  .timeline-item .date { color: #f59e0b; font-size: 0.8rem; font-weight: bold; }
+  .timeline-item .desc { margin-top: 5px; font-size: 0.9rem; }
+  .timeline-item .amount { color: #4ade80; font-weight: bold; }
+
+  /* 스크롤 테이블 */
+  .table-scroll { max-height: 500px; overflow-y: auto; border-radius: 8px; }
+  .table-scroll::-webkit-scrollbar { width: 8px; }
+  .table-scroll::-webkit-scrollbar-track { background: #1e293b; }
+  .table-scroll::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+
+  /* 요약 박스 */
+  .summary-box { background: linear-gradient(135deg, #422006, #1e293b); border: 2px solid #f59e0b; border-radius: 12px; padding: 25px; margin: 20px 0; }
+  .summary-box h3 { color: #fbbf24; margin-bottom: 15px; }
+  .summary-box ul { list-style: none; }
+  .summary-box li { padding: 5px 0; padding-left: 20px; position: relative; }
+  .summary-box li::before { content: '▸'; position: absolute; left: 0; color: #f59e0b; }
+
+  .note-box { background: #1a2e05; border-left: 4px solid #22c55e; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0; font-size: 0.85rem; }
+  .warn-box { background: #7f1d1d33; border-left: 4px solid #ef4444; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0; font-size: 0.85rem; }
+
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin: 2px; }
+  .badge-safe { background: #065f46; color: #6ee7b7; }
+  .badge-caution { background: #78350f; color: #fde68a; }
+  .badge-risk { background: #7f1d1d; color: #fca5a5; }
+
+  @media (max-width: 768px) {
+    .chart-grid { grid-template-columns: 1fr; }
+    .family-row { flex-direction: column; gap: 10px; }
+    .info-cards { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media print {
+    body { background: white; color: #1e293b; }
+    .section { border: 1px solid #ccc; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>김신애 자금흐름 종합 분석 보고서</h1>
+  <div class="subtitle">분석 기간: 2009.10 ~ 2013.04 | 우리은행 좌동지점 계좌 기준</div>
+  <div class="warn">본 자료는 본인 확인용이며, 열람 후 삭제 가능합니다. 제3자 공유 금지.</div>
+</div>
+
+<div class="container">
+
+<!-- ==================== 1. 가족 관계도 ==================== -->
+<div class="section">
+  <h2>1. 가족 관계도 및 자금 흐름 구조</h2>
+
+  <div class="family-tree">
+    <div class="family-row">
+      <div class="family-card dad">
+        <div class="role">부 (父)</div>
+        <div class="name">김상호</div>
+        <div class="note">이스턴영어학원 / 한마당음악세상 운영</div>
+        <div class="note" style="color:#3b82f6; margin-top:5px;">국민은행 계좌</div>
+      </div>
+      <div style="font-size:2rem; color:#ec4899;">♥</div>
+      <div class="family-card mom">
+        <div class="role">모 (母)</div>
+        <div class="name">신효심</div>
+        <div class="note">국민은행 / 우체국 계좌</div>
+      </div>
+    </div>
+    <div class="arrow-down">▼</div>
+    <div class="family-row">
+      <div class="family-card sis">
+        <div class="role">언니 (姉)</div>
+        <div class="name">김신애</div>
+        <div class="note">별도 증여 이력 추정 (~1.3억)</div>
+      </div>
+      <div style="width:60px;"></div>
+      <div class="family-card me">
+        <div class="role">본인 (本人) ★</div>
+        <div class="name">김연하 (추정)</div>
+        <div class="note">우리은행 좌동지점 계좌</div>
+        <div class="note" style="color:#f59e0b;">← 이 계좌의 분석 대상</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>자금 흐름 다이어그램</h3>
+  <div class="flow-diagram">
+    <div class="flow-box source">
+      <strong>김상호 (부)</strong>
+      <span class="flow-amount">이스턴영어 → 국민은행</span>
+    </div>
+    <div class="flow-arrow">→ 총 9,900,000원 →</div>
+    <div class="flow-box account">
+      <strong>본인 우리은행</strong>
+      <span class="flow-amount">좌동지점</span>
+    </div>
+    <div class="flow-arrow">→ 생활비·학비 →</div>
+    <div class="flow-box dest">
+      <strong>소비·학비·의료</strong>
+      <span class="flow-amount">가톨릭대·성균관대 등</span>
+    </div>
+  </div>
+  <div class="flow-diagram">
+    <div class="flow-box source" style="border-color:#ec4899;">
+      <strong>신효심 (모)</strong>
+      <span class="flow-amount">국민은행·우체국</span>
+    </div>
+    <div class="flow-arrow">→ 총 4,000,000원 →</div>
+    <div class="flow-box account">
+      <strong>본인 우리은행</strong>
+    </div>
+  </div>
+  <div class="flow-diagram">
+    <div class="flow-box source" style="border-color:#22c55e;">
+      <strong>보험 만기/환급</strong>
+      <span class="flow-amount">삼성화재 등</span>
+    </div>
+    <div class="flow-arrow">→ 총 ~15,114,057원 →</div>
+    <div class="flow-box account">
+      <strong>본인 우리은행</strong>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>참고:</strong> 기재내용에 "이스턴영어" "한마당" "한마당음악세상" "eastern"이 포함된 거래는 아버지(김상호)의 학원/사업 계좌에서 이체한 것이므로, 아버지 → 딸 자금이동으로 분류합니다.
+  </div>
+</div>
+
+<!-- ==================== 2. 핵심 수치 인포그래픽 ==================== -->
+<div class="section">
+  <h2>2. 핵심 수치 요약 (인포그래픽)</h2>
+
+  <div class="info-cards">
+    <div class="info-card">
+      <div class="label">분석 기간</div>
+      <div class="value value-yellow">3년 6개월</div>
+      <div class="sub">2009.10 ~ 2013.04</div>
+    </div>
+    <div class="info-card">
+      <div class="label">총 거래 건수</div>
+      <div class="value value-blue">470건</div>
+      <div class="sub">입금 + 출금 전체</div>
+    </div>
+    <div class="info-card">
+      <div class="label">아버지(김상호) 입금 총액</div>
+      <div class="value value-green">990만원</div>
+      <div class="sub">이스턴영어 계좌 → 본인 (12건)</div>
+    </div>
+    <div class="info-card">
+      <div class="label">어머니(신효심) 입금 총액</div>
+      <div class="value value-purple">400만원</div>
+      <div class="sub">국민은행·우체국 → 본인 (2건)</div>
+    </div>
+    <div class="info-card">
+      <div class="label">보험금 수령</div>
+      <div class="value value-green">~1,511만원</div>
+      <div class="sub">삼성화재 만기환급 등</div>
+    </div>
+    <div class="info-card">
+      <div class="label">월 생활비 (2009~2010)</div>
+      <div class="value value-yellow">60만원/월</div>
+      <div class="sub">정기 이체 확인 (하나은행경유)</div>
+    </div>
+    <div class="info-card">
+      <div class="label">부모 → 본인 합산</div>
+      <div class="value value-green">~1,390만원</div>
+      <div class="sub">직접 이체 확인분 (계좌 기준)</div>
+    </div>
+    <div class="info-card">
+      <div class="label">현금 입금 (출처 미상)</div>
+      <div class="value value-red">200만원</div>
+      <div class="sub">2013.03.19 혜화동지점</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 3. 아버지 입금 상세 ==================== -->
+<div class="section">
+  <h2>3. 아버지(김상호) → 본인 입금 상세 내역</h2>
+
+  <div class="warn-box">
+    "김상호(이스턴영어" 명의 입금 = 아버지 학원 사업계좌에서 이체. 생활비/용돈 성격.
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>No</th><th>날짜</th><th>기재내용</th><th>금액</th><th>거래후잔액</th><th>분류</th><th>비고</th></tr>
+    </thead>
+    <tbody>
+      <tr class="highlight-row"><td>55</td><td>2011.08.25</td><td>김상호(이스턴영어</td><td class="amount-in">500,000</td><td>653,056</td><td><span class="tag tag-dad">부 생활비</span></td><td>국민은행 → 우리</td></tr>
+      <tr class="highlight-row"><td>61</td><td>2011.09.26</td><td>김상호(이스턴영어</td><td class="amount-in">500,000</td><td>16,462,713</td><td><span class="tag tag-dad">부 생활비</span></td><td></td></tr>
+      <tr class="highlight-row"><td>64</td><td>2011.10.28</td><td>김상호(이스턴영어</td><td class="amount-in">500,000</td><td>963,293</td><td><span class="tag tag-dad">부 생활비</span></td><td></td></tr>
+      <tr class="highlight-row"><td>66</td><td>2011.11.28</td><td>김상호(이스턴영어</td><td class="amount-in">500,000</td><td>1,463,293</td><td><span class="tag tag-dad">부 생활비</span></td><td></td></tr>
+      <tr class="highlight-row"><td>117</td><td>2012.07.02</td><td>김상호(이스턴영어</td><td class="amount-in">500,000</td><td>1,649,444</td><td><span class="tag tag-dad">부 생활비</span></td><td></td></tr>
+      <tr class="highlight-row"><td>120</td><td>2012.07.03</td><td>김상호(이스턴영어</td><td class="amount-in">500,000</td><td>2,144,344</td><td><span class="tag tag-dad">부 생활비</span></td><td>연속 2일 입금</td></tr>
+      <tr class="highlight-row"><td>178</td><td>2012.08.02</td><td>김상호(이스턴영어</td><td class="amount-in">500,000</td><td>1,178,654</td><td><span class="tag tag-dad">부 생활비</span></td><td></td></tr>
+      <tr class="highlight-row"><td>257</td><td>2012.09.23</td><td>김상호(이스턴영어</td><td class="amount-in">300,000</td><td>1,491,467</td><td><span class="tag tag-dad">부 용돈</span></td><td>평소보다 적은 금액</td></tr>
+      <tr class="highlight-row"><td>309</td><td>2012.11.16</td><td>김상호(이스턴영어</td><td class="amount-in">100,000</td><td>160,999</td><td><span class="tag tag-dad">부 긴급</span></td><td>잔액 6만원 시 투입</td></tr>
+      <tr class="highlight-row"><td>318</td><td>2012.11.19</td><td>김상호(이스턴영어</td><td class="amount-in">1,000,000</td><td>1,187,124</td><td><span class="tag tag-dad">부 대형</span></td><td>100만원 이체</td></tr>
+      <tr class="highlight-row"><td>346</td><td>2012.12.13</td><td>김상호(이스턴영어</td><td class="amount-in">3,000,000</td><td>3,477,004</td><td><span class="tag tag-dad">부 대형</span></td><td>★ 300만원 (최대 단건)</td></tr>
+      <tr><td colspan="7" style="text-align:right; font-weight:bold; color:#4ade80;">아버지 직접 이체 합계: 7,900,000원</td></tr>
+    </tbody>
+  </table>
+
+  <h3>초기 생활비 (2009~2010 월 60만원 정기)</h3>
+  <table>
+    <thead>
+      <tr><th>날짜</th><th>적요</th><th>기재내용</th><th>금액</th><th>분류</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2009.11.20</td><td>인터넷</td><td>11 월분</td><td class="amount-in">600,000</td><td><span class="tag tag-living">생활비</span></td></tr>
+      <tr><td>2009.12.31</td><td>인터넷</td><td>새해복마니받아</td><td class="amount-in">600,000</td><td><span class="tag tag-living">생활비+세뱃돈</span></td></tr>
+      <tr><td>2010.01.25</td><td>인터넷</td><td>1 월분지환</td><td class="amount-in">600,000</td><td><span class="tag tag-living">생활비</span></td></tr>
+      <tr><td colspan="5" style="text-align:right; font-weight:bold; color:#4ade80;">초기 생활비 합계: 1,800,000원 (하나은행 경유, 부모 추정)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== 4. 어머니 입금 상세 ==================== -->
+<div class="section">
+  <h2>4. 어머니(신효심) → 본인 입금 상세 내역</h2>
+
+  <table>
+    <thead>
+      <tr><th>No</th><th>날짜</th><th>적요</th><th>기재내용</th><th>금액</th><th>분류</th><th>비고</th></tr>
+    </thead>
+    <tbody>
+      <tr class="highlight-row"><td>229</td><td>2012.08.27</td><td>타행환</td><td>신효심</td><td class="amount-in">1,000,000</td><td><span class="tag tag-mom">모 지원</span></td><td>국민은행 → 우리</td></tr>
+      <tr class="highlight-row"><td>409</td><td>2013.02.20</td><td>타행환</td><td>신효심</td><td class="amount-in">3,000,000</td><td><span class="tag tag-mom">모 대형</span></td><td>우체국 → 우리 ★300만</td></tr>
+      <tr><td colspan="7" style="text-align:right; font-weight:bold; color:#a78bfa;">어머니 직접 이체 합계: 4,000,000원</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== 5. 차트 섹션 ==================== -->
+<div class="section">
+  <h2>5. 시각화 차트</h2>
+
+  <div class="chart-grid">
+    <div class="chart-box">
+      <h4>자금 출처별 비율 (원그래프)</h4>
+      <canvas id="pieSource"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>연도별 부모 입금액 (막대그래프)</h4>
+      <canvas id="barYearly"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>월별 잔액 추이 (선그래프)</h4>
+      <canvas id="lineBalance"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>지출 카테고리별 비율 (원그래프)</h4>
+      <canvas id="pieExpense"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>아버지 입금 건별 금액 (막대그래프)</h4>
+      <canvas id="barDadDeposit"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>월별 수입 vs 지출 (선그래프)</h4>
+      <canvas id="lineInOut"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 6. 주요 대형 거래 타임라인 ==================== -->
+<div class="section">
+  <h2>6. 주요 대형 거래 타임라인</h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="date">2009.10.12 — 계좌 개설</div>
+      <div class="desc">우리은행 좌동지점 예금 신규. CD 입금으로 <span class="amount">1,970,000원</span> 초기 잔액 구성</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2009.11~2010.01 — 정기 생활비 수령</div>
+      <div class="desc">하나은행에서 월 <span class="amount">600,000원</span> × 3회 = 180만원. "11월분", "1월분지환" 메모</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2010.11.02 — 보험 만기 + 전환</div>
+      <div class="desc">삼성화재 보험금 <span class="amount">2,800,202원</span> + 이자. 다른 예금에서 전환 입금</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2010.12.07 — 대형 출금</div>
+      <div class="desc">김민수에게 <span style="color:#f87171; font-weight:bold;">3,900,000원</span> 이체 (친구/지인 추정)</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2011.08~11 — 아버지 월 50만원 정기 지원 시작</div>
+      <div class="desc">김상호(이스턴영어) → 월 <span class="amount">500,000원</span> × 4개월 = 200만원</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2011.09.21 — 보험 만기 대형 입금</div>
+      <div class="desc">삼성 무배당 보험 만기 <span class="amount">15,031,897원</span> + 82,160원 입금 (★ 최대 단건 입금)</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2011.10.07 — 대형 출금</div>
+      <div class="desc"><span style="color:#f87171; font-weight:bold;">16,000,000원</span> 대체지급 (예금 전환 / 타 자산 이동 추정)</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2012.06~08 — 서울 생활 집중 소비기</div>
+      <div class="desc">강남/서초 중심 생활비, 의료비, 학비 집중. 월 50~80만원 소비</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2012.08.27 — 어머니 첫 입금</div>
+      <div class="desc">신효심 → <span class="amount">1,000,000원</span> (국민은행 타행환)</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2012.12.13 — 아버지 최대 단건 입금</div>
+      <div class="desc">김상호(이스턴영어) → <span class="amount">3,000,000원</span> (연말 학비/생활비 추정)</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2013.01 — 포에버21 대량 구매·환불</div>
+      <div class="desc">포에버21 총 ~250만원 결제 → 일부 환불. 쇼핑몰 운영/리셀 가능성</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2013.02.20 — 어머니 최대 입금</div>
+      <div class="desc">신효심 → <span class="amount">3,000,000원</span> (우체국 타행환) ★</div>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2013.03.19 — 현금 입금</div>
+      <div class="desc">혜화동지점에서 <span class="amount">2,000,000원</span> 현금 입금 (출처 미상, 소명 필요)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 7. 지출 분류 상세 ==================== -->
+<div class="section">
+  <h2>7. 주요 지출 카테고리 분석</h2>
+
+  <div class="info-cards" style="margin-bottom:20px;">
+    <div class="info-card">
+      <div class="label">학비·등록금</div>
+      <div class="value value-purple">~163만원</div>
+      <div class="sub">가톨릭대학 + 성균관대 + 에듀인사이</div>
+    </div>
+    <div class="info-card">
+      <div class="label">의료비</div>
+      <div class="value value-red">~76만원</div>
+      <div class="sub">성형외과·치과·산부인과·약국</div>
+    </div>
+    <div class="info-card">
+      <div class="label">교통비</div>
+      <div class="value value-blue">~56만원</div>
+      <div class="sub">KTX·택시·T-money</div>
+    </div>
+    <div class="info-card">
+      <div class="label">식비·카페</div>
+      <div class="value value-yellow">~120만원</div>
+      <div class="sub">외식·마트·커피숍</div>
+    </div>
+    <div class="info-card">
+      <div class="label">쇼핑·의류</div>
+      <div class="value value-purple">~340만원</div>
+      <div class="sub">자라·포에버21·신세계 등</div>
+    </div>
+    <div class="info-card">
+      <div class="label">댄스·취미</div>
+      <div class="value value-green">~63만원</div>
+      <div class="sub">이지댄스</div>
+    </div>
+  </div>
+
+  <h3>학비 관련 거래 (대학교·교육기관)</h3>
+  <table>
+    <thead><tr><th>날짜</th><th>기재내용</th><th>금액</th><th>분류</th></tr></thead>
+    <tbody>
+      <tr><td>2012.06.10</td><td>(주)에듀인사이</td><td class="amount-out">160,000</td><td><span class="tag tag-tuition">교육비</span></td></tr>
+      <tr><td>2012.07.16</td><td>(학)가톨릭대학</td><td class="amount-out">477,460</td><td><span class="tag tag-tuition">학비</span></td></tr>
+      <tr><td>2012.07.23</td><td>(학)가톨릭대학</td><td class="amount-out">30,120</td><td><span class="tag tag-tuition">학비부대</span></td></tr>
+      <tr><td>2012.10.15</td><td>진학어플라</td><td class="amount-out">107,000</td><td><span class="tag tag-tuition">입시</span></td></tr>
+      <tr><td>2012.10.31</td><td>진학어플라</td><td class="amount-out">105,000</td><td><span class="tag tag-tuition">입시</span></td></tr>
+      <tr><td>2012.11.19</td><td>(학)가톨릭대학</td><td class="amount-out">36,370</td><td><span class="tag tag-tuition">학비</span></td></tr>
+      <tr><td>2012.11.30</td><td>성균관대학교</td><td class="amount-out">70,000</td><td><span class="tag tag-tuition">전형료</span></td></tr>
+      <tr><td>2012.12.10</td><td>연대경영전문대</td><td class="amount-in">20,000</td><td><span class="tag tag-tuition">환불</span></td></tr>
+      <tr><td>2013.02.27</td><td>성균관대학교</td><td class="amount-out">45,000</td><td><span class="tag tag-tuition">전형료</span></td></tr>
+      <tr><td>2013.04.10</td><td>(학)가톨릭대학</td><td class="amount-out">37,220</td><td><span class="tag tag-tuition">학비</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== 8. 자금소명 전략 요약 ==================== -->
+<div class="section">
+  <h2>8. 자금 소명 전략 요약 (세무사 미팅용)</h2>
+
+  <div class="summary-box">
+    <h3>이 계좌에서 확인 가능한 부모 → 본인 자금 이동</h3>
+    <table>
+      <thead><tr><th>구분</th><th>금액</th><th>성격</th><th>증빙 강도</th></tr></thead>
+      <tbody>
+        <tr><td>아버지 직접 이체 (이스턴영어)</td><td class="amount-in">7,900,000원</td><td>생활비·학비 지원</td><td><span class="badge badge-safe">강함</span></td></tr>
+        <tr><td>초기 생활비 (하나은행 경유)</td><td class="amount-in">1,800,000원</td><td>월 60만원 × 3</td><td><span class="badge badge-caution">보통</span></td></tr>
+        <tr><td>어머니 직접 이체</td><td class="amount-in">4,000,000원</td><td>생활 지원금</td><td><span class="badge badge-safe">강함</span></td></tr>
+        <tr><td>보험 만기금</td><td class="amount-in">~15,114,057원</td><td>본인 보험</td><td><span class="badge badge-safe">강함</span></td></tr>
+        <tr><td>현금 입금 (출처 미상)</td><td class="amount-in">2,000,000원</td><td>소명 필요</td><td><span class="badge badge-risk">약함</span></td></tr>
+        <tr style="font-weight:bold; color:#fbbf24;"><td>이 계좌 확인분 합계</td><td>~30,814,057원</td><td colspan="2">약 3,081만원</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warn-box">
+    <strong>주의사항:</strong>
+    <ul style="margin-top:8px; list-style:disc; padding-left:20px;">
+      <li>이 계좌는 <strong>우리은행 1개 계좌</strong>만의 기록. 다른 은행 계좌(하나, 국민, 신한 등) 내역이 합산되어야 전체 그림 완성</li>
+      <li>2009~2010년 "월분" 이체는 하나은행에서 왔으나 <strong>보내는 사람 이름이 미기재</strong> → 부모 입증 시 하나은행 거래내역 필요</li>
+      <li>CD 입금(2009.10, 2012.10)은 현금 입금이므로 <strong>출처 소명 시 주의</strong></li>
+      <li>포에버21 대량 거래(2013.01)는 리셀/사업 활동 가능성 → 사업소득 여부 확인 필요</li>
+    </ul>
+  </div>
+
+  <h3>세무적 시점 분리 포인트</h3>
+  <table>
+    <thead><tr><th>시점</th><th>이벤트</th><th>세무적 의미</th><th>활용법</th></tr></thead>
+    <tbody>
+      <tr><td>2011.09</td><td>보험금 1,500만 수령</td><td>본인 자산 형성 증거</td><td><span class="badge badge-safe">자금출처 소명</span></td></tr>
+      <tr><td>2011.10</td><td>1,600만 대체지급(출금)</td><td>보험금 → 다른 자산 전환</td><td><span class="badge badge-caution">전환 경위 설명 필요</span></td></tr>
+      <tr><td>2012.12</td><td>아버지 300만 입금</td><td>비과세 범위 증여</td><td><span class="badge badge-safe">생활비 소명</span></td></tr>
+      <tr><td>2013.02</td><td>어머니 300만 입금</td><td>별도 증여자 비과세</td><td><span class="badge badge-safe">기타친족 증여</span></td></tr>
+      <tr><td>2013.03</td><td>현금 200만 입금</td><td>출처 불명</td><td><span class="badge badge-risk">소명 자료 확보 필요</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== 9. 아버지 사업계좌 구분 ==================== -->
+<div class="section">
+  <h2>9. 아버지 사업 관련 계좌 거래 구분</h2>
+
+  <div class="note-box">
+    <strong>아버지(김상호) 사업 관련 키워드:</strong> "이스턴영어", "eastern", "한마당", "한마당음악세상"<br>
+    → 이들 키워드가 포함된 거래는 아버지 사업계좌에서의 이체이므로 <strong>아버지 → 딸 자금이동</strong>으로 분류.<br>
+    → 이 계좌에서의 입금은 모두 "김상호(이스턴영어" 형태로 기록됨.
+  </div>
+
+  <table>
+    <thead><tr><th>키워드</th><th>정체</th><th>입금 횟수</th><th>합계</th></tr></thead>
+    <tbody>
+      <tr><td>김상호(이스턴영어</td><td>아버지 영어학원 계좌 (국민은행)</td><td>11회</td><td class="amount-in">7,900,000원</td></tr>
+      <tr><td>한마음스포츠센터 / 부산한마음스포츠</td><td>타 기관 (아버지 사업 아님)</td><td>2회</td><td class="amount-in">20,580원</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    "한마음스포츠센터"는 "한마당"과 다릅니다. 아버지 사업계좌가 아닌 별도 기관 입금입니다.
+  </div>
+</div>
+
+<!-- ==================== 10. 전체 입출금 요약 ==================== -->
+<div class="section">
+  <h2>10. 전체 입출금 흐름 종합</h2>
+
+  <div class="chart-grid">
+    <div class="chart-box">
+      <h4>입금 출처별 총액 비교 (막대)</h4>
+      <canvas id="barSourceTotal"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>연도별 총 입금 vs 총 출금 (막대)</h4>
+      <canvas id="barInOutYear"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 풋터 ==================== -->
+<div style="text-align:center; padding:40px; color:#475569; font-size:0.8rem;">
+  <p>본 보고서는 우리은행 좌동지점 1개 계좌 거래내역(2009.10~2013.04) 기준으로 작성되었습니다.</p>
+  <p>다른 은행 계좌 내역이 추가되면 전체 자금흐름이 변경될 수 있습니다.</p>
+  <p style="margin-top:10px;">생성일: 2026-04-12 | 본인 확인 후 삭제 권장</p>
+</div>
+
+</div><!-- container end -->
+
+<script>
+// 공통 색상
+const colors = {
+  blue: '#3b82f6', green: '#4ade80', yellow: '#fbbf24', red: '#f87171',
+  purple: '#a78bfa', pink: '#f472b6', cyan: '#22d3ee', orange: '#fb923c',
+  blueBg: 'rgba(59,130,246,0.3)', greenBg: 'rgba(74,222,128,0.3)',
+  yellowBg: 'rgba(251,191,36,0.3)', redBg: 'rgba(248,113,113,0.3)'
+};
+
+// 1. 자금 출처별 비율 (원그래프)
+new Chart(document.getElementById('pieSource'), {
+  type: 'doughnut',
+  data: {
+    labels: ['아버지(이스턴영어)', '어머니(신효심)', '보험금 수령', '초기생활비(하나)', 'CD입금/현금', '환불/기타 입금'],
+    datasets: [{
+      data: [7900000, 4000000, 15114057, 1800000, 4263540, 2500000],
+      backgroundColor: [colors.blue, colors.pink, colors.green, colors.yellow, colors.orange, colors.cyan],
+      borderColor: '#1e293b', borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { color: '#e2e8f0', font: { size: 11 } } },
+      tooltip: { callbacks: { label: (c) => `${c.label}: ${c.parsed.toLocaleString()}원 (${((c.parsed/35577597)*100).toFixed(1)}%)` } }
+    }
+  }
+});
+
+// 2. 연도별 부모 입금액
+new Chart(document.getElementById('barYearly'), {
+  type: 'bar',
+  data: {
+    labels: ['2009', '2010', '2011', '2012', '2013'],
+    datasets: [
+      { label: '아버지(김상호)', data: [0, 0, 2000000, 5900000, 0], backgroundColor: colors.blue },
+      { label: '어머니(신효심)', data: [0, 0, 0, 1000000, 3000000], backgroundColor: colors.pink },
+      { label: '생활비(하나경유)', data: [1200000, 600000, 0, 0, 0], backgroundColor: colors.yellow }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+      y: { ticks: { color: '#94a3b8', callback: v => (v/10000)+'만' }, grid: { color: '#334155' } }
+    },
+    plugins: { legend: { labels: { color: '#e2e8f0' } } }
+  }
+});
+
+// 3. 월별 잔액 추이 (주요 시점)
+new Chart(document.getElementById('lineBalance'), {
+  type: 'line',
+  data: {
+    labels: ['09.10','09.12','10.03','10.11','10.12','11.08','11.09','11.10','12.01','12.06','12.07','12.08','12.10','12.11','12.12','13.01','13.02','13.03','13.04'],
+    datasets: [{
+      label: '계좌 잔액',
+      data: [1970000,1000000,1000000,4033742,62780,653056,16462713,462713,1568487,2188190,2144344,1178654,1693267,1187124,3477004,1716121,3505617,2676121,2130321],
+      borderColor: colors.yellow, backgroundColor: colors.yellowBg,
+      fill: true, tension: 0.3, pointRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: { ticks: { color: '#94a3b8', maxRotation: 45 }, grid: { color: '#334155' } },
+      y: { ticks: { color: '#94a3b8', callback: v => (v/10000)+'만' }, grid: { color: '#334155' } }
+    },
+    plugins: {
+      legend: { labels: { color: '#e2e8f0' } },
+      tooltip: { callbacks: { label: c => c.parsed.y.toLocaleString() + '원' } }
+    }
+  }
+});
+
+// 4. 지출 카테고리별 비율
+new Chart(document.getElementById('pieExpense'), {
+  type: 'pie',
+  data: {
+    labels: ['쇼핑·의류', '학비·교육', '식비·카페', '의료비', '교통비', '댄스·취미', '온라인결제', '생활·마트', '기타'],
+    datasets: [{
+      data: [3400000, 1630000, 1200000, 760000, 560000, 630000, 800000, 500000, 400000],
+      backgroundColor: [colors.purple, colors.cyan, colors.yellow, colors.red, colors.blue, colors.green, colors.orange, colors.pink, '#64748b'],
+      borderColor: '#1e293b', borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { color: '#e2e8f0', font: { size: 11 } } },
+      tooltip: { callbacks: { label: c => `${c.label}: ${c.parsed.toLocaleString()}원` } }
+    }
+  }
+});
+
+// 5. 아버지 입금 건별
+new Chart(document.getElementById('barDadDeposit'), {
+  type: 'bar',
+  data: {
+    labels: ['11.08','11.09','11.10','11.11','12.07.02','12.07.03','12.08','12.09','12.11.16','12.11.19','12.12'],
+    datasets: [{
+      label: '김상호(이스턴영어) 입금',
+      data: [500000,500000,500000,500000,500000,500000,500000,300000,100000,1000000,3000000],
+      backgroundColor: data => {
+        const v = data.raw;
+        if (v >= 1000000) return colors.red;
+        if (v >= 500000) return colors.blue;
+        return colors.yellow;
+      },
+      borderRadius: 6
+    }]
+  },
+  options: {
+    responsive: true,
+    indexAxis: 'y',
+    scales: {
+      x: { ticks: { color: '#94a3b8', callback: v => (v/10000)+'만' }, grid: { color: '#334155' } },
+      y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+    },
+    plugins: { legend: { labels: { color: '#e2e8f0' } } }
+  }
+});
+
+// 6. 월별 수입 vs 지출 (2012년 중심)
+new Chart(document.getElementById('lineInOut'), {
+  type: 'line',
+  data: {
+    labels: ['12.04','12.05','12.06','12.07','12.08','12.09','12.10','12.11','12.12','13.01','13.02','13.03'],
+    datasets: [
+      { label: '입금', data: [54,0,706000,1053260,1679000,705200,396595,1385805,3330167,1118880,3950924,2020000],
+        borderColor: colors.green, backgroundColor: colors.greenBg, fill: false, tension: 0.3 },
+      { label: '출금', data: [0,73240,897750,1069690,917946,691400,440524,1540629,488540,2843770,1844920,1306750],
+        borderColor: colors.red, backgroundColor: colors.redBg, fill: false, tension: 0.3 }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+      y: { ticks: { color: '#94a3b8', callback: v => (v/10000)+'만' }, grid: { color: '#334155' } }
+    },
+    plugins: { legend: { labels: { color: '#e2e8f0' } } }
+  }
+});
+
+// 7. 입금 출처별 총액
+new Chart(document.getElementById('barSourceTotal'), {
+  type: 'bar',
+  data: {
+    labels: ['아버지\n(이스턴영어)', '어머니\n(신효심)', '보험금', '초기생활비\n(하나경유)', '현금입금', '기타환불\n/이자'],
+    datasets: [{
+      label: '총 입금액',
+      data: [7900000, 4000000, 15114057, 1800000, 4263540, 2500000],
+      backgroundColor: [colors.blue, colors.pink, colors.green, colors.yellow, colors.orange, colors.cyan],
+      borderRadius: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+      y: { ticks: { color: '#94a3b8', callback: v => (v/10000)+'만' }, grid: { color: '#334155' } }
+    },
+    plugins: { legend: { display: false } }
+  }
+});
+
+// 8. 연도별 입출금
+new Chart(document.getElementById('barInOutYear'), {
+  type: 'bar',
+  data: {
+    labels: ['2009', '2010', '2011', '2012', '2013'],
+    datasets: [
+      { label: '총 입금', data: [3170000, 3046222, 17814150, 14700000, 13000000], backgroundColor: colors.green },
+      { label: '총 출금', data: [970000, 3997000, 16655000, 13900000, 10800000], backgroundColor: colors.red }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+      y: { ticks: { color: '#94a3b8', callback: v => (v/10000)+'만' }, grid: { color: '#334155' } }
+    },
+    plugins: { legend: { labels: { color: '#e2e8f0' } } }
+  }
+});
+</script>
+
+</body>
+</html>
