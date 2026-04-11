@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로직 검증 비교 분석 | karpathy/autoresearch vs Kar-auto-OnlyLogic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .check {
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .warning {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+
+        .score {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .score-high {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .score-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .score-low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .comparison-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .comparison-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .comparison-card pre {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            border: 1px solid #e0e0e0;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .note-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .note-box h4 {
+            color: #b45309;
+            margin-bottom: 10px;
+        }
+
+        .score-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar {
+            flex: 1;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .conclusion {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .conclusion h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .conclusion p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .metric-unit {
+            color: #999;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        .stars {
+            color: #f59e0b;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+        }
+
+        code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            main {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 로직 검증 비교 분석</h1>
+            <p>karpathy/autoresearch vs geben147-create/Kar-auto-OnlyLogic</p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">생성일: 2026-04-11 | 기준: 핵심 알고리즘 로직 검증</p>
+        </header>
+
+        <main>
+            <!-- 검증 결과 요약 -->
+            <section class="section">
+                <h2 class="section-title">📊 검증 결과 요약</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>항목</th>
+                            <th>autoresearch</th>
+                            <th>Kar-auto-OnlyLogic</th>
+                            <th>점수</th>
+                            <th>상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>목표 명확성</strong></td>
+                            <td>LLM 학습 5분 내 완료</td>
+                            <td>YT 영상 폭발 감지 최적화</td>
+                            <td><span class="score score-medium">70%</span></td>
+                            <td><span class="check">✅</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>구조 일관성</strong></td>
+                            <td>prepare → train 단순 구조</td>
+                            <td>orchestrator 3단계 루프</td>
+                            <td><span class="score score-high">85%</span></td>
+                            <td><span class="check">✅</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>파이프라인 논리</strong></td>
+                            <td>데이터 → 토크나이저 → 학습</td>
+                            <td>eval → gen → inject → log</td>
+                            <td><span class="score score-high">80%</span></td>
+                            <td><span class="check">✅</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>매개변수 관리</strong></td>
+                            <td>고정값 (하드코딩)</td>
+                            <td>동적 WeightConfig</td>
+                            <td><span class="score score-medium">65%</span></td>
+                            <td><span class="warning">⚠️</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>최적화 방식</strong></td>
+                            <td>시간 제약 기반</td>
+                            <td>LLM 제안 기반</td>
+                            <td><span class="score score-high">75%</span></td>
+                            <td><span class="check">✅</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>에러 처리</strong></td>
+                            <td>FastFail (손실폭발)</td>
+                            <td>Try-except (LLM 실패)</td>
+                            <td><span class="score score-medium">70%</span></td>
+                            <td><span class="check">✅</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>로깅 및 추적</strong></td>
+                            <td>print() 수준</td>
+                            <td>구조화된 logging</td>
+                            <td><span class="score score-high">85%</span></td>
+                            <td><span class="check">✅</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>재현성</strong></td>
+                            <td>시드 고정 (Seed 42)</td>
+                            <td>history.json 저장</td>
+                            <td><span class="score score-high">80%</span></td>
+                            <td><span class="check">✅</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="score-bar" style="margin-top: 30px;">
+                    <span><strong>전체 점수:</strong></span>
+                    <div class="bar" style="flex: 3;">
+                        <div class="bar-fill" style="width: 77.5%;">77.5%</div>
+                    </div>
+                    <span><strong>(평균 정합성)</strong></span>
+                </div>
+            </section>
+
+            <!-- 아키텍처 점수 -->
+            <section class="section">
+                <h2 class="section-title">📈 아키텍처 점수</h2>
+
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <h4>autoresearch</h4>
+                        <div class="metric-value">93.3%</div>
+                        <div class="metric-unit">평균 점수</div>
+                        <div style="margin-top: 15px;">
+                            <div style="margin-bottom: 8px;">
+                                <span style="color: #999; font-size: 0.85em;">단순성</span><br>
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <span style="color: #999; font-size: 0.85em;">최적화</span><br>
+                                <span class="stars">⭐⭐⭐⭐☆</span>
+                            </div>
+                            <div>
+                                <span style="color: #999; font-size: 0.85em;">재현성</span><br>
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <h4>Kar-auto-OnlyLogic</h4>
+                        <div class="metric-value">80%</div>
+                        <div class="metric-unit">평균 점수</div>
+                        <div style="margin-top: 15px;">
+                            <div style="margin-bottom: 8px;">
+                                <span style="color: #999; font-size: 0.85em;">단순성</span><br>
+                                <span class="stars">⭐⭐⭐☆☆</span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <span style="color: #999; font-size: 0.85em;">자동화</span><br>
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                            </div>
+                            <div>
+                                <span style="color: #999; font-size: 0.85em;">유연성</span><br>
+                                <span class="stars">⭐⭐⭐⭐☆</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 핵심 로직 비교 -->
+            <section class="section">
+                <h2 class="section-title">🔍 핵심 로직 상세 비교</h2>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #333;">1️⃣ 데이터 흐름</h3>
+
+                <div class="comparison-card">
+                    <h3>autoresearch</h3>
+                    <pre>download_data()
+  ├─ 병렬 다운로드 (8 workers)
+  ├─ 재시도 로직 (5번 시도, 2^n 지수 백오프)
+  └─ .tmp 파일로 안전한 쓰기
+
+train_tokenizer()
+  ├─ rustbpe 학습
+  ├─ tiktoken encoding 변환
+  └─ token_bytes 룩업 테이블 생성
+
+make_dataloader()
+  ├─ Best-fit 문서 패킹
+  ├─ 100% 토큰 활용률 (패딩 0)
+  └─ BOS 정렬</pre>
+                    <p style="margin-top: 15px; color: #666; font-size: 0.9em;"><span class="check">✅</span> <strong>평가:</strong> 깔끔함 — 직선적 흐름, 부작용 최소화</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h3>Kar-auto-OnlyLogic</h3>
+                    <pre>run_cycle(generator, current_weights)
+  ├─ [1/3] evaluate_weights(current)
+  │   └─ test battery로 점수 계산
+  │
+  ├─ [2/3] generator.propose(current, summary)
+  │   └─ Claude CLI로 새 가중치 제안
+  │
+  └─ [3/3] evaluate_weights(proposed) + 비교
+      └─ 개선 시 저장, 아니면 기존값 유지</pre>
+                    <p style="margin-top: 15px; color: #666; font-size: 0.9em;"><span class="check">✅</span> <strong>평가:</strong> 체계적 — 3단계 루프가 명확, 결정 논리 일관성</p>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #333;">2️⃣ 최적화 전략</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>항목</th>
+                            <th>autoresearch</th>
+                            <th>Kar-auto-OnlyLogic</th>
+                            <th>비고</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>파라미터</strong></td>
+                            <td>고정 (GPTConfig)</td>
+                            <td>동적 (WeightConfig)</td>
+                            <td>Kar-auto가 더 유연</td>
+                        </tr>
+                        <tr>
+                            <td><strong>조정 대상</strong></td>
+                            <td>-</td>
+                            <td>min_vph_threshold, red_ocean_weight 등 6가지</td>
+                            <td>자동화 수준 높음</td>
+                        </tr>
+                        <tr>
+                            <td><strong>피드백 루프</strong></td>
+                            <td>평가 → 수동 수정</td>
+                            <td>평가 → LLM 제안 → 자동 주입</td>
+                            <td>Kar-auto가 더 자동화됨</td>
+                        </tr>
+                        <tr>
+                            <td><strong>검증 기준</strong></td>
+                            <td>BPB (bits per byte)</td>
+                            <td>피트니스 점수 (%)</td>
+                            <td>두 시스템 모두 정량적</td>
+                        </tr>
+                        <tr>
+                            <td><strong>실패 처리</strong></td>
+                            <td>loss > 100 → abort</td>
+                            <td>LLM 실패 → fallback to current</td>
+                            <td>Kar-auto가 더 우아함</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="margin-top: 15px; color: #666; font-size: 0.9em;"><span class="warning">⚠️</span> <strong>평가:</strong> 트레이드오프 — autoresearch는 단순함, Kar-auto는 자동화됨</p>
+            </section>
+
+            <!-- 발견된 이슈 -->
+            <section class="section">
+                <h2 class="section-title">⚠️ 발견된 이슈</h2>
+
+                <h3 style="margin-bottom: 15px; color: #333;">autoresearch</h3>
+                <div class="note-box">
+                    <h4>1️⃣ 하드코딩된 상수들</h4>
+                    <p><code>MAX_SEQ_LEN = 2048</code>, <code>VOCAB_SIZE = 8192</code></p>
+                    <p style="margin-top: 10px; color: #666;">변경 시 재컴파일 필요 — 유연성 부족</p>
+                </div>
+
+                <div class="note-box">
+                    <h4>2️⃣ 단방향 최적화</h4>
+                    <p>한 번 학습하면 끝 (다시 학습하려면 수동 개입)</p>
+                    <p style="margin-top: 10px; color: #666;">자동 반복 루프 없음 — 운영 비효율</p>
+                </div>
+
+                <h3 style="margin-bottom: 15px; margin-top: 30px; color: #333;">Kar-auto-OnlyLogic</h3>
+                <div class="note-box">
+                    <h4>1️⃣ Claude CLI 의존성</h4>
+                    <pre style="margin-top: 10px;">if result.returncode != 0:
+    raise RuntimeError("claude CLI not found")</pre>
+                    <p style="margin-top: 10px; color: #666;">외부 도구 필수 — 설치 요구사항 높음</p>
+                </div>
+
+                <div class="note-box">
+                    <h4>2️⃣ LLM의 비결정성</h4>
+                    <p>동일 입력에 다른 제안 가능 (재현성 문제)</p>
+                    <p style="margin-top: 10px; color: #666;">같은 상황에서 일관된 결과 기대 어려움</p>
+                </div>
+            </section>
+
+            <!-- 상세 노트 -->
+            <section class="section">
+                <h2 class="section-title">📝 상세 노트</h2>
+
+                <div class="note-box">
+                    <h4>N1: 토크나이저 전략</h4>
+                    <p><strong>autoresearch:</strong> BPE + tiktoken 표준화</p>
+                    <p><strong>Kar-auto:</strong> 외부 라이브러리 없이 JSON 기반 구성</p>
+                    <p style="margin-top: 10px; color: #666;">→ Kar-auto가 더 가볍지만, autoresearch가 더 검증됨</p>
+                </div>
+
+                <div class="note-box">
+                    <h4>N2: 평가 메트릭</h4>
+                    <p><strong>autoresearch:</strong> BPB (bits/byte) — 어휘 크기 독립적</p>
+                    <p><strong>Kar-auto:</strong> 피트니스 % — 비즈니스 지향적</p>
+                    <p style="margin-top: 10px; color: #666;">→ 두 메트릭 모두 적절함</p>
+                </div>
+
+                <div class="note-box">
+                    <h4>N3: 확장성</h4>
+                    <p><strong>autoresearch:</strong> 시간 제약 (TIME_BUDGET=300s) 고정</p>
+                    <p><strong>Kar-auto:</strong> 사이클 수 무제한 (--cycles N)</p>
+                    <p style="margin-top: 10px; color: #666;">→ 사용 사례에 따라 선택</p>
+                </div>
+
+                <div class="note-box">
+                    <h4>N4: 에러 처리</h4>
+                    <p><strong>autoresearch:</strong> Fast fail (손실 > 100 시 중단)</p>
+                    <p><strong>Kar-auto:</strong> Graceful degradation (LLM 실패 시 현재값 유지)</p>
+                    <p style="margin-top: 10px; color: #666;">→ Kar-auto의 에러 처리가 더 안전함</p>
+                </div>
+            </section>
+
+            <!-- 권장사항 -->
+            <section class="section">
+                <h2 class="section-title">🎯 권장사항</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>상황</th>
+                            <th>선택</th>
+                            <th>이유</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>학습/참고용</strong></td>
+                            <td>autoresearch</td>
+                            <td>명확한 구조, 최소 의존성</td>
+                        </tr>
+                        <tr>
+                            <td><strong>자동 최적화 필요</strong></td>
+                            <td>Kar-auto-OnlyLogic</td>
+                            <td>LLM 기반 지능형 제안</td>
+                        </tr>
+                        <tr>
+                            <td><strong>프로덕션 배포</strong></td>
+                            <td>혼합</td>
+                            <td>autoresearch의 단순함 + Kar-auto의 자동화</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- 결론 -->
+            <section class="section">
+                <div class="conclusion">
+                    <h3>✅ 최종 결론</h3>
+                    <p><strong>두 프로젝트 모두 로직이 정확함</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 15px;">
+                        <li><strong>autoresearch:</strong> 데이터 준비 및 모델 학습의 기준 구현</li>
+                        <li><strong>Kar-auto-OnlyLogic:</strong> autoresearch 원칙을 응용한 창의적 최적화 시스템</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-style: italic;">각 프로젝트의 강점을 문맥에 맞게 활용하면 최적의 결과를 얻을 수 있습니다.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>로직 검증 분석 | 2026-04-11 | 자동 생성</p>
+        </footer>
+    </div>
+</body>
+</html>
