@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>재무 관리 도구 모음 - 다운로드 + AI 명령어 + 구글시트</title>
+<style>
+:root{--pri:#1a237e;--sec:#ff6f00;--grn:#2e7d32;--red:#d32f2f;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,'Pretendard',sans-serif;background:#f5f5f5;color:#212121;line-height:1.7;}
+.container{max-width:1000px;margin:0 auto;padding:20px;}
+.header{background:linear-gradient(135deg,#1a237e,#283593);color:#fff;padding:36px;border-radius:16px;margin-bottom:24px;text-align:center;}
+.header h1{font-size:1.8em;margin-bottom:6px;}
+.card{background:#fff;border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e0e0e0;}
+.card h2{color:var(--pri);font-size:1.25em;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--pri);}
+.card h3{color:#37474f;font-size:1.05em;margin:16px 0 8px;}
+.dl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:16px 0;}
+.dl-item{display:flex;align-items:center;gap:12px;padding:14px;border:2px solid #e0e0e0;border-radius:10px;text-decoration:none;color:#212121;transition:all .2s;}
+.dl-item:hover{border-color:var(--pri);background:#e8eaf6;transform:translateY(-2px);}
+.dl-icon{font-size:2em;}
+.dl-info .dl-name{font-weight:700;font-size:.95em;}
+.dl-info .dl-desc{font-size:.78em;color:#757575;}
+.dl-info .dl-size{font-size:.72em;color:var(--pri);font-weight:600;}
+.cmd-box{background:#1e1e1e;color:#d4d4d4;border-radius:8px;padding:16px;margin:10px 0;font-family:'Fira Code',monospace;font-size:.85em;overflow-x:auto;white-space:pre-wrap;line-height:1.6;}
+.cmd-box .comment{color:#6a9955;}
+.cmd-box .keyword{color:#569cd6;}
+.cmd-box .string{color:#ce9178;}
+.cmd-box .highlight{color:#dcdcaa;}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88em;}
+th,td{padding:10px 12px;border:1px solid #e0e0e0;text-align:left;}
+th{background:#e8eaf6;color:var(--pri);font-weight:600;text-align:center;}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;color:#fff;font-size:.72em;font-weight:600;}
+.badge-d{background:#e91e63;}
+.badge-f{background:#1565c0;}
+.alert{padding:14px;border-radius:8px;margin:12px 0;font-size:.9em;}
+.alert-blue{background:#e3f2fd;border-left:4px solid #1565c0;color:#0d47a1;}
+.alert-green{background:#e8f5e9;border-left:4px solid var(--grn);color:#1b5e20;}
+.alert-warn{background:#fff8e1;border-left:4px solid var(--sec);color:#e65100;}
+.step{display:flex;gap:12px;margin:8px 0;align-items:flex-start;}
+.step-num{background:var(--pri);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8em;font-weight:700;flex-shrink:0;}
+.step-content{flex:1;}
+.copy-btn{background:var(--pri);color:#fff;border:none;padding:4px 10px;border-radius:4px;font-size:.75em;cursor:pointer;margin-left:8px;}
+.copy-btn:hover{background:#283593;}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>재무 관리 도구 모음</h1>
+  <div style="opacity:.85;">파일 다운로드 + AI 명령어 + 구글시트 템플릿 + 세금 가이드</div>
+</div>
+
+<!-- DOWNLOADS -->
+<div class="card">
+  <h2>1. 파일 다운로드</h2>
+
+  <h3>계약서 (DOCX)</h3>
+  <div class="dl-grid">
+    <a class="dl-item" href="매매계약서_백송한신_저가매매.docx" download>
+      <div class="dl-icon">📄</div>
+      <div class="dl-info">
+        <div class="dl-name">매매계약서</div>
+        <div class="dl-desc">백송한신 저가매매용 (상증세법 제35조 고려)</div>
+        <div class="dl-size">DOCX | 38KB</div>
+      </div>
+    </a>
+    <a class="dl-item" href="상계합의서_채권채무확인서.docx" download>
+      <div class="dl-icon">📄</div>
+      <div class="dl-info">
+        <div class="dl-name">상계합의서 + 채권채무확인서</div>
+        <div class="dl-desc">과거 자금 흐름 정리 + 비트코인 거래소 포함</div>
+        <div class="dl-size">DOCX | 38KB</div>
+      </div>
+    </a>
+  </div>
+
+  <h3>세금 신고 체크리스트 (DOCX)</h3>
+  <div class="dl-grid">
+    <a class="dl-item" href="증여세_신고_체크리스트.docx" download>
+      <div class="dl-icon">📋</div>
+      <div class="dl-info">
+        <div class="dl-name">증여세 신고 체크리스트</div>
+        <div class="dl-desc"><span class="badge badge-d">딸</span> 매매 후 3개월 이내 신고</div>
+        <div class="dl-size">DOCX | 37KB</div>
+      </div>
+    </a>
+    <a class="dl-item" href="취득세_신고_체크리스트.docx" download>
+      <div class="dl-icon">📋</div>
+      <div class="dl-info">
+        <div class="dl-name">취득세 신고 체크리스트</div>
+        <div class="dl-desc"><span class="badge badge-d">딸</span> 취득일로부터 60일 이내</div>
+        <div class="dl-size">DOCX | 36KB</div>
+      </div>
+    </a>
+    <a class="dl-item" href="양도세_신고_체크리스트_아버지용.docx" download>
+      <div class="dl-icon">📋</div>
+      <div class="dl-info">
+        <div class="dl-name">양도소득세 체크리스트</div>
+        <div class="dl-desc"><span class="badge badge-f">아버지</span> 양도 후 2개월 이내</div>
+        <div class="dl-size">DOCX | 36KB</div>
+      </div>
+    </a>
+  </div>
+
+  <h3>엑셀 템플릿 (XLSX)</h3>
+  <div class="dl-grid">
+    <a class="dl-item" href="월간지출_자금추적_템플릿.xlsx" download>
+      <div class="dl-icon">📊</div>
+      <div class="dl-info">
+        <div class="dl-name">월간지출 + 자금추적 + 거래소 템플릿</div>
+        <div class="dl-desc">3개 시트: 월간지출 / 아버지-딸 자금이동 / 거래소 손익</div>
+        <div class="dl-size">XLSX | 8KB</div>
+      </div>
+    </a>
+  </div>
+
+  <h3>종합 가이드 (HTML)</h3>
+  <div class="dl-grid">
+    <a class="dl-item" href="low-price-sale-guide.html">
+      <div class="dl-icon">📈</div>
+      <div class="dl-info">
+        <div class="dl-name">저가매매 세금 분석 가이드</div>
+        <div class="dl-desc">실거래가 분석 + 시나리오별 세금 시뮬레이션 + 차트</div>
+        <div class="dl-size">HTML</div>
+      </div>
+    </a>
+    <a class="dl-item" href="daily-finance-habits.html">
+      <div class="dl-icon">📅</div>
+      <div class="dl-info">
+        <div class="dl-name">매일 생활습관 가이드</div>
+        <div class="dl-desc">비용 항목 120개 + 역할별 체크리스트 + 세금 달력</div>
+        <div class="dl-size">HTML</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- GOOGLE SHEETS -->
+<div class="card">
+  <h2>2. 구글 시트 템플릿 (복사해서 사용)</h2>
+
+  <div class="alert alert-blue">
+    <strong>사용법:</strong> 아래 구글 시트 구조를 새 구글 시트에 복사하세요.<br>
+    <strong>구글 시트 새로 만들기:</strong> <a href="https://sheets.new" target="_blank" style="color:#1565c0;font-weight:700;">sheets.new</a> (클릭하면 바로 새 시트 생성)
+  </div>
+
+  <h3>시트 1: 월간 지출 기록</h3>
+  <table>
+    <tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th></tr>
+    <tr><td><strong>날짜</strong></td><td><strong>항목</strong></td><td><strong>카테고리</strong></td><td><strong>금액(원)</strong></td><td><strong>결제수단</strong></td><td><strong>영수증</strong></td><td><strong>비고</strong></td></tr>
+    <tr><td>4/1</td><td>이마트</td><td>식비</td><td>85,000</td><td>신용카드</td><td>O</td><td></td></tr>
+  </table>
+
+  <div class="alert alert-green">
+    <strong>D열 합계 공식 (매월 하단에):</strong><br>
+    <code>=SUM(D2:D100)</code><br>
+    <strong>카테고리별 합계:</strong><br>
+    <code>=SUMIF(C:C,"식비",D:D)</code>
+  </div>
+
+  <h3>시트 2: 아버지-딸 자금 이동</h3>
+  <table>
+    <tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th></tr>
+    <tr><td><strong>날짜</strong></td><td><strong>방향</strong></td><td><strong>금액</strong></td><td><strong>성격</strong></td><td><strong>누적(딸>아)</strong></td><td><strong>누적(아>딸)</strong></td><td><strong>순잔액</strong></td></tr>
+  </table>
+
+  <div class="alert alert-green">
+    <strong>자동 누적 공식 (E2에 입력):</strong><br>
+    <code>=IF(B2="딸>아버지", E1+C2, E1)</code><br>
+    <strong>순잔액 (G2):</strong><br>
+    <code>=E2-F2</code>
+  </div>
+
+  <h3>시트 3: 거래소 손익</h3>
+  <table>
+    <tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th></tr>
+    <tr><td><strong>월</strong></td><td><strong>시작잔고</strong></td><td><strong>입금</strong></td><td><strong>출금</strong></td><td><strong>월말잔고</strong></td><td><strong>월손익</strong></td><td><strong>누적손익</strong></td></tr>
+  </table>
+  <div class="alert alert-green">
+    <strong>월손익 (F2):</strong> <code>=E2-(B2+C2-D2)</code><br>
+    <strong>누적손익 (G2):</strong> <code>=G1+F2</code>
+  </div>
+</div>
+
+<!-- AI COMMANDS -->
+<div class="card">
+  <h2>3. AI 명령어 (ChatGPT / Claude에 복사-붙여넣기)</h2>
+
+  <div class="alert alert-warn">
+    <strong>사용법:</strong> 각 단계별로 AI에게 아래 명령어를 복사해서 붙여넣으세요. 순서대로 진행하면 됩니다.
+  </div>
+
+  <h3>Step 1: 매일 가계부 입력 (매일 저녁)</h3>
+  <div class="cmd-box"><span class="comment"># AI에게 이렇게 말하세요:</span>
+
+오늘 지출을 정리해줘. 아래 형식으로 만들어줘:
+날짜 | 항목 | 카테고리 | 금액 | 결제수단 | 비고
+
+오늘 지출:
+- 마트에서 과일 3만원 카드
+- 택시 1만2천원 카드
+- 아버지 병원비 1만5천원 현금
+
+<span class="comment"># AI가 표로 정리해줍니다. 그대로 엑셀/구글시트에 붙여넣기!</span></div>
+
+  <h3>Step 2: 주간 정산 (매주 일요일)</h3>
+  <div class="cmd-box"><span class="comment"># AI에게 이렇게 말하세요:</span>
+
+이번 주 지출을 카테고리별로 합산해줘:
+
+[여기에 이번 주 지출 내역 붙여넣기]
+
+결과를 이렇게 정리해줘:
+1. 카테고리별 합계
+2. 전체 합계
+3. 가장 많이 쓴 카테고리</div>
+
+  <h3>Step 3: 월간 정산 (매월 1일)</h3>
+  <div class="cmd-box"><span class="comment"># AI에게 이렇게 말하세요:</span>
+
+이번 달 전체 지출을 분석해줘:
+
+[여기에 이번 달 지출 내역 붙여넣기]
+
+다음을 포함해서 정리해줘:
+1. 카테고리별 합계 (표)
+2. 전월 대비 증감 (있으면)
+3. 아버지-딸 자금 이동 내역 별도 정리
+4. 엑셀에 바로 붙여넣을 수 있는 CSV 형식</div>
+
+  <h3>Step 4: 자금 흐름 분석 (분기마다)</h3>
+  <div class="cmd-box"><span class="comment"># AI에게 이렇게 말하세요:</span>
+
+아버지와 나(딸) 사이의 자금 흐름을 분석해줘:
+
+[여기에 3개월간 이체 내역 붙여넣기]
+
+다음을 계산해줘:
+1. 딸→아버지 총 이체액
+2. 아버지→딸 총 이체액
+3. 순이전액 (딸→아버지 기준)
+4. 각 이체의 성격 추정 (대여/생활비/투자/반환)
+5. 상계 가능 금액 추정</div>
+
+  <h3>Step 5: 거래소 손익 정리 (매월)</h3>
+  <div class="cmd-box"><span class="comment"># AI에게 이렇게 말하세요:</span>
+
+비트코인 거래소 내역을 정리해줘:
+
+[여기에 거래소 입출금 + 잔고 내역 붙여넣기]
+
+다음을 계산해줘:
+1. 월별 시작/종료 잔고
+2. 월별 손익
+3. 누적 손익
+4. 최고 수익 구간 / 최대 손실 구간
+5. 아버지/딸 각자 지분별 손익</div>
+
+  <h3>Step 6: 연말정산 준비 (12월~1월)</h3>
+  <div class="cmd-box"><span class="comment"># AI에게 이렇게 말하세요:</span>
+
+올해 연말정산을 준비해줘. 내 정보:
+- 근로소득자 / 사업자 (선택)
+- 부양가족: 아버지 (만   세)
+- 의료비 총액: 약    만원
+- 교육비 총액: 약    만원
+- 기부금(교회 등): 약    만원
+- 보험료: 약    만원/월
+- 신용카드 사용액: 약    만원
+- 체크카드 사용액: 약    만원
+- 전통시장 사용액: 약    만원
+
+다음을 알려줘:
+1. 예상 공제 항목별 금액
+2. 추가로 공제받을 수 있는 항목
+3. 12월 안에 할 수 있는 절세 팁
+4. 필요한 서류 목록</div>
+
+  <h3>Step 7: 저가매매 세금 계산 (거래 전)</h3>
+  <div class="cmd-box"><span class="comment"># AI에게 이렇게 말하세요:</span>
+
+가족간 저가매매 세금을 계산해줘:
+- 대상: 백송한신아파트 50B㎡ (전용 37B)
+- 시가 (최근 실거래가): 2억 3,000만원
+- 매수 희망가: 1억 5,000만원
+- 관계: 아버지→딸 (직계비속)
+- 과거 10년 내 증여 이력: (있으면/없으면)
+
+다음을 계산해줘:
+1. 저가매매 해당 여부 (30% 기준)
+2. 증여재산가액
+3. 증여세 (5천만 공제 적용)
+4. 취득세
+5. 양도소득세 (아버지)
+6. 총 예상 세금
+7. 감정평가 받으면 달라지는 시나리오</div>
+
+  <h3>Step 8: 세금 신고 준비 (거래 후)</h3>
+  <div class="cmd-box"><span class="comment"># AI에게 이렇게 말하세요:</span>
+
+저가매매 후 세금 신고를 준비해줘:
+- 매매일: 2026년   월   일
+- 매매가: 1억 5,000만원
+- 시가: 2억 3,000만원 (감정가:    원)
+
+각 세금별로 알려줘:
+1. 취득세: 신고기한, 금액, 필요서류, 신고방법
+2. 증여세: 신고기한, 금액, 필요서류, 신고방법
+3. 양도세(아버지): 신고기한, 금액, 필요서류
+4. 각 신고의 D-day 카운트다운</div>
+</div>
+
+<!-- TIMELINE -->
+<div class="card">
+  <h2>4. 전체 실행 타임라인</h2>
+
+  <table>
+    <tr><th>단계</th><th>시기</th><th>할 일</th><th>누가</th><th>AI 명령어</th></tr>
+    <tr><td>1</td><td>지금~계속</td><td>매일 영수증 수집 + 가계부</td><td><span class="badge badge-d">딸</span><span class="badge badge-f">아버지</span></td><td>Step 1</td></tr>
+    <tr><td>2</td><td>매주 일요일</td><td>주간 정산</td><td><span class="badge badge-d">딸</span></td><td>Step 2</td></tr>
+    <tr><td>3</td><td>매월 1일</td><td>월간 정산 + 거래소 정리</td><td><span class="badge badge-d">딸</span></td><td>Step 3, 5</td></tr>
+    <tr><td>4</td><td>3개월마다</td><td>자금 흐름 분석</td><td><span class="badge badge-d">딸</span></td><td>Step 4</td></tr>
+    <tr><td>5</td><td>거래 1개월 전</td><td>계좌 내역 발급 + 정리</td><td><span class="badge badge-d">딸</span></td><td>Step 4</td></tr>
+    <tr><td>6</td><td>거래 2주 전</td><td>감정평가 의뢰</td><td><span class="badge badge-d">딸</span></td><td>-</td></tr>
+    <tr><td>7</td><td>거래 1주 전</td><td>상계합의서 + 매매계약서 작성</td><td><span class="badge badge-d">딸</span><span class="badge badge-f">아버지</span></td><td>-</td></tr>
+    <tr><td>8</td><td>거래일</td><td>계약 체결 + 계약금 이체</td><td><span class="badge badge-d">딸</span><span class="badge badge-f">아버지</span></td><td>Step 7</td></tr>
+    <tr><td>9</td><td>거래 후 60일</td><td>취득세 신고</td><td><span class="badge badge-d">딸</span></td><td>Step 8</td></tr>
+    <tr><td>10</td><td>거래 후 2개월</td><td>양도소득세 신고</td><td><span class="badge badge-f">아버지</span></td><td>Step 8</td></tr>
+    <tr><td>11</td><td>거래 후 3개월</td><td>증여세 자진 신고</td><td><span class="badge badge-d">딸</span></td><td>Step 8</td></tr>
+    <tr><td>12</td><td>12월~1월</td><td>연말정산</td><td><span class="badge badge-d">딸</span></td><td>Step 6</td></tr>
+  </table>
+</div>
+
+<div style="text-align:center;margin:30px 0;color:#757575;font-size:.82em;">
+  2026년 4월 기준 | 세무사 상담 권장 | 개인별 상황에 따라 달라질 수 있음
+</div>
+
+</div>
+</body>
+</html>
