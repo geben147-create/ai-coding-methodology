@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>백송한신 아파트 매도·전세 전략 종합 분석 (2026.04)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  :root { --accent: #2563eb; --danger: #dc2626; --success: #16a34a; --warn: #f59e0b; --bg: #f8fafc; --card: #fff; --text: #1e293b; --muted: #64748b; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height:1.7; }
+  .hero { background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%); color:#fff; padding:60px 20px 40px; text-align:center; }
+  .hero h1 { font-size:2rem; margin-bottom:8px; }
+  .hero .sub { opacity:.85; font-size:1rem; }
+  .hero .badge { display:inline-block; background:rgba(255,255,255,.2); padding:4px 14px; border-radius:20px; font-size:.85rem; margin-top:12px; }
+  .container { max-width:960px; margin:0 auto; padding:0 16px; }
+  .toc { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:24px 32px; margin:30px auto; max-width:700px; }
+  .toc h2 { font-size:1.1rem; margin-bottom:12px; color:var(--accent); }
+  .toc ol { padding-left:20px; }
+  .toc li { margin:6px 0; }
+  .toc a { color:var(--text); text-decoration:none; border-bottom:1px dashed #cbd5e1; }
+  .toc a:hover { color:var(--accent); }
+  section { background:var(--card); border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.08); padding:32px 28px; margin:28px auto; max-width:960px; }
+  section h2 { font-size:1.5rem; color:var(--accent); margin-bottom:6px; display:flex; align-items:center; gap:10px; }
+  section h2 .num { background:var(--accent); color:#fff; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.9rem; flex-shrink:0; }
+  section h3 { font-size:1.15rem; margin:20px 0 10px; color:#334155; }
+  .highlight { background:#eff6ff; border-left:4px solid var(--accent); padding:14px 18px; border-radius:0 8px 8px 0; margin:16px 0; font-size:.95rem; }
+  .highlight.danger { background:#fef2f2; border-color:var(--danger); }
+  .highlight.success { background:#f0fdf4; border-color:var(--success); }
+  .highlight.warn { background:#fffbeb; border-color:var(--warn); }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:.9rem; }
+  th, td { padding:10px 12px; border:1px solid #e2e8f0; text-align:center; }
+  th { background:#f1f5f9; font-weight:600; }
+  tr:nth-child(even) { background:#f8fafc; }
+  .chart-wrap { position:relative; width:100%; max-width:700px; margin:20px auto; }
+  .chart-wrap canvas { width:100%!important; }
+  .example-box { border:2px dashed #cbd5e1; border-radius:10px; padding:18px; margin:16px 0; background:#f8fafc; }
+  .example-box .tag { display:inline-block; background:var(--accent); color:#fff; font-size:.75rem; padding:2px 10px; border-radius:10px; margin-bottom:8px; }
+  .example-box h4 { font-size:1rem; margin-bottom:6px; }
+  .example-box p, .example-box ul { font-size:.9rem; }
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
+  @media(max-width:640px){ .grid-2{grid-template-columns:1fr;} section{padding:20px 16px;} }
+  .source-list { margin:16px 0; padding:14px 18px; background:#f1f5f9; border-radius:8px; font-size:.82rem; color:var(--muted); }
+  .source-list a { color:var(--accent); }
+  .verdict { text-align:center; padding:20px; border-radius:12px; margin:20px 0; }
+  .verdict.sell { background:linear-gradient(135deg,#fef2f2,#fee2e2); border:2px solid #fca5a5; }
+  .verdict.hold { background:linear-gradient(135deg,#eff6ff,#dbeafe); border:2px solid #93c5fd; }
+  .verdict h3 { font-size:1.3rem; }
+  .footer { text-align:center; padding:40px 20px; color:var(--muted); font-size:.82rem; }
+  .arrow { font-size:1.2rem; }
+  .tag-inline { display:inline-block; padding:2px 8px; border-radius:6px; font-size:.8rem; font-weight:600; }
+  .tag-red { background:#fee2e2; color:#b91c1c; }
+  .tag-green { background:#dcfce7; color:#166534; }
+  .tag-blue { background:#dbeafe; color:#1e40af; }
+  .tag-yellow { background:#fef9c3; color:#854d0e; }
+  .compare-row { display:flex; gap:12px; margin:12px 0; }
+  .compare-card { flex:1; padding:16px; border-radius:10px; border:1px solid #e2e8f0; }
+  .compare-card h4 { font-size:.95rem; margin-bottom:6px; }
+  @media(max-width:640px){ .compare-row{flex-direction:column;} }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>백송한신 아파트 매도·전세 전략 종합 분석</h1>
+  <p class="sub">일산 백석동 · 전용 37㎡(15평형) · 301동 15층</p>
+  <span class="badge">분석 기준일: 2026년 4월 12일 · 실거래가 + 정책 데이터 기반</span>
+</div>
+
+<div class="container">
+
+<!-- TOC -->
+<nav class="toc">
+  <h2>목차</h2>
+  <ol>
+    <li><a href="#s1">정책 및 시장 변화에 따른 매도 시점 분석</a></li>
+    <li><a href="#s2">매매 가격 목표 및 상승 가능성 판단</a></li>
+    <li><a href="#s3">전세가 설정 및 현재 임차 상황 분석</a></li>
+    <li><a href="#s4">전세 가격과 향후 매매 전략 간 관계</a></li>
+    <li><a href="#s5">유동성 리스크 및 임차인 대응 전략</a></li>
+    <li><a href="#s6">부동산 vs 타 자산 투자 비교</a></li>
+  </ol>
+</nav>
+
+<!-- ======================== Section 1 ======================== -->
+<section id="s1">
+  <h2><span class="num">1</span> 정책 및 시장 변화에 따른 매도 시점 분석</h2>
+
+  <h3>핵심 정책 타임라인</h3>
+  <table>
+    <tr><th>시점</th><th>이벤트</th><th>영향</th></tr>
+    <tr><td>2024.11.27</td><td>백송마을 1·2·3·5단지 재건축 선도지구 확정</td><td><span class="tag-inline tag-green">호재 — 시세 상승 기대</span></td></tr>
+    <tr><td><strong>2026.05.09</strong></td><td>다주택자 양도세 중과 유예 종료</td><td><span class="tag-inline tag-red">2주택 +20%p, 3주택 +30%p</span></td></tr>
+    <tr><td>2026.04</td><td>토지거래허가 '신청분'까지 유예 인정 시행령 개정</td><td><span class="tag-inline tag-yellow">매도 마감 시한 소폭 완화</span></td></tr>
+    <tr><td>2027~2030</td><td>재건축 사업 인허가·착공 예상</td><td><span class="tag-inline tag-blue">장기 보유 시 추가 상승 가능</span></td></tr>
+  </table>
+
+  <div class="highlight danger">
+    <strong>긴급:</strong> 다주택자라면 2026.05.09까지 양도 완료 시 중과세율(기본세율 + 20~30%p) 회피 가능.
+    <br>1주택자라면 이 일정은 직접 해당 없음. 단, 시장 매물 증가로 단기 가격 눌림 가능성 있음.
+  </div>
+
+  <h3>매도 시점별 시나리오 비교</h3>
+  <table>
+    <tr><th>시나리오</th><th>예상 매도가</th><th>양도세 (1주택 비과세 가정)</th><th>세후 실수령</th><th>리스크</th></tr>
+    <tr>
+      <td><strong>A. 즉시 매도</strong><br>(2026 상반기)</td>
+      <td>2.3~2.5억</td>
+      <td>비과세 (2년+ 보유·거주 충족 시)</td>
+      <td>2.3~2.5억</td>
+      <td>낮음</td>
+    </tr>
+    <tr>
+      <td><strong>B. 2027 매도</strong><br>(재건축 인허가 전)</td>
+      <td>2.5~2.8억</td>
+      <td>비과세 또는 일반세율</td>
+      <td>2.4~2.7억</td>
+      <td>중간 (정책 변수)</td>
+    </tr>
+    <tr>
+      <td><strong>C. 장기 보유</strong><br>(2028~2030 착공 전후)</td>
+      <td>3.0억+</td>
+      <td>재건축 조합원 지위 변동에 따라 복잡</td>
+      <td>불확실</td>
+      <td>높음 (사업 지연·추가분담금)</td>
+    </tr>
+  </table>
+
+  <div class="grid-2">
+    <div class="example-box">
+      <span class="tag">예시 1 — 즉시 매도 (1주택자)</span>
+      <h4>김씨: "5월 전에 팔겠다"</h4>
+      <p>취득가 1.8억 → 매도가 2.4억 = 차익 6,000만원</p>
+      <ul>
+        <li>2년 이상 보유·거주 → <strong>양도세 비과세</strong></li>
+        <li>실수령: 약 <strong>2.4억</strong> (중개 수수료 등 제외)</li>
+        <li>자금을 즉시 ETF·예금 등에 재배치 가능</li>
+      </ul>
+    </div>
+    <div class="example-box">
+      <span class="tag">예시 2 — 2027년 매도 (다주택자)</span>
+      <h4>박씨: "재건축 기대감으로 1년 더 보유"</h4>
+      <p>취득가 1.8억 → 매도가 2.7억 = 차익 9,000만원</p>
+      <ul>
+        <li>2026.05.10 이후 다주택 중과 적용 시: 세율 약 52~62%</li>
+        <li>양도세 약 <strong>4,700~5,600만원</strong></li>
+        <li>세후 실수령: 약 <strong>2.1~2.3억</strong> (오히려 손해 가능)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="source-list">
+    <strong>출처:</strong>
+    매일경제 (2024.11.27) "일산 재건축 선도지구 4곳 반색" |
+    연합뉴스 (2024.11.27) "일산 재건축 선도지구 4곳 주민 환영" |
+    땅집고 (2024.11.27) "尹 방문한 백송마을, 용적률 150%" |
+    한국AI부동산신문 (2026.04) "다주택자 양도세 중과 유예 5월 9일 종료" |
+    삼일PwC "다주택소유자 세금 지식" |
+    innno.co.kr "2026 다주택자 부동산 정책 총정리"
+  </div>
+</section>
+
+<!-- ======================== Section 2 ======================== -->
+<section id="s2">
+  <h2><span class="num">2</span> 매매 가격 목표 및 상승 가능성 판단</h2>
+
+  <h3>10년 실거래가 추이 (전용 37㎡ 기준)</h3>
+  <div class="chart-wrap"><canvas id="chartPrice"></canvas></div>
+
+  <h3>연도별 실거래가 요약</h3>
+  <table>
+    <tr><th>연도</th><th>최저가</th><th>최고가</th><th>평균</th><th>거래건수</th></tr>
+    <tr><td>2016</td><td>1.53억</td><td>1.88억</td><td>1.69억</td><td>19건</td></tr>
+    <tr><td>2017</td><td>1.79억</td><td>1.90억</td><td>1.83억</td><td>8건</td></tr>
+    <tr><td>2018</td><td>1.69억</td><td>1.73억</td><td>1.71억</td><td>3건</td></tr>
+    <tr><td>2019</td><td>1.40억</td><td>1.88억</td><td>1.65억</td><td>6건</td></tr>
+    <tr><td>2020</td><td>1.48억</td><td>1.88억</td><td>1.67억</td><td>14건</td></tr>
+    <tr><td>2021</td><td>2.05억</td><td>2.90억</td><td>2.28억</td><td>6건</td></tr>
+    <tr><td>2022</td><td>2.35억</td><td><strong>3.04억</strong></td><td>2.84억</td><td>6건</td></tr>
+    <tr><td>2023</td><td>2.15억</td><td>2.20억</td><td>2.18억</td><td>2건</td></tr>
+    <tr><td>2024</td><td>2.07억</td><td><strong>2.70억</strong></td><td>2.34억</td><td>10건</td></tr>
+    <tr><td>2025</td><td>2.30억</td><td>2.58억</td><td>2.40억</td><td>4건</td></tr>
+    <tr><td>2026</td><td>2.30억</td><td>2.30억</td><td>2.30억</td><td>1건</td></tr>
+  </table>
+
+  <h3>현재 호가 분포 (50㎡/전용37㎡ 매물, 2026.04 기준)</h3>
+  <div class="chart-wrap"><canvas id="chartAskPrice"></canvas></div>
+
+  <table>
+    <tr><th>동/층</th><th>호가</th><th>비고</th></tr>
+    <tr><td>301동 1층</td><td>2.20억</td><td>전세 안고, 올수리 급매</td></tr>
+    <tr><td>305동 10층</td><td>2.30억</td><td>입주가능, 로얄동·로얄층</td></tr>
+    <tr><td>305동 7층</td><td>2.30억</td><td>—</td></tr>
+    <tr><td>305동 12층</td><td>2.30억</td><td>—</td></tr>
+    <tr><td>301동 3층</td><td>2.35억</td><td>전세 안고</td></tr>
+    <tr><td style="background:#eff6ff"><strong>301동 15층 (본인)</strong></td><td style="background:#eff6ff"><strong>2.38~2.40억 추정</strong></td><td style="background:#eff6ff">15층 탑층, 동향</td></tr>
+    <tr><td>305동 15층</td><td>2.50억</td><td>올수리, 로얄동</td></tr>
+    <tr><td>305동 9층</td><td>2.60억</td><td>올수리, 로얄동</td></tr>
+    <tr><td>306동 1층 (39A)</td><td>2.60억</td><td>계단식, 올수리</td></tr>
+    <tr><td>304동 3층 (39A)</td><td>2.70억</td><td>계단식, 올수리</td></tr>
+  </table>
+
+  <div class="verdict hold">
+    <h3>적정 매도 목표가: 2.4~2.5억</h3>
+    <p>15층 탑층 프리미엄 감안. 2.7억 목표는 현재 시장에서 비현실적 (39A 계단식 매물 호가 수준).</p>
+    <p>재건축 인허가 진행 시(2027~) 2.7~3.0억 가능성은 열려 있으나, 시간·정책 리스크 수반.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="example-box">
+      <span class="tag">예시 1 — 보수적 매도</span>
+      <h4>"2.35억에 빠른 매도"</h4>
+      <p>현재 최저 호가(2.2억) 대비 높지만, 15층 프리미엄으로 가능.</p>
+      <ul>
+        <li>1~2개월 내 계약 가능성 높음</li>
+        <li>공실 리스크 제거, 즉시 자금 확보</li>
+      </ul>
+    </div>
+    <div class="example-box">
+      <span class="tag">예시 2 — 공격적 매도</span>
+      <h4>"2.5억 목표로 3개월 대기"</h4>
+      <p>305동 15층 호가 2.5억 수준. 301동 15층도 유사 포지션.</p>
+      <ul>
+        <li>수요 있으면 가능하지만 3개월+ 소요 예상</li>
+        <li>전세 공실 기간 월 이자 부담 약 50~60만원</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="source-list">
+    <strong>출처:</strong>
+    국토교통부 실거래가 공개시스템 (rt.molit.go.kr) |
+    네이버 부동산 매물 현황 (2026.04.11 기준) |
+    KB부동산 시세 (kbland.kr)
+  </div>
+</section>
+
+<!-- ======================== Section 3 ======================== -->
+<section id="s3">
+  <h2><span class="num">3</span> 전세가 설정 및 현재 임차 상황 분석</h2>
+
+  <h3>10년 전세 실거래가 추이</h3>
+  <div class="chart-wrap"><canvas id="chartJeonse"></canvas></div>
+
+  <h3>최근 전세 실거래 (2024~2026)</h3>
+  <table>
+    <tr><th>계약일</th><th>층</th><th>가격</th><th>비고</th></tr>
+    <tr><td>2026.02</td><td>15층</td><td><strong>1.60억</strong></td><td>현재 본인 매물과 동일 포지션</td></tr>
+    <tr><td>2026.02</td><td>6층</td><td>1.68억</td><td>갱신 (기존 1.6억)</td></tr>
+    <tr><td>2026.01</td><td>12층</td><td>1.64억</td><td>갱신 (기존 1.58억)</td></tr>
+    <tr><td>2025.10</td><td>15층</td><td>1.60억</td><td>—</td></tr>
+    <tr><td>2025.09</td><td>9층</td><td>1.75억</td><td>—</td></tr>
+    <tr><td>2025.07</td><td>9층</td><td><strong>1.85억</strong></td><td>3년내 최고</td></tr>
+    <tr><td>2025.07</td><td>10층</td><td>1.80억</td><td>—</td></tr>
+    <tr><td>2024.12</td><td>15층</td><td>1.58억</td><td>갱신 (기존 1.5억)</td></tr>
+    <tr><td>2024.12</td><td>9층</td><td>1.65억</td><td>—</td></tr>
+    <tr><td>2024.03</td><td>13층</td><td>1.80억</td><td>—</td></tr>
+  </table>
+
+  <h3>현재 전세 호가 (2026.04)</h3>
+  <table>
+    <tr><th>동/층</th><th>호가</th></tr>
+    <tr style="background:#eff6ff"><td><strong>301동 15층 (본인)</strong></td><td><strong>1.60억</strong></td></tr>
+    <tr><td>305동 8층</td><td>1.70억</td></tr>
+    <tr><td>301동 13층</td><td>1.75억</td></tr>
+  </table>
+
+  <div class="highlight">
+    <strong>분석:</strong> 15층 전세 실거래는 2025.10, 2026.02 모두 <strong>1.60억</strong>에 체결.
+    현재 1.60억 호가는 시장가와 정확히 일치. 1.65억으로 올리면 계약 지연 가능성 높음.
+  </div>
+
+  <div class="grid-2">
+    <div class="example-box">
+      <span class="tag">예시 1 — 1.6억 유지 (권장)</span>
+      <h4>"빠른 계약 우선"</h4>
+      <ul>
+        <li>15층 동일 조건 실거래가: 1.6억 (2건 확인)</li>
+        <li>1~2주 내 계약 가능성 높음</li>
+        <li>공실 1개월 = 이자 약 50만원 손실</li>
+        <li>감정 리스크 최소화 (임차인 조기 확보)</li>
+      </ul>
+    </div>
+    <div class="example-box">
+      <span class="tag">예시 2 — 1.65억 재시도</span>
+      <h4>"500만원 더 받겠다"</h4>
+      <ul>
+        <li>고층(9층) 실거래 1.65억 사례 있음 (2024.12)</li>
+        <li>그러나 15층 탑층은 여름 더위·누수 우려로 프리미엄 낮음</li>
+        <li>계약 지연 1~2개월 시 이자 손실 100만원 → 순이익 차이 400만원</li>
+        <li>수요 부족 시 다시 1.6억으로 내려야 하는 심리적 부담</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verdict sell">
+    <h3>결론: 1.60억 유지 후 빠른 계약 권장</h3>
+    <p>시장 실거래가와 일치하며, 공실 리스크 최소화가 재무적으로 유리.</p>
+  </div>
+
+  <div class="source-list">
+    <strong>출처:</strong>
+    국토교통부 실거래가 공개시스템 (전세) |
+    네이버 부동산 전세 매물 (2026.04.11 기준)
+  </div>
+</section>
+
+<!-- ======================== Section 4 ======================== -->
+<section id="s4">
+  <h2><span class="num">4</span> 전세 가격과 향후 매매 전략 간 관계</h2>
+
+  <h3>갭(Gap) 분석: 매매가 − 전세가</h3>
+  <div class="chart-wrap"><canvas id="chartGap"></canvas></div>
+
+  <table>
+    <tr><th>항목</th><th>전세 1.6억 시</th><th>전세 1.7억 시</th><th>차이</th></tr>
+    <tr><td>매매 목표가</td><td colspan="2">2.4억</td><td>—</td></tr>
+    <tr><td>갭(투자금)</td><td>8,000만원</td><td>7,000만원</td><td>1,000만원</td></tr>
+    <tr><td>갭투자 매력도</td><td>보통</td><td><strong>높음</strong></td><td>매수자 유리</td></tr>
+    <tr><td>공실 리스크</td><td><strong>낮음</strong></td><td>중간</td><td>임대인 관점</td></tr>
+    <tr><td>전세 계약 속도</td><td><strong>빠름</strong> (1~2주)</td><td>느림 (1~2개월)</td><td>시간가치</td></tr>
+  </table>
+
+  <div class="highlight">
+    <strong>핵심 인사이트:</strong> 전세가를 높이면 '전세 안고 매매' 시 갭이 줄어 매수자에게 유리해 매도가 빨라질 수 있으나,
+    전세 자체가 미계약 상태이므로 <strong>"전세 먼저 계약 → 매매"</strong> 순서가 현실적.
+  </div>
+
+  <h3>전략 조합별 비교</h3>
+  <div class="grid-2">
+    <div class="example-box">
+      <span class="tag">예시 1 — 전세 확보 후 단기 매도</span>
+      <h4>전세 1.6억 → 6개월 내 매도 2.4억</h4>
+      <ul>
+        <li>전세 세입자 확보 → 안정적 현금흐름</li>
+        <li>"전세 안고" 매물로 등록 → 갭 8,000만원</li>
+        <li>매수자: 실투자금 8,000만원으로 재건축 기대 가능</li>
+        <li><strong>결과: 2.4억 수령, 전세 반환 의무 매수자 이전</strong></li>
+      </ul>
+    </div>
+    <div class="example-box">
+      <span class="tag">예시 2 — 공실 상태로 매도</span>
+      <h4>전세 미계약 → 즉시 매도 2.3억</h4>
+      <ul>
+        <li>매수자가 직접 입주 or 전세 세팅 가능</li>
+        <li>공실이므로 매도가 다소 낮게 형성 (2.2~2.3억)</li>
+        <li>전세 보증금 반환 의무 없음</li>
+        <li><strong>결과: 2.3억 수령, 깔끔한 매도</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="source-list">
+    <strong>출처:</strong>
+    실거래가 기반 자체 계산 |
+    네이버 부동산 갭투자 매물 분석
+  </div>
+</section>
+
+<!-- ======================== Section 5 ======================== -->
+<section id="s5">
+  <h2><span class="num">5</span> 유동성 리스크 및 임차인 대응 전략</h2>
+
+  <h3>리스크 매트릭스</h3>
+  <table>
+    <tr><th>리스크</th><th>발생확률</th><th>영향도</th><th>대응 방안</th></tr>
+    <tr>
+      <td>전세 보증금 반환 불능</td>
+      <td><span class="tag-inline tag-yellow">중</span></td>
+      <td><span class="tag-inline tag-red">높음</span></td>
+      <td>전세보증보험 가입 확인, 매도 타이밍 조율</td>
+    </tr>
+    <tr>
+      <td>임차인 감정 악화 (중도 퇴거 요구)</td>
+      <td><span class="tag-inline tag-yellow">중</span></td>
+      <td><span class="tag-inline tag-yellow">중</span></td>
+      <td>서면 합의, 이사비 일부 지원 검토</td>
+    </tr>
+    <tr>
+      <td>전세 사기 의심 민원</td>
+      <td><span class="tag-inline tag-green">낮음</span></td>
+      <td><span class="tag-inline tag-red">높음</span></td>
+      <td>전세보증보험, 확정일자, 등기부등본 투명 제공</td>
+    </tr>
+    <tr>
+      <td>재건축 장기 지연으로 가격 하락</td>
+      <td><span class="tag-inline tag-yellow">중</span></td>
+      <td><span class="tag-inline tag-yellow">중</span></td>
+      <td>매도 시점 결정 후 신속 실행</td>
+    </tr>
+    <tr>
+      <td>금리 인상으로 전세 수요 감소</td>
+      <td><span class="tag-inline tag-yellow">중</span></td>
+      <td><span class="tag-inline tag-yellow">중</span></td>
+      <td>전세가 하향 조정 대비</td>
+    </tr>
+  </table>
+
+  <div class="grid-2">
+    <div class="example-box">
+      <span class="tag">예시 1 — 기존 세입자와 원만 합의</span>
+      <h4>시나리오: 세입자가 계약 만기 전 퇴거 요청</h4>
+      <ul>
+        <li>임대차보호법상 임차인은 계약 기간 중 퇴거 가능 (1개월 전 통보)</li>
+        <li>임대인은 잔여 기간 전세금 반환 의무</li>
+        <li><strong>대응:</strong> 이사비 100~200만원 협의 후, 즉시 새 세입자 모집 또는 매도 전환</li>
+        <li>서면 합의서 작성 필수 (녹취도 권장)</li>
+      </ul>
+    </div>
+    <div class="example-box">
+      <span class="tag">예시 2 — 전세 보증금 반환 대비</span>
+      <h4>시나리오: 자금 여력 부족 시 보증금 반환 문제</h4>
+      <ul>
+        <li>전세 만기 시 보증금 1.6억 반환 필요</li>
+        <li><strong>대응 A:</strong> 만기 3개월 전 매도 진행 → 매매 대금으로 반환</li>
+        <li><strong>대응 B:</strong> 새 세입자 구해 보증금 승계</li>
+        <li><strong>대응 C:</strong> 전세자금대출(임대인용) 활용 — 최후 수단</li>
+        <li>HUG 전세보증보험 가입 시 임차인 보호 + 임대인 신뢰도 상승</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="source-list">
+    <strong>출처:</strong>
+    주택임대차보호법 제6조의3 (갱신요구권) |
+    HUG 전세보증보험 가입 기준 |
+    법률 상담 일반 기준
+  </div>
+</section>
+
+<!-- ======================== Section 6 ======================== -->
+<section id="s6">
+  <h2><span class="num">6</span> 부동산 vs 타 자산 투자 비교</h2>
+
+  <h3>2.4억 운용 시 5년 기대수익률 비교</h3>
+  <div class="chart-wrap"><canvas id="chartAsset"></canvas></div>
+
+  <table>
+    <tr><th>자산</th><th>연평균 기대수익률</th><th>5년 후 예상 자산</th><th>변동성(리스크)</th><th>유동성</th></tr>
+    <tr>
+      <td><strong>백송한신 보유</strong><br>(재건축 기대)</td>
+      <td>3~8%</td>
+      <td>2.8~3.5억</td>
+      <td>중 (정책 리스크)</td>
+      <td><span class="tag-inline tag-red">매우 낮음</span></td>
+    </tr>
+    <tr>
+      <td><strong>S&P500 ETF</strong><br>(SPY/VOO)</td>
+      <td>8~10%</td>
+      <td>3.5~3.9억</td>
+      <td>중 (시장 변동)</td>
+      <td><span class="tag-inline tag-green">높음</span></td>
+    </tr>
+    <tr>
+      <td><strong>나스닥100 2x 레버리지</strong><br>(TQQQ 등)</td>
+      <td>15~25%</td>
+      <td>4.8~7.3억</td>
+      <td><span class="tag-inline tag-red">매우 높음</span></td>
+      <td><span class="tag-inline tag-green">높음</span></td>
+    </tr>
+    <tr>
+      <td><strong>비트코인</strong></td>
+      <td>10~30%</td>
+      <td>3.9~8.9억</td>
+      <td><span class="tag-inline tag-red">극고</span></td>
+      <td><span class="tag-inline tag-green">높음</span></td>
+    </tr>
+    <tr>
+      <td><strong>국내 예금</strong><br>(정기예금)</td>
+      <td>3~3.5%</td>
+      <td>2.8~2.9억</td>
+      <td><span class="tag-inline tag-green">없음</span></td>
+      <td><span class="tag-inline tag-green">높음</span></td>
+    </tr>
+  </table>
+
+  <h3>과거 실적 비교 (2020→2025, 5년)</h3>
+  <table>
+    <tr><th>자산</th><th>2020 초</th><th>2025 말</th><th>5년 수익률</th></tr>
+    <tr><td>백송한신 37㎡</td><td>약 1.6억</td><td>약 2.5억</td><td><strong>+56%</strong></td></tr>
+    <tr><td>S&P500</td><td>3,230pt</td><td>5,881pt</td><td><strong>+82%</strong></td></tr>
+    <tr><td>비트코인</td><td>$7,200</td><td>$94,000</td><td><strong>+1,205%</strong></td></tr>
+    <tr><td>KOSPI</td><td>2,175pt</td><td>2,399pt</td><td><strong>+10%</strong></td></tr>
+  </table>
+
+  <div class="highlight warn">
+    <strong>주의:</strong> 과거 수익률은 미래를 보장하지 않습니다.
+    레버리지 ETF·비트코인은 -50% 이상 급락 가능성도 있습니다.
+    분산 투자가 핵심입니다.
+  </div>
+
+  <h3>추천 포트폴리오 (매도 후 2.4억 운용)</h3>
+  <div class="chart-wrap"><canvas id="chartPortfolio"></canvas></div>
+
+  <div class="grid-2">
+    <div class="example-box">
+      <span class="tag">예시 1 — 안정형 포트폴리오</span>
+      <h4>변동성 낮게, 연 5~7% 목표</h4>
+      <ul>
+        <li>S&P500 ETF: 1.0억 (42%)</li>
+        <li>국내 채권/예금: 0.8억 (33%)</li>
+        <li>금 ETF: 0.3억 (13%)</li>
+        <li>비트코인: 0.3억 (13%) — 위험자산 한도</li>
+        <li><strong>5년 후 예상: 3.2~3.5억</strong></li>
+      </ul>
+    </div>
+    <div class="example-box">
+      <span class="tag">예시 2 — 공격형 포트폴리오</span>
+      <h4>고수익 추구, 연 12~18% 목표</h4>
+      <ul>
+        <li>S&P500 2x 레버리지: 1.0억 (42%)</li>
+        <li>나스닥100 ETF: 0.6억 (25%)</li>
+        <li>비트코인: 0.5억 (21%)</li>
+        <li>현금/예금: 0.3억 (13%) — 리밸런싱용</li>
+        <li><strong>5년 후 예상: 4.0~6.5억 (또는 1.5억 손실 가능)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="source-list">
+    <strong>출처:</strong>
+    S&P500 역사적 연평균 수익률 8~10% (1926~현재, S&P Dow Jones Indices) |
+    EBC Financial Group "S&P500 ETF 가이드" |
+    CoinMarketCap 비트코인 가격 이력 |
+    한국은행 기준금리 현황 (2026.04)
+  </div>
+</section>
+
+</div><!-- container -->
+
+<div class="footer">
+  <p>본 분석은 공개된 실거래가 데이터, 정책 자료, 시장 정보를 기반으로 작성되었습니다.</p>
+  <p>투자 결정은 개인의 재무 상황, 세무 전문가 상담을 거쳐 신중하게 내려야 합니다.</p>
+  <p>작성일: 2026.04.12 | 데이터 기준: 국토교통부 실거래가, 네이버부동산, KB부동산, 정책 발표 자료</p>
+</div>
+
+<script>
+// ===== Chart 1: 매매 실거래가 추이 =====
+new Chart(document.getElementById('chartPrice'), {
+  type: 'line',
+  data: {
+    labels: ['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+    datasets: [
+      {
+        label: '최고가 (만원)',
+        data: [13400,15250,18800,19000,17300,18800,18800,29000,30400,22000,27000,25800,23000],
+        borderColor: '#dc2626',
+        backgroundColor: 'rgba(220,38,38,.1)',
+        fill: false,
+        tension: 0.3
+      },
+      {
+        label: '최저가 (만원)',
+        data: [12500,12500,15300,17850,16850,14000,14800,20500,23500,21500,20700,23000,23000],
+        borderColor: '#2563eb',
+        backgroundColor: 'rgba(37,99,235,.1)',
+        fill: false,
+        tension: 0.3
+      },
+      {
+        label: '평균 (만원)',
+        data: [12840,13930,16900,18270,17050,16500,16700,22800,28400,21750,23400,24000,23000],
+        borderColor: '#16a34a',
+        backgroundColor: 'rgba(22,163,74,.1)',
+        fill: '-1',
+        tension: 0.3,
+        borderDash: [5,5]
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '백송한신 37㎡ 매매 실거래가 추이 (2014~2026)' },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.parsed.y/10000).toFixed(1) + '억원' } }
+    },
+    scales: {
+      y: {
+        title: { display: true, text: '만원' },
+        ticks: { callback: v => (v/10000).toFixed(1)+'억' }
+      }
+    }
+  }
+});
+
+// ===== Chart 2: 호가 분포 =====
+new Chart(document.getElementById('chartAskPrice'), {
+  type: 'bar',
+  data: {
+    labels: ['301/1F','305/10F','305/7F','305/12F','301/3F','301/15F\n(본인)','305/15F','305/9F','306/1F','304/3F'],
+    datasets: [{
+      label: '호가 (만원)',
+      data: [22000,23000,23000,23000,23500,24000,25000,26000,26000,27000],
+      backgroundColor: [
+        '#93c5fd','#93c5fd','#93c5fd','#93c5fd','#93c5fd',
+        '#2563eb',
+        '#93c5fd','#93c5fd','#93c5fd','#93c5fd'
+      ],
+      borderRadius: 6
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '현재 매매 호가 분포 (50㎡/전용37㎡, 2026.04)' },
+      tooltip: { callbacks: { label: ctx => (ctx.parsed.y/10000).toFixed(1) + '억원' } }
+    },
+    scales: {
+      y: {
+        beginAtZero: false,
+        min: 20000,
+        title: { display: true, text: '만원' },
+        ticks: { callback: v => (v/10000).toFixed(1)+'억' }
+      }
+    }
+  }
+});
+
+// ===== Chart 3: 전세 실거래가 추이 =====
+new Chart(document.getElementById('chartJeonse'), {
+  type: 'line',
+  data: {
+    labels: ['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+    datasets: [
+      {
+        label: '최고가 (만원)',
+        data: [11000,13000,16000,18000,15000,15000,16800,19000,22000,20000,18000,18500,16800],
+        borderColor: '#dc2626',
+        fill: false,
+        tension: 0.3
+      },
+      {
+        label: '최저가 (만원)',
+        data: [9000,7000,13500,11000,12500,12500,10000,12810,5000,10500,12500,13500,13000],
+        borderColor: '#2563eb',
+        fill: false,
+        tension: 0.3
+      },
+      {
+        label: '중위가 (만원)',
+        data: [10000,10500,14250,15600,13750,13200,14500,17000,14700,14600,16500,16000,16000],
+        borderColor: '#f59e0b',
+        fill: false,
+        tension: 0.3,
+        borderDash: [5,5]
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '백송한신 37㎡ 전세 실거래가 추이 (2014~2026)' },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.parsed.y/10000).toFixed(1) + '억원' } }
+    },
+    scales: {
+      y: {
+        title: { display: true, text: '만원' },
+        ticks: { callback: v => (v/10000).toFixed(1)+'억' }
+      }
+    }
+  }
+});
+
+// ===== Chart 4: 갭(매매-전세) 분석 =====
+new Chart(document.getElementById('chartGap'), {
+  type: 'bar',
+  data: {
+    labels: ['2018','2019','2020','2021','2022','2023','2024','2025','2026(현재)'],
+    datasets: [
+      {
+        label: '전세가 (만원)',
+        data: [13750,13200,14500,17000,14700,14600,16500,16000,16000],
+        backgroundColor: 'rgba(37,99,235,.6)',
+        borderRadius: 4
+      },
+      {
+        label: '갭 = 매매-전세 (만원)',
+        data: [17050-13750, 16500-13200, 16700-14500, 22800-17000, 28400-14700, 21750-14600, 23400-16500, 24000-16000, 24000-16000],
+        backgroundColor: 'rgba(220,38,38,.5)',
+        borderRadius: 4
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '매매가 vs 전세가 갭 추이' }
+    },
+    scales: {
+      x: { stacked: true },
+      y: {
+        stacked: true,
+        ticks: { callback: v => (v/10000).toFixed(1)+'억' }
+      }
+    }
+  }
+});
+
+// ===== Chart 5: 자산 비교 =====
+new Chart(document.getElementById('chartAsset'), {
+  type: 'bar',
+  data: {
+    labels: ['백송한신\n(재건축 기대)', 'S&P500\nETF', '나스닥\n2x 레버리지', '비트코인', '국내 예금'],
+    datasets: [
+      {
+        label: '5년 후 예상 최소 (억원)',
+        data: [2.8, 3.5, 4.8, 3.9, 2.8],
+        backgroundColor: 'rgba(37,99,235,.5)',
+        borderRadius: 4
+      },
+      {
+        label: '5년 후 예상 최대 (억원)',
+        data: [3.5-2.8, 3.9-3.5, 7.3-4.8, 8.9-3.9, 2.9-2.8],
+        backgroundColor: 'rgba(16,163,74,.4)',
+        borderRadius: 4
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '2.4억 투자 시 5년 후 예상 자산 범위' },
+      tooltip: { callbacks: {
+        label: function(ctx) {
+          if(ctx.datasetIndex === 0) return '최소: '+ctx.parsed.y+'억';
+          return '최대 추가: +'+ctx.parsed.y.toFixed(1)+'억';
+        }
+      }}
+    },
+    scales: {
+      x: { stacked: true },
+      y: { stacked: true, title: { display: true, text: '억원' } }
+    }
+  }
+});
+
+// ===== Chart 6: 포트폴리오 =====
+new Chart(document.getElementById('chartPortfolio'), {
+  type: 'doughnut',
+  data: {
+    labels: ['S&P500 ETF (42%)', '채권/예금 (33%)', '금 ETF (13%)', '비트코인 (13%)'],
+    datasets: [{
+      data: [42, 33, 13, 13],
+      backgroundColor: ['#2563eb','#64748b','#f59e0b','#f97316'],
+      borderWidth: 2,
+      borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: '안정형 포트폴리오 추천 배분' }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
