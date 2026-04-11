@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상속·증여세 종합 전략 보고서 | 2026년 기준</title>
+<style>
+  :root {
+    --navy: #1a2332;
+    --gold: #c9a84c;
+    --dark-gold: #a8893f;
+    --bg: #f5f3ee;
+    --card-bg: #ffffff;
+    --red: #c0392b;
+    --green: #27ae60;
+    --blue: #2980b9;
+    --orange: #e67e22;
+    --gray: #7f8c8d;
+    --light-gray: #ecf0f1;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Pretendard','Noto Sans KR','Segoe UI',sans-serif; background:var(--bg); color:#333; line-height:1.7; }
+
+  .header { background: linear-gradient(135deg, var(--navy) 0%, #2c3e50 100%); color:#fff; padding:3rem 2rem; text-align:center; border-bottom:4px solid var(--gold); }
+  .header h1 { font-size:2.2rem; margin-bottom:0.5rem; letter-spacing:-0.5px; }
+  .header .sub { color:var(--gold); font-size:1.1rem; margin-bottom:0.3rem; }
+  .header .date { color:#95a5a6; font-size:0.9rem; }
+  .header .badge { display:inline-block; background:var(--gold); color:var(--navy); padding:4px 16px; border-radius:20px; font-size:0.8rem; font-weight:700; margin-top:10px; }
+
+  .toc { background:var(--card-bg); max-width:900px; margin:2rem auto; border-radius:12px; padding:2rem; box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+  .toc h2 { color:var(--navy); border-bottom:2px solid var(--gold); padding-bottom:8px; margin-bottom:1rem; }
+  .toc ol { padding-left:1.5rem; }
+  .toc li { margin:6px 0; }
+  .toc a { color:var(--navy); text-decoration:none; font-weight:500; }
+  .toc a:hover { color:var(--gold); }
+
+  .container { max-width:900px; margin:0 auto; padding:0 1rem; }
+
+  .section { background:var(--card-bg); border-radius:12px; padding:2rem; margin:1.5rem auto; max-width:900px; box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+  .section h2 { color:var(--navy); border-left:4px solid var(--gold); padding-left:12px; margin-bottom:1.5rem; font-size:1.5rem; }
+  .section h3 { color:var(--navy); margin:1.5rem 0 0.8rem; font-size:1.15rem; }
+
+  .alert { padding:1rem 1.2rem; border-radius:8px; margin:1rem 0; font-size:0.95rem; }
+  .alert-red { background:#fdf2f2; border-left:4px solid var(--red); color:#7b241c; }
+  .alert-green { background:#eafaf1; border-left:4px solid var(--green); color:#1e8449; }
+  .alert-blue { background:#eaf2f8; border-left:4px solid var(--blue); color:#1a5276; }
+  .alert-gold { background:#fef9e7; border-left:4px solid var(--gold); color:#7d6608; }
+  .alert-orange { background:#fef5e7; border-left:4px solid var(--orange); color:#9c5c16; }
+
+  table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.92rem; }
+  th { background:var(--navy); color:#fff; padding:10px 12px; text-align:left; font-weight:600; }
+  td { padding:9px 12px; border-bottom:1px solid #e0e0e0; }
+  tr:nth-child(even) { background:#fafafa; }
+  tr:hover { background:#f0f0f0; }
+  .highlight-row { background:#fff9e6 !important; }
+  .danger-row { background:#fef2f2 !important; }
+  .success-row { background:#eafaf1 !important; }
+
+  .amount { text-align:right; font-family:'Consolas','Monaco',monospace; font-weight:600; }
+  .amount-big { font-size:1.3rem; color:var(--navy); }
+  .tax-red { color:var(--red); font-weight:700; }
+  .tax-green { color:var(--green); font-weight:700; }
+  .emoji-mark { font-size:1.1rem; }
+
+  .scenario-box { border:2px solid var(--navy); border-radius:10px; padding:1.5rem; margin:1.5rem 0; }
+  .scenario-box.danger { border-color:var(--red); }
+  .scenario-box.safe { border-color:var(--green); }
+  .scenario-title { font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px dashed #ccc; }
+
+  .strategy-card { background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius:10px; padding:1.5rem; margin:1rem 0; border-left:5px solid var(--gold); }
+  .strategy-card h4 { color:var(--navy); margin-bottom:0.5rem; }
+
+  .timeline { position:relative; padding-left:30px; margin:1.5rem 0; }
+  .timeline::before { content:''; position:absolute; left:10px; top:0; bottom:0; width:3px; background:var(--gold); }
+  .timeline-item { position:relative; margin-bottom:1.5rem; padding:1rem; background:#f9f9f9; border-radius:8px; }
+  .timeline-item::before { content:''; position:absolute; left:-25px; top:14px; width:14px; height:14px; background:var(--gold); border-radius:50%; border:3px solid #fff; }
+  .timeline-item .year { font-weight:700; color:var(--gold); font-size:1rem; }
+
+  .comparison-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1rem 0; }
+  .comparison-grid .box { padding:1.2rem; border-radius:8px; }
+  .comparison-grid .box-bad { background:#fdf2f2; border:1px solid #e6b0aa; }
+  .comparison-grid .box-good { background:#eafaf1; border:1px solid #a9dfbf; }
+
+  .checklist { list-style:none; padding:0; }
+  .checklist li { padding:8px 0; border-bottom:1px solid #eee; display:flex; align-items:flex-start; gap:8px; }
+  .checklist li::before { content:'☐'; font-size:1.1rem; flex-shrink:0; }
+  .checklist li.urgent::before { content:'🔴'; }
+  .checklist li.soon::before { content:'🟡'; }
+  .checklist li.plan::before { content:'🟢'; }
+
+  .badge-tag { display:inline-block; padding:2px 10px; border-radius:12px; font-size:0.78rem; font-weight:600; }
+  .badge-danger { background:#e74c3c; color:#fff; }
+  .badge-warning { background:#f39c12; color:#fff; }
+  .badge-safe { background:#27ae60; color:#fff; }
+  .badge-info { background:#3498db; color:#fff; }
+
+  .summary-box { background:linear-gradient(135deg, var(--navy), #34495e); color:#fff; border-radius:12px; padding:2rem; margin:1.5rem 0; }
+  .summary-box h3 { color:var(--gold); margin-bottom:1rem; }
+  .summary-box .num { font-size:2rem; font-weight:800; color:var(--gold); }
+  .summary-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; }
+  .summary-item { text-align:center; padding:1rem; background:rgba(255,255,255,0.1); border-radius:8px; }
+  .summary-item .label { font-size:0.85rem; color:#bdc3c7; margin-top:4px; }
+
+  .footnote { font-size:0.82rem; color:var(--gray); margin-top:2rem; padding-top:1rem; border-top:1px solid #ddd; }
+  .footer { background:var(--navy); color:#95a5a6; text-align:center; padding:2rem; margin-top:2rem; font-size:0.85rem; }
+
+  @media (max-width:700px) {
+    .header h1 { font-size:1.5rem; }
+    .section { padding:1.2rem; }
+    table { font-size:0.82rem; }
+    td, th { padding:6px 8px; }
+    .comparison-grid { grid-template-columns:1fr; }
+    .summary-grid { grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<div class="header">
+  <div class="badge">CONFIDENTIAL · FAMILY OFFICE ADVISORY</div>
+  <h1>상속·증여세 종합 전략 보고서</h1>
+  <div class="sub">부모님 자산 시나리오별 세금 분석 및 절세 로드맵</div>
+  <div class="date">기준일: 2026년 4월 12일 | 적용법률: 상속세 및 증여세법 (현행) | 공시지가: 2025년 기준</div>
+</div>
+
+<!-- ==================== TOC ==================== -->
+<div class="toc" id="top">
+  <h2>📋 목차</h2>
+  <ol>
+    <li><a href="#s1">핵심 결론 (Executive Summary)</a></li>
+    <li><a href="#s2">자산 현황표 (수정 반영 🟡)</a></li>
+    <li><a href="#s3">소득 현황표 (수정 반영 🟡)</a></li>
+    <li><a href="#s4">상속세 시뮬레이션 — 시나리오별</a></li>
+    <li><a href="#s5">1.5억 도달 가능성 분석</a></li>
+    <li><a href="#s6">증여세 시뮬레이션</a></li>
+    <li><a href="#s7">20~30년 장기 전략 (장수 유전자 반영)</a></li>
+    <li><a href="#s8">최고 절세 전략 로드맵</a></li>
+    <li><a href="#s9">사전 대응 체크리스트</a></li>
+    <li><a href="#s10">대응 필요 여부 최종 판단</a></li>
+  </ol>
+</div>
+
+<!-- ==================== 1. EXECUTIVE SUMMARY ==================== -->
+<div class="section" id="s1">
+  <h2>1. 핵심 결론 (Executive Summary)</h2>
+
+  <div class="summary-box">
+    <h3>⚡ 한눈에 보는 핵심 수치</h3>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="num">18.35억</div>
+        <div class="label">부모님 자산 합계 (공시지가)</div>
+      </div>
+      <div class="summary-item">
+        <div class="num" style="color:#27ae60;">0원~1,240만</div>
+        <div class="label">1차 상속세 (한분 먼저 사망)</div>
+      </div>
+      <div class="summary-item">
+        <div class="num" style="color:#e74c3c;">1.06~2.34억</div>
+        <div class="label">2차 상속세 (나머지 한분 사망)</div>
+      </div>
+      <div class="summary-item">
+        <div class="num" style="color:#e74c3c;">2.5~4.0억+</div>
+        <div class="label">20년 후 2차 상속세 (가치상승 시)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-red">
+    <strong>🔴 결론:</strong> 1차 상속은 배우자공제로 세금이 거의 없지만, <strong>2차 상속(생존 배우자 사망 시)</strong>에서
+    <strong>1.5억 이상 상속세 충분히 가능</strong>합니다. 장수 유전자로 20~30년 뒤라면 부동산 가치 상승으로 <strong>2.5~4억 이상</strong>까지 예상됩니다.
+    <br><br>
+    <strong>→ 사전 대응이 반드시 필요합니다.</strong> 다만 수십억대 자산가처럼 긴급하지는 않으므로,
+    <strong>10년 단위 분할 증여 + 오피스텔 저가매매</strong> 중심의 점진적 전략이 최적입니다.
+  </div>
+</div>
+
+<!-- ==================== 2. 자산 현황표 ==================== -->
+<div class="section" id="s2">
+  <h2>2. 자산 현황표 (수정 반영)</h2>
+
+  <div class="alert alert-gold">
+    <strong>🟡 수정 반영 사항:</strong>
+    ① 2층 상가 지분 1/3 → <strong>1/2</strong>로 변경 (자녀 1/2, 부친 1/2)
+    ② 오피스텔 0.7억 → <strong>1.05억</strong> (3,500만원 × 3개)
+    ③ 동호회 수익 <strong>220만원 유지</strong> (조정 없음)
+  </div>
+
+  <h3>🧔 부친 명의 자산</h3>
+  <table>
+    <tr><th>항목</th><th>상세</th><th>공시지가 기준</th><th>시세 추정</th><th>비고</th></tr>
+    <tr class="highlight-row">
+      <td>해운대 좌동 상가 2층</td>
+      <td>591.185㎡ (약 179평) · <strong>1/2 지분</strong></td>
+      <td class="amount">🟡 8.71억</td>
+      <td class="amount">~5.0억</td>
+      <td>🟡 1/3→1/2 수정<br>시세: 10억×1/2 (층별효용비 65% 적용)</td>
+    </tr>
+    <tr>
+      <td>해운대 좌동 한라아파트</td>
+      <td>1/2 지분</td>
+      <td class="amount">1.85억</td>
+      <td class="amount">~2.5억</td>
+      <td>부모님 실거주 주택</td>
+    </tr>
+    <tr>
+      <td>금융자산 (예금·보험)</td>
+      <td>-</td>
+      <td class="amount">0.70억</td>
+      <td class="amount">0.70억</td>
+      <td>보험 환산액 별도</td>
+    </tr>
+    <tr style="background:#e8f4fd; font-weight:700;">
+      <td colspan="2">🧔 부친 소계</td>
+      <td class="amount">11.26억</td>
+      <td class="amount">~8.20억</td>
+      <td></td>
+    </tr>
+  </table>
+
+  <h3>👩 모친 명의 자산</h3>
+  <table>
+    <tr><th>항목</th><th>상세</th><th>공시지가 기준</th><th>시세 추정</th><th>비고</th></tr>
+    <tr>
+      <td>해운대 좌동 상가 1층</td>
+      <td>427.42㎡ (약 129평) · 1/3 지분</td>
+      <td class="amount">4.19억</td>
+      <td class="amount">~3.33억</td>
+      <td>시세: 10억×1/3</td>
+    </tr>
+    <tr>
+      <td>해운대 좌동 한라아파트</td>
+      <td>1/2 지분</td>
+      <td class="amount">1.85억</td>
+      <td class="amount">~2.5억</td>
+      <td>부모님 실거주 주택</td>
+    </tr>
+    <tr class="highlight-row">
+      <td>부산 소재 오피스텔</td>
+      <td>3개 보유 (단독 명의)</td>
+      <td class="amount">🟡 1.05억</td>
+      <td class="amount">1.05~1.50억</td>
+      <td>🟡 3,500만×3개 = 1.05억</td>
+    </tr>
+    <tr style="background:#fce4ec; font-weight:700;">
+      <td colspan="2">👩 모친 소계</td>
+      <td class="amount">7.09억</td>
+      <td class="amount">~6.88억</td>
+      <td></td>
+    </tr>
+  </table>
+
+  <h3>📊 가계 자산 총괄</h3>
+  <table>
+    <tr><th>구분</th><th>공시지가 기준</th><th>시세 추정</th><th>상속세 과세 대상</th></tr>
+    <tr>
+      <td>🧔 부친 자산</td>
+      <td class="amount">11.26억</td>
+      <td class="amount">~8.20억</td>
+      <td>부친 사망 시 상속재산</td>
+    </tr>
+    <tr>
+      <td>👩 모친 자산</td>
+      <td class="amount">7.09억</td>
+      <td class="amount">~6.88억</td>
+      <td>모친 사망 시 상속재산</td>
+    </tr>
+    <tr style="background:var(--navy); color:#fff; font-weight:700;">
+      <td>🏠 부모님 합계</td>
+      <td class="amount" style="color:var(--gold);">18.35억</td>
+      <td class="amount" style="color:var(--gold);">~15.08억</td>
+      <td>상속세 계산 기준</td>
+    </tr>
+    <tr style="color:var(--gray);">
+      <td>참고) 자녀(연하) 자산</td>
+      <td class="amount">8.71억 (2층 1/2)</td>
+      <td class="amount">~5.0억</td>
+      <td>상속 대상 아님</td>
+    </tr>
+  </table>
+
+  <div class="alert alert-blue">
+    <strong>📌 공시지가 vs 시세:</strong> 상속세는 원칙적으로 <strong>시가</strong>(매매사례가·감정평가액·공매가) 기준입니다.
+    시가를 알 수 없는 경우 <strong>보충적 평가방법</strong>(공시지가·기준시가)을 사용합니다.
+    실제 과세 시 국세청이 감정평가를 요구할 수 있으며, 이 경우 공시지가보다 높거나 낮을 수 있습니다.
+    <br><br>
+    이 보고서에서는 <strong>공시지가 기준(보수적)</strong>과 <strong>시세 추정(현실적)</strong> 두 가지로 병행 분석합니다.
+  </div>
+</div>
+
+<!-- ==================== 3. 소득 현황표 ==================== -->
+<div class="section" id="s3">
+  <h2>3. 소득 현황표 (수정 반영)</h2>
+
+  <table>
+    <tr><th>귀속</th><th>항목</th><th>월 수입</th><th>연 수입</th><th>수정</th><th>비고</th></tr>
+    <tr>
+      <td rowspan="5">🧔 부친</td>
+      <td>국민연금 (공적연금)</td>
+      <td class="amount">70.0만</td>
+      <td class="amount">840만</td>
+      <td></td>
+      <td>조정 불가 (고정)</td>
+    </tr>
+    <tr class="highlight-row">
+      <td>동호회 운영 수익</td>
+      <td class="amount">🟡 220.0만</td>
+      <td class="amount">🟡 2,640만</td>
+      <td>🟡</td>
+      <td>🟡 220만 유지 (조정 없음)</td>
+    </tr>
+    <tr>
+      <td>교회 월세 수익</td>
+      <td class="amount">100.0만</td>
+      <td class="amount">1,200만</td>
+      <td></td>
+      <td>임대소득</td>
+    </tr>
+    <tr>
+      <td>주민센터 활동비</td>
+      <td class="amount">30.0만</td>
+      <td class="amount">360만</td>
+      <td></td>
+      <td>활동 기간에 따라 변동</td>
+    </tr>
+    <tr>
+      <td>금융자산 이자</td>
+      <td class="amount">20.0만</td>
+      <td class="amount">240만</td>
+      <td></td>
+      <td>예금 이자</td>
+    </tr>
+    <tr style="background:#e8f4fd; font-weight:600;">
+      <td></td>
+      <td>🧔 부친 소계</td>
+      <td class="amount">440.0만</td>
+      <td class="amount">5,280만</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="highlight-row">
+      <td>👩 모친</td>
+      <td>오피스텔 월세 (3개 합산)</td>
+      <td class="amount">🟡 75.0만</td>
+      <td class="amount">🟡 900만</td>
+      <td>🟡</td>
+      <td>3,500만×3개 보유, 각 ~25만/월</td>
+    </tr>
+    <tr style="background:var(--navy); color:#fff; font-weight:700;">
+      <td></td>
+      <td>🏠 가계 합산</td>
+      <td class="amount" style="color:var(--gold);">515.0만</td>
+      <td class="amount" style="color:var(--gold);">6,180만</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+
+  <div class="alert alert-gold">
+    <strong>💡 소득세 관련:</strong> 동호회 수익 220만원은 사업소득 또는 기타소득으로 과세될 수 있습니다.
+    교회 월세 100만원은 임대소득으로 종합소득세 신고 대상입니다.
+    이 소득들은 상속세와 직접 관련은 없으나, <strong>소득 축적 → 금융자산 증가 → 상속재산 증가</strong> 경로로 간접 영향을 줍니다.
+  </div>
+</div>
+
+<!-- ==================== 4. 상속세 시뮬레이션 ==================== -->
+<div class="section" id="s4">
+  <h2>4. 상속세 시뮬레이션 — 시나리오별</h2>
+
+  <div class="alert alert-blue">
+    <strong>📌 상속세 세율표 (현행법 2026년 기준)</strong><br>
+    상속세 및 증여세법 제26조 · 상속세는 피상속인(사망자) 기준으로 전체 상속재산에 과세됩니다.
+  </div>
+
+  <table>
+    <tr><th>과세표준</th><th>세율</th><th>누진공제</th><th>예시: 5억 과세 시</th></tr>
+    <tr><td>1억 이하</td><td>10%</td><td>-</td><td rowspan="5" style="vertical-align:middle; text-align:center; font-weight:700; color:var(--navy);">
+      5억 × 20% - 1,000만<br>= <span style="color:var(--red);">9,000만원</span>
+    </td></tr>
+    <tr><td>1억 초과 ~ 5억</td><td>20%</td><td>1,000만</td></tr>
+    <tr><td>5억 초과 ~ 10억</td><td>30%</td><td>6,000만</td></tr>
+    <tr><td>10억 초과 ~ 30억</td><td>40%</td><td>1억 6,000만</td></tr>
+    <tr><td>30억 초과</td><td>50%</td><td>4억 6,000만</td></tr>
+  </table>
+
+  <table>
+    <tr><th>주요 공제 항목</th><th>금액</th><th>요건</th></tr>
+    <tr><td>기초공제</td><td>2억원</td><td>모든 상속에 적용</td></tr>
+    <tr><td>일괄공제</td><td>5억원</td><td>기초공제+인적공제 대신 선택 가능 (대부분 유리)</td></tr>
+    <tr style="background:#fff3cd;"><td><strong>배우자공제</strong></td><td><strong>최소 5억 ~ 최대 30억</strong></td><td><strong>배우자가 생존하여 상속받는 경우만 적용 (핵심!)</strong></td></tr>
+    <tr><td>금융재산공제</td><td>순금융재산의 20% (최대 2억)</td><td>금융부채 차감 후 순금융재산 기준</td></tr>
+    <tr><td>동거주택상속공제</td><td>최대 6억원</td><td>10년 이상 동거 + 1세대1주택 등 엄격한 요건</td></tr>
+  </table>
+
+  <!-- 시나리오 1 -->
+  <div class="scenario-box safe" id="scenario1">
+    <div class="scenario-title">
+      시나리오 1️⃣ 부친 먼저 사망 시 (1차 상속) <span class="badge-tag badge-safe">세금 미미</span>
+    </div>
+
+    <table>
+      <tr><th colspan="2">항목</th><th>자녀 1명 가정</th><th>자녀 2명 가정</th><th>자녀 3명 가정</th></tr>
+      <tr><td colspan="2">상속재산 (공시지가)</td><td class="amount">11.26억</td><td class="amount">11.26억</td><td class="amount">11.26억</td></tr>
+      <tr><td rowspan="2">배우자 법정상속분</td><td>비율</td><td>1.5/2.5 = 60%</td><td>1.5/3.5 = 43%</td><td>1.5/4.5 = 33%</td></tr>
+      <tr><td>금액</td><td class="amount">6.76억</td><td class="amount">4.83억</td><td class="amount">3.75억</td></tr>
+      <tr style="background:#fff9e6;"><td colspan="2"><strong>배우자공제 적용액</strong></td>
+        <td class="amount"><strong>6.76억</strong></td>
+        <td class="amount"><strong>5.00억</strong> (최소 보장)</td>
+        <td class="amount"><strong>5.00억</strong> (최소 보장)</td>
+      </tr>
+      <tr><td colspan="2">일괄공제</td><td class="amount">5.00억</td><td class="amount">5.00억</td><td class="amount">5.00억</td></tr>
+      <tr><td colspan="2">금융재산공제</td><td class="amount">0.14억</td><td class="amount">0.14억</td><td class="amount">0.14억</td></tr>
+      <tr><td colspan="2"><strong>공제 합계</strong></td>
+        <td class="amount"><strong>11.90억</strong></td>
+        <td class="amount"><strong>10.14억</strong></td>
+        <td class="amount"><strong>10.14억</strong></td>
+      </tr>
+      <tr style="background:#e8f4fd;"><td colspan="2"><strong>과세표준</strong></td>
+        <td class="amount tax-green"><strong>0원</strong></td>
+        <td class="amount"><strong>1.12억</strong></td>
+        <td class="amount"><strong>1.12억</strong></td>
+      </tr>
+      <tr style="background:var(--navy); color:#fff;"><td colspan="2"><strong>상속세</strong></td>
+        <td class="amount" style="color:var(--gold);"><strong>0원</strong></td>
+        <td class="amount" style="color:var(--gold);"><strong>1,240만원</strong></td>
+        <td class="amount" style="color:var(--gold);"><strong>1,240만원</strong></td>
+      </tr>
+    </table>
+
+    <div class="alert alert-green">
+      <strong>✅ 1차 상속세 부담: 극히 낮음.</strong> 배우자공제(최소 5억) + 일괄공제(5억) = 최소 10억 공제가 가능하므로,
+      부친 자산 11.26억에 대한 실질 세금은 <strong>0원 ~ 최대 1,240만원</strong> 수준입니다.
+    </div>
+  </div>
+
+  <!-- 시나리오 2 -->
+  <div class="scenario-box safe" id="scenario2">
+    <div class="scenario-title">
+      시나리오 2️⃣ 모친 먼저 사망 시 (1차 상속) <span class="badge-tag badge-safe">세금 없음</span>
+    </div>
+
+    <table>
+      <tr><th colspan="2">항목</th><th>자녀 1명</th><th>자녀 2명</th><th>자녀 3명</th></tr>
+      <tr><td colspan="2">상속재산 (공시지가)</td><td class="amount">7.09억</td><td class="amount">7.09억</td><td class="amount">7.09억</td></tr>
+      <tr><td colspan="2">배우자공제</td><td class="amount">4.25억→5.00억</td><td class="amount">3.04억→5.00억</td><td class="amount">2.36억→5.00억</td></tr>
+      <tr><td colspan="2">일괄공제</td><td class="amount">5.00억</td><td class="amount">5.00억</td><td class="amount">5.00억</td></tr>
+      <tr><td colspan="2"><strong>공제 합계</strong></td><td class="amount"><strong>10.00억</strong></td><td class="amount"><strong>10.00억</strong></td><td class="amount"><strong>10.00억</strong></td></tr>
+      <tr style="background:#e8f4fd;"><td colspan="2"><strong>과세표준</strong></td>
+        <td class="amount tax-green" colspan="3" style="text-align:center;"><strong>0원 (공제 > 상속재산)</strong></td>
+      </tr>
+      <tr style="background:var(--navy); color:#fff;"><td colspan="2"><strong>상속세</strong></td>
+        <td class="amount" style="color:var(--gold);" colspan="3" style="text-align:center;"><strong>0원</strong></td>
+      </tr>
+    </table>
+
+    <div class="alert alert-green">
+      <strong>✅ 모친 자산 7.09억 < 최소 공제 10억.</strong> 어떤 시나리오에서도 1차 상속세는 <strong>0원</strong>입니다.
+    </div>
+  </div>
+
+  <!-- 시나리오 3 (핵심!) -->
+  <div class="scenario-box danger" id="scenario3">
+    <div class="scenario-title">
+      ⚠️ 시나리오 3️⃣ 2차 상속 — 생존 배우자 사망 시 <span class="badge-tag badge-danger">핵심 위험</span>
+    </div>
+
+    <div class="alert alert-red">
+      <strong>🔴 핵심:</strong> 2차 상속 시에는 <strong>배우자공제가 없습니다</strong> (배우자가 이미 사망했으므로).
+      일괄공제 5억만 적용됩니다. 이것이 상속세 부담의 <strong>가장 큰 위험 구간</strong>입니다.
+    </div>
+
+    <h3>Case 3-A: 부친 먼저 사망 → 모친 나중 사망</h3>
+    <p>모친이 부친 사망 시 법정상속분(33%~60%)을 상속받은 후, 모친 사망 시점의 자산:</p>
+
+    <table>
+      <tr><th>모친이 상속받은 금액</th><th>모친 기존자산</th><th>모친 최종자산</th><th>과세표준<br>(일괄5억 차감)</th><th style="background:var(--red);">2차 상속세</th><th>1차+2차 합계</th></tr>
+      <tr>
+        <td>3.75억 (법정 1/3)</td>
+        <td class="amount">7.09억</td>
+        <td class="amount">10.84억</td>
+        <td class="amount">5.54억</td>
+        <td class="amount tax-red"><strong>1.06억</strong></td>
+        <td class="amount"><strong>1.19억</strong></td>
+      </tr>
+      <tr class="highlight-row">
+        <td>5.00억 (배우자공제 활용)</td>
+        <td class="amount">7.09억</td>
+        <td class="amount">12.09억</td>
+        <td class="amount">6.79억</td>
+        <td class="amount tax-red"><strong>1.44억</strong></td>
+        <td class="amount"><strong>1.56억</strong></td>
+      </tr>
+      <tr class="danger-row">
+        <td>6.76억 (자녀1명, 배우자60%)</td>
+        <td class="amount">7.09억</td>
+        <td class="amount">13.85억</td>
+        <td class="amount">8.55억</td>
+        <td class="amount tax-red"><strong>1.97억</strong></td>
+        <td class="amount"><strong>1.97억</strong></td>
+      </tr>
+      <tr class="danger-row">
+        <td>8.00억 (과다 상속)</td>
+        <td class="amount">7.09억</td>
+        <td class="amount">15.09억</td>
+        <td class="amount">9.79억</td>
+        <td class="amount tax-red"><strong>2.34억</strong></td>
+        <td class="amount"><strong>2.46억</strong></td>
+      </tr>
+    </table>
+
+    <h3>Case 3-B: 모친 먼저 사망 → 부친 나중 사망</h3>
+    <table>
+      <tr><th>부친이 상속받은 금액</th><th>부친 기존자산</th><th>부친 최종자산</th><th>과세표준</th><th style="background:var(--red);">2차 상속세</th><th>1차+2차 합계</th></tr>
+      <tr>
+        <td>2.36억 (법정 1/3)</td>
+        <td class="amount">11.26억</td>
+        <td class="amount">13.62억</td>
+        <td class="amount">8.32억</td>
+        <td class="amount tax-red"><strong>1.90억</strong></td>
+        <td class="amount"><strong>1.90억</strong></td>
+      </tr>
+      <tr class="highlight-row">
+        <td>5.00억 (배우자공제 활용)</td>
+        <td class="amount">11.26억</td>
+        <td class="amount">16.26억</td>
+        <td class="amount">10.96억</td>
+        <td class="amount tax-red"><strong>2.78억</strong></td>
+        <td class="amount"><strong>2.78억</strong></td>
+      </tr>
+    </table>
+
+    <div class="alert alert-red">
+      <strong>🔴 핵심 발견:</strong><br>
+      • <strong>1차+2차 상속세 합산: 1.19억 ~ 2.78억</strong> (시나리오에 따라 다름)<br>
+      • <strong>1.5억 달성 가능성: YES</strong> — 배우자가 5억 이상 상속받으면 2차에서 충분히 초과<br>
+      • <strong>최적 전략:</strong> 1차 상속에서 배우자에게 <strong>최소한만 상속</strong> (법정상속분) → 2차 세금 최소화<br>
+      • <strong>부친이 나중에 사망하는 경우가 세금 부담 더 큼</strong> (부친 자산이 더 크므로)
+    </div>
+  </div>
+
+  <!-- 1+2차 최적화 비교 -->
+  <div class="scenario-box">
+    <div class="scenario-title">📊 1차+2차 합산 세금 최적화 비교 (자녀 3명 기준)</div>
+    <table>
+      <tr><th>시나리오</th><th>1차 상속세</th><th>2차 상속세</th><th>합산</th><th>판정</th></tr>
+      <tr class="success-row">
+        <td>부친 먼저 사망, 모친 법정상속분만</td>
+        <td class="amount">1,240만</td>
+        <td class="amount">1.06억</td>
+        <td class="amount"><strong>1.19억</strong></td>
+        <td><span class="badge-tag badge-safe">최적</span></td>
+      </tr>
+      <tr class="highlight-row">
+        <td>부친 먼저 사망, 모친 5억 상속</td>
+        <td class="amount">1,240만</td>
+        <td class="amount">1.44억</td>
+        <td class="amount"><strong>1.56억</strong></td>
+        <td><span class="badge-tag badge-warning">주의</span></td>
+      </tr>
+      <tr>
+        <td>모친 먼저 사망, 부친 법정상속분만</td>
+        <td class="amount">0원</td>
+        <td class="amount">1.90억</td>
+        <td class="amount"><strong>1.90억</strong></td>
+        <td><span class="badge-tag badge-warning">불리</span></td>
+      </tr>
+      <tr class="danger-row">
+        <td>모친 먼저 사망, 부친 5억 상속</td>
+        <td class="amount">0원</td>
+        <td class="amount">2.78억</td>
+        <td class="amount"><strong>2.78억</strong></td>
+        <td><span class="badge-tag badge-danger">최악</span></td>
+      </tr>
+    </table>
+
+    <div class="alert alert-gold">
+      <strong>💡 인사이트:</strong> 사망 순서는 통제할 수 없지만, <strong>사전 증여로 2차 상속 재산을 줄이는 것</strong>이 가장 확실한 절세 방법입니다.
+      특히 <strong>부친 자산(11.26억)이 모친(7.09억)보다 크므로</strong>, 부친 명의 자산을 먼저 분산하는 것이 중요합니다.
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 5. 1.5억 도달 가능성 ==================== -->
+<div class="section" id="s5">
+  <h2>5. 1.5억 도달 가능성 분석</h2>
+
+  <div class="alert alert-red">
+    <strong>🔴 결론: 1.5억 도달 가능성 = <span style="font-size:1.3rem;">YES (충분히 가능)</span></strong>
+  </div>
+
+  <table>
+    <tr><th>조건</th><th>1+2차 합산 세금</th><th>1.5억 초과?</th><th>설명</th></tr>
+    <tr class="success-row">
+      <td>최선의 경우 (부친먼저, 모친 최소상속)</td>
+      <td class="amount">1.19억</td>
+      <td class="tax-green">미달</td>
+      <td>법정상속분만 상속 + 일괄공제 최대 활용</td>
+    </tr>
+    <tr class="highlight-row">
+      <td>중간 경우</td>
+      <td class="amount">1.56억</td>
+      <td class="tax-red"><strong>초과 ✓</strong></td>
+      <td>배우자가 5억 상속 시</td>
+    </tr>
+    <tr class="danger-row">
+      <td>불리한 경우 (모친먼저, 부친 많이 상속)</td>
+      <td class="amount">2.78억</td>
+      <td class="tax-red"><strong>대폭 초과 ✓</strong></td>
+      <td>부친이 모친 재산 추가 상속 후 사망</td>
+    </tr>
+    <tr class="danger-row">
+      <td>20년 후 (자산가치 상승)</td>
+      <td class="amount">2.5~4.0억+</td>
+      <td class="tax-red"><strong>대폭 초과 ✓</strong></td>
+      <td>연 3% 부동산 가치 상승 반영 (다음 섹션 상세)</td>
+    </tr>
+  </table>
+
+  <div class="alert alert-orange">
+    <strong>⚠️ 현실적 판단:</strong><br>
+    • 현재 자산 규모(18.35억)에서 <strong>배우자공제 없는 2차 상속 시 1.5억 초과는 현실적으로 발생</strong>합니다.<br>
+    • 다만 수십억대 자산가의 "상속세 폭탄"과는 수준이 다릅니다. <strong>적절한 사전 증여</strong>만으로도 상당히 줄일 수 있습니다.<br>
+    • <strong>긴급도: 중간</strong> — 당장 올해 안에 해결해야 할 수준은 아니지만, 10년 단위 증여 주기를 고려하면 <strong>빠를수록 유리</strong>합니다.
+  </div>
+</div>
+
+<!-- ==================== 6. 증여세 시뮬레이션 ==================== -->
+<div class="section" id="s6">
+  <h2>6. 증여세 시뮬레이션</h2>
+
+  <div class="alert alert-blue">
+    <strong>📌 증여세 면세한도 (현행법):</strong> 직계존속 → 성인 자녀: <strong>5,000만원 / 10년</strong><br>
+    부모 각각이 아닌 <strong>수증자(받는 사람) 기준</strong>으로 합산합니다. 즉 부+모에게서 합쳐서 10년간 5,000만원까지 비과세.
+  </div>
+
+  <h3>증여세 세율표 (상속세와 동일)</h3>
+  <table>
+    <tr><th>과세표준 (증여재산-공제)</th><th>세율</th><th>누진공제</th><th>실질 세금 예시</th></tr>
+    <tr><td>1억 이하</td><td>10%</td><td>-</td><td>1억 증여 시: 500만원 (공제 후)</td></tr>
+    <tr><td>1억~5억</td><td>20%</td><td>1,000만</td><td>3억 증여 시: 4,000만원</td></tr>
+    <tr><td>5억~10억</td><td>30%</td><td>6,000만</td><td>7억 증여 시: 1.5억</td></tr>
+    <tr><td>10억~30억</td><td>40%</td><td>1.6억</td><td>-</td></tr>
+    <tr><td>30억 초과</td><td>50%</td><td>4.6억</td><td>-</td></tr>
+  </table>
+
+  <h3>오피스텔 3개 증여 시 세금 비교</h3>
+  <table>
+    <tr><th>방법</th><th>이전 금액</th><th>과세표준</th><th>증여세</th><th>절세 효과</th></tr>
+    <tr>
+      <td>일반 증여 (시가 기준)</td>
+      <td class="amount">1.05억</td>
+      <td class="amount">5,500만<br>(1.05억-5,000만 공제)</td>
+      <td class="amount tax-red">1,000만원</td>
+      <td>상속 시 과세 제외</td>
+    </tr>
+    <tr class="success-row">
+      <td><strong>저가매매</strong> (시가의 70%)</td>
+      <td class="amount">7,350만<br>(1.05억×70%)</td>
+      <td class="amount">0원<br>(시가-대가 차액 30%<br>= 3,150만 &lt; 3억 기준금액)</td>
+      <td class="amount tax-green"><strong>0원</strong></td>
+      <td><strong>최적!</strong> 세금 0 + 상속재산 감소</td>
+    </tr>
+    <tr>
+      <td>10년 분할 증여</td>
+      <td class="amount">5,000만/10년</td>
+      <td class="amount">0원</td>
+      <td class="amount tax-green">0원</td>
+      <td>시간 필요 (20년간 1억)</td>
+    </tr>
+  </table>
+
+  <div class="alert alert-green">
+    <strong>✅ 오피스텔 저가매매 전략:</strong> 시가의 70% 이상으로 매매하면 증여세가 <strong>0원</strong>입니다.
+    <br>• 오피스텔 3개(1.05억) → 시가 70% = 7,350만원에 자녀에게 매매
+    <br>• 차액 3,150만원 &lt; 시가와 대가 차액의 30%(또는 3억원) → <strong>증여세 비과세</strong>
+    <br>• 매매대금은 부모에게 실제 지급해야 함 (통장 이체 기록 필수)
+  </div>
+
+  <h3>10년 단위 분할 증여 시뮬레이션 (20~30년 로드맵)</h3>
+  <table>
+    <tr><th>기간</th><th>증여 대상</th><th>금액</th><th>누적 이전액</th><th>증여세</th></tr>
+    <tr>
+      <td>1~10년차 (2026~2036)</td>
+      <td>현금 + 오피스텔 저가매매</td>
+      <td>5,000만 (면세) + 오피스텔 1.05억</td>
+      <td class="amount">1.55억</td>
+      <td class="amount tax-green">0원</td>
+    </tr>
+    <tr>
+      <td>11~20년차 (2036~2046)</td>
+      <td>현금 증여</td>
+      <td>5,000만 (면세)</td>
+      <td class="amount">2.05억</td>
+      <td class="amount tax-green">0원</td>
+    </tr>
+    <tr>
+      <td>21~30년차 (2046~2056)</td>
+      <td>현금 증여</td>
+      <td>5,000만 (면세)</td>
+      <td class="amount">2.55억</td>
+      <td class="amount tax-green">0원</td>
+    </tr>
+    <tr style="background:var(--navy); color:#fff; font-weight:700;">
+      <td colspan="2">30년간 비과세 이전 총액</td>
+      <td colspan="2" class="amount" style="color:var(--gold);">2.55억</td>
+      <td class="amount" style="color:var(--gold);">0원</td>
+    </tr>
+  </table>
+
+  <div class="alert alert-gold">
+    <strong>💡 자녀가 여러 명이면:</strong> 각 자녀에게 10년마다 5,000만원씩 = 자녀 3명 × 30년 = <strong>4.5억 비과세 이전 가능!</strong>
+    <br>+ 손자녀에게도 10년간 5,000만원(미성년 2,000만원) 증여 가능 → 세대 건너뛰기 효과
+  </div>
+</div>
+
+<!-- ==================== 7. 20~30년 장기 전략 ==================== -->
+<div class="section" id="s7">
+  <h2>7. 20~30년 장기 전략 (장수 유전자 반영)</h2>
+
+  <div class="alert alert-orange">
+    <strong>⚠️ 전제:</strong> 부모님이 <strong>20~30년 더 장수</strong>하시는 경우, 부동산 가치 상승으로 상속세 부담이 크게 증가합니다.
+    아래는 연 3% 부동산 가치 상승을 가정한 시뮬레이션입니다.
+  </div>
+
+  <h3>부동산 가치 변동 전망 (연 3% 상승 가정)</h3>
+  <table>
+    <tr><th>자산</th><th>현재 (2026)</th><th>10년 후 (2036)</th><th>20년 후 (2046)</th><th>30년 후 (2056)</th></tr>
+    <tr>
+      <td>2층 상가 1/2 (부친)</td>
+      <td class="amount">8.71억</td>
+      <td class="amount">11.70억</td>
+      <td class="amount">15.73억</td>
+      <td class="amount">21.14억</td>
+    </tr>
+    <tr>
+      <td>1층 상가 1/3 (모친)</td>
+      <td class="amount">4.19억</td>
+      <td class="amount">5.63억</td>
+      <td class="amount">7.57억</td>
+      <td class="amount">10.17억</td>
+    </tr>
+    <tr>
+      <td>한라아파트 전체</td>
+      <td class="amount">3.70억</td>
+      <td class="amount">4.97억</td>
+      <td class="amount">6.68억</td>
+      <td class="amount">8.98억</td>
+    </tr>
+    <tr>
+      <td>오피스텔 3개</td>
+      <td class="amount">1.05억</td>
+      <td class="amount">1.41억</td>
+      <td class="amount">1.90억</td>
+      <td class="amount">2.55억</td>
+    </tr>
+    <tr style="background:var(--navy); color:#fff; font-weight:700;">
+      <td>부모님 자산 합계</td>
+      <td class="amount" style="color:var(--gold);">18.35억</td>
+      <td class="amount" style="color:var(--gold);">24.66억</td>
+      <td class="amount" style="color:var(--gold);">33.14억</td>
+      <td class="amount" style="color:var(--gold);">44.54억</td>
+    </tr>
+  </table>
+
+  <h3>20년 후 2차 상속세 시뮬레이션 (부친 먼저 사망 가정)</h3>
+  <table>
+    <tr><th>시점</th><th>모친 최종자산</th><th>과세표준</th><th style="background:var(--red);">2차 상속세</th><th>현재 대비 증가</th></tr>
+    <tr>
+      <td>현재 (2026)</td>
+      <td class="amount">10.84억</td>
+      <td class="amount">5.54억</td>
+      <td class="amount">1.06억</td>
+      <td>기준</td>
+    </tr>
+    <tr class="highlight-row">
+      <td>10년 후 (2036)</td>
+      <td class="amount">14.57억</td>
+      <td class="amount">9.27억</td>
+      <td class="amount tax-red"><strong>2.18억</strong></td>
+      <td>+1.12억 (2.1배)</td>
+    </tr>
+    <tr class="danger-row">
+      <td><strong>20년 후 (2046)</strong></td>
+      <td class="amount"><strong>19.58억</strong></td>
+      <td class="amount"><strong>14.28억</strong></td>
+      <td class="amount tax-red"><strong>4.11억</strong></td>
+      <td><strong>+3.05억 (3.9배)</strong></td>
+    </tr>
+    <tr class="danger-row">
+      <td>30년 후 (2056)</td>
+      <td class="amount">26.31억</td>
+      <td class="amount">21.01억</td>
+      <td class="amount tax-red"><strong>6.80억</strong></td>
+      <td>+5.74억 (6.4배)</td>
+    </tr>
+  </table>
+
+  <div class="alert alert-red">
+    <strong>🔴 장수 리스크:</strong> 부모님이 20년 더 사시면 2차 상속세가 <strong>4억 이상</strong>,
+    30년이면 <strong>6.8억</strong>까지 증가할 수 있습니다.
+    이는 부동산 가치 상승 + 배우자공제 부재가 결합된 효과입니다.
+    <br><br>
+    <strong>→ 지금부터 10년 단위 분할 증여를 시작하면, 20~30년간 2.55~4.5억을 비과세로 이전할 수 있어
+    이 세금 부담을 절반 이하로 줄일 수 있습니다.</strong>
+  </div>
+
+  <h3>📉 사전 대응 시 vs 미대응 시 세금 비교 (20년 후)</h3>
+  <div class="comparison-grid">
+    <div class="box box-bad">
+      <h4 style="color:var(--red);">❌ 미대응 시</h4>
+      <table>
+        <tr><td>1차 상속세</td><td class="amount">~1,240만</td></tr>
+        <tr><td>2차 상속세</td><td class="amount tax-red">~4.11억</td></tr>
+        <tr style="font-weight:700;"><td>합계</td><td class="amount tax-red">~4.24억</td></tr>
+      </table>
+    </div>
+    <div class="box box-good">
+      <h4 style="color:var(--green);">✅ 사전 대응 시</h4>
+      <table>
+        <tr><td>1차 상속세</td><td class="amount">~0원</td></tr>
+        <tr><td>2차 상속세 (증여로 축소)</td><td class="amount tax-green">~1.5~2.0억</td></tr>
+        <tr><td>증여세</td><td class="amount tax-green">0원 (면세 범위)</td></tr>
+        <tr style="font-weight:700;"><td>합계</td><td class="amount tax-green">~1.5~2.0억</td></tr>
+      </table>
+      <p style="color:var(--green); font-weight:700; margin-top:8px;">절감액: 약 2.0~2.7억!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 8. 최고 절세 전략 로드맵 ==================== -->
+<div class="section" id="s8">
+  <h2>8. 최고 절세 전략 로드맵</h2>
+
+  <div class="strategy-card">
+    <h4>🥇 전략 1: 오피스텔 저가매매 (즉시 실행 가능)</h4>
+    <table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td>대상</td><td>모친 명의 오피스텔 3개 (3,500만 × 3 = 1.05억)</td></tr>
+      <tr><td>방법</td><td>시가의 70% 이상 가격으로 자녀에게 매매 (7,350만원)</td></tr>
+      <tr><td>증여세</td><td class="tax-green"><strong>0원</strong> (시가-대가 차액 &lt; 시가의 30%)</td></tr>
+      <tr><td>취득세</td><td>약 290만원 (오피스텔 4% 기준, 7,350만 × 4%)</td></tr>
+      <tr><td>효과</td><td>모친 상속재산 1.05억 감소 → 2차 상속세 약 2,100~3,150만원 절감</td></tr>
+      <tr><td>주의</td><td>실제 매매대금 통장 이체 필수 · 감정평가서 확보 권장 · 특수관계인 거래 신고</td></tr>
+    </table>
+  </div>
+
+  <div class="strategy-card">
+    <h4>🥈 전략 2: 10년 단위 분할 증여 (장기 필수)</h4>
+    <table>
+      <tr><th>기간</th><th>증여자</th><th>수증자</th><th>금액</th><th>세금</th></tr>
+      <tr><td>2026~2036</td><td>부친+모친</td><td>자녀(연하)</td><td>5,000만</td><td class="tax-green">0원</td></tr>
+      <tr><td>2036~2046</td><td>부친+모친</td><td>자녀(연하)</td><td>5,000만</td><td class="tax-green">0원</td></tr>
+      <tr><td>2046~2056</td><td>생존 부모</td><td>자녀(연하)</td><td>5,000만</td><td class="tax-green">0원</td></tr>
+      <tr style="font-weight:700; background:#eafaf1;">
+        <td colspan="3">30년간 합계</td><td>1.5억</td><td class="tax-green">0원</td>
+      </tr>
+    </table>
+    <p style="margin-top:8px;">💡 자녀가 여러 명이면: 자녀 수 × 5,000만/10년. 3명이면 30년간 <strong>4.5억</strong> 비과세 이전!</p>
+  </div>
+
+  <div class="strategy-card">
+    <h4>🥉 전략 3: 부담부증여 (채무 포함 증여)</h4>
+    <table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td>개념</td><td>부동산 + 담보대출을 함께 증여 → 대출금만큼 증여가액 차감</td></tr>
+      <tr><td>예시</td><td>2층 상가(부친 1/2, 8.71억) + 근저당 대출 4억 → 증여가액 = 8.71 - 4 = 4.71억</td></tr>
+      <tr><td>증여세</td><td>4.71 - 0.5(공제) = 4.21억 × 20% - 0.1 = <strong>7,420만원</strong></td></tr>
+      <tr><td>vs 상속 시</td><td>상속 시 2차 상속세 1.97~4.11억 중 지분 해당분</td></tr>
+      <tr><td>주의</td><td>대출을 자녀가 실제로 상환해야 함 · 양도세 발생 가능 · 전문 세무사 상담 필수</td></tr>
+    </table>
+    <div class="alert alert-orange" style="margin-top:8px;">
+      ⚠️ 부담부증여는 복잡한 세금 구조(증여세+양도세)를 동반합니다. 반드시 <strong>세무사 시뮬레이션 후 결정</strong>하세요.
+    </div>
+  </div>
+
+  <div class="strategy-card">
+    <h4>💡 전략 4: 1차 상속 시 배우자 상속분 최소화</h4>
+    <table>
+      <tr><th>전략</th><th>효과</th></tr>
+      <tr><td>1차 상속에서 배우자에게 법정상속분만 상속</td><td>2차 상속 재산 감소 → 세금 절감</td></tr>
+      <tr><td>유언장 작성으로 상속 비율 지정</td><td>분쟁 방지 + 세금 최적화</td></tr>
+      <tr><td>배우자 상속 포기 (극단적)</td><td>1차 세금 증가하나 2차 세금 대폭 감소<br>단, 합산으로는 유불리 따져야 함</td></tr>
+    </table>
+  </div>
+
+  <div class="strategy-card">
+    <h4>🏥 전략 5: 보험 활용 (상속세 재원 마련)</h4>
+    <table>
+      <tr><th>방법</th><th>내용</th></tr>
+      <tr><td>종신보험 가입</td><td>피보험자: 부모 / 수익자: 자녀 → 사망보험금으로 상속세 납부</td></tr>
+      <tr><td>주의</td><td>사망보험금은 상속재산에 포함 (간주상속재산) → 세금 증가 가능</td></tr>
+      <tr><td>대안</td><td>자녀가 직접 보험료 납부 → 상속재산 미포함 (증여세 이슈 주의)</td></tr>
+    </table>
+  </div>
+
+  <h3>📋 전략 우선순위 종합</h3>
+  <table>
+    <tr><th>우선순위</th><th>전략</th><th>절세 효과</th><th>난이도</th><th>즉시 실행?</th></tr>
+    <tr class="success-row">
+      <td>1</td>
+      <td><strong>오피스텔 저가매매</strong></td>
+      <td>2,100~3,150만 절감</td>
+      <td><span class="badge-tag badge-safe">쉬움</span></td>
+      <td><strong>✅ 즉시</strong></td>
+    </tr>
+    <tr class="success-row">
+      <td>2</td>
+      <td><strong>10년 분할 증여 시작</strong></td>
+      <td>장기 1.5~4.5억 이전</td>
+      <td><span class="badge-tag badge-safe">쉬움</span></td>
+      <td><strong>✅ 즉시</strong></td>
+    </tr>
+    <tr class="highlight-row">
+      <td>3</td>
+      <td><strong>유언장 작성</strong></td>
+      <td>분쟁 방지 + 세금 최적화</td>
+      <td><span class="badge-tag badge-info">보통</span></td>
+      <td>올해 내 권장</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>부담부증여 검토</td>
+      <td>수천만~수억 절감 가능</td>
+      <td><span class="badge-tag badge-warning">복잡</span></td>
+      <td>세무사 상담 후</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>보험 활용</td>
+      <td>세금 납부 재원 확보</td>
+      <td><span class="badge-tag badge-info">보통</span></td>
+      <td>건강 상태 고려</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ==================== 9. 사전 대응 체크리스트 ==================== -->
+<div class="section" id="s9">
+  <h2>9. 사전 대응 체크리스트</h2>
+
+  <h3>🔴 즉시 실행 (2026년 내)</h3>
+  <ul class="checklist">
+    <li class="urgent">오피스텔 3개 감정평가 의뢰 → 시가 확정</li>
+    <li class="urgent">오피스텔 저가매매 계약 체결 (시가의 70% 이상)</li>
+    <li class="urgent">첫 번째 증여 실행 (5,000만원 면세 한도 내 현금 증여)</li>
+    <li class="urgent">증여세 신고 (증여일로부터 3개월 이내) — 면세라도 신고 필수!</li>
+  </ul>
+
+  <h3>🟡 올해 내 실행 (2026년)</h3>
+  <ul class="checklist">
+    <li class="soon">부모님 각각 유언장(공정증서) 작성 — 상속 비율 지정</li>
+    <li class="soon">부모님 자산 목록 정리 (부동산 등기부, 금융계좌, 보험 목록)</li>
+    <li class="soon">상가 건물 전체 감정평가 (2층 1/2 지분 시가 확인)</li>
+    <li class="soon">세무사 상담: 부담부증여 시뮬레이션 (2층 상가 + 근저당)</li>
+    <li class="soon">동거주택상속공제 요건 점검 (10년 동거 + 1세대1주택 등)</li>
+  </ul>
+
+  <h3>🟢 중장기 계획 (2027년~)</h3>
+  <ul class="checklist">
+    <li class="plan">2036년: 두 번째 분할 증여 (5,000만원 면세)</li>
+    <li class="plan">자녀 명의 부동산 보유 시: 양도세·종부세 영향 점검</li>
+    <li class="plan">세법 개정 모니터링 (상속세율 인하 · 공제 확대 여부)</li>
+    <li class="plan">부모님 건강 변화 시: 증여 일정 앞당기기 검토</li>
+    <li class="plan">손자녀 출생 시: 세대생략증여 전략 추가</li>
+  </ul>
+
+  <div class="alert alert-gold">
+    <strong>⚠️ 주의사항:</strong><br>
+    • 증여 후 <strong>10년 이내 사망</strong> 시, 증여 재산이 상속재산에 합산됩니다 (사전증여재산 가산규정).<br>
+    • 따라서 증여는 <strong>빠를수록 유리</strong>합니다 (10년 경과 후 상속 발생 시 합산 제외).<br>
+    • 2024년 세법개정안에서 사전증여 합산기간을 15년으로 연장하는 안이 논의되었으나, 현재 미통과 상태입니다. 향후 법 개정 주시 필요.<br>
+    • 저가매매 시 <strong>실제 대금 지급 증빙</strong>이 없으면 국세청이 증여로 간주할 수 있습니다.
+  </div>
+</div>
+
+<!-- ==================== 10. 대응 필요 여부 ==================== -->
+<div class="section" id="s10">
+  <h2>10. 대응 필요 여부 — 최종 판단</h2>
+
+  <div class="summary-box">
+    <h3>🏁 최종 판단</h3>
+    <table style="color:#fff;">
+      <tr><th style="background:rgba(255,255,255,0.2); color:#fff;">질문</th><th style="background:rgba(255,255,255,0.2); color:#fff;">답변</th></tr>
+      <tr>
+        <td>자산이 크게 않아서 대응 불필요한가?</td>
+        <td><strong style="color:#e74c3c;">❌ 아닙니다.</strong> 18.35억은 2차 상속 시 1.5억+ 세금이 나오는 수준입니다.</td>
+      </tr>
+      <tr>
+        <td>상속세 1.5억 가능한가?</td>
+        <td><strong style="color:#e74c3c;">✅ 가능합니다.</strong> 2차 상속 시 1.06~2.78억 범위. 20년 후엔 4억+.</td>
+      </tr>
+      <tr>
+        <td>긴급한가?</td>
+        <td><strong style="color:var(--gold);">⚠️ 중간.</strong> 수십억대 자산가처럼 긴급하진 않지만, 증여 10년 주기를 고려하면 빠를수록 유리.</td>
+      </tr>
+      <tr>
+        <td>가장 효과적인 대응은?</td>
+        <td><strong style="color:#27ae60;">오피스텔 저가매매(즉시) + 분할 증여(장기)</strong> 조합이 최적.</td>
+      </tr>
+      <tr>
+        <td>전문가 상담 필요한가?</td>
+        <td><strong style="color:var(--gold);">⚠️ 부담부증여(2층 상가) 검토 시 반드시 필요.</strong> 단순 증여·저가매매는 자가 가능.</td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>시나리오별 전략 승계 로드맵</h3>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="year">2026년 (즉시)</div>
+      <strong>Phase 1: 소규모 자산 이전</strong><br>
+      오피스텔 3개 저가매매 + 첫 분할 증여(5,000만) → 유언장 작성
+    </div>
+    <div class="timeline-item">
+      <div class="year">2027~2030년</div>
+      <strong>Phase 2: 구조 설계</strong><br>
+      부담부증여 검토(세무사) + 보험 전략 수립 + 상가 지분 정리 방향 결정
+    </div>
+    <div class="timeline-item">
+      <div class="year">2036년</div>
+      <strong>Phase 3: 2차 분할 증여</strong><br>
+      10년 경과 후 추가 5,000만 면세 증여 실행
+    </div>
+    <div class="timeline-item">
+      <div class="year">2046년</div>
+      <strong>Phase 4: 3차 분할 증여</strong><br>
+      추가 5,000만 면세 증여 + 상황 변화에 따른 전략 재검토
+    </div>
+    <div class="timeline-item">
+      <div class="year">상속 발생 시</div>
+      <strong>Phase 5: 상속세 최적화 실행</strong><br>
+      유언장에 따른 상속분 배분 + 배우자 최소 상속 전략 + 공제 최대 활용
+    </div>
+  </div>
+
+  <div class="alert alert-green" style="font-size:1.05rem;">
+    <strong>✅ 결론:</strong> 부모님 자산 규모(18.35억)는 <strong>"대응 불필요"가 아니라 "점진적 대응 필요"</strong> 수준입니다.
+    긴급하게 수억을 움직여야 할 정도는 아니지만, <strong>지금 시작하면 20~30년 후 2~3억 이상의 세금을 줄일 수 있습니다.</strong>
+    <br><br>
+    가장 중요한 첫 걸음: <strong>① 오피스텔 저가매매 ② 첫 분할 증여 ③ 유언장 작성</strong> — 이 세 가지를 올해 안에 실행하세요.
+  </div>
+</div>
+
+<!-- ==================== FOOTNOTES ==================== -->
+<div class="section">
+  <div class="footnote">
+    <strong>면책 조항 (Disclaimer)</strong><br>
+    본 보고서는 2026년 4월 기준 현행 「상속세 및 증여세법」에 근거한 <strong>참고용 시뮬레이션</strong>입니다.
+    실제 세금은 자산 평가 방법, 세법 개정, 개인 상황에 따라 달라질 수 있습니다.
+    구체적인 실행 전에 반드시 <strong>세무사 또는 회계사의 전문 상담</strong>을 받으시기 바랍니다.
+    <br><br>
+    <strong>참고 법령:</strong> 상속세 및 증여세법 제13조(상속세 과세가액), 제18조(기초공제), 제19조(배우자상속공제),
+    제24조(일괄공제), 제26조(세율), 제35조(저가양도에 따른 이익의 증여), 제47조(증여세 과세가액), 제53조(증여재산공제)
+    <br><br>
+    <strong>공시지가 출처:</strong> 국토교통부 부동산공시가격 알리미 (2025년 기준)
+    <br><br>
+    작성일: 2026-04-12 | 분석 도구: AI 세무 시뮬레이터 | 버전: v1.0
+  </div>
+</div>
+
+<div class="footer">
+  <p>본 문서는 가족 내부 참고용으로 작성되었습니다.</p>
+  <p>상속·증여세 종합 전략 보고서 | 2026년 4월</p>
+</div>
+
+<script>
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior:'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
