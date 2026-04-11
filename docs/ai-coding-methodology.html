@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 코딩 전담 통합 방법론 | Claude Opus 4.6 + GPT-5.2-pro + Gemini 3 Pro</title>
+<style>
+:root {
+  --primary: #0f172a;
+  --primary-light: #1e293b;
+  --accent: #3b82f6;
+  --accent2: #8b5cf6;
+  --accent3: #06b6d4;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warn: #f59e0b;
+  --orange: #f97316;
+  --pink: #ec4899;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --code-bg: #1e293b;
+  --code-text: #e2e8f0;
+  --gradient1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  --gradient5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Pretendard Variable','Pretendard','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif; background:var(--bg); color:var(--text); line-height:1.8; }
+.container { max-width:1280px; margin:0 auto; padding:20px; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 40%, #312e81 100%); color:#fff; padding:60px 20px 50px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:0; left:0; right:0; bottom:0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+.hero h1 { font-size:2.8rem; font-weight:800; margin-bottom:12px; position:relative; }
+.hero .subtitle { font-size:1.1rem; color:#94a3b8; margin-bottom:8px; position:relative; }
+.hero .models { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:20px; position:relative; }
+.hero .model-badge { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:6px 16px; border-radius:20px; font-size:0.85rem; backdrop-filter:blur(4px); }
+.hero .model-badge.opus { border-color:#8b5cf6; color:#c4b5fd; }
+.hero .model-badge.gpt { border-color:#10b981; color:#6ee7b7; }
+.hero .model-badge.gemini { border-color:#3b82f6; color:#93c5fd; }
+.hero .sources { font-size:0.85rem; color:#64748b; margin-top:12px; position:relative; }
+
+/* TOC */
+.toc { background:var(--card); border-radius:16px; padding:28px 32px; margin:30px auto; max-width:800px; box-shadow:0 4px 24px rgba(0,0,0,0.06); border:1px solid var(--border); }
+.toc h2 { font-size:1.3rem; color:var(--primary); margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.toc ol { list-style:none; counter-reset:toc; display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; }
+.toc li { counter-increment:toc; }
+.toc a { text-decoration:none; color:var(--accent); font-weight:500; display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; transition:all 0.2s; }
+.toc a:hover { background:#eff6ff; }
+.toc a::before { content:counter(toc)'.'; color:var(--muted); font-weight:700; min-width:24px; }
+
+/* Section */
+.section { margin-top:48px; }
+.section-title { font-size:1.8rem; font-weight:800; color:var(--primary); margin-bottom:6px; display:flex; align-items:center; gap:12px; }
+.section-title .num { background:var(--accent); color:#fff; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; flex-shrink:0; }
+.section-desc { color:var(--muted); margin-bottom:24px; font-size:0.95rem; }
+
+/* Cards */
+.card { background:var(--card); border-radius:14px; padding:24px; margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,0.04); border:1px solid var(--border); }
+.card-title { font-size:1.15rem; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+
+/* Tables */
+table { width:100%; border-collapse:separate; border-spacing:0; margin:16px 0; border-radius:12px; overflow:hidden; box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+thead th { background:var(--primary); color:#fff; padding:14px 16px; text-align:left; font-weight:600; font-size:0.9rem; white-space:nowrap; }
+tbody td { padding:12px 16px; border-bottom:1px solid var(--border); font-size:0.9rem; vertical-align:top; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:nth-child(even) { background:#f8fafc; }
+tbody tr:hover { background:#eff6ff; }
+.highlight-a { background:linear-gradient(90deg, #dbeafe, transparent); }
+.highlight-b { background:linear-gradient(90deg, #dcfce7, transparent); }
+.highlight-c { background:linear-gradient(90deg, #fce7f3, transparent); }
+
+/* Mode Cards */
+.mode-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin:20px 0; }
+.mode-card { border-radius:16px; padding:24px; color:#fff; position:relative; overflow:hidden; }
+.mode-card::after { content:''; position:absolute; top:-30px; right:-30px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,0.1); }
+.mode-a { background:linear-gradient(135deg, #3b82f6, #2563eb); }
+.mode-b { background:linear-gradient(135deg, #10b981, #059669); }
+.mode-c { background:linear-gradient(135deg, #8b5cf6, #7c3aed); }
+.mode-card h3 { font-size:1.4rem; margin-bottom:4px; position:relative; z-index:1; }
+.mode-card .mode-sub { font-size:0.85rem; opacity:0.85; margin-bottom:12px; }
+.mode-card .mode-detail { font-size:0.88rem; opacity:0.9; line-height:1.6; }
+.mode-card .mode-detail span { display:block; margin:3px 0; }
+
+/* Badges */
+.badge { display:inline-block; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:600; }
+.badge-s { background:#fef3c7; color:#92400e; }
+.badge-a { background:#dbeafe; color:#1e40af; }
+.badge-b { background:#e0e7ff; color:#3730a3; }
+.badge-required { background:#fee2e2; color:#991b1b; }
+.badge-recommended { background:#dcfce7; color:#166534; }
+.badge-optional { background:#f1f5f9; color:#475569; }
+.badge-mode-a { background:#3b82f6; color:#fff; }
+.badge-mode-b { background:#10b981; color:#fff; }
+.badge-mode-c { background:#8b5cf6; color:#fff; }
+
+/* Flow */
+.flow { display:flex; align-items:center; gap:0; margin:20px 0; flex-wrap:wrap; justify-content:center; }
+.flow-step { background:var(--card); border:2px solid var(--border); border-radius:12px; padding:14px 18px; text-align:center; min-width:130px; position:relative; transition:all 0.2s; }
+.flow-step:hover { border-color:var(--accent); transform:translateY(-2px); box-shadow:0 4px 16px rgba(59,130,246,0.15); }
+.flow-step .step-num { background:var(--accent); color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; margin:0 auto 8px; }
+.flow-step .step-label { font-weight:600; font-size:0.88rem; }
+.flow-step .step-desc { font-size:0.78rem; color:var(--muted); margin-top:4px; }
+.flow-arrow { color:var(--accent); font-size:1.5rem; padding:0 6px; font-weight:700; }
+
+/* Code blocks */
+.code-block { background:var(--code-bg); color:var(--code-text); border-radius:12px; padding:18px 20px; margin:12px 0; font-family:'Fira Code','Cascadia Code','JetBrains Mono',monospace; font-size:0.85rem; line-height:1.7; overflow-x:auto; position:relative; }
+.code-block .lang { position:absolute; top:8px; right:12px; font-size:0.7rem; color:#64748b; background:#334155; padding:2px 8px; border-radius:4px; }
+.code-block .comment { color:#64748b; }
+.code-block .keyword { color:#c084fc; }
+.code-block .string { color:#86efac; }
+.code-block .cmd { color:#67e8f9; }
+
+/* Grids */
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.grid-4 { display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; }
+
+/* File role cards */
+.file-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:flex-start; gap:12px; }
+.file-card .file-icon { width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+.file-card .file-info h4 { font-size:0.95rem; font-weight:700; margin-bottom:2px; }
+.file-card .file-info p { font-size:0.82rem; color:var(--muted); }
+.file-card .file-info .file-meta { font-size:0.78rem; color:var(--accent); margin-top:4px; }
+
+/* Guide table */
+.guide-table { margin:20px 0; }
+.guide-row { display:flex; align-items:center; gap:16px; padding:12px 16px; border-radius:10px; margin-bottom:8px; background:var(--card); border:1px solid var(--border); }
+.guide-row:hover { border-color:var(--accent); }
+.guide-situation { flex:1; font-size:0.9rem; }
+.guide-mode { min-width:80px; text-align:center; }
+.guide-reason { flex:1; font-size:0.85rem; color:var(--muted); }
+
+/* Comparison */
+.compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:20px 0; }
+.compare-col { border-radius:14px; padding:20px; }
+.compare-do { background:#f0fdf4; border:2px solid #86efac; }
+.compare-dont { background:#fef2f2; border:2px solid #fca5a5; }
+.compare-col h4 { font-size:1.05rem; margin-bottom:12px; }
+.compare-col li { font-size:0.88rem; margin-bottom:6px; line-height:1.6; }
+
+/* GitHub links */
+.gh-links { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:20px 0; }
+.gh-link { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 18px; text-decoration:none; color:var(--text); transition:all 0.2s; }
+.gh-link:hover { border-color:var(--accent); transform:translateY(-1px); box-shadow:0 4px 16px rgba(59,130,246,0.1); }
+.gh-link .gh-rank { background:var(--accent); color:#fff; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; flex-shrink:0; }
+.gh-link .gh-info h4 { font-size:0.92rem; font-weight:600; }
+.gh-link .gh-info p { font-size:0.78rem; color:var(--muted); }
+
+/* Risk table */
+.risk-item { display:flex; align-items:flex-start; gap:14px; padding:14px 16px; margin-bottom:10px; background:var(--card); border-radius:12px; border:1px solid var(--border); }
+.risk-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.1rem; }
+.risk-danger { background:#fef2f2; }
+.risk-info h4 { font-size:0.92rem; font-weight:600; margin-bottom:2px; }
+.risk-info p { font-size:0.84rem; color:var(--muted); }
+
+/* PS commands */
+.ps-cmd { display:flex; align-items:center; gap:12px; padding:10px 16px; margin-bottom:8px; background:#f8fafc; border-radius:10px; border:1px solid var(--border); }
+.ps-cmd code { font-family:'Fira Code',monospace; font-size:0.85rem; color:var(--accent); font-weight:600; min-width:200px; }
+.ps-cmd .ps-desc { font-size:0.85rem; color:var(--muted); }
+.ps-cmd .ps-ex { font-size:0.82rem; color:var(--accent2); }
+
+/* Folder tree */
+.folder-tree { background:var(--code-bg); color:var(--code-text); border-radius:12px; padding:20px 24px; font-family:'Fira Code',monospace; font-size:0.85rem; line-height:2; }
+.folder-tree .dir { color:#67e8f9; }
+.folder-tree .comment { color:#64748b; font-style:italic; }
+
+/* Env table */
+.env-grid { display:grid; grid-template-columns:auto 1fr 1fr; gap:0; margin:20px 0; }
+
+/* Mode step detail */
+.step-detail { background:#f8fafc; border-radius:12px; padding:20px; margin:16px 0; border-left:4px solid var(--accent); }
+.step-detail h4 { font-size:1rem; margin-bottom:8px; }
+
+/* Anti pattern */
+.anti-item { background:#fff7ed; border:1px solid #fed7aa; border-radius:12px; padding:16px; margin-bottom:12px; }
+.anti-item h4 { color:#c2410c; font-size:0.95rem; margin-bottom:6px; }
+.anti-item p { font-size:0.85rem; color:#9a3412; }
+
+/* Feature loop */
+.loop-container { position:relative; margin:30px 0; padding:20px 0; }
+.loop-flow { display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:wrap; }
+.loop-step { background:white; border:2px solid var(--accent); border-radius:14px; padding:16px 20px; text-align:center; min-width:120px; }
+.loop-step .ls-num { background:var(--gradient1); color:#fff; width:30px; height:30px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; margin-bottom:6px; }
+.loop-step .ls-title { font-weight:700; font-size:0.9rem; display:block; }
+.loop-step .ls-desc { font-size:0.78rem; color:var(--muted); display:block; margin-top:4px; }
+.loop-arrow-r { font-size:1.8rem; color:var(--accent); padding:0 8px; }
+
+/* Responsive */
+@media(max-width:900px) {
+  .mode-grid, .grid-2, .grid-3, .gh-links, .compare-grid { grid-template-columns:1fr; }
+  .grid-4 { grid-template-columns:1fr 1fr; }
+  .toc ol { grid-template-columns:1fr; }
+  .hero h1 { font-size:2rem; }
+  .flow { flex-direction:column; align-items:stretch; }
+  .flow-arrow { transform:rotate(90deg); text-align:center; }
+  .loop-flow { flex-direction:column; }
+  .loop-arrow-r { transform:rotate(90deg); }
+}
+@media(max-width:600px) {
+  .grid-4 { grid-template-columns:1fr; }
+  .container { padding:12px; }
+  table { font-size:0.8rem; }
+  thead th, tbody td { padding:8px 10px; }
+}
+
+/* Scroll to top */
+.scroll-top { position:fixed; bottom:24px; right:24px; width:48px; height:48px; border-radius:50%; background:var(--accent); color:#fff; border:none; cursor:pointer; font-size:1.2rem; box-shadow:0 4px 16px rgba(59,130,246,0.3); display:none; z-index:100; transition:all 0.2s; }
+.scroll-top:hover { transform:scale(1.1); }
+
+/* Tab */
+.tab-container { margin:20px 0; }
+.tab-buttons { display:flex; gap:4px; margin-bottom:0; }
+.tab-btn { padding:10px 20px; border:none; background:#e2e8f0; color:var(--muted); cursor:pointer; font-weight:600; font-size:0.88rem; border-radius:10px 10px 0 0; transition:all 0.2s; }
+.tab-btn.active { background:var(--card); color:var(--accent); box-shadow:0 -2px 8px rgba(0,0,0,0.04); }
+.tab-panel { display:none; background:var(--card); border-radius:0 14px 14px 14px; padding:24px; border:1px solid var(--border); }
+.tab-panel.active { display:block; }
+
+/* Timeline / Vertical flow */
+.vflow { position:relative; padding-left:40px; margin:20px 0; }
+.vflow::before { content:''; position:absolute; left:18px; top:0; bottom:0; width:3px; background:linear-gradient(to bottom, var(--accent), var(--accent2)); border-radius:2px; }
+.vflow-item { position:relative; margin-bottom:16px; }
+.vflow-item::before { content:attr(data-step); position:absolute; left:-40px; top:4px; width:32px; height:32px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.8rem; z-index:1; }
+.vflow-item .vf-title { font-weight:700; font-size:0.95rem; }
+.vflow-item .vf-desc { font-size:0.85rem; color:var(--muted); }
+.vflow-item .vf-cmd { font-family:'Fira Code',monospace; font-size:0.82rem; color:var(--accent3); background:#f0f9ff; padding:4px 10px; border-radius:6px; display:inline-block; margin-top:4px; }
+
+/* Warn box */
+.warn-box { background:#fffbeb; border:1px solid #fde68a; border-radius:12px; padding:16px 20px; margin:16px 0; display:flex; gap:12px; align-items:flex-start; }
+.warn-box .warn-icon { font-size:1.3rem; flex-shrink:0; }
+.warn-box .warn-text { font-size:0.88rem; color:#92400e; }
+.warn-box .warn-text strong { color:#78350f; }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>AI 코딩 전담 통합 방법론</h1>
+  <div class="subtitle">3대 모델 교차검증 기반 | 프로젝트 규모별 최적 워크플로우</div>
+  <div class="models">
+    <span class="model-badge opus">Claude Opus 4.6</span>
+    <span class="model-badge gpt">GPT-5.2-pro</span>
+    <span class="model-badge gemini">Gemini 3 Pro</span>
+  </div>
+  <div class="sources">GitHub Spec Kit + BMAD v6 + Karpathy + HumanLayer + Anthropic | 2026-04-11</div>
+</div>
+
+<div class="container">
+
+<!-- TOC -->
+<div class="toc" id="top">
+  <h2>&#128220; 목차</h2>
+  <ol>
+    <li><a href="#sec1">모드 비교표</a></li>
+    <li><a href="#sec2">파일 역할 맵 (Tier S/A/B)</a></li>
+    <li><a href="#sec3">Mode A: 소형 프로젝트</a></li>
+    <li><a href="#sec4">Mode B: 중대형 (Spec Kit)</a></li>
+    <li><a href="#sec5">Mode C: 대형 (하이브리드)</a></li>
+    <li><a href="#sec6">공통 Feature 루프</a></li>
+    <li><a href="#sec7">PowerShell 함수</a></li>
+    <li><a href="#sec8">핵심 GitHub 링크</a></li>
+    <li><a href="#sec9">리스크 &amp; 경고</a></li>
+  </ol>
+</div>
+
+<!-- Section 1: Mode Comparison -->
+<div class="section" id="sec1">
+  <div class="section-title"><span class="num">1</span> 모드 비교표</div>
+  <div class="section-desc">프로젝트 규모에 따라 3가지 모드를 선택합니다.</div>
+
+  <div class="mode-grid">
+    <div class="mode-card mode-a">
+      <h3>Mode A</h3>
+      <div class="mode-sub">소형 프로젝트</div>
+      <div class="mode-detail">
+        <span><strong>규모:</strong> 스크립트, 도구, 실험</span>
+        <span><strong>기간:</strong> 30분 ~ 1일</span>
+        <span><strong>Spec Kit:</strong> -</span>
+        <span><strong>BMAD:</strong> -</span>
+        <span><strong>템플릿:</strong> 7개</span>
+        <span><strong>워크플로우:</strong> 자유 프롬프트</span>
+        <span><strong>교차검증:</strong> 선택</span>
+      </div>
+    </div>
+    <div class="mode-card mode-b">
+      <h3>Mode B</h3>
+      <div class="mode-sub">중대형 (Spec Kit)</div>
+      <div class="mode-detail">
+        <span><strong>규모:</strong> 기능 5+, 상용</span>
+        <span><strong>기간:</strong> 며칠 ~ 몇주</span>
+        <span><strong>Spec Kit:</strong> O</span>
+        <span><strong>BMAD:</strong> -</span>
+        <span><strong>템플릿:</strong> 10개</span>
+        <span><strong>워크플로우:</strong> speckit 스킬 체인</span>
+        <span><strong>교차검증:</strong> 권장</span>
+      </div>
+    </div>
+    <div class="mode-card mode-c">
+      <h3>Mode C</h3>
+      <div class="mode-sub">대형 (하이브리드)</div>
+      <div class="mode-detail">
+        <span><strong>규모:</strong> 6개월+, 엔터프라이즈</span>
+        <span><strong>기간:</strong> 몇달 ~ 1년+</span>
+        <span><strong>Spec Kit:</strong> O</span>
+        <span><strong>BMAD:</strong> O</span>
+        <span><strong>템플릿:</strong> 전체 + BMAD</span>
+        <span><strong>워크플로우:</strong> speckit + BMAD</span>
+        <span><strong>교차검증:</strong> 필수</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">&#128204; 모드 선택 가이드</div>
+    <table>
+      <thead><tr><th>상황</th><th>모드</th><th>이유</th></tr></thead>
+      <tbody>
+        <tr><td>혼자 쓸 스크립트, 도구</td><td><span class="badge badge-mode-a">A</span></td><td>Spec Kit 오버헤드 불필요</td></tr>
+        <tr><td>토이/실험/해커톤</td><td><span class="badge badge-mode-a">A</span></td><td>빠른 시작</td></tr>
+        <tr><td>기능 5-15개, 1-3개월</td><td><span class="badge badge-mode-b">B</span></td><td>Spec Kit이 구조 잡음</td></tr>
+        <tr><td>상용 제품, NFR 중요</td><td><span class="badge badge-mode-b">B</span></td><td>constitution으로 NFR 강제</td></tr>
+        <tr><td>6개월+, 멀티 서브시스템</td><td><span class="badge badge-mode-c">C</span></td><td>BMAD 에이전트 역할 분리</td></tr>
+        <tr><td>엔터프라이즈급</td><td><span class="badge badge-mode-c">C</span></td><td>12+ 에이전트 필요</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Section 2: File Role Map -->
+<div class="section" id="sec2">
+  <div class="section-title"><span class="num">2</span> 파일 역할 맵</div>
+  <div class="section-desc">Tier별로 필요한 시점에 파일을 추가합니다.</div>
+
+  <!-- Tier S -->
+  <div class="card" style="border-left:4px solid #f59e0b;">
+    <div class="card-title"><span class="badge badge-s">TIER S</span> Day 1 필수 (모든 모드)</div>
+    <div class="grid-2">
+      <div class="file-card">
+        <div class="file-icon" style="background:#fef3c7;">&#128220;</div>
+        <div class="file-info">
+          <h4>AGENTS.md</h4>
+          <p>모든 AI 도구 baseline. 명령어/스타일/금지/검증법</p>
+          <div class="file-meta">100-200줄 | AAIF 표준</div>
+        </div>
+      </div>
+      <div class="file-card">
+        <div class="file-icon" style="background:#fef3c7;">&#128221;</div>
+        <div class="file-info">
+          <h4>CLAUDE.md</h4>
+          <p>Claude 전용 규칙 (AGENTS.md import)</p>
+          <div class="file-meta">50-100줄 | HumanLayer</div>
+        </div>
+      </div>
+      <div class="file-card">
+        <div class="file-icon" style="background:#fef3c7;">&#128218;</div>
+        <div class="file-info">
+          <h4>LEARN.md</h4>
+          <p>오답노트. 같은 실수 반복 방지</p>
+          <div class="file-meta">무제한 | HumanLayer/Karpathy</div>
+        </div>
+      </div>
+      <div class="file-card">
+        <div class="file-icon" style="background:#fef3c7;">&#128196;</div>
+        <div class="file-info">
+          <h4>scratchpad.md</h4>
+          <p>활성 작업 transient (.gitignore)</p>
+          <div class="file-meta">100줄 이하 | Gemini 인사이트</div>
+        </div>
+      </div>
+      <div class="file-card" style="grid-column:span 2;">
+        <div class="file-icon" style="background:#fef3c7;">&#128203;</div>
+        <div class="file-info">
+          <h4>specs/_template/feature.md</h4>
+          <p>WHAT+HOW+TASKS 합본</p>
+          <div class="file-meta">200-500줄 | Spec Kit</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tier A -->
+  <div class="card" style="border-left:4px solid #3b82f6;">
+    <div class="card-title"><span class="badge badge-a">TIER A</span> 병목 보이면 추가 (Week 2-4)</div>
+    <table>
+      <thead><tr><th>파일</th><th>트리거</th></tr></thead>
+      <tbody>
+        <tr><td><strong>constitution.md</strong></td><td>NFR(보안/접근성/성능) 손실 발생 시</td></tr>
+        <tr><td><strong>ARCHITECTURE.md</strong></td><td>모듈 5개+ / AI가 패턴 모방 실패</td></tr>
+        <tr><td><strong>DECISIONS.md</strong></td><td>"왜 X 선택?" 같은 질문 반복</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tier B -->
+  <div class="card" style="border-left:4px solid #8b5cf6;">
+    <div class="card-title"><span class="badge badge-b">TIER B</span> 대형/공개 프로젝트만</div>
+    <table>
+      <thead><tr><th>파일</th><th>시점</th></tr></thead>
+      <tbody>
+        <tr><td><strong>README.md</strong></td><td>공개 시</td></tr>
+        <tr><td><strong>ROADMAP.md</strong></td><td>분기별 마일스톤</td></tr>
+        <tr><td><strong>SECURITY.md</strong></td><td>보안 정책</td></tr>
+        <tr><td><strong>RELEASE.md</strong></td><td>버저닝/마이그레이션</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Section 3: Mode A -->
+<div class="section" id="sec3">
+  <div class="section-title"><span class="num">3</span> Mode A: 소형 프로젝트</div>
+  <div class="section-desc">스크립트, 도구, 실험, 해커톤 | 세팅 1분</div>
+
+  <div class="card">
+    <div class="card-title">&#128640; Step-by-Step</div>
+    <div class="vflow">
+      <div class="vflow-item" data-step="1">
+        <div class="vf-title">프로젝트 생성</div>
+        <div class="vf-cmd">ai-new my-tool</div>
+      </div>
+      <div class="vflow-item" data-step="2">
+        <div class="vf-title">AGENTS.md 편집</div>
+        <div class="vf-desc">프로젝트 명령어/스택 채우기</div>
+      </div>
+      <div class="vflow-item" data-step="3">
+        <div class="vf-title">브랜치 생성</div>
+        <div class="vf-cmd">ai-start feature-name</div>
+      </div>
+      <div class="vflow-item" data-step="4">
+        <div class="vf-title">Claude Code 시작</div>
+        <div class="vf-cmd">claude</div>
+      </div>
+      <div class="vflow-item" data-step="5">
+        <div class="vf-title">자유 프롬프트</div>
+        <div class="vf-desc">"로그인 만들어줘" (TDD)</div>
+      </div>
+      <div class="vflow-item" data-step="6">
+        <div class="vf-title">검증</div>
+        <div class="vf-desc">lint + typecheck + test</div>
+      </div>
+      <div class="vflow-item" data-step="7">
+        <div class="vf-title">마감</div>
+        <div class="vf-cmd">ai-done "feat: xxx" -Merge</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">&#128187; 수동 실행 명령어</div>
+    <div class="code-block">
+      <span class="lang">PowerShell</span>
+<span class="cmd">cd</span> C:\Users\llorr\dev\repos
+<span class="cmd">mkdir</span> my-tool <span class="keyword">&&</span> <span class="cmd">cd</span> my-tool <span class="keyword">&&</span> <span class="cmd">git init</span>
+
+<span class="comment"># 템플릿 복사</span>
+$kit = <span class="string">'C:\Users\llorr\dev\kit-templates'</span>
+<span class="cmd">Copy-Item</span> <span class="string">"$kit\AGENTS.md"</span>,<span class="string">"$kit\CLAUDE.md"</span>,<span class="string">"$kit\LEARN.md"</span>,`
+          <span class="string">"$kit\scratchpad.md"</span>,<span class="string">"$kit\ARCHITECTURE.md"</span>,`
+          <span class="string">"$kit\DECISIONS.md"</span>,<span class="string">"$kit\README.md"</span> .
+
+<span class="cmd">git add</span> -A <span class="keyword">&&</span> <span class="cmd">git commit</span> -m <span class="string">"chore: initial setup"</span> <span class="keyword">&&</span> <span class="cmd">git branch</span> -M main
+<span class="cmd">gh repo create</span> my-tool --private --source=. --push
+    </div>
+  </div>
+</div>
+
+<!-- Section 4: Mode B -->
+<div class="section" id="sec4">
+  <div class="section-title"><span class="num">4</span> Mode B: 중대형 (Spec Kit)</div>
+  <div class="section-desc">기능 5+, 상용 제품 | 세팅 5분 | 추천 기본 모드</div>
+
+  <div class="card">
+    <div class="card-title">&#9889; Step-by-Step</div>
+    <div class="vflow">
+      <div class="vflow-item" data-step="1">
+        <div class="vf-title">Spec Kit 초기화</div>
+        <div class="vf-cmd">ai-new my-saas -Mode B</div>
+      </div>
+      <div class="vflow-item" data-step="2">
+        <div class="vf-title">내 템플릿 덮기</div>
+        <div class="vf-desc">AGENTS/CLAUDE/LEARN/ARCH/DECISIONS/ROADMAP</div>
+      </div>
+      <div class="vflow-item" data-step="3">
+        <div class="vf-title">헌법 작성 (1회)</div>
+        <div class="vf-cmd">/speckit.constitution</div>
+      </div>
+      <div class="vflow-item" data-step="4">
+        <div class="vf-title">기능 루프 (반복)</div>
+        <div class="vf-desc">/speckit.specify -> clarify -> plan -> tasks -> analyze -> implement</div>
+      </div>
+      <div class="vflow-item" data-step="5">
+        <div class="vf-title">PAL 교차검증</div>
+        <div class="vf-desc">consensus codereview secaudit</div>
+      </div>
+      <div class="vflow-item" data-step="6">
+        <div class="vf-title">마감</div>
+        <div class="vf-cmd">ai-done "feat: xxx" -Merge</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">&#128187; 수동 실행 명령어</div>
+    <div class="code-block">
+      <span class="lang">PowerShell</span>
+<span class="cmd">cd</span> C:\Users\llorr\dev\repos
+$env:PYTHONUTF8 = <span class="string">'1'</span>
+<span class="cmd">uvx</span> --from git+https://github.com/github/spec-kit.git `
+    specify init my-saas --ai claude
+<span class="cmd">cd</span> my-saas
+
+$kit = <span class="string">'C:\Users\llorr\dev\kit-templates'</span>
+<span class="cmd">Copy-Item</span> <span class="string">"$kit\AGENTS.md"</span>,<span class="string">"$kit\CLAUDE.md"</span>,<span class="string">"$kit\LEARN.md"</span>,`
+          <span class="string">"$kit\scratchpad.md"</span>,<span class="string">"$kit\ARCHITECTURE.md"</span>,`
+          <span class="string">"$kit\DECISIONS.md"</span>,<span class="string">"$kit\README.md"</span>,`
+          <span class="string">"$kit\ROADMAP.md"</span>,<span class="string">"$kit\RELEASE.md"</span> . -Force
+
+<span class="cmd">git add</span> -A <span class="keyword">&&</span> <span class="cmd">git commit</span> -m <span class="string">"chore: spec-kit + kit setup"</span> <span class="keyword">&&</span> <span class="cmd">git branch</span> -M main
+<span class="cmd">gh repo create</span> my-saas --private --source=. --push
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">&#128220; Claude Code 안에서 (헌법 1회)</div>
+      <div class="code-block">
+        <span class="lang">Claude Code</span>
+<span class="cmd">/speckit.constitution</span>
+  - 기술 스택: Next.js 15 + FastAPI + PostgreSQL
+  - 보안: OWASP Top 10
+  - 성능: p95 &lt; 200ms
+  - 테스트: TDD 필수, 커버리지 80%+
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">&#128260; 기능마다 반복</div>
+      <div class="code-block">
+        <span class="lang">Claude Code</span>
+<span class="cmd">/speckit.specify</span> 사용자 로그인
+  (이메일+패스워드, JWT 24h, rate limit 5/min)
+<span class="cmd">/speckit.clarify</span>
+<span class="cmd">/speckit.plan</span>
+<span class="cmd">/speckit.tasks</span>
+<span class="cmd">/speckit.analyze</span>
+<span class="cmd">/speckit.implement</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 5: Mode C -->
+<div class="section" id="sec5">
+  <div class="section-title"><span class="num">5</span> Mode C: 대형 (하이브리드)</div>
+  <div class="section-desc">6개월+, 멀티 모듈, 역할 분리 | 세팅 10분</div>
+
+  <div class="card">
+    <div class="card-title">&#127960; Step-by-Step</div>
+    <div class="vflow">
+      <div class="vflow-item" data-step="1">
+        <div class="vf-title">Spec Kit + BMAD</div>
+        <div class="vf-cmd">ai-new huge-app -Mode C</div>
+      </div>
+      <div class="vflow-item" data-step="2">
+        <div class="vf-title">내 템플릿 전체 + BMAD 설치</div>
+        <div class="vf-cmd">npx bmad-method install</div>
+      </div>
+      <div class="vflow-item" data-step="3">
+        <div class="vf-title">BMAD 안내</div>
+        <div class="vf-cmd">bmad-help</div>
+      </div>
+      <div class="vflow-item" data-step="4">
+        <div class="vf-title">헌법 작성</div>
+        <div class="vf-cmd">/speckit.constitution</div>
+      </div>
+      <div class="vflow-item" data-step="5">
+        <div class="vf-title">BMAD 에이전트 자동 역할</div>
+        <div class="vf-desc">PM Agent (PRD) -> Architect Agent (아키텍처) -> Dev Agent (구현) -> QA Agent (테스트) -> Security Agent (보안 감사)</div>
+      </div>
+      <div class="vflow-item" data-step="6">
+        <div class="vf-title">speckit 체인 + PAL 3중 검증</div>
+      </div>
+      <div class="vflow-item" data-step="7">
+        <div class="vf-title">마감 + LEARN + DECISIONS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">&#128187; 수동 실행 명령어</div>
+    <div class="code-block">
+      <span class="lang">PowerShell</span>
+<span class="cmd">cd</span> C:\Users\llorr\dev\repos
+<span class="cmd">uvx</span> --from git+https://github.com/github/spec-kit.git `
+    specify init huge-app --ai claude
+<span class="cmd">cd</span> huge-app
+
+$kit = <span class="string">'C:\Users\llorr\dev\kit-templates'</span>
+<span class="cmd">Copy-Item</span> <span class="string">"$kit\AGENTS.md"</span>,<span class="string">"$kit\CLAUDE.md"</span>,<span class="string">"$kit\LEARN.md"</span>,`
+          <span class="string">"$kit\scratchpad.md"</span>,<span class="string">"$kit\ARCHITECTURE.md"</span>,`
+          <span class="string">"$kit\DECISIONS.md"</span>,<span class="string">"$kit\README.md"</span>,<span class="string">"$kit\RELEASE.md"</span>,`
+          <span class="string">"$kit\ROADMAP.md"</span>,<span class="string">"$kit\SECURITY.md"</span> . -Force
+
+<span class="cmd">npx</span> bmad-method install
+
+<span class="cmd">git add</span> -A <span class="keyword">&&</span> <span class="cmd">git commit</span> -m <span class="string">"chore: hybrid setup"</span> <span class="keyword">&&</span> <span class="cmd">git branch</span> -M main
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="warn-icon">&#9888;&#65039;</div>
+    <div class="warn-text">
+      <strong>병렬 작업 규칙:</strong> tmux 창 1 = 메인 feature, 창 2 = 테스트, 창 3 = 문서, 창 4 = PAL secaudit<br>
+      <strong>금지:</strong> 같은 feature를 프론트/백 분리해서 병렬 &rarr; 머지 지옥
+    </div>
+  </div>
+</div>
+
+<!-- Section 6: Common Feature Loop -->
+<div class="section" id="sec6">
+  <div class="section-title"><span class="num">6</span> 공통 Feature 작업 루프</div>
+  <div class="section-desc">모든 모드에서 반복되는 기능 구현 사이클</div>
+
+  <div class="card">
+    <div class="loop-flow">
+      <div class="loop-step">
+        <span class="ls-num">1</span>
+        <span class="ls-title">브랜치 생성</span>
+        <span class="ls-desc">ai-start login</span>
+      </div>
+      <span class="loop-arrow-r">&rarr;</span>
+      <div class="loop-step">
+        <span class="ls-num">2</span>
+        <span class="ls-title">Claude 시작</span>
+        <span class="ls-desc">claude</span>
+      </div>
+      <span class="loop-arrow-r">&rarr;</span>
+      <div class="loop-step">
+        <span class="ls-num">3</span>
+        <span class="ls-title">명세 &rarr; 구현</span>
+        <span class="ls-desc">(모드별 다름)</span>
+      </div>
+      <span class="loop-arrow-r">&rarr;</span>
+      <div class="loop-step">
+        <span class="ls-num">4</span>
+        <span class="ls-title">검증</span>
+        <span class="ls-desc">lint+type+test</span>
+      </div>
+      <span class="loop-arrow-r">&rarr;</span>
+      <div class="loop-step">
+        <span class="ls-num">5</span>
+        <span class="ls-title">커밋</span>
+        <span class="ls-desc">ai-done</span>
+      </div>
+      <span class="loop-arrow-r">&rarr;</span>
+      <div class="loop-step">
+        <span class="ls-num">6</span>
+        <span class="ls-title">회고</span>
+        <span class="ls-desc">LEARN.md</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">&#128269; Step 3: 모드별 차이</div>
+    <table>
+      <thead><tr><th>Mode</th><th>Claude Code 안에서</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-mode-a">A</span></td><td>자유 프롬프트: "로그인 만들어줘"</td></tr>
+        <tr><td><span class="badge badge-mode-b">B</span></td><td>/speckit.specify &rarr; /speckit.implement 체인</td></tr>
+        <tr><td><span class="badge badge-mode-c">C</span></td><td>bmad-help &rarr; speckit 체인 + BMAD 에이전트</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">&#128295; 검증 명령어 (프로젝트에 맞게)</div>
+    <div class="grid-2">
+      <div class="code-block">
+        <span class="lang">JavaScript / TypeScript</span>
+<span class="cmd">npm run lint</span> <span class="keyword">&&</span> <span class="cmd">npm run typecheck</span> <span class="keyword">&&</span> <span class="cmd">npm test</span>
+      </div>
+      <div class="code-block">
+        <span class="lang">Python</span>
+<span class="cmd">ruff check</span> . <span class="keyword">&&</span> <span class="cmd">mypy</span> . <span class="keyword">&&</span> <span class="cmd">pytest</span> -xvs
+      </div>
+    </div>
+    <div class="code-block" style="margin-top:8px;">
+      <span class="lang">PAL 교차검증 (Mode B/C)</span>
+<span class="cmd">pal:codereview</span> 최신 변경사항
+<span class="cmd">pal:secaudit</span>   인증 로직
+<span class="cmd">pal:precommit</span>  커밋 전 최종
+    </div>
+  </div>
+</div>
+
+<!-- Section 7: PowerShell -->
+<div class="section" id="sec7">
+  <div class="section-title"><span class="num">7</span> PowerShell 함수 요약</div>
+  <div class="section-desc">프로젝트 자동화 명령어 모음</div>
+
+  <div class="card">
+    <table>
+      <thead><tr><th>명령어</th><th>기능</th><th>예시</th></tr></thead>
+      <tbody>
+        <tr><td><code style="color:var(--accent);font-weight:600;">ai-new &lt;이름&gt;</code></td><td>Mode A 프로젝트 생성</td><td>ai-new my-tool</td></tr>
+        <tr><td><code style="color:var(--accent);font-weight:600;">ai-new &lt;이름&gt; -Mode B</code></td><td>Mode B (Spec Kit)</td><td>ai-new my-saas -Mode B</td></tr>
+        <tr><td><code style="color:var(--accent);font-weight:600;">ai-new &lt;이름&gt; -Mode C</code></td><td>Mode C (하이브리드)</td><td>ai-new huge-app -Mode C</td></tr>
+        <tr><td><code style="color:var(--accent);font-weight:600;">ai-start &lt;기능명&gt;</code></td><td>feat 브랜치 생성</td><td>ai-start login</td></tr>
+        <tr><td><code style="color:var(--accent);font-weight:600;">ai-done "msg"</code></td><td>커밋 + 푸시</td><td>ai-done "feat: login"</td></tr>
+        <tr><td><code style="color:var(--accent);font-weight:600;">ai-done "msg" -Merge</code></td><td>커밋 + 푸시 + main 병합</td><td>ai-done "feat: login" -Merge</td></tr>
+        <tr><td><code style="color:var(--accent);font-weight:600;">cd-repo &lt;이름&gt;</code></td><td>프로젝트 이동</td><td>cd-repo my-tool</td></tr>
+        <tr><td><code style="color:var(--accent);font-weight:600;">cd-out</code></td><td>결과물 폴더 이동</td><td>cd-out</td></tr>
+        <tr><td><code style="color:var(--accent);font-weight:600;">ai-check</code></td><td>키트 상태 점검</td><td>ai-check</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Section 8: GitHub Links -->
+<div class="section" id="sec8">
+  <div class="section-title"><span class="num">8</span> 핵심 GitHub 링크</div>
+  <div class="section-desc">품질 순으로 정렬한 참고 레포지토리</div>
+
+  <div class="gh-links">
+    <div class="gh-link">
+      <div class="gh-rank">1</div>
+      <div class="gh-info">
+        <h4>github/spec-kit</h4>
+        <p>constitution/spec/plan/tasks 표준</p>
+      </div>
+    </div>
+    <div class="gh-link">
+      <div class="gh-rank">2</div>
+      <div class="gh-info">
+        <h4>shanraisshan/claude-code-best-practice</h4>
+        <p>Claude Code 패턴 (Karpathy/Boris 인용)</p>
+      </div>
+    </div>
+    <div class="gh-link">
+      <div class="gh-rank">3</div>
+      <div class="gh-info">
+        <h4>karpathy/autoresearch</h4>
+        <p>Karpathy 단일 markdown 워크플로우</p>
+      </div>
+    </div>
+    <div class="gh-link">
+      <div class="gh-rank">4</div>
+      <div class="gh-info">
+        <h4>agents.md</h4>
+        <p>AGENTS.md 표준 (60,000+ 레포)</p>
+      </div>
+    </div>
+    <div class="gh-link">
+      <div class="gh-rank">5</div>
+      <div class="gh-info">
+        <h4>bmad-code-org/BMAD-METHOD</h4>
+        <p>BMAD v6 (대형 참고)</p>
+      </div>
+    </div>
+    <div class="gh-link">
+      <div class="gh-rank">6</div>
+      <div class="gh-info">
+        <h4>Anthropic 공식</h4>
+        <p>Claude Code best practices</p>
+      </div>
+    </div>
+    <div class="gh-link" style="grid-column:span 2;">
+      <div class="gh-rank">7</div>
+      <div class="gh-info">
+        <h4>HumanLayer</h4>
+        <p>CLAUDE.md lean 가이드</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 9: Risk & Warning -->
+<div class="section" id="sec9">
+  <div class="section-title"><span class="num">9</span> 리스크 &amp; 경고</div>
+  <div class="section-desc">예상 리스크와 대응 방안</div>
+
+  <div class="card">
+    <div class="card-title">&#128680; 리스크 대응표</div>
+    <table>
+      <thead><tr><th>리스크</th><th>대응</th></tr></thead>
+      <tbody>
+        <tr><td>spec/plan 드리프트</td><td>scratchpad.md SSOT</td></tr>
+        <tr><td>tmux 병렬 머지 충돌</td><td>독립 작업만 병렬</td></tr>
+        <tr><td>검증 없이 완료 주장</td><td>PAL precommit 강제</td></tr>
+        <tr><td>LEARN.md 비대화</td><td>50개 넘으면 분리</td></tr>
+        <tr><td>Spec Kit lock-in</td><td>plain markdown, CLI 제거 가능</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">&#9989; 하면 vs &#10060; 안하면</div>
+    <table>
+      <thead><tr><th></th><th>하면</th><th>안하면</th></tr></thead>
+      <tbody>
+        <tr><td><strong>맥락 파악</strong></td><td style="color:var(--success);">즉시</td><td style="color:var(--danger);">매번 설명</td></tr>
+        <tr><td><strong>결정 기록</strong></td><td style="color:var(--success);">DECISIONS 누적</td><td style="color:var(--danger);">까먹음</td></tr>
+        <tr><td><strong>스펙 &rarr; 코드</strong></td><td style="color:var(--success);">일관</td><td style="color:var(--danger);">즉흥적</td></tr>
+        <tr><td><strong>세션 인수인계</strong></td><td style="color:var(--success);">LEARN.md</td><td style="color:var(--danger);">다시 설명</td></tr>
+        <tr><td><strong>같은 실수</strong></td><td style="color:var(--success);">자동 차단</td><td style="color:var(--danger);">반복</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">&#128683; 3모델 합의 비추 사항</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="anti-item">
+        <h4>BMAD 풀 적용 (1인 초반)</h4>
+        <p>소규모에서는 오버엔지니어링. Mode A/B로 시작</p>
+      </div>
+      <div class="anti-item">
+        <h4>markdown 동기화 CI 훅</h4>
+        <p>유지보수 비용이 이득을 초과</p>
+      </div>
+      <div class="anti-item">
+        <h4>tmux로 같은 feature 분할</h4>
+        <p>프론트/백 분리 병렬 = 머지 지옥</p>
+      </div>
+      <div class="anti-item">
+        <h4>CLAUDE.md에 코드베이스 구조 설명</h4>
+        <p>코드가 바뀌면 즉시 stale. ARCHITECTURE.md 사용</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Folder structure -->
+  <div class="card">
+    <div class="card-title">&#128193; 폴더 구조 (Z님 환경)</div>
+    <div class="folder-tree">
+<span class="dir">C:\Users\llorr\dev\</span>
+├── <span class="dir">kit-templates\</span>    <span class="comment">&larr; 마스터 템플릿 (읽기 전용)</span>
+├── <span class="dir">refs\</span>             <span class="comment">&larr; 세계 표준 원본 (참고용)</span>
+│   ├── <span class="dir">spec-kit\</span>
+│   ├── <span class="dir">BMAD-METHOD\</span>
+│   ├── <span class="dir">autoresearch\</span>
+│   └── <span class="dir">claude-code-best-practice\</span>
+├── <span class="dir">repos\</span>            <span class="comment">&larr; 실제 작업 (모든 프로젝트)</span>
+└── <span class="dir">worktrees\</span>        <span class="comment">&larr; git worktree (병렬)</span>
+
+<span class="dir">D:\2026airesult_byclaude\</span>
+└── <span class="dir">outputs\</span>          <span class="comment">&larr; 결과물</span>
+    </div>
+  </div>
+
+  <!-- Env recommendation -->
+  <div class="card">
+    <div class="card-title">&#127919; 환경 추천</div>
+    <table>
+      <thead><tr><th>순위</th><th>환경</th><th>적합한 상황</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Claude Code CLI (WSL) + Spec Kit</td><td>대부분. PAL MCP 통합, 1M context</td></tr>
+        <tr><td><strong>2</strong></td><td>Antigravity (VS Code)</td><td>풀스택 웹 프로토타이핑, GUI 필요시</td></tr>
+        <tr><td><strong>3</strong></td><td>tmux 그리드</td><td>독립 검증/문서/테스트 병렬</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center; margin:50px 0 30px; padding-top:30px; border-top:1px solid var(--border);">
+  <p style="color:var(--muted); font-size:0.85rem;">Last updated: 2026-04-11 | Claude Opus 4.6 + GPT-5.2-pro + Gemini 3 Pro 교차검증</p>
+  <p style="color:var(--muted); font-size:0.8rem; margin-top:4px;">GitHub Spec Kit + BMAD v6 + Karpathy + HumanLayer + Anthropic</p>
+</div>
+
+</div><!-- container -->
+
+<!-- Scroll to top button -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+// Scroll to top button
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').style.display = window.scrollY > 400 ? 'block' : 'none';
+});
+
+// Smooth scroll for TOC
+document.querySelectorAll('.toc a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>
