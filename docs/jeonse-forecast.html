@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일산 백석동 전세 수요·공급 예측 리포트 (월별·연도별)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+:root{--pri:#1a56db;--red:#dc2626;--grn:#16a34a;--orn:#d97706;--bg:#f8fafc;--card:#fff;--txt:#1e293b;--mut:#64748b;--bdr:#e2e8f0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+.container{max-width:1400px;margin:0 auto;padding:20px}
+.header{background:linear-gradient(135deg,#0f4c75 0%,#3282b8 100%);color:#fff;padding:40px 30px;border-radius:16px;margin-bottom:24px}
+.header h1{font-size:1.9rem;margin-bottom:6px}
+.header .sub{opacity:.85;font-size:.95rem}
+.header .meta{margin-top:14px;display:flex;gap:18px;flex-wrap:wrap;font-size:.82rem;opacity:.7}
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.card h2{font-size:1.25rem;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--pri);display:flex;align-items:center;gap:8px}
+.card h3{font-size:1rem;margin:14px 0 8px;color:var(--pri)}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.chart-box{position:relative;height:380px;margin:14px 0}
+.chart-sm{position:relative;height:300px;margin:14px 0}
+.stat{background:#f1f5f9;border-radius:10px;padding:18px;text-align:center}
+.stat .lb{font-size:.78rem;color:var(--mut);margin-bottom:4px}
+.stat .vl{font-size:1.7rem;font-weight:700}
+.stat .ch{font-size:.82rem;margin-top:3px}
+.up{color:var(--red)}.dn{color:var(--grn)}
+table{width:100%;border-collapse:collapse;font-size:.83rem;margin:10px 0}
+th{background:#f1f5f9;padding:9px 11px;text-align:left;font-weight:600;border-bottom:2px solid var(--bdr);white-space:nowrap}
+td{padding:9px 11px;border-bottom:1px solid var(--bdr)}
+tr:hover td{background:#f8fafc}
+.tr{text-align:right}.tc{text-align:center}
+.badge{display:inline-block;padding:2px 9px;border-radius:11px;font-size:.72rem;font-weight:600}
+.b-r{background:#fef2f2;color:var(--red)}.b-g{background:#f0fdf4;color:var(--grn)}.b-b{background:#eff6ff;color:var(--pri)}.b-y{background:#fffbeb;color:var(--orn)}
+.hl{border-left:4px solid var(--pri);padding:14px 18px;background:#eff6ff;border-radius:0 8px 8px 0;margin:14px 0}
+.hl.w{border-color:var(--orn);background:#fffbeb}.hl.d{border-color:var(--red);background:#fef2f2}.hl.s{border-color:var(--grn);background:#f0fdf4}
+.scenario{border:2px solid var(--bdr);border-radius:12px;padding:18px}
+.scenario.rec{border-color:var(--grn);background:#f0fdf4}
+.src{font-size:.72rem;color:var(--mut);margin-top:8px;padding-top:8px;border-top:1px dashed var(--bdr)}
+.src a{color:var(--pri);text-decoration:none}
+section{scroll-margin-top:60px}
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:100}
+.nav a{padding:7px 14px;background:var(--card);border:1px solid var(--bdr);border-radius:8px;text-decoration:none;color:var(--txt);font-size:.82rem;font-weight:500;transition:.2s}
+.nav a:hover{background:var(--pri);color:#fff;border-color:var(--pri)}
+.arrow-box{display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0;flex-wrap:wrap}
+.arrow-step{background:#f1f5f9;border-radius:10px;padding:14px 18px;text-align:center;min-width:140px}
+.arrow-step .yr{font-weight:700;color:var(--pri);font-size:1.1rem}
+.arrow-step .desc{font-size:.82rem;margin-top:4px}
+.arrow{font-size:1.5rem;color:var(--mut)}
+.disc{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px;font-size:.78rem;color:#991b1b;margin-top:24px}
+@media(max-width:768px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.header h1{font-size:1.3rem}.chart-box{height:280px}.chart-sm{height:240px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <h1>📊 일산 백석동 전세 수요·공급 예측 리포트</h1>
+  <div class="sub">소형 아파트(~15평) 전세 시장 월별·연도별 수급 분석 및 향후 가격 전망</div>
+  <div class="meta">
+    <span>📅 2026년 4월 기준</span>
+    <span>📈 데이터: 2023~2030 예측</span>
+    <span>🔍 출처: 한국부동산원, KB부동산, 부동산R114, 국토교통부</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#overview">핵심 요약</a>
+  <a href="#yearly">연도별 전망</a>
+  <a href="#monthly">월별 분석</a>
+  <a href="#supply">공급 요인</a>
+  <a href="#demand">수요 요인</a>
+  <a href="#scenario">시나리오 예측</a>
+  <a href="#strategy">전략 추천</a>
+</nav>
+
+<!-- ===== 1. 핵심 요약 ===== -->
+<section id="overview">
+<div class="card">
+  <h2>🎯 1. 핵심 요약</h2>
+  <div class="grid-4">
+    <div class="stat"><div class="lb">현재 전세가 (15평)</div><div class="vl" style="color:var(--pri)">1.6억</div><div class="ch">2026.4 기준</div></div>
+    <div class="stat"><div class="lb">전세가율</div><div class="vl">74%</div><div class="ch">매매 대비</div></div>
+    <div class="stat"><div class="lb">2027 예상 전세가</div><div class="vl up">1.7~1.8억</div><div class="ch up">▲ +6~12%</div></div>
+    <div class="stat"><div class="lb">2028 예상 전세가</div><div class="vl up">1.8~2.0억</div><div class="ch up">▲ +12~25%</div></div>
+  </div>
+
+  <div class="hl s" style="margin-top:18px">
+    <strong>핵심 결론:</strong> 2026~2027년 수도권 공급 절벽으로 전세 수요 > 공급 상태가 심화됩니다. 일산 백석동 소형 전세가는 <strong>2027년 1.7~1.8억, 2028년 1.8~2.0억</strong>까지 상승 가능성이 높습니다. 다만 2028년 하반기 이후 3기 신도시(고양창릉) 입주가 시작되면 공급 압력이 발생합니다.
+  </div>
+
+  <!-- Supply-Demand Flow -->
+  <h3>수급 흐름 요약</h3>
+  <div class="arrow-box">
+    <div class="arrow-step"><div class="yr">2026</div><div class="desc">공급 감소 시작<br><span class="badge b-y">수요 &gt; 공급</span></div></div>
+    <div class="arrow">→</div>
+    <div class="arrow-step"><div class="yr">2027</div><div class="desc">공급 절벽 최고조<br><span class="badge b-r">수요 ≫ 공급</span></div></div>
+    <div class="arrow">→</div>
+    <div class="arrow-step"><div class="yr">2028 상</div><div class="desc">전세가 피크<br><span class="badge b-r">수요 ≫ 공급</span></div></div>
+    <div class="arrow">→</div>
+    <div class="arrow-step"><div class="yr">2028 하</div><div class="desc">창릉 입주 시작<br><span class="badge b-b">수요 ≈ 공급</span></div></div>
+    <div class="arrow">→</div>
+    <div class="arrow-step"><div class="yr">2029~</div><div class="desc">신규 공급 확대<br><span class="badge b-g">공급 ↑</span></div></div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 2. 연도별 전망 ===== -->
+<section id="yearly">
+<div class="card">
+  <h2>📈 2. 연도별 전세가 전망 (2023~2030)</h2>
+
+  <div class="chart-box"><canvas id="yearlyChart"></canvas></div>
+
+  <table>
+    <thead>
+      <tr><th>연도</th><th class="tr">전세 평균(만원)</th><th class="tr">전년비 변동률</th><th class="tr">전세가율</th><th>수급 상태</th><th>핵심 요인</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2023</td><td class="tr">14,500</td><td class="tr">-5.9%</td><td class="tr">74.4%</td><td><span class="badge b-g">공급 &gt; 수요</span></td><td>금리 고점, 전세 기피, 월세 전환 확대</td></tr>
+      <tr><td>2024</td><td class="tr">15,000</td><td class="tr">+3.4%</td><td class="tr">75.0%</td><td><span class="badge b-b">균형</span></td><td>금리 인하 시작, 전세 수요 회복 조짐</td></tr>
+      <tr><td>2025</td><td class="tr">15,500</td><td class="tr">+3.3%</td><td class="tr">73.8%</td><td><span class="badge b-b">균형~소폭 부족</span></td><td>GTX-A 개통 효과, 소형 수요 증가</td></tr>
+      <tr style="background:#eff6ff;font-weight:600"><td>2026(현재)</td><td class="tr">16,000~16,500</td><td class="tr">+3~6%</td><td class="tr">74%</td><td><span class="badge b-y">수요 &gt; 공급</span></td><td>수도권 입주물량 급감 시작, 전세 매물 감소</td></tr>
+      <tr style="background:#fef2f2;font-weight:600"><td>2027</td><td class="tr">17,000~18,000</td><td class="tr">+6~10%</td><td class="tr">72~75%</td><td><span class="badge b-r">수요 ≫ 공급</span></td><td>공급 절벽 최고조, 전세 매물 품귀, 전세가 급등 구간</td></tr>
+      <tr style="background:#fef2f2"><td>2028 상반기</td><td class="tr">18,000~20,000</td><td class="tr">+6~11%</td><td class="tr">72~77%</td><td><span class="badge b-r">수요 ≫ 공급</span></td><td>전세가 피크, 재건축 이주 수요 가세</td></tr>
+      <tr><td>2028 하반기</td><td class="tr">17,500~19,000</td><td class="tr">소폭 조정</td><td class="tr">73~76%</td><td><span class="badge b-y">전환점</span></td><td>고양창릉 1차 입주(1,285세대), 공급 압력 시작</td></tr>
+      <tr><td>2029</td><td class="tr">17,000~18,500</td><td class="tr">-3~+3%</td><td class="tr">72~75%</td><td><span class="badge b-b">균형</span></td><td>창릉 2차 입주(2,089세대), 선도지구 이주 수요 상쇄</td></tr>
+      <tr><td>2030</td><td class="tr">17,000~19,000</td><td class="tr">0~+3%</td><td class="tr">70~75%</td><td><span class="badge b-b">균형~공급 확대</span></td><td>3기 신도시 본격 입주, 선도지구 완공 물량 유입 시작</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hl w">
+    <strong>핵심 포인트:</strong> 전세가 상승의 골든타임은 <strong>2026 Q4 ~ 2028 Q2</strong> (약 18개월). 이 구간에서 전세가가 +10~25% 상승할 수 있으며, 2028년 하반기부터 고양창릉 입주로 상승 동력이 약화됩니다.
+  </div>
+
+  <div class="src">출처: 한국부동산원 전국주택가격동향(reb.or.kr), KB부동산 월간 시세동향(kbland.kr), 부동산R114 입주물량 전망(r114.com), 미래에셋증권 부동산매거진(2025.12)</div>
+</div>
+</section>
+
+<!-- ===== 3. 월별 분석 ===== -->
+<section id="monthly">
+<div class="card">
+  <h2>📅 3. 월별 전세가 추이 및 예측</h2>
+
+  <h3>3-1. 2025.1 ~ 2028.12 월별 전세가 예측 (만원)</h3>
+  <div class="chart-box"><canvas id="monthlyChart"></canvas></div>
+
+  <h3>3-2. 월별 전세 수요 패턴 (계절성)</h3>
+  <div class="chart-sm"><canvas id="seasonChart"></canvas></div>
+
+  <table>
+    <thead><tr><th>월</th><th>수요 강도</th><th>전세 가격 영향</th><th>이유</th><th>전략</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1월</strong></td><td><span class="badge b-y">중</span></td><td>보합</td><td>설 연휴 전 이사 수요 일부</td><td>매물 유지</td></tr>
+      <tr style="background:#fef2f2"><td><strong>2월</strong></td><td><span class="badge b-r">최고</span></td><td class="up">▲ 상승</td><td>신학기 이사 성수기, 학군 수요 폭증</td><td>전세가 올려 내놓기 적기</td></tr>
+      <tr style="background:#fef2f2"><td><strong>3월</strong></td><td><span class="badge b-r">최고</span></td><td class="up">▲ 상승</td><td>입학·전학 시즌 계속, 직장 인사 이동</td><td>가장 유리한 계약 시점</td></tr>
+      <tr><td><strong>4월</strong></td><td><span class="badge b-y">중</span></td><td>보합~약상승</td><td>성수기 잔여 수요</td><td>늦지 않은 타이밍</td></tr>
+      <tr><td><strong>5월</strong></td><td><span class="badge b-b">중하</span></td><td>보합</td><td>봄 이사 마무리</td><td>매물 유지</td></tr>
+      <tr><td><strong>6월</strong></td><td><span class="badge b-g">하</span></td><td class="dn">▼ 약보합</td><td>비수기 진입, 방학 전 대기</td><td>가격 양보 필요 가능</td></tr>
+      <tr><td><strong>7월</strong></td><td><span class="badge b-g">하</span></td><td class="dn">▼ 약보합</td><td>여름 비수기, 장마</td><td>공실 주의</td></tr>
+      <tr style="background:#eff6ff"><td><strong>8월</strong></td><td><span class="badge b-y">중상</span></td><td class="up">▲ 반등</td><td>2학기 이사 수요, 가을 이사 준비</td><td>전세가 재조정 가능</td></tr>
+      <tr style="background:#eff6ff"><td><strong>9월</strong></td><td><span class="badge b-y">중상</span></td><td class="up">▲ 상승</td><td>추석 전후 이사, 전입 수요</td><td>2차 성수기</td></tr>
+      <tr><td><strong>10월</strong></td><td><span class="badge b-y">중</span></td><td>보합</td><td>가을 이사 마무리</td><td>적정 시점</td></tr>
+      <tr><td><strong>11월</strong></td><td><span class="badge b-b">중하</span></td><td>보합~약하락</td><td>연말 비수기 진입</td><td>가격 양보 검토</td></tr>
+      <tr><td><strong>12월</strong></td><td><span class="badge b-g">하</span></td><td class="dn">▼ 하락</td><td>연말 비수기, 이사 기피</td><td>공실 각오 or 가격 인하</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hl">
+    <strong>월별 전략 핵심:</strong><br>
+    • <strong>전세 내놓기 최적 시기:</strong> 1~2월 (2~3월 성수기 진입 전 매물 등록)<br>
+    • <strong>전세가 올려 받기 가능 시기:</strong> 2~3월, 8~9월<br>
+    • <strong>전세가 양보 필요 시기:</strong> 6~7월, 11~12월 (비수기)<br>
+    • <strong>현재(4월):</strong> 성수기 잔여 수요 활용 가능 — 빠른 계약 시 유리
+  </div>
+
+  <div class="src">출처: KB부동산 월간시세동향(kbland.kr), 한국부동산원 주간아파트가격동향(reb.or.kr), FOX부동산 일산 분석(foxgori.com)</div>
+</div>
+</section>
+
+<!-- ===== 4. 공급 요인 ===== -->
+<section id="supply">
+<div class="card">
+  <h2>🏗️ 4. 전세 공급 요인 분석</h2>
+
+  <h3>4-1. 입주물량 → 전세 공급 영향</h3>
+  <div class="chart-sm"><canvas id="supplyImpactChart"></canvas></div>
+
+  <table>
+    <thead><tr><th>연도</th><th class="tr">고양시 입주(세대)</th><th class="tr">서울 입주(만 가구)</th><th class="tr">수도권 합계(만 가구)</th><th>전세 공급 영향</th></tr></thead>
+    <tbody>
+      <tr><td>2024</td><td class="tr">4,200</td><td class="tr">4.3</td><td class="tr">17.3</td><td>정상 공급</td></tr>
+      <tr><td>2025</td><td class="tr">5,800</td><td class="tr">2.8</td><td class="tr">13.2</td><td><span class="badge b-y">감소 시작 (-24%)</span></td></tr>
+      <tr style="background:#fef2f2"><td>2026</td><td class="tr">3,100</td><td class="tr">1.6</td><td class="tr">10.5</td><td><span class="badge b-r">급감 (-39%)</span></td></tr>
+      <tr style="background:#fef2f2"><td>2027</td><td class="tr">2,800</td><td class="tr">1.3</td><td class="tr">8.8</td><td><span class="badge b-r">절벽 (-16%)</span></td></tr>
+      <tr><td>2028</td><td class="tr">6,500</td><td class="tr">2.0</td><td class="tr">12.0</td><td><span class="badge b-y">회복 시작 (+36%)</span></td></tr>
+      <tr><td>2029</td><td class="tr">8,200</td><td class="tr">2.5</td><td class="tr">15.0</td><td><span class="badge b-g">정상화</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>4-2. 전세 공급 감소 요인</h3>
+  <div class="grid-3">
+    <div class="scenario">
+      <h4>신규 입주 감소</h4>
+      <p style="font-size:.85rem">2026~2027 수도권 입주물량이 2024년 대비 <strong>40~50% 급감</strong>. 신축 전세 매물이 크게 줄어 기존 아파트 전세 수요가 증가.</p>
+    </div>
+    <div class="scenario">
+      <h4>월세 전환 확대</h4>
+      <p style="font-size:.85rem">고금리 영향으로 집주인들이 전세→월세 전환 가속. 전세 매물 자체가 줄어 <strong>전세 품귀 현상</strong> 심화.</p>
+    </div>
+    <div class="scenario">
+      <h4>재건축 이주 수요</h4>
+      <p style="font-size:.85rem">일산 선도지구(9,174세대) 이주 시 주변 전세 수요 폭발. <strong>2027~2028년</strong> 이주 시작 시 백석동 전세가 추가 상승 압력.</p>
+    </div>
+  </div>
+
+  <h3>4-3. 전세 공급 증가 요인</h3>
+  <div class="grid-3">
+    <div class="scenario">
+      <h4>고양창릉 3기 신도시</h4>
+      <p style="font-size:.85rem">2028.12 첫 입주 1,285세대 시작. 2029~2030년 본격 확대. <strong>총 38,000세대</strong> 중 2028~2030 유입분이 일산 전세 시장에 하방 압력.</p>
+    </div>
+    <div class="scenario">
+      <h4>금리 인하 → 매수 전환</h4>
+      <p style="font-size:.85rem">기준금리 2.5%→2.25% 하락 시 전세 수요 일부가 매수로 전환. 전세 수요 자체가 감소하는 효과.</p>
+    </div>
+    <div class="scenario">
+      <h4>전세 사기 우려 완화</h4>
+      <p style="font-size:.85rem">전세보증보험 강화, HUG 보증 확대로 전세 기피 심리 완화. 전세 수요 회복에 기여.</p>
+    </div>
+  </div>
+
+  <div class="src">출처: 한국부동산원 입주예정물량(data.go.kr), 부동산R114 전망(r114.com), 미래에셋증권 매거진(2025.12), 연합인포맥스 3기신도시 보도</div>
+</div>
+</section>
+
+<!-- ===== 5. 수요 요인 ===== -->
+<section id="demand">
+<div class="card">
+  <h2>👥 5. 전세 수요 요인 분석</h2>
+
+  <h3>5-1. 수요 드라이버별 강도</h3>
+  <div class="chart-sm"><canvas id="demandChart"></canvas></div>
+
+  <table>
+    <thead><tr><th>수요 요인</th><th class="tc">영향 강도</th><th class="tc">지속 기간</th><th>설명</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1인 가구 증가</strong></td><td class="tc"><span class="badge b-r">매우 높음</span></td><td class="tc">영구적</td><td>고양시 1인가구 비율 34.2%→40% 전망. 소형 전세 수요 구조적 증가</td></tr>
+      <tr><td><strong>공급 절벽 효과</strong></td><td class="tc"><span class="badge b-r">매우 높음</span></td><td class="tc">2026~2028</td><td>수도권 입주물량 40~50% 급감 → 기존 아파트 전세 경쟁 심화</td></tr>
+      <tr><td><strong>GTX-A 통근 수요</strong></td><td class="tc"><span class="badge b-y">높음</span></td><td class="tc">장기</td><td>킨텍스역→서울역 22분. 서울 출퇴근 직장인 전세 수요 유입</td></tr>
+      <tr><td><strong>학군 수요</strong></td><td class="tc"><span class="badge b-y">높음</span></td><td class="tc">장기</td><td>백석동은 백마중·백석고 등 학군 수요 꾸준. 2~3월 성수기 집중</td></tr>
+      <tr><td><strong>재건축 이주 수요</strong></td><td class="tc"><span class="badge b-y">높음</span></td><td class="tc">2027~2030</td><td>선도지구 9,174세대 이주 시 주변 전세 수요 폭증 예상</td></tr>
+      <tr><td><strong>매수 대기 수요</strong></td><td class="tc"><span class="badge b-b">중간</span></td><td class="tc">2026~2027</td><td>매수 타이밍 관망하는 실수요자가 전세로 대기</td></tr>
+      <tr><td><strong>전세 사기 우려 감소</strong></td><td class="tc"><span class="badge b-b">중간</span></td><td class="tc">중기</td><td>보증보험 강화로 전세 기피→전세 복귀 수요</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5-2. 수요 감소 요인</h3>
+  <table>
+    <thead><tr><th>요인</th><th class="tc">영향 강도</th><th>설명</th></tr></thead>
+    <tbody>
+      <tr><td>금리 인하 → 매수 전환</td><td class="tc"><span class="badge b-y">중간</span></td><td>금리 하락 시 전세→매수 전환 수요 발생. 전세 수요 일부 이탈</td></tr>
+      <tr><td>인구 감소·고령화</td><td class="tc"><span class="badge b-b">낮음(장기)</span></td><td>일산동구 출산율 0.79. 장기적 수요 기반 약화</td></tr>
+      <tr><td>3기 신도시 분양 당첨</td><td class="tc"><span class="badge b-b">낮음(단기)</span></td><td>고양창릉 분양 당첨자가 기존 전세 해지 후 이사</td></tr>
+    </tbody>
+  </table>
+
+  <div class="src">출처: 통계청 인구총조사, 고양시청 인구통계, KB부동산 수요동향, FOX부동산(foxgori.com)</div>
+</div>
+</section>
+
+<!-- ===== 6. 시나리오 예측 ===== -->
+<section id="scenario">
+<div class="card">
+  <h2>🔮 6. 전세가 시나리오 예측</h2>
+
+  <h3>6-1. 3가지 시나리오 전세가 전망 (만원)</h3>
+  <div class="chart-box"><canvas id="scenarioChart"></canvas></div>
+
+  <div class="grid-3">
+    <div class="scenario">
+      <h4 style="color:var(--grn)">🟢 보수적 (연 +2~3%)</h4>
+      <table>
+        <tr><td>가정</td><td>금리 동결, 창릉 조기 입주, 수요 정체</td></tr>
+        <tr><td>2026</td><td class="tr">16,000</td></tr>
+        <tr><td>2027</td><td class="tr">16,500</td></tr>
+        <tr><td>2028</td><td class="tr">17,000</td></tr>
+        <tr><td>2029</td><td class="tr">17,300</td></tr>
+        <tr><td>2030</td><td class="tr">17,500</td></tr>
+      </table>
+    </div>
+    <div class="scenario rec">
+      <h4 style="color:var(--pri)">🔵 기본 (연 +5~8%) <span class="badge b-g">가장 유력</span></h4>
+      <table>
+        <tr><td>가정</td><td>공급 절벽 효과, 금리 인하, 선도지구 기대</td></tr>
+        <tr><td>2026</td><td class="tr">16,500</td></tr>
+        <tr><td>2027</td><td class="tr">17,500</td></tr>
+        <tr><td>2028 상</td><td class="tr">19,000</td></tr>
+        <tr><td>2028 하</td><td class="tr">18,500</td></tr>
+        <tr><td>2029</td><td class="tr">18,000</td></tr>
+        <tr><td>2030</td><td class="tr">18,500</td></tr>
+      </table>
+    </div>
+    <div class="scenario">
+      <h4 style="color:var(--red)">🔴 낙관적 (연 +10~15%)</h4>
+      <table>
+        <tr><td>가정</td><td>공급 절벽 극심, 재건축 이주 폭증, 금리 급락</td></tr>
+        <tr><td>2026</td><td class="tr">17,000</td></tr>
+        <tr><td>2027</td><td class="tr">19,000</td></tr>
+        <tr><td>2028</td><td class="tr">21,000</td></tr>
+        <tr><td>2029</td><td class="tr">20,000</td></tr>
+        <tr><td>2030</td><td class="tr">20,500</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h3>6-2. 수급 균형 지수 (Supply-Demand Index)</h3>
+  <div class="chart-sm"><canvas id="balanceChart"></canvas></div>
+  <p style="font-size:.82rem;color:var(--mut);text-align:center">양수(+) = 수요 우세 → 전세가 상승 압력 / 음수(-) = 공급 우세 → 전세가 하락 압력</p>
+
+  <div class="src">출처: 한국부동산원 수급동향지수, KB부동산 전세수급지수, 부동산R114 입주물량 데이터 종합 분석</div>
+</div>
+</section>
+
+<!-- ===== 7. 전략 추천 ===== -->
+<section id="strategy">
+<div class="card">
+  <h2>🎯 7. 전세 전략 추천</h2>
+
+  <h3>7-1. 시기별 최적 전세가 설정</h3>
+  <div class="chart-sm"><canvas id="strategyChart"></canvas></div>
+
+  <table>
+    <thead><tr><th>시기</th><th class="tr">추천 전세가(만원)</th><th>근거</th><th>전략</th></tr></thead>
+    <tbody>
+      <tr style="background:#eff6ff"><td><strong>2026.4 (지금)</strong></td><td class="tr"><strong>16,000</strong></td><td>성수기 잔여 수요 활용, 빠른 계약 우선</td><td><span class="badge b-g">즉시 계약</span> 1.6억 유지</td></tr>
+      <tr><td>2026 Q4 재계약 시</td><td class="tr">16,500~17,000</td><td>공급 절벽 효과 본격화</td><td>+500~1,000 인상 가능</td></tr>
+      <tr><td>2027 Q1 (성수기)</td><td class="tr">17,000~18,000</td><td>공급 절벽 최고조 + 성수기</td><td>적극적 인상</td></tr>
+      <tr><td>2027 Q3~Q4</td><td class="tr">17,500~18,500</td><td>선도지구 구역지정 효과</td><td>높은 전세가 유지 가능</td></tr>
+      <tr style="background:#f0fdf4"><td><strong>2028 Q1 (피크)</strong></td><td class="tr"><strong>18,000~20,000</strong></td><td>전세가 피크 + 재건축 이주 수요</td><td><span class="badge b-r">최고점</span> 매도 준비 시작</td></tr>
+      <tr><td>2028 Q4~</td><td class="tr">17,500~19,000</td><td>창릉 입주 시작, 공급 압력</td><td>전세가 방어 또는 매도 전환</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7-2. 종합 전략 타임라인</h3>
+  <div class="hl s">
+    <strong>추천 전략 요약:</strong><br><br>
+    <strong>Step 1 (지금~2026.Q2):</strong> 전세 1.6억으로 빠르게 계약 성사. 공실 비용 최소화가 핵심.<br>
+    <strong>Step 2 (2026.Q4~2027):</strong> 전세 만기 시 1.65~1.7억으로 인상 갱신 or 신규 임차인 1.7억 이상 모집.<br>
+    <strong>Step 3 (2027.Q4~2028.Q2):</strong> 전세가 피크 구간에서 <strong>매도 실행</strong>. 매매가 2.5~2.7억 목표.<br>
+    <strong>Step 4 (매도 후):</strong> 자금 회수 → S&P500 ETF 70% + 예금 30% 분산 투자.
+  </div>
+
+  <div class="disc">
+    <strong>면책 조항:</strong> 본 분석은 공개 데이터 기반 참고자료이며 투자 조언이 아닙니다. 전세 시장은 정책, 금리, 지역 특수성 등에 의해 예측과 다르게 변동할 수 있습니다. 최종 결정은 전문가 상담 후 판단하시기 바랍니다.
+  </div>
+
+  <div class="src" style="margin-top:14px">
+    <strong>종합 출처:</strong> 한국부동산원(reb.or.kr) | KB부동산(kbland.kr) | 국토교통부(molit.go.kr) | 부동산R114(r114.com) | 호갱노노(hogangnono.com) | 미래에셋증권 매거진 | FOX부동산(foxgori.com) | 통계청 인구총조사 | 한국은행 기준금리
+  </div>
+</div>
+</section>
+
+<div style="text-align:center;margin:30px 0">
+  <a href="ilsan-baekseok-analysis.html" style="display:inline-block;padding:12px 28px;background:var(--pri);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:.95rem">📊 종합 분석 리포트 보기 →</a>
+</div>
+
+</div><!-- /container -->
+
+<!-- ===== CHARTS ===== -->
+<script>
+const C={b:'#2563eb',r:'#dc2626',g:'#16a34a',y:'#d97706',p:'#7c3aed',c:'#06b6d4',gr:'#6b7280',
+bl:'rgba(37,99,235,.12)',rl:'rgba(220,38,38,.12)',gl:'rgba(22,163,74,.12)'};
+
+// 1. Yearly Forecast
+new Chart(document.getElementById('yearlyChart'),{
+  type:'line',
+  data:{
+    labels:['2023','2024','2025','2026','2027','2028 상','2028 하','2029','2030'],
+    datasets:[{
+      label:'전세 평균(만원)',data:[14500,15000,15500,16200,17500,19000,18200,17800,18000],
+      borderColor:C.b,backgroundColor:C.bl,fill:true,tension:.35,pointRadius:6,borderWidth:3
+    },{
+      label:'예상 범위 상한',data:[14500,15000,15500,16500,18000,20000,19000,18500,19000],
+      borderColor:C.r,borderWidth:1,borderDash:[5,5],pointRadius:3,fill:false,tension:.35
+    },{
+      label:'예상 범위 하한',data:[14500,15000,15500,16000,17000,18000,17500,17000,17000],
+      borderColor:C.g,borderWidth:1,borderDash:[5,5],pointRadius:3,fill:false,tension:.35
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'백석동 소형(15평) 전세가 연도별 전망',font:{size:14}},
+    tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toLocaleString()+'만원'}}},
+    scales:{y:{ticks:{callback:v=>(v/10000).toFixed(1)+'억'},min:13000,max:21000}}
+  }
+});
+
+// 2. Monthly Chart
+const mLabels=[];const mBase=[];const mHigh=[];const mLow=[];
+const baseStart=15500;
+const monthFactors=[0,0.3,0.8,1.2,1.0,0.7,0.3,0.2,0.5,0.8,0.6,0.3,0.1];
+// 2025: 15500 base
+for(let m=1;m<=12;m++){
+  mLabels.push('25.'+String(m).padStart(2,'0'));
+  const v=Math.round(baseStart+monthFactors[m]*200);
+  mBase.push(v);mHigh.push(v+400);mLow.push(v-300);
+}
+// 2026: ~16200 base
+for(let m=1;m<=12;m++){
+  mLabels.push('26.'+String(m).padStart(2,'0'));
+  const trend=m*80;
+  const v=Math.round(15800+trend+monthFactors[m]*250);
+  mBase.push(v);mHigh.push(v+500);mLow.push(v-400);
+}
+// 2027: ~17500 base, strong rise
+for(let m=1;m<=12;m++){
+  mLabels.push('27.'+String(m).padStart(2,'0'));
+  const trend=m*100;
+  const v=Math.round(16800+trend+monthFactors[m]*350);
+  mBase.push(v);mHigh.push(v+700);mLow.push(v-500);
+}
+// 2028: peak then decline
+for(let m=1;m<=12;m++){
+  mLabels.push('28.'+String(m).padStart(2,'0'));
+  const peak=m<=6?m*80:-((m-6)*60);
+  const v=Math.round(18500+peak+monthFactors[m]*300);
+  mBase.push(v);mHigh.push(v+800);mLow.push(v-600);
+}
+
+new Chart(document.getElementById('monthlyChart'),{
+  type:'line',
+  data:{
+    labels:mLabels,
+    datasets:[{
+      label:'기본 시나리오',data:mBase,
+      borderColor:C.b,backgroundColor:C.bl,fill:true,tension:.3,pointRadius:0,borderWidth:2.5
+    },{
+      label:'상한',data:mHigh,
+      borderColor:C.r,borderWidth:1,borderDash:[4,4],pointRadius:0,fill:false,tension:.3
+    },{
+      label:'하한',data:mLow,
+      borderColor:C.g,borderWidth:1,borderDash:[4,4],pointRadius:0,fill:false,tension:.3
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'월별 전세가 예측 추이 (2025~2028, 만원)',font:{size:14}},
+    tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toLocaleString()+'만원'}}},
+    scales:{y:{ticks:{callback:v=>(v/10000).toFixed(2)+'억'}},
+    x:{ticks:{maxTicksRotation:45,autoSkip:true,maxRotation:45}}}
+  }
+});
+
+// 3. Season Chart
+new Chart(document.getElementById('seasonChart'),{
+  type:'bar',
+  data:{
+    labels:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    datasets:[{
+      label:'전세 수요 강도 (1~10)',
+      data:[5,9,10,7,5,3,3,7,8,6,4,2],
+      backgroundColor:['#93c5fd','#ef4444','#ef4444','#fbbf24','#93c5fd','#86efac','#86efac','#fbbf24','#fbbf24','#93c5fd','#93c5fd','#86efac'],
+      borderRadius:6
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'월별 전세 수요 강도 (계절성 패턴)',font:{size:13}}},
+    scales:{y:{beginAtZero:true,max:12,ticks:{callback:v=>v+'/10'}}}
+  }
+});
+
+// 4. Supply Impact
+new Chart(document.getElementById('supplyImpactChart'),{
+  type:'bar',
+  data:{
+    labels:['2024','2025','2026','2027','2028','2029'],
+    datasets:[{
+      label:'고양시 입주(세대)',
+      data:[4200,5800,3100,2800,6500,8200],
+      backgroundColor:['#60a5fa','#60a5fa','#ef4444','#ef4444','#fbbf24','#86efac'],
+      borderRadius:6,yAxisID:'y'
+    },{
+      label:'수도권 합계(만 가구)',
+      data:[17.3,13.2,10.5,8.8,12.0,15.0],
+      type:'line',borderColor:C.p,borderWidth:3,pointRadius:5,
+      yAxisID:'y1',fill:false,tension:.3
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'입주물량 → 전세 공급 영향',font:{size:13}}},
+    scales:{
+      y:{position:'left',beginAtZero:true,title:{display:true,text:'고양시(세대)'}},
+      y1:{position:'right',beginAtZero:true,title:{display:true,text:'수도권(만 가구)'},grid:{drawOnChartArea:false}}
+    }
+  }
+});
+
+// 5. Demand Drivers
+new Chart(document.getElementById('demandChart'),{
+  type:'radar',
+  data:{
+    labels:['1인가구 증가','공급 절벽','GTX-A 통근','학군 수요','재건축 이주','매수 대기','전세사기 완화'],
+    datasets:[{
+      label:'2026~2027 영향도',
+      data:[9,10,7,7,5,6,5],
+      backgroundColor:'rgba(37,99,235,.2)',borderColor:C.b,borderWidth:2,pointRadius:4
+    },{
+      label:'2028~2030 영향도',
+      data:[9,4,8,7,9,4,6],
+      backgroundColor:'rgba(220,38,38,.15)',borderColor:C.r,borderWidth:2,pointRadius:4
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'전세 수요 요인별 영향도 (10점 만점)',font:{size:13}}},
+    scales:{r:{min:0,max:10,ticks:{stepSize:2}}}
+  }
+});
+
+// 6. Scenario Forecast
+new Chart(document.getElementById('scenarioChart'),{
+  type:'line',
+  data:{
+    labels:['2026','2027','2028 상','2028 하','2029','2030'],
+    datasets:[{
+      label:'낙관적 (+10~15%/yr)',data:[17000,19000,21000,20000,20000,20500],
+      borderColor:C.r,borderWidth:2,borderDash:[5,5],pointRadius:4,fill:false,tension:.3
+    },{
+      label:'기본 (+5~8%/yr)',data:[16500,17500,19000,18500,18000,18500],
+      borderColor:C.b,borderWidth:3,pointRadius:6,fill:false,tension:.3
+    },{
+      label:'보수적 (+2~3%/yr)',data:[16000,16500,17000,16800,17300,17500],
+      borderColor:C.g,borderWidth:2,borderDash:[5,5],pointRadius:4,fill:false,tension:.3
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'시나리오별 전세가 전망 (만원)',font:{size:14}},
+    tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toLocaleString()+'만원'}}},
+    scales:{y:{ticks:{callback:v=>(v/10000).toFixed(1)+'억'},min:15000,max:22000}}
+  }
+});
+
+// 7. Balance Index
+new Chart(document.getElementById('balanceChart'),{
+  type:'bar',
+  data:{
+    labels:['2024','2025','2026 상','2026 하','2027 상','2027 하','2028 상','2028 하','2029 상','2029 하','2030'],
+    datasets:[{
+      label:'수급 균형 지수',
+      data:[5,10,20,30,45,50,55,25,10,5,0],
+      backgroundColor:function(ctx){const v=ctx.raw;return v>=40?'#ef4444':v>=20?'#f59e0b':v>=10?'#60a5fa':'#86efac'},
+      borderRadius:6
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'전세 수급 균형 지수 (양수=수요우세, 음수=공급우세)',font:{size:13}}},
+    scales:{y:{ticks:{callback:v=>v>0?'+'+v:v}}}
+  }
+});
+
+// 8. Strategy Timeline
+new Chart(document.getElementById('strategyChart'),{
+  type:'line',
+  data:{
+    labels:['26.Q1','26.Q2','26.Q3','26.Q4','27.Q1','27.Q2','27.Q3','27.Q4','28.Q1','28.Q2','28.Q3','28.Q4'],
+    datasets:[{
+      label:'추천 전세가(만원)',
+      data:[16000,16000,16200,16800,17500,17800,18000,18500,19000,19500,18500,18000],
+      borderColor:C.b,backgroundColor:C.bl,fill:true,tension:.35,pointRadius:5,borderWidth:3
+    },{
+      label:'매도 추천 구간',
+      data:[null,null,null,null,null,null,null,18500,19000,19500,null,null],
+      borderColor:C.y,borderWidth:5,pointRadius:9,pointBackgroundColor:C.y,fill:false
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'분기별 추천 전세가 & 매도 타이밍',font:{size:13}},
+    tooltip:{callbacks:{label:c=>c.parsed.y?c.dataset.label+': '+c.parsed.y.toLocaleString()+'만원':''}}},
+    scales:{y:{ticks:{callback:v=>(v/10000).toFixed(1)+'억'},min:15000,max:20500}}
+  }
+});
+</script>
+
+</body>
+</html>
