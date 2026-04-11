@@ -375,7 +375,7 @@ def doc6():
     t2.cell(13,2).text = "2,640,000"
 
     legal(d, ["국세기본법 시행규칙 제7조", "소득세법 시행령 제208조 (증빙 보관)"])
-    d.save(f"{OUT}/06_회비_납부_확인서.docx")
+    d.save(f"{OUT}/06_dues_confirmation.docx")
     print("6/6 회비 확인서")
 
 
