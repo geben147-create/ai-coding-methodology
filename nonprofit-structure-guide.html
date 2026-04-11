@@ -3,1538 +3,527 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>비영리단체 대표자·명의 구조 및 절세 종합 가이드</title>
+<title>비영리단체 대표자/명의 구조 종합 가이드</title>
 <style>
-  :root {
-    --primary: #1a56db;
-    --primary-light: #e8f0fe;
-    --danger: #dc2626;
-    --danger-light: #fef2f2;
-    --success: #16a34a;
-    --success-light: #f0fdf4;
-    --warning: #d97706;
-    --warning-light: #fffbeb;
-    --gray-50: #f9fafb;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-300: #d1d5db;
-    --gray-600: #4b5563;
-    --gray-700: #374151;
-    --gray-800: #1f2937;
-    --gray-900: #111827;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--gray-50);
-    color: var(--gray-800);
-    line-height: 1.7;
-  }
-  .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-
-  /* Header */
-  header {
-    background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 100%);
-    color: white;
-    padding: 50px 20px;
-    text-align: center;
-  }
-  header h1 { font-size: 2rem; margin-bottom: 10px; }
-  header p { font-size: 1.05rem; opacity: 0.9; }
-  .badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.4);
-    border-radius: 20px;
-    padding: 4px 14px;
-    font-size: 0.85rem;
-    margin-top: 12px;
-  }
-
-  /* TOC */
-  .toc {
-    background: white;
-    border: 1px solid var(--gray-200);
-    border-radius: 12px;
-    padding: 28px 32px;
-    margin: 30px 0;
-  }
-  .toc h2 { font-size: 1.2rem; margin-bottom: 14px; color: var(--primary); }
-  .toc ol { padding-left: 22px; }
-  .toc li { margin-bottom: 6px; }
-  .toc a { color: var(--primary); text-decoration: none; }
-  .toc a:hover { text-decoration: underline; }
-
-  /* Section */
-  .section {
-    background: white;
-    border: 1px solid var(--gray-200);
-    border-radius: 12px;
-    padding: 32px;
-    margin-bottom: 28px;
-  }
-  .section h2 {
-    font-size: 1.4rem;
-    color: var(--gray-900);
-    border-bottom: 3px solid var(--primary);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-  .section h3 {
-    font-size: 1.15rem;
-    color: var(--gray-800);
-    margin: 22px 0 12px;
-  }
-  .section h4 {
-    font-size: 1rem;
-    color: var(--gray-700);
-    margin: 16px 0 8px;
-  }
-  .section p, .section li { font-size: 0.95rem; }
-
-  /* Tables */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 16px 0;
-    font-size: 0.9rem;
-  }
-  th, td {
-    border: 1px solid var(--gray-200);
-    padding: 10px 14px;
-    text-align: left;
-  }
-  th {
-    background: var(--primary-light);
-    font-weight: 700;
-    color: var(--gray-800);
-  }
-  tr:nth-child(even) { background: var(--gray-50); }
-
-  /* Info Boxes */
-  .box {
-    border-radius: 10px;
-    padding: 18px 22px;
-    margin: 16px 0;
-  }
-  .box-blue { background: var(--primary-light); border-left: 4px solid var(--primary); }
-  .box-green { background: var(--success-light); border-left: 4px solid var(--success); }
-  .box-red { background: var(--danger-light); border-left: 4px solid var(--danger); }
-  .box-yellow { background: var(--warning-light); border-left: 4px solid var(--warning); }
-  .box strong { display: block; margin-bottom: 4px; }
-
-  /* Source Tag */
-  .source {
-    display: inline-block;
-    background: #eef2ff;
-    color: #3730a3;
-    font-size: 0.78rem;
-    padding: 2px 10px;
-    border-radius: 12px;
-    margin: 2px 4px 2px 0;
-  }
-  .source a { color: #3730a3; text-decoration: none; }
-  .source a:hover { text-decoration: underline; }
-
-  /* Example Box */
-  .example {
-    border: 2px dashed var(--gray-300);
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin: 18px 0;
-    background: var(--gray-50);
-  }
-  .example-title {
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-  }
-
-  /* Flow Chart (CSS-based) */
-  .flow {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 14px 0;
-  }
-  .flow-item {
-    background: var(--primary);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .flow-item.alt { background: var(--success); }
-  .flow-item.warn { background: var(--warning); }
-  .flow-item.danger { background: var(--danger); }
-  .flow-arrow { font-size: 1.2rem; color: var(--gray-400); }
-
-  /* Comparison Grid */
-  .compare-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin: 16px 0;
-  }
-  .compare-card {
-    border: 2px solid var(--gray-200);
-    border-radius: 10px;
-    padding: 18px;
-  }
-  .compare-card.recommended { border-color: var(--success); }
-  .compare-card.caution { border-color: var(--warning); }
-  .compare-card h4 {
-    margin: 0 0 10px;
-    font-size: 1rem;
-  }
-  .compare-card ul {
-    padding-left: 18px;
-    font-size: 0.9rem;
-  }
-  .compare-card li { margin-bottom: 4px; }
-  .tag-rec {
-    display: inline-block;
-    background: var(--success);
-    color: white;
-    font-size: 0.72rem;
-    padding: 1px 8px;
-    border-radius: 8px;
-    margin-left: 6px;
-    vertical-align: middle;
-  }
-  .tag-warn {
-    display: inline-block;
-    background: var(--warning);
-    color: white;
-    font-size: 0.72rem;
-    padding: 1px 8px;
-    border-radius: 8px;
-    margin-left: 6px;
-    vertical-align: middle;
-  }
-
-  /* Visual Diagram */
-  .diagram {
-    background: white;
-    border: 2px solid var(--gray-200);
-    border-radius: 10px;
-    padding: 24px;
-    margin: 16px 0;
-    text-align: center;
-  }
-  .diagram-row {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 12px 0;
-    flex-wrap: wrap;
-  }
-  .d-node {
-    border: 2px solid var(--primary);
-    border-radius: 10px;
-    padding: 12px 20px;
-    min-width: 120px;
-    background: white;
-    font-size: 0.88rem;
-    font-weight: 600;
-  }
-  .d-node.highlight {
-    background: var(--primary);
-    color: white;
-  }
-  .d-node.green {
-    border-color: var(--success);
-    background: var(--success-light);
-  }
-  .d-node.red {
-    border-color: var(--danger);
-    background: var(--danger-light);
-  }
-  .d-arrow {
-    text-align: center;
-    font-size: 1.5rem;
-    color: var(--gray-400);
-    margin: 4px 0;
-  }
-
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 30px;
-    color: var(--gray-600);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--gray-200);
-    margin-top: 40px;
-  }
-
-  /* DOCX download button */
-  .btn-download {
-    display: inline-block;
-    background: var(--primary);
-    color: white;
-    padding: 10px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin: 8px 4px;
-    transition: background 0.2s;
-  }
-  .btn-download:hover { background: #1e40af; }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .compare-grid { grid-template-columns: 1fr; }
-    .diagram-row { flex-direction: column; align-items: center; }
-    header h1 { font-size: 1.5rem; }
-    .section { padding: 20px; }
-  }
-
-  /* Highlight number */
-  .big-num {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--primary);
-    display: block;
-    margin-bottom: 4px;
-  }
+:root{--p:#1a56db;--pl:#e8f0fe;--w:#f59e0b;--wl:#fef3c7;--d:#ef4444;--dl:#fee2e2;--s:#10b981;--sl:#d1fae5;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g600:#4b5563;--g800:#1f2937}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard','Noto Sans KR',-apple-system,sans-serif;background:var(--g50);color:var(--g800);line-height:1.7}
+.hd{background:linear-gradient(135deg,#1e3a8a,#1a56db 50%,#3b82f6);color:#fff;padding:3rem 2rem;text-align:center}
+.hd h1{font-size:2rem;margin-bottom:.5rem}.hd p{font-size:1.1rem;opacity:.9}
+.hd .badge{display:inline-block;background:rgba(255,255,255,.2);border-radius:20px;padding:4px 16px;font-size:.85rem;margin-top:1rem}
+.ct{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+.toc{background:#fff;border-radius:12px;padding:2rem;margin-bottom:2rem;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.toc h2{font-size:1.3rem;margin-bottom:1rem;color:var(--p)}.toc ol{padding-left:1.5rem}.toc li{margin-bottom:.5rem}
+.toc a{color:var(--p);text-decoration:none}.toc a:hover{text-decoration:underline}
+.sc{background:#fff;border-radius:12px;padding:2rem;margin-bottom:2rem;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.sc h2{font-size:1.5rem;color:var(--p);border-bottom:2px solid var(--pl);padding-bottom:.5rem;margin-bottom:1.5rem}
+.sc h3{font-size:1.15rem;margin:1.5rem 0 .8rem}
+.ib{background:var(--pl);border-left:4px solid var(--p);padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin:1rem 0}
+.wb{background:var(--wl);border-left:4px solid var(--w);padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin:1rem 0}
+.db{background:var(--dl);border-left:4px solid var(--d);padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin:1rem 0}
+.sb{background:var(--sl);border-left:4px solid var(--s);padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin:1rem 0}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+th,td{border:1px solid var(--g200);padding:.7rem .9rem;text-align:left}
+th{background:var(--g100);font-weight:600}tr:nth-child(even){background:var(--g50)}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.5rem 0}
+@media(max-width:768px){.cg{grid-template-columns:1fr}}
+.cc{border:2px solid var(--g200);border-radius:10px;padding:1.5rem}.cc.rc{border-color:var(--s)}
+.cc h4{font-size:1.1rem;margin-bottom:.8rem}
+.eb{background:#f8f9ff;border:1px dashed var(--p);border-radius:8px;padding:1.2rem;margin:1rem 0}
+.eb .lb{font-weight:700;color:var(--p);font-size:.9rem;margin-bottom:.5rem}
+.fc{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:1.5rem 0;justify-content:center}
+.fs{background:var(--p);color:#fff;padding:.6rem 1.2rem;border-radius:8px;font-size:.9rem;text-align:center;min-width:120px}
+.fa{font-size:1.5rem;color:var(--p)}
+.vd{background:var(--g100);border-radius:10px;padding:1.5rem;margin:1.5rem 0;font-family:'Consolas','D2Coding',monospace;font-size:.85rem;line-height:1.5;overflow-x:auto;white-space:pre}
+.sr{background:var(--g100);border-radius:6px;padding:.8rem 1rem;margin:.8rem 0;font-size:.85rem;color:var(--g600)}
+.sr strong{color:var(--g800)}.sr a{color:var(--p)}
+.dp{background:#fff;border:2px solid var(--g200);border-radius:8px;padding:1.5rem;margin:1rem 0}
+.dp h4{text-align:center;font-size:1.2rem;margin-bottom:1rem;border-bottom:1px solid #000;padding-bottom:.5rem}
+.dp .cl{margin:.8rem 0}.dp .ct2{font-weight:700}
+.tg{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.8rem;font-weight:600;margin-right:4px}
+.tg-l{background:#dbeafe;color:#1e40af}.tg-t{background:var(--wl);color:#92400e}
+.ft{text-align:center;padding:2rem;color:var(--g600);font-size:.85rem;border-top:1px solid var(--g200);margin-top:2rem}
+.ck{list-style:none;padding:0}.ck li{padding:.4rem 0 .4rem 1.5rem;position:relative}.ck li::before{content:'\2610';position:absolute;left:0}
 </style>
 </head>
 <body>
+<div class="hd">
+<h1>비영리단체 대표자/명의 구조 종합 가이드</h1>
+<p>대표자 선택, 자금 흐름 정리, 절세 구조 설계, 계약서 샘플까지</p>
+<div class="badge">2026년 4월 기준 | 법령/판례 출처 포함 | DOCX 계약서 샘플 수록</div>
+</div>
+<div class="ct">
 
-<header>
-  <h1>비영리단체 대표자·명의 구조 및 절세 종합 가이드</h1>
-  <p>대표자 선정 · 자금 흐름 · 비용 처리 · 계약 구조 · 관리비 설계</p>
-  <span class="badge">2026년 4월 기준 · 법령 출처 명시</span>
-</header>
+<div class="toc"><h2>목차</h2>
+<ol>
+<li><a href="#s1">대표자/명의 구조 상황 정리</a></li>
+<li><a href="#s2">과거 회비 및 자금 흐름 정리 + 절세 방향</a></li>
+<li><a href="#s3">향후 운영 구조 + 비용 처리 기준</a></li>
+<li><a href="#s4">비영리 법인 vs 동호회 선택 기준</a></li>
+<li><a href="#s5">정관 및 기본 계약 구조 설계</a></li>
+<li><a href="#s6">과거 거래 내역 기반 정리 방향</a></li>
+<li><a href="#s7">계약서(DOCX) 샘플 및 절세 설계</a></li>
+<li><a href="#s8">건물 종합관리 수수료 - 법적 근거 및 허용 범위</a></li>
+<li><a href="#s9">정기 관리비 vs 수리비 처리 방식</a></li>
+<li><a href="#s10">전대차/비영리단체 명의 구조</a></li>
+</ol></div>
 
-<div class="container">
+<!-- 1 -->
+<div class="sc" id="s1"><h2>1. 대표자/명의 구조 상황 정리</h2>
+<p>비영리 단체(동호회) 대표를 누구로 할 것인지에 따라 <strong>소득 귀속, 세금 구간, 건강보험료, 종합소득세</strong>가 달라집니다.</p>
+<h3>후보자별 비교표</h3>
+<table>
+<tr><th>후보</th><th>나이/상태</th><th>장점</th><th>단점</th><th>세금 영향</th></tr>
+<tr><td><b>85년생 언니</b> (기혼)</td><td>41세, 기혼</td><td>사회적 신뢰도 높음</td><td>배우자 소득 합산 리스크, 건보료 상승</td><td>배우자 소득 합산 시 세율 구간 상승</td></tr>
+<tr style="background:#d1fae5"><td><b>87년생 본인 (추천)</b></td><td>39세, 소득 적음</td><td>과세표준 낮음, 건보료 최소화</td><td>소득 집중 시 향후 세율 상승 가능</td><td>과세표준 1,400만 원 이하 시 세율 6%</td></tr>
+<tr><td><b>제3자</b> (약 70세)</td><td>70세</td><td>가족 관계 차단, 세무 조사 분리</td><td>신뢰 문제, 법률행위 위험</td><td>별도 소득 발생</td></tr>
+<tr><td><b>아버지</b></td><td>기존 소득 높음</td><td>건물주로서 자연스러운 명의</td><td>기존 소득 + 단체 소득 = 세율 급상승</td><td>종합소득세 24%에서 35%로 상승 가능</td></tr>
+</table>
+<div class="sr"><strong>출처:</strong> 소득세법 제55조 (세율) - 과세표준 구간별 세율 6%~45%<br><strong>참고:</strong> 국세법령정보시스템 <a href="https://taxlaw.nts.go.kr" target="_blank">taxlaw.nts.go.kr</a> | 법제처 <a href="https://www.law.go.kr" target="_blank">law.go.kr</a></div>
 
-<!-- TOC -->
-<div class="toc">
-  <h2>목차</h2>
-  <ol>
-    <li><a href="#sec1">대표자/명의 구조 상황 정리 — 누구를 대표로 세울 것인가</a></li>
-    <li><a href="#sec2">과거 회비 및 자금 흐름 정리 + 절세 방향</a></li>
-    <li><a href="#sec3">향후 운영 구조 + 비용 처리 기준</a></li>
-    <li><a href="#sec4">비영리 법인 vs 동호회 선택 기준</a></li>
-    <li><a href="#sec5">정관 및 기본 계약 구조 설계</a></li>
-    <li><a href="#sec6">과거 거래 내역 기반 정리 방향</a></li>
-    <li><a href="#sec7">계약서(DOCX) 및 절세 설계</a></li>
-    <li><a href="#sec8">건물 종합관리 수수료 — 전대차·관리비·동호회 수익</a></li>
-    <li><a href="#sec9">법령 출처 종합 정리</a></li>
-    <li><a href="#sec10">계약서·정관 DOCX 다운로드 (6종)</a></li>
-  </ol>
+<div class="eb"><div class="lb">예시 1: 87년생 본인 단독 대표 (추천 구조)</div>
+<div class="vd">+---------------------------------------------+
+|           비영리단체 "OO동호회"                |
+|           대표자: 87년생 본인                  |
+|           고유번호증 발급 (관할 세무서)          |
++---------------------------------------------+
+|  회비 수입: 월 220만 원                        |
+|  - 교육비 지출: 80만 원                        |
+|  - 임차료 지출: 50만 원                        |
+|  - 운영비 지출: 40만 원                        |
+|  - 나머지: 50만 원 (적립 또는 추가 비용처리)     |
++---------------------------------------------+
+|  연간 수입: 2,640만 원                         |
+|  비용 처리 후 과세소득: 약 600만 원              |
+|  적용 세율: 6% (과세표준 1,400만 원 이하)        |
+|  예상 종합소득세: 약 36만 원                     |
++---------------------------------------------+</div></div>
+
+<div class="eb"><div class="lb">예시 2: 아버지 대표 시 세율 구간 상승 시뮬레이션</div>
+<div class="vd">+-- 아버지 기존 소득 --------------------------+
+|  근로/사업소득: 약 4,600만 원 (세율 24% 구간) |
+|  + 단체 수입 추가: +2,640만 원               |
+|  = 합산 소득: 7,240만 원                     |
+|  --&gt; 세율 구간: 24% --&gt; 35%로 상승!          |
++---------------------------------------------+
+|  추가 세금 부담 계산:                         |
+|  기존 세금: 약 582만 원                       |
+|  합산 후 세금: 약 1,394만 원                  |
+|  ★ 추가 부담: 약 812만 원/년 ★               |
++---------------------------------------------+
+
+!! 결론: 아버지 명의 시 연간 약 800만 원 이상 세금 추가</div></div>
+
+<h3>종합소득세 세율표 (2026년 기준)</h3>
+<table>
+<tr><th>과세표준</th><th>세율</th><th>누진공제</th></tr>
+<tr><td>1,400만 원 이하</td><td>6%</td><td>-</td></tr>
+<tr><td>1,400만~5,000만 원</td><td>15%</td><td>126만 원</td></tr>
+<tr><td>5,000만~8,800만 원</td><td>24%</td><td>576만 원</td></tr>
+<tr><td>8,800만~1.5억 원</td><td>35%</td><td>1,544만 원</td></tr>
+<tr><td>1.5억~3억 원</td><td>38%</td><td>1,994만 원</td></tr>
+<tr><td>3억~5억 원</td><td>40%</td><td>2,594만 원</td></tr>
+<tr><td>5억~10억 원</td><td>42%</td><td>3,594만 원</td></tr>
+<tr><td>10억 원 초과</td><td>45%</td><td>6,594만 원</td></tr>
+</table>
+<div class="sr"><strong>출처:</strong> 소득세법 제55조 제1항 (2024.1.1. 이후 귀속분)</div>
 </div>
 
-<!-- ======================================= -->
-<!-- SECTION 1 -->
-<!-- ======================================= -->
-<div class="section" id="sec1">
-  <h2>1. 대표자/명의 구조 상황 정리</h2>
+<!-- 2 -->
+<div class="sc" id="s2"><h2>2. 과거 회비 및 자금 흐름 정리 + 절세 방향</h2>
+<p>과거 5~10년간 월 180~280만 원 수준의 자금이 유입되었으나, 명확한 비용 처리 없이 누적된 상태입니다.</p>
+<table>
+<tr><th>항목</th><th>월 금액</th><th>연간 합계</th><th>현재 상태</th><th>정리 방향</th></tr>
+<tr><td>회비 (정기)</td><td>180~220만 원</td><td>2,160~2,640만 원</td><td>미신고</td><td>비영리단체 수입으로 재분류</td></tr>
+<tr><td>교육비 (비정기)</td><td>30~60만 원</td><td>360~720만 원</td><td>성격 불명확</td><td>교육사업 지출로 재분류</td></tr>
+<tr><td>기타 수입</td><td>변동</td><td>변동</td><td>혼재</td><td>성격별 재분류 필요</td></tr>
+</table>
+<div class="wb"><strong>핵심 리스크:</strong> 과거 수입이 개인 계좌로 입금된 경우, 국세청이 '사업소득'으로 과세 가능. <strong>소급 적용은 불가</strong>하며, 앞으로의 구조만 변경 가능.</div>
+<div class="sr"><strong>출처:</strong> 소득세법 제21조 (기타소득), 제19조 (사업소득)<br><strong>판례:</strong> 대법원 2017두47564 - "실질적 귀속자에게 과세"<br><strong>참고:</strong> 국세기본법 제14조 (실질과세 원칙)</div>
 
-  <h3>1-1. 후보자별 비교 분석</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>항목</th>
-        <th>87년생 본인<br>(소득 거의 없음)</th>
-        <th>85년생 언니<br>(기혼)</th>
-        <th>제3자<br>(약 70세)</th>
-        <th>아버지<br>(기존 소득 높음)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>소득세 구간</strong></td>
-        <td>6% (1,400만 원 이하)</td>
-        <td>15~24% (기존 소득에 따라)</td>
-        <td>6~15% (연금 소득 수준)</td>
-        <td>24~35% (기존 소득 합산)</td>
-      </tr>
-      <tr>
-        <td><strong>건강보험료 영향</strong></td>
-        <td>피부양자 탈락 가능성 있음</td>
-        <td>배우자 소득과 합산 → 보험료↑</td>
-        <td>소득 따라 소폭 상승</td>
-        <td>이미 높은 보험료에 추가 부담</td>
-      </tr>
-      <tr>
-        <td><strong>세무조사 리스크</strong></td>
-        <td>낮음 (소규모 단체)</td>
-        <td>중간 (가족 명의 분산 의심)</td>
-        <td>중간 (실질 관계 증빙 필요)</td>
-        <td>높음 (소득 집중 + 상속 관련)</td>
-      </tr>
-      <tr>
-        <td><strong>관리 편의성</strong></td>
-        <td>본인 직접 관리 가능</td>
-        <td>별도 위임 필요</td>
-        <td>별도 위임 필요</td>
-        <td>실질 경영자 vs 명목 분리 부담</td>
-      </tr>
-      <tr>
-        <td><strong>종합 추천</strong></td>
-        <td style="color:var(--success);font-weight:700;">★★★ 최적</td>
-        <td>★★ 보통</td>
-        <td>★★ 보통</td>
-        <td style="color:var(--danger);font-weight:700;">★ 비추천</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="eb"><div class="lb">예시 1: 과거 자금 흐름 재분류 (Before / After)</div>
+<div class="vd">[ Before ]
+회원A --&gt; 개인통장 --&gt; 용도 불명
+회원B --&gt; 개인통장 --&gt; 용도 불명
+회원C --&gt; 현금 수령 --&gt; 기록 없음
+  !! 국세청: "사업소득 미신고" 의심
 
-  <div class="box box-blue">
-    <strong>출처 — 소득세 과세표준 구간</strong>
-    <span class="source"><a href="https://www.law.go.kr/법령/소득세법" target="_blank">소득세법 제55조 (세율)</a></span>
-    <span class="source"><a href="https://www.nts.go.kr" target="_blank">국세청 소득세율표</a></span>
-    <br>2026년 기준 종합소득세율: 1,400만 원 이하 6% / 1,400~5,000만 원 15% / 5,000~8,800만 원 24% / 8,800~1.5억 35%
-  </div>
+[ After ]
+회원A --&gt; 단체통장 --&gt; 회비대장 --&gt; 교육비 지출
+회원B --&gt; 단체통장 --&gt; 회비대장 --&gt; 임차료 지출
+회원C --&gt; 단체통장 --&gt; 회비대장 --&gt; 운영비 지출
+  OK: "비영리단체 고유목적사업"</div></div>
 
-  <h3>1-2. 시각화 예시</h3>
+<div class="eb"><div class="lb">예시 2: 소급 불가 vs 향후 절세 효과</div>
+<div class="vd">+-----------+-------------------+-------------------+
+|  연도      |  과거 (소급 불가)   |  향후 (구조 변경)   |
++-----------+-------------------+-------------------+
+| 2021~2025 | 개인소득 귀속       |  (변경 불가)        |
+|           | 세율 15~24%        |                    |
++-----------+-------------------+-------------------+
+| 2026~     |                   | 단체소득 귀속        |
+|           |                   | 비용처리 후 6%       |
+|           |                   | 연간 절세 200만+     |
++-----------+-------------------+-------------------+
+★ 지금부터 구조를 바꿔야 절세 효과 발생</div></div>
 
-  <!-- 예시 1: 소득 집중 구조 -->
-  <div class="example">
-    <div class="example-title">예시 ① 87년생 1인 집중 구조 (추천)</div>
-    <div class="diagram">
-      <div class="diagram-row">
-        <div class="d-node">회원 A<br>월 회비 지급</div>
-        <div class="d-node">회원 B<br>월 회비 지급</div>
-        <div class="d-node">회원 C<br>월 회비 지급</div>
-      </div>
-      <div class="d-arrow">▼ ▼ ▼</div>
-      <div class="diagram-row">
-        <div class="d-node highlight">비영리 단체 통장<br>(대표: 87년생)</div>
-      </div>
-      <div class="d-arrow">▼</div>
-      <div class="diagram-row">
-        <div class="d-node green">비용 처리<br>교육비·장소대여·운영비</div>
-        <div class="d-node green">잉여금<br>이월 적립</div>
-      </div>
-    </div>
-    <p><strong>핵심:</strong> 소득이 거의 없는 87년생이 대표 → 수익 귀속 시 6% 최저 구간 적용 가능. 비용 처리 후 과세 대상 소득 최소화.</p>
-  </div>
-
-  <!-- 예시 2: 분산 구조 -->
-  <div class="example">
-    <div class="example-title">예시 ② 아버지 대표 시 소득 합산 문제 (비추천)</div>
-    <div class="diagram">
-      <div class="diagram-row">
-        <div class="d-node">기존 아버지 소득<br>임대·사업 등<br><strong>연 5,000만 원+</strong></div>
-        <div class="d-node red">동호회 수익 추가<br>연 2,400만 원<br>(월 200만 원)</div>
-      </div>
-      <div class="d-arrow">▼ 합산 ▼</div>
-      <div class="diagram-row">
-        <div class="d-node red">종합소득 7,400만 원+<br>세율 24% → <strong>세금 약 870만 원+</strong></div>
-      </div>
-    </div>
-    <p><strong>문제점:</strong> 아버지 기존 소득(5,000만 원+)에 동호회 수익(2,400만 원)이 합산되면 24% 구간 → 세금만 약 870만 원 이상. 87년생 명의로 분리하면 동일 수익에 세금 약 144만 원(6% 구간)으로 절감.</p>
-
-    <div class="box box-red">
-      <strong>경고 — 소득 분산 시 주의사항</strong>
-      <span class="source"><a href="https://www.law.go.kr/법령/국세기본법" target="_blank">국세기본법 제14조 (실질과세)</a></span>
-      <br>명의만 분산하고 실질적 관리·수익은 아버지가 하면 <strong>실질과세 원칙</strong>에 의해 아버지 소득으로 재귀속될 수 있음. 반드시 실제 관리·운영 실체가 필요.
-    </div>
-  </div>
+<h3>절세 방향 3단계</h3>
+<div class="fc">
+<div class="fs">1단계<br>단체 설립<br>(고유번호증)</div><div class="fa">&rarr;</div>
+<div class="fs">2단계<br>자금 이전<br>(단체 통장)</div><div class="fa">&rarr;</div>
+<div class="fs">3단계<br>비용 처리<br>(증빙 체계화)</div>
+</div>
+<div class="sr"><strong>출처:</strong> 법인세법 제3조 - 수익사업에서 발생하는 소득만 과세</div>
 </div>
 
-<!-- ======================================= -->
-<!-- SECTION 2 -->
-<!-- ======================================= -->
-<div class="section" id="sec2">
-  <h2>2. 과거 회비 및 자금 흐름 정리 + 절세 방향</h2>
+<!-- 3 -->
+<div class="sc" id="s3"><h2>3. 향후 운영 구조 + 비용 처리 기준</h2>
+<div class="vd">+-----------------------------------------------------+
+|                  OO동호회 (비영리)                     |
+|                  대표: 87년생 본인                      |
++---------------------+-------------------------------+
+|    수입 구조          |         지출 구조               |
++---------------------+-------------------------------+
+| 월 회비: 220만 원     | 강사비: 60~80만 원              |
+| 특별활동비: 수시       | 장소 임차료: 50만 원             |
+| 후원금: 수시          | 교재/재료비: 20~30만 원           |
+|                     | 통신/관리비: 10~15만 원           |
+|                     | 행사/대회비: 수시                 |
+|                     | 예비비(적립): 20~30만 원          |
++-----------------------------------------------------+</div>
 
-  <h3>2-1. 현황 분석</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>항목</th>
-        <th>내용</th>
-        <th>세무 리스크</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>유입 기간</td>
-        <td>약 5~10년 (월 180~280만 원)</td>
-        <td>장기 미신고 시 가산세 가능</td>
-      </tr>
-      <tr>
-        <td>자금 성격</td>
-        <td>회비·교육비·기타 혼재</td>
-        <td>성격 불명확 → 과세 위험</td>
-      </tr>
-      <tr>
-        <td>비용 처리</td>
-        <td>명확한 처리 없이 누적</td>
-        <td>소급 비용 처리 필요</td>
-      </tr>
-      <tr>
-        <td>추정 총액</td>
-        <td>약 1억~3.4억 원 (5년~10년)</td>
-        <td>금액 규모 상 국세청 관심 대상 가능</td>
-      </tr>
-    </tbody>
-  </table>
+<h3>비용 인정 범위</h3>
+<table>
+<tr><th>비용 항목</th><th>인정</th><th>증빙 방법</th><th>한도/주의</th></tr>
+<tr><td>강사비/인건비</td><td>O</td><td>원천징수 영수증, 계약서</td><td>3.3% 원천징수 필수</td></tr>
+<tr><td>장소 임차료</td><td>O</td><td>임대차계약서, 세금계산서</td><td>시가 적정 수준</td></tr>
+<tr><td>교재/재료비</td><td>O</td><td>구매 영수증, 카드전표</td><td>단체 목적 부합</td></tr>
+<tr><td>식비/회의비</td><td>조건부</td><td>카드전표 + 참석자 명단</td><td>1인 3만 원 한도</td></tr>
+<tr><td>차량 유지비</td><td>조건부</td><td>운행일지, 주유 영수증</td><td>업무용 비율만</td></tr>
+<tr><td>대표자 인건비</td><td>X</td><td>-</td><td>별도 근거 필요</td></tr>
+</table>
+<div class="sr"><strong>출처:</strong> 소득세법 시행령 제208조 (증빙서류), 법인세법 시행령 제36조 (접대비 한도)</div>
 
-  <div class="box box-yellow">
-    <strong>출처 — 비영리단체 과세 기준</strong>
-    <span class="source"><a href="https://www.law.go.kr/법령/법인세법" target="_blank">법인세법 제3조 (비영리 내국법인의 과세소득)</a></span>
-    <span class="source"><a href="https://www.law.go.kr/법령/소득세법" target="_blank">소득세법 제12조 (비과세소득)</a></span>
-    <br>비영리단체의 <strong>회비 수입</strong>은 수익사업이 아닌 한 과세 대상이 아님. 다만, 회비를 초과하는 수입이나 수익사업 소득은 법인세/소득세 대상.
-  </div>
+<div class="eb"><div class="lb">예시 1: 전액 비용 처리 시나리오</div>
+<div class="vd">수입: 월 220만 원 (연 2,640만 원)
+  강사비       80만 원  ==================== 36%
+  임차료       50만 원  ============         23%
+  교재비       30만 원  ========             14%
+  통신/관리    15만 원  ====                  7%
+  행사비       25만 원  ======               11%
+  예비적립     20만 원  =====                 9%
+합계 220만 원 = 수입 전액 --&gt; 세금 0원</div></div>
 
-  <h3>2-2. 절세 방향 — 3단계 전략</h3>
-  <div class="flow">
-    <span class="flow-item">1단계: 자금 성격 재분류</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-item alt">2단계: 비용 증빙 보완</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-item">3단계: 신규 단체 설립 연결</span>
-  </div>
+<div class="eb"><div class="lb">예시 2: 일부 적립 시나리오</div>
+<div class="vd">수입: 월 220만 원 / 비용: 200만 원 / 적립: 20만 원
+과세소득: 연 240만 원 / 세율: 6% / 세금: 약 14.4만 원
 
-  <h3>2-3. 시각화 예시</h3>
-
-  <div class="example">
-    <div class="example-title">예시 ① 과거 자금 흐름 재분류 다이어그램</div>
-    <div class="diagram">
-      <div class="diagram-row">
-        <div class="d-node" style="min-width:200px;">과거 입금 내역<br>월 180~280만 원 × 5~10년</div>
-      </div>
-      <div class="d-arrow">▼ 성격 재분류</div>
-      <div class="diagram-row">
-        <div class="d-node green">회비 (비과세)<br>연습실 사용·모임 참여</div>
-        <div class="d-node">교육비<br>수강료·레슨비</div>
-        <div class="d-node" style="border-color:var(--warning);">기타 (정리 필요)<br>불명확한 이체</div>
-      </div>
-      <div class="d-arrow">▼ 증빙 보완</div>
-      <div class="diagram-row">
-        <div class="d-node green">확인서·계약서 작성<br>회비 납부 확인서<br>교육 용역 계약서</div>
-      </div>
-    </div>
-    <p><strong>핵심:</strong> 회비 성격이 명확한 금액은 비과세 처리, 교육비는 용역 계약으로 비용화, 불명확한 금액은 확인서로 성격 확정.</p>
-  </div>
-
-  <div class="example">
-    <div class="example-title">예시 ② 과거 → 현재 구조 연결 시나리오 (연간 기준)</div>
-    <table>
-      <thead>
-        <tr>
-          <th>구분</th>
-          <th>과거 (미정리)</th>
-          <th>현재 (구조화 후)</th>
-          <th>절세 효과</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>연 수입</td>
-          <td>2,640만 원 (월 220만 원)</td>
-          <td>2,640만 원 (동일)</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>비용 처리</td>
-          <td>0원 (증빙 없음)</td>
-          <td>1,800만 원 (장소·교육·운영비)</td>
-          <td>과세 대상 소득 ↓68%</td>
-        </tr>
-        <tr>
-          <td>과세 대상</td>
-          <td>2,640만 원 전액</td>
-          <td>840만 원</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>추정 세금 (6%+지방세)</td>
-          <td>약 174만 원</td>
-          <td>약 55만 원</td>
-          <td style="color:var(--success);font-weight:700;">연 119만 원 절감</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="box box-blue">
-      <strong>출처 — 필요경비 공제</strong>
-      <span class="source"><a href="https://www.law.go.kr/법령/소득세법" target="_blank">소득세법 제19조 (사업소득), 제27조 (필요경비)</a></span>
-      <br>사업소득의 필요경비: 총수입금액에 대응하는 비용으로서 일반적으로 용인되는 통상적인 것의 합계액.
-    </div>
-  </div>
+OK: 적립금은 '이월잉여금'으로 차기년도 사업에 사용 가능
+!!: 3년 이상 과도한 적립 시 세무서 조사 가능</div></div>
 </div>
 
-<!-- ======================================= -->
-<!-- SECTION 3 -->
-<!-- ======================================= -->
-<div class="section" id="sec3">
-  <h2>3. 향후 운영 구조 + 비용 처리 기준</h2>
+<!-- 4 -->
+<div class="sc" id="s4"><h2>4. 비영리 법인 vs 동호회 선택 기준</h2>
+<div class="cg">
+<div class="cc"><h4>비영리 법인 (사단법인)</h4>
+<table>
+<tr><th>항목</th><th>내용</th></tr>
+<tr><td>설립</td><td>민법 제32조, 주무관청 허가, 50~200만 원, 2~6개월</td></tr>
+<tr><td>관리</td><td>이사회, 연간 결산보고, 주무관청 감독</td></tr>
+<tr><td>세금</td><td>수익사업만 과세 (법인세)</td></tr>
+<tr><td>해산</td><td>복잡 (주무관청 승인)</td></tr>
+</table></div>
+<div class="cc rc"><h4>임의단체/동호회 (고유번호증) - 추천</h4>
+<table>
+<tr><th>항목</th><th>내용</th></tr>
+<tr><td>설립</td><td>세무서 고유번호증, 거의 무료, 1~2주</td></tr>
+<tr><td>관리</td><td>최소 (정관, 회의록)</td></tr>
+<tr><td>세금</td><td>수익사업만 과세</td></tr>
+<tr><td>해산</td><td>간단 (폐업 신고)</td></tr>
+</table></div></div>
+<div class="sb"><strong>추천:</strong> 월 200만 원대 소규모에서는 <strong>임의단체 + 고유번호증</strong>이 가장 효율적.</div>
+<div class="sr"><strong>출처:</strong> 민법 제32조, 국세기본법 시행규칙 제7조</div>
 
-  <h3>3-1. 운영 구조 설계 포인트</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>설계 항목</th>
-        <th>권장 사항</th>
-        <th>근거</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>대표자</td>
-        <td>87년생 본인 (소득 낮음)</td>
-        <td>소득세법 제55조 — 낮은 세율 구간 적용</td>
-      </tr>
-      <tr>
-        <td>수익 수취 계좌</td>
-        <td>단체 고유번호 통장 (개인 통장 분리)</td>
-        <td>국세기본법 제14조 — 실질과세 원칙 대비</td>
-      </tr>
-      <tr>
-        <td>지출 구조</td>
-        <td>정관에 명시된 비용 항목에 한정</td>
-        <td>소득세법 제27조 — 필요경비 인정 범위</td>
-      </tr>
-      <tr>
-        <td>잉여금 처리</td>
-        <td>다음 연도 이월 (단체 계좌 내 보관)</td>
-        <td>비영리 수입 귀속 원칙</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="eb"><div class="lb">예시 1: 설립 절차</div>
+<div class="fc">
+<div class="fs">1. 정관 작성</div><div class="fa">&rarr;</div>
+<div class="fs">2. 창립총회</div><div class="fa">&rarr;</div>
+<div class="fs">3. 세무서 방문</div><div class="fa">&rarr;</div>
+<div class="fs">4. 통장 개설</div>
+</div>
+<p style="margin-top:1rem"><b>서류:</b> 정관, 회의록, 신분증, 인감증명서, 회원 명단</p></div>
 
-  <h3>3-2. 비용 인정 가능 항목 상세</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>비용 항목</th>
-        <th>월 예상 금액</th>
-        <th>증빙 방법</th>
-        <th>인정 근거</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>연습실/장소 대여비</td>
-        <td>50~80만 원</td>
-        <td>임대차 계약서, 이체 내역</td>
-        <td>소득세법 시행령 제55조</td>
-      </tr>
-      <tr>
-        <td>강사/교육비</td>
-        <td>30~50만 원</td>
-        <td>용역 계약서, 원천징수 영수증</td>
-        <td>소득세법 제19조 (사업소득)</td>
-      </tr>
-      <tr>
-        <td>교통비·차량유지비</td>
-        <td>10~20만 원</td>
-        <td>운행일지, 주유 영수증</td>
-        <td>소득세법 시행령 제78조의3</td>
-      </tr>
-      <tr>
-        <td>사무용품·소모품</td>
-        <td>5~10만 원</td>
-        <td>카드 매출전표, 세금계산서</td>
-        <td>소득세법 제27조</td>
-      </tr>
-      <tr>
-        <td>식비·회의비</td>
-        <td>10~20만 원</td>
-        <td>카드 결제, 참석자 명단</td>
-        <td>법인세법 시행령 제40조 유추</td>
-      </tr>
-      <tr>
-        <td>통신비·인터넷</td>
-        <td>3~5만 원</td>
-        <td>요금 고지서</td>
-        <td>일반 관리비 성격</td>
-      </tr>
-      <tr>
-        <td style="font-weight:700;">합계 (예상)</td>
-        <td style="font-weight:700;">108~185만 원</td>
-        <td colspan="2">월 수입 220만 원 대비 비용률 49~84%</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>3-3. 시각화 예시</h3>
-
-  <div class="example">
-    <div class="example-title">예시 ① 월간 자금 흐름도 (월 수입 220만 원 기준)</div>
-    <div class="diagram">
-      <div class="diagram-row">
-        <div class="d-node highlight" style="min-width: 200px;">월 회비 수입<br><strong>220만 원</strong></div>
-      </div>
-      <div class="d-arrow">▼ 비용 처리</div>
-      <div class="diagram-row">
-        <div class="d-node green">장소 대여<br>70만 원</div>
-        <div class="d-node green">강사비<br>40만 원</div>
-        <div class="d-node green">운영비<br>25만 원</div>
-        <div class="d-node green">기타<br>15만 원</div>
-      </div>
-      <div class="d-arrow">▼ 잔여</div>
-      <div class="diagram-row">
-        <div class="d-node" style="border-color:var(--warning);">과세 대상 잔여<br><strong>70만 원</strong><br>(연 840만 원 → 6% 구간)</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="example">
-    <div class="example-title">예시 ② 연간 비용 처리 vs 미처리 세금 비교</div>
-    <div class="compare-grid">
-      <div class="compare-card caution">
-        <h4>비용 미처리 시 <span class="tag-warn">비추천</span></h4>
-        <ul>
-          <li>연 수입: 2,640만 원</li>
-          <li>비용 공제: 0원</li>
-          <li>과세 대상: 2,640만 원</li>
-          <li>세금 (15% 구간): <strong>약 240만 원</strong></li>
-          <li>건강보험료 추가: 약 월 8~12만 원</li>
-        </ul>
-      </div>
-      <div class="compare-card recommended">
-        <h4>비용 처리 시 <span class="tag-rec">추천</span></h4>
-        <ul>
-          <li>연 수입: 2,640만 원</li>
-          <li>비용 공제: 1,800만 원</li>
-          <li>과세 대상: 840만 원</li>
-          <li>세금 (6% 구간): <strong>약 55만 원</strong></li>
-          <li>건강보험료 추가: 최소 수준</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+<div class="eb"><div class="lb">예시 2: 비용 비교</div>
+<div class="vd">동호회                     비영리 법인
+설립비: ~5만 원             설립비: 100~200만 원
+기간:   1~2주               기간:   3~6개월
+관리비: ~10만 원/년          관리비: 50~100만 원/년
+감독:   세무서만             감독:   주무관청+세무서
+★ 월 220만 원 규모에서 법인 설립은 과투자</div></div>
 </div>
 
-<!-- ======================================= -->
-<!-- SECTION 4 -->
-<!-- ======================================= -->
-<div class="section" id="sec4">
-  <h2>4. 비영리 법인 vs 동호회(임의단체) 선택 기준</h2>
+<!-- 5 -->
+<div class="sc" id="s5"><h2>5. 정관 및 기본 계약 구조 설계</h2>
+<table>
+<tr><th>조항</th><th>내용</th><th>세무 포인트</th></tr>
+<tr><td>제1조 (명칭)</td><td>단체의 정식 명칭</td><td>고유번호증과 일치</td></tr>
+<tr><td>제2조 (목적)</td><td>교육, 문화, 친목</td><td>"수익사업 아님" 명확히</td></tr>
+<tr><td>제5조 (회비)</td><td>월 회비, 납부방법</td><td><b>비용처리 근거 (핵심!)</b></td></tr>
+<tr><td>제7조 (재정)</td><td>수입/지출 관리</td><td>지출 항목 = 비용인정 근거</td></tr>
+</table>
+<div class="sr"><strong>출처:</strong> 국세기본법 시행규칙 제7조 - 정관 또는 규약 필수</div>
 
-  <h3>4-1. 핵심 비교</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>비교 항목</th>
-        <th>비영리 법인 (사단법인 등)</th>
-        <th>동호회 (임의단체·고유번호증)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>설립 절차</td>
-        <td>주무관청 허가 + 법원 등기<br>(수개월 소요)</td>
-        <td>관할세무서에 고유번호증 신청<br>(<strong>1~2주</strong>)</td>
-      </tr>
-      <tr>
-        <td>법적 지위</td>
-        <td>독립 법인격 (권리·의무 주체)</td>
-        <td>법인격 없음 (대표자 개인 책임)</td>
-      </tr>
-      <tr>
-        <td>세무 신고</td>
-        <td>법인세 신고 (수익사업만 과세)</td>
-        <td>대표자 소득세 신고 (사업소득)</td>
-      </tr>
-      <tr>
-        <td>비용 인정 범위</td>
-        <td>넓음 (법인 경비 전반)</td>
-        <td>제한적 (개인 사업소득 필요경비)</td>
-      </tr>
-      <tr>
-        <td>관리 부담</td>
-        <td>높음 (이사회, 감사, 연례보고)</td>
-        <td><strong>낮음</strong> (자체 규약만 유지)</td>
-      </tr>
-      <tr>
-        <td>통장 개설</td>
-        <td>법인 명의 가능</td>
-        <td>고유번호증 기반 단체 통장 가능</td>
-      </tr>
-      <tr>
-        <td>기부금 영수증</td>
-        <td>발행 가능 (지정기부금 등)</td>
-        <td>불가</td>
-      </tr>
-      <tr>
-        <td style="font-weight:700;">이 상황에 추천</td>
-        <td>△ (과도한 관리 부담)</td>
-        <td style="color:var(--success);font-weight:700;">★ 추천 (간편·실용적)</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="eb"><div class="lb">예시 1: 정관 제5조(회비) - DOCX 샘플</div>
+<div class="dp"><div class="cl"><span class="ct2">제5조 (회비)</span><br>
+1. 정회원은 매월 정해진 회비를 납부하여야 한다.<br>
+2. 2026년도 회비는 월 220,000원으로 한다.<br>
+3. 회비는 단체 전용 통장으로 납부함을 원칙으로 한다.<br>
+4. 납부된 회비는 제3조의 사업 목적에 한하여 사용한다.<br>
+5. 사용 내역은 매 분기 회원에게 공개한다.</div></div></div>
 
-  <div class="box box-blue">
-    <strong>출처</strong>
-    <span class="source"><a href="https://www.law.go.kr/법령/민법" target="_blank">민법 제32조 (비영리법인 설립)</a></span>
-    <span class="source"><a href="https://www.law.go.kr/법령/법인세법" target="_blank">법인세법 제1조 (납세의무자)</a></span>
-    <span class="source"><a href="https://www.law.go.kr/법령/소득세법" target="_blank">소득세법 제2조 (납세의무)</a></span>
-    <span class="source"><a href="https://www.nts.go.kr" target="_blank">국세청 — 비영리단체 고유번호증 안내</a></span>
-  </div>
-
-  <h3>4-2. 시각화 예시</h3>
-
-  <div class="example">
-    <div class="example-title">예시 ① 동호회(고유번호증) 설립 프로세스</div>
-    <div class="flow">
-      <span class="flow-item">정관(규약) 작성</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item alt">설립 총회 개최<br>회의록 작성</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item">세무서 방문<br>고유번호증 신청</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item alt">단체 통장 개설</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item">운영 개시</span>
-    </div>
-    <p><strong>소요 시간:</strong> 약 1~2주 / <strong>비용:</strong> 0원 (인지세 없음)</p>
-    <div class="box box-green">
-      <strong>필요 서류</strong>
-      <br>① 정관(규약) 1부 ② 설립 총회 회의록 1부 ③ 대표자 신분증 사본 ④ 회원 명부 ⑤ 사업장 증명 (임대차 계약서 등)
-    </div>
-  </div>
-
-  <div class="example">
-    <div class="example-title">예시 ② 비영리 법인 설립 프로세스 (비교용)</div>
-    <div class="flow">
-      <span class="flow-item warn">정관 작성<br>이사·감사 선임</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item warn">주무관청<br>설립 허가 신청</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item danger">허가 심사<br>(1~3개월)</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item warn">법원 등기<br>등록세 납부</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item">세무서 신고<br>법인 통장</span>
-    </div>
-    <p><strong>소요 시간:</strong> 최소 2~4개월 / <strong>비용:</strong> 등록세 + 등기 비용 약 30~50만 원</p>
-    <p><strong>결론:</strong> 현재 규모(월 200만 원대)에서는 동호회(고유번호증)가 압도적으로 유리.</p>
-  </div>
+<div class="eb"><div class="lb">예시 2: 정관 제7조(재정) - DOCX 샘플</div>
+<div class="dp"><div class="cl"><span class="ct2">제7조 (재정)</span><br>
+1. 재정은 회비, 후원금, 사업수익으로 충당한다.<br>
+2. 지출 범위:<br>
+&nbsp;&nbsp;가. 교육 강사비 및 전문가 초청비<br>
+&nbsp;&nbsp;나. 교육장 및 연습실 임차료<br>
+&nbsp;&nbsp;다. 교재, 악보, 소모품 등 재료비<br>
+&nbsp;&nbsp;라. 통신비, 인쇄비, 사무용품비<br>
+&nbsp;&nbsp;마. 정기 행사, 발표회, 대회 참가비<br>
+&nbsp;&nbsp;바. 회의비 및 간담회비<br>
+&nbsp;&nbsp;사. 기타 총회에서 승인한 경비<br>
+3. 모든 지출은 적격증빙을 구비하여야 한다.</div></div></div>
 </div>
 
-<!-- ======================================= -->
-<!-- SECTION 5 -->
-<!-- ======================================= -->
-<div class="section" id="sec5">
-  <h2>5. 정관 및 기본 계약 구조 설계</h2>
+<!-- 6 -->
+<div class="sc" id="s6"><h2>6. 과거 거래 내역 기반 정리 방향</h2>
+<table>
+<tr><th>거래 유형</th><th>성격</th><th>재분류</th><th>필요 증빙</th></tr>
+<tr><td>정기 입금 (동일 금액)</td><td>회비</td><td>회비 수입</td><td>회비대장, 회원명단</td></tr>
+<tr><td>비정기 입금</td><td>교육비/행사비</td><td>사업 수입</td><td>프로그램 안내문</td></tr>
+<tr><td>가족 간 이체</td><td>생활비/대여/증여</td><td>금전 대차</td><td>차용증 또는 증여신고</td></tr>
+<tr><td>현금 수수</td><td>회비/기타</td><td>회비/후원금</td><td>현금 영수증</td></tr>
+</table>
+<div class="db"><strong>주의:</strong> 가족 간 이체가 10년 합산 5,000만 원 초과 시 <strong>증여세 과세</strong>.</div>
+<div class="sr"><strong>출처:</strong> 상증세법 제53조 (5,000만 원/10년)<br><strong>판례:</strong> 대법원 2015두52037 - "가족 간 금전 이동도 증여 추정"</div>
 
-  <h3>5-1. 정관(규약) 필수 포함 사항</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>조항</th>
-        <th>내용</th>
-        <th>세무상 중요도</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>제1조 (명칭)</td>
-        <td>"○○ 동호회" 등 단체명</td>
-        <td>중</td>
-      </tr>
-      <tr>
-        <td>제2조 (목적)</td>
-        <td>비영리 목적 명시 (문화·교육·친목)</td>
-        <td style="color:var(--danger);font-weight:700;">매우 높음</td>
-      </tr>
-      <tr>
-        <td>제3조 (사업)</td>
-        <td>구체적 활동 내역 (연습, 공연, 교육 등)</td>
-        <td style="color:var(--danger);font-weight:700;">매우 높음</td>
-      </tr>
-      <tr>
-        <td>제4조 (회원)</td>
-        <td>가입·탈퇴 기준, 회원 의무</td>
-        <td>중</td>
-      </tr>
-      <tr>
-        <td>제5조 (회비)</td>
-        <td>금액, 납부 주기, 용도 한정</td>
-        <td style="color:var(--danger);font-weight:700;">매우 높음</td>
-      </tr>
-      <tr>
-        <td>제6조 (회계)</td>
-        <td>회계연도, 수입·지출 기준, 잔여재산 처리</td>
-        <td style="color:var(--danger);font-weight:700;">매우 높음</td>
-      </tr>
-      <tr>
-        <td>제7조 (임원)</td>
-        <td>대표자·감사 선출 방법, 임기</td>
-        <td>중</td>
-      </tr>
-      <tr>
-        <td>제8조 (해산)</td>
-        <td>해산 시 잔여재산 귀속 (유사 목적 단체에 기부)</td>
-        <td>높음</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="eb"><div class="lb">예시 1: 재분류 작업 흐름</div>
+<div class="fc">
+<div class="fs">1. 통장 출력</div><div class="fa">&rarr;</div>
+<div class="fs">2. 성격 분류</div><div class="fa">&rarr;</div>
+<div class="fs">3. 증빙 매칭</div><div class="fa">&rarr;</div>
+<div class="fs">4. 증빙 보완</div><div class="fa">&rarr;</div>
+<div class="fs">5. 확인서</div>
+</div></div>
 
-  <div class="box box-yellow">
-    <strong>핵심 — 세무서 심사 포인트</strong>
-    <br>고유번호증 발급 시 세무서는 <strong>비영리 목적의 진정성</strong>을 확인합니다. 정관에 수익 분배 조항이 있거나 영리 사업이 주목적이면 거부될 수 있습니다.
-    <br><span class="source"><a href="https://www.nts.go.kr" target="_blank">국세청 고유번호 부여 안내</a></span>
-  </div>
+<div class="eb"><div class="lb">예시 2: 증여 vs 차용 판단</div>
+<div class="vd">가족 간 이체 발생!
+  +-- 이자 지급 있음? --&gt; 금전대차 (차용)
+  |     필요: 차용증 + 이자 이체 기록 (연 4.6%)
+  |
+  +-- 이자 없음? --&gt; 증여 추정
+       +-- 10년 합산 5,000만 원 이하 --&gt; 공제 (세금 없음)
+       +-- 10년 합산 5,000만 원 초과 --&gt; 증여세 과세!
 
-  <h3>5-2. 필요한 계약서 목록</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>계약서 종류</th>
-        <th>당사자</th>
-        <th>핵심 내용</th>
-        <th>세무 효과</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>장소 임대차 계약서</td>
-        <td>단체 ↔ 건물주(아버지 등)</td>
-        <td>사용 장소, 월 임대료, 기간</td>
-        <td>임대료 비용 처리 근거</td>
-      </tr>
-      <tr>
-        <td>교육 용역 계약서</td>
-        <td>단체 ↔ 강사(교육 제공자)</td>
-        <td>교육 내용, 시간, 대가</td>
-        <td>교육비 비용 처리 근거</td>
-      </tr>
-      <tr>
-        <td>건물관리 위탁 계약서</td>
-        <td>건물주(아버지) ↔ 단체/개인</td>
-        <td>관리 범위, 수수료, 정산 방식</td>
-        <td>관리 수수료 비용 처리</td>
-      </tr>
-      <tr>
-        <td>전대차 계약서</td>
-        <td>건물주 → 단체 → 세입자(교회 등)</td>
-        <td>전대 조건, 차임, 관리 의무</td>
-        <td>임대 수익 귀속 변경</td>
-      </tr>
-      <tr>
-        <td>회비 납부 확인서</td>
-        <td>회원 → 단체</td>
-        <td>납부 일자, 금액, 용도</td>
-        <td>회비 비과세 근거 증빙</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>5-3. 시각화 예시</h3>
-
-  <div class="example">
-    <div class="example-title">예시 ① 계약 관계 구조도</div>
-    <div class="diagram">
-      <div class="diagram-row">
-        <div class="d-node">아버지 (건물주)</div>
-      </div>
-      <div class="d-arrow">▼ 전대차 계약 / 관리 위탁 계약</div>
-      <div class="diagram-row">
-        <div class="d-node highlight" style="min-width:220px;">동호회 (대표: 87년생)<br>고유번호증 보유</div>
-      </div>
-      <div style="display:flex; justify-content:center; gap:40px; margin:8px 0;">
-        <div style="text-align:center;">
-          <div class="d-arrow">▼ 전대차</div>
-          <div class="d-node green">세입자(교회)<br>월세 지급</div>
-        </div>
-        <div style="text-align:center;">
-          <div class="d-arrow">▼ 용역 계약</div>
-          <div class="d-node green">강사<br>교육비 수령</div>
-        </div>
-        <div style="text-align:center;">
-          <div class="d-arrow">▼ 회비 납부</div>
-          <div class="d-node green">회원 A, B, C<br>월 회비 납부</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="example">
-    <div class="example-title">예시 ② 정관 핵심 조항 샘플 (요약)</div>
-    <div style="background:white;border:1px solid var(--gray-200);border-radius:8px;padding:18px;font-size:0.9rem;">
-      <p style="font-weight:700;margin-bottom:10px;">제5조 (회비)</p>
-      <p>① 본 동호회의 정회원은 매월 <u>[금액]</u>원의 회비를 납부한다.</p>
-      <p>② 회비는 다음 각 호의 용도에 한하여 사용한다.</p>
-      <p style="padding-left:16px;">1. 연습실 및 활동 장소 임차료<br>2. 강사 초빙 및 교육 비용<br>3. 행사 운영비 (공연, 발표회 등)<br>4. 사무용품 및 소모품 구입비<br>5. 기타 총회에서 승인한 운영 비용</p>
-      <p>③ 회비를 목적 외 용도로 사용할 수 없으며, 회원에게 배분하지 아니한다.</p>
-      <hr style="margin:12px 0;">
-      <p style="font-weight:700;margin-bottom:10px;">제6조 (회계)</p>
-      <p>① 본 동호회의 회계연도는 매년 1월 1일부터 12월 31일까지로 한다.</p>
-      <p>② 회계연도 종료 후 3개월 내 수입·지출 결산서를 작성하여 총회에 보고한다.</p>
-      <p>③ 잉여금은 다음 회계연도로 이월하며, 회원에 대한 이익 분배를 하지 아니한다.</p>
-    </div>
-  </div>
+★ 차용증: 이자를 실제 통장 이체해야 인정</div></div>
 </div>
 
-<!-- ======================================= -->
-<!-- SECTION 6 -->
-<!-- ======================================= -->
-<div class="section" id="sec6">
-  <h2>6. 과거 거래 내역 기반 정리 방향</h2>
+<!-- 7 -->
+<div class="sc" id="s7"><h2>7. 계약서(DOCX) 샘플 및 절세 설계</h2>
+<h3>A. 건물 관리 위탁 계약서</h3>
+<div class="dp"><h4>건물 관리 위탁 계약서</h4>
+<div class="cl"><span class="ct2">제1조 (목적)</span><br>갑(건물 소유자)이 을(관리인)에게 부동산 종합 관리를 위탁하고 대가를 지급한다.</div>
+<div class="cl"><span class="ct2">제2조 (관리 대상)</span><br>소재지: OO시 OO구 OO동 / 오피스텔 3실 + 사무실 1실</div>
+<div class="cl"><span class="ct2">제3조 (업무 범위)</span><br>1. 세입자 관리 (입퇴실, 민원, 계약갱신)<br>2. 시설 관리 (점검, 수리업체, 긴급 수선)<br>3. 재무 관리 (월세 수금, 관리비 정산, 세금계산서)<br>4. 행정 관리 (관공서 대행, 보험 관리)</div>
+<div class="cl"><span class="ct2">제4조 (관리 수수료)</span><br>월세 총액의 10%<br>- 오피스텔 3실: 75만 x 10% = 7.5만 원<br>- 사무실: 100만 x 10% = 10만 원<br>- 합계: 월 17.5만 원</div>
+<div class="cl"><span class="ct2">제5조 (수리비)</span><br>50만 원 이하: 을이 선집행 후 실비 청구<br>50만 원 초과: 갑 사전 승인 후 집행<br>수리비는 관리 수수료와 별도 정산</div>
+<div class="cl"><span class="ct2">제6조 (기간)</span><br>1년, 자동 연장</div>
+</div>
+<div class="sr"><strong>출처:</strong> 민법 제680조~692조 (위임), 소득세법 제19조 제1항 제15호</div>
 
-  <h3>6-1. 자금 유형별 재분류 기준</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>거래 유형</th>
-        <th>성격 판단 기준</th>
-        <th>재분류 방향</th>
-        <th>필요 증빙</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>정기 이체 (매월 유사 금액)</td>
-        <td>반복성·정기성 있으면 회비</td>
-        <td><strong>회비 수입</strong></td>
-        <td>회비 납부 확인서, 회원 명부</td>
-      </tr>
-      <tr>
-        <td>특정 시점 대량 입금</td>
-        <td>행사, 공연, 특별 활동 관련</td>
-        <td><strong>행사 참가비</strong></td>
-        <td>행사 기획안, 참가자 명단</td>
-      </tr>
-      <tr>
-        <td>불규칙 소액 이체</td>
-        <td>교재비, 소모품 분담금 등</td>
-        <td><strong>교육비 / 분담금</strong></td>
-        <td>용도 확인서, 구매 내역</td>
-      </tr>
-      <tr>
-        <td>현금 거래</td>
-        <td>가장 리스크 높음</td>
-        <td><strong>확인서 기반 보완</strong></td>
-        <td>현금 수취 확인서 (서명 포함)</td>
-      </tr>
-      <tr>
-        <td>보험 관련</td>
-        <td>성격 완전 분리 필요</td>
-        <td><strong>개인 거래로 분리</strong></td>
-        <td>보험 계약서 사본</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="eb"><div class="lb">예시 1: 수수료 적정성 검증</div>
+<div class="vd">+--------------+-----------+------------------+
+|  비교 대상    |  수수료율  |  비고             |
++--------------+-----------+------------------+
+| 일반 관리업체  |  5~8%    |  단순 임대관리     |
+| 종합관리(본건) |  8~12%   |  시설+재무+행정    |
+| PM업체        | 10~15%   |  대형 건물 기준    |
++--------------+-----------+------------------+
+★ 10%는 종합관리 기준 시가 범위 내 적정</div></div>
 
-  <div class="box box-red">
-    <strong>경고 — 소급 정리 시 주의사항</strong>
-    <span class="source"><a href="https://www.law.go.kr/법령/국세기본법" target="_blank">국세기본법 제26조의2 (국세부과 제척기간)</a></span>
-    <br>일반적인 경우 국세 부과 제척기간은 <strong>5년</strong>, 부정행위가 있는 경우 <strong>10년</strong>입니다. 과거 5년 이내 거래는 세무조사 대상이 될 수 있으므로, 성격 재분류 시 합리적 근거가 반드시 필요합니다.
-  </div>
-
-  <h3>6-2. 시각화 예시</h3>
-
-  <div class="example">
-    <div class="example-title">예시 ① 과거 5년 거래 내역 정리 워크플로우</div>
-    <div class="flow">
-      <span class="flow-item">계좌 거래 내역<br>다운로드 (5년)</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item alt">거래 유형별<br>자동 분류</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item">성격 불명 항목<br>수동 확인</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item alt">증빙 서류<br>작성·보관</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-item">세무사 검토<br>(선택사항)</span>
-    </div>
-  </div>
-
-  <div class="example">
-    <div class="example-title">예시 ② 현금 거래 보완 — 확인서 양식 샘플</div>
-    <div style="background:white;border:2px solid var(--gray-300);border-radius:8px;padding:20px;font-size:0.9rem;">
-      <p style="text-align:center;font-weight:700;font-size:1.1rem;margin-bottom:16px;">회비 납부 확인서</p>
-      <table style="width:100%;margin:0;">
-        <tr>
-          <td style="width:100px;font-weight:700;">납부자</td>
-          <td>성명: _____________ &nbsp;&nbsp; 연락처: _____________</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;">수취 단체</td>
-          <td>○○ 동호회 (대표: _____________)</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;">납부 내역</td>
-          <td>
-            기간: 20__년 __월 ~ 20__년 __월<br>
-            월 회비: ________원 × __개월 = 총 ________원
-          </td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;">납부 방법</td>
-          <td>□ 계좌이체 &nbsp; □ 현금 &nbsp; □ 기타(__________)</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;">용도</td>
-          <td>□ 연습실 이용 &nbsp; □ 교육 참여 &nbsp; □ 행사 참가 &nbsp; □ 기타</td>
-        </tr>
-      </table>
-      <p style="margin-top:16px;">위 내용이 사실임을 확인합니다.</p>
-      <p style="text-align:right;margin-top:12px;">20__년 __월 __일<br>납부자: _____________ (서명/인)</p>
-    </div>
-  </div>
+<div class="eb"><div class="lb">예시 2: 전대차 계약서 핵심 (교회)</div>
+<div class="dp"><h4>전대차 계약서 (핵심)</h4>
+<div class="cl"><span class="ct2">제1조</span> 갑(전대인)은 을(교회)에게 부동산을 전대한다.</div>
+<div class="cl"><span class="ct2">제2조</span> 보증금: OOO만 원 / 월 차임: 28만 원</div>
+<div class="cl"><span class="ct2">제3조</span> 원임대인의 서면 동의를 얻어 체결한다. <em>(민법 629조)</em></div>
+</div>
+<p style="margin-top:.8rem"><span class="tg tg-l">민법 629조</span> <span class="tg tg-t">부가세 면세</span> 종교단체 = 부가가치세법 제26조 제1항 제18호</p></div>
 </div>
 
-<!-- ======================================= -->
-<!-- SECTION 7 -->
-<!-- ======================================= -->
-<div class="section" id="sec7">
-  <h2>7. 계약서(DOCX) 및 절세 설계</h2>
+<!-- 8 -->
+<div class="sc" id="s8"><h2>8. 건물 종합관리 수수료 - 법적 근거 및 허용 범위</h2>
+<table>
+<tr><th>상황</th><th>법적 근거</th><th>허용 범위</th><th>금액 예시</th></tr>
+<tr><td>건물 종합관리</td><td>민법 위임/도급, 소득세법</td><td>10~15% (최대 20%)</td><td>25만 원 &rarr; 2.5~3.7만 원</td></tr>
+<tr><td>오피스텔 3개</td><td>동일</td><td>월 7.5~11만 원</td><td>25만x3</td></tr>
+<tr><td>사무실 100만 원</td><td>동일</td><td>10~15만 원</td><td>월세 기준</td></tr>
+<tr style="background:#e8f0fe"><td><b>전체 합계</b></td><td>동일</td><td><b>약 17~26만 원 (최대 35만 원)</b></td><td>전체</td></tr>
+</table>
+<div class="wb">20% 초과 시 "임대소득 위장" 또는 "증여" 의심.</div>
+<div class="sr"><strong>출처:</strong> 민법 제680조, 소득세법 제19조<br><strong>판례:</strong> 대법원 2013두16362 - "관리용역 대가는 시가에 비추어 판단"</div>
 
-  <h3>7-1. 작성 필요 계약서 체크리스트</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>계약서명</th>
-        <th>당사자</th>
-        <th>핵심 절세 효과</th>
-        <th>우선순위</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>동호회 정관(규약)</td>
-        <td>단체 내부</td>
-        <td>고유번호증 발급 기반 → 단체 통장 개설</td>
-        <td style="color:var(--danger);font-weight:700;">최우선</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>장소 임대차 계약서</td>
-        <td>아버지 → 단체</td>
-        <td>임대료 비용 처리 (연 600~960만 원)</td>
-        <td style="color:var(--danger);font-weight:700;">최우선</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>건물관리 위탁 계약서</td>
-        <td>아버지 → 단체/87년생</td>
-        <td>관리 수수료 수입 귀속 변경</td>
-        <td>높음</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>전대차 계약서</td>
-        <td>아버지 → 단체 → 세입자</td>
-        <td>임대 수익 단체로 귀속</td>
-        <td>높음</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>교육 용역 계약서</td>
-        <td>단체 → 강사</td>
-        <td>교육비 비용 처리 근거</td>
-        <td>중간</td>
-      </tr>
-      <tr>
-        <td>6</td>
-        <td>회비 납부 확인서</td>
-        <td>회원 → 단체</td>
-        <td>과거 거래 소급 증빙</td>
-        <td>중간</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="eb"><div class="lb">예시 1: 수수료율별 리스크</div>
+<div class="vd"> 5%  ==========                안전 (단순 임대관리)
+10%  ==================        적정 (종합관리) ★ 추천
+15%  ======================    상한선 (근거 충분 시)
+20%  ========================  경계선 (소명 필요)
+25%+ ========================= 위험 (증여/위장 의심)</div></div>
 
-  <h3>7-2. 절세 구조 종합 효과</h3>
-
-  <div class="example">
-    <div class="example-title">예시 ① 구조화 전후 연간 세금 비교 (시뮬레이션)</div>
-    <table>
-      <thead>
-        <tr>
-          <th>항목</th>
-          <th>구조화 전 (아버지 귀속)</th>
-          <th>구조화 후 (87년생+단체)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>동호회 수익</td>
-          <td>아버지 소득에 합산 (24~35%)</td>
-          <td>87년생 소득 (6%)</td>
-        </tr>
-        <tr>
-          <td>임대 수익 (교회 등)</td>
-          <td>아버지 소득에 합산</td>
-          <td>전대차 → 단체 귀속 → 비용 처리 후 잔여분만 과세</td>
-        </tr>
-        <tr>
-          <td>관리 수수료</td>
-          <td>없음 (비용 처리 안 함)</td>
-          <td>관리 위탁 계약 → 아버지 필요경비로 공제</td>
-        </tr>
-        <tr>
-          <td>연간 추정 절세액</td>
-          <td>—</td>
-          <td style="color:var(--success);font-weight:700;">약 200~400만 원</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="box box-blue">
-      <strong>출처 — 절세 구조 법적 근거</strong>
-      <span class="source"><a href="https://www.law.go.kr/법령/소득세법" target="_blank">소득세법 제55조 (종합소득세율)</a></span>
-      <span class="source"><a href="https://www.law.go.kr/법령/소득세법" target="_blank">소득세법 제27조 (필요경비 계산)</a></span>
-      <span class="source"><a href="https://www.law.go.kr/법령/민법" target="_blank">민법 제680조 (위임), 제664조 (도급)</a></span>
-    </div>
-  </div>
-
-  <div class="example">
-    <div class="example-title">예시 ② DOCX 계약서 핵심 문구 — 건물관리 위탁 계약서 요약</div>
-    <div style="background:white;border:2px solid var(--gray-300);border-radius:8px;padding:20px;font-size:0.9rem;">
-      <p style="text-align:center;font-weight:700;font-size:1.1rem;margin-bottom:16px;">건물 종합관리 위탁 계약서 (요약)</p>
-
-      <p><strong>제1조 (목적)</strong><br>
-      갑(건물주: ○○○)은 소유 부동산의 종합관리 업무를 을(○○ 동호회 / 대표: ○○○)에게 위탁하고, 을은 이를 수탁한다.</p>
-
-      <p><strong>제3조 (위탁 업무 범위)</strong><br>
-      ① 세입자 관리 (입·퇴실, 민원 대응)<br>
-      ② 시설물 유지·보수 업체 선정 및 관리<br>
-      ③ 월세·관리비 수납 및 정산<br>
-      ④ 정기 안전점검 실시 및 보고</p>
-
-      <p><strong>제5조 (관리 수수료)</strong><br>
-      ① 갑은 을에게 월 임대 수입의 <u>[10~15]</u>%에 해당하는 관리 수수료를 지급한다.<br>
-      ② 수리비 등 실비는 별도 정산하며, 영수증 증빙을 첨부한다.</p>
-
-      <p><strong>제7조 (업무 일지)</strong><br>
-      을은 매월 관리 업무 일지를 작성하여 갑에게 제출한다.</p>
-    </div>
-    <div class="box box-yellow">
-      <strong>DOCX 실제 파일이 필요하시면</strong><br>
-      위 내용을 기반으로 실제 서명 가능한 DOCX 파일을 별도 작성해 드릴 수 있습니다. 필요한 계약서 번호를 알려주세요.
-    </div>
-  </div>
+<div class="eb"><div class="lb">예시 2: 관리 업무 일지 (소명용)</div>
+<div class="vd">+------+----------+-----------------------------+
+| 날짜  | 업무유형  | 내용                         |
++------+----------+-----------------------------+
+| 4/2  | 세입자관리 | 301호 계약갱신 상담            |
+| 4/5  | 시설점검  | 공용부 전등 교체               |
+| 4/8  | 월세확인  | 3월분 입금 확인 (3건)          |
+| 4/12 | 수리대응  | 201호 누수 - 배관업체          |
+| 4/15 | 재무관리  | 관리비 정산, 세금계산서         |
+| 4/25 | 세입자관리 | 교회 시설 문의 대응            |
+| 4/30 | 월말정산  | 수입/지출 보고서               |
++------+----------+-----------------------------+
+★ 이 일지 = "실제 관리 업무 존재" 핵심 증빙</div></div>
 </div>
 
-<!-- ======================================= -->
-<!-- SECTION 8 -->
-<!-- ======================================= -->
-<div class="section" id="sec8">
-  <h2>8. 건물 종합관리 수수료 — 전대차·관리비·동호회 수익</h2>
+<!-- 9 -->
+<div class="sc" id="s9"><h2>9. 정기 관리비 vs 수리비 처리 방식</h2>
+<table>
+<tr><th>항목</th><th>법적 근거</th><th>처리</th><th>핵심</th></tr>
+<tr><td><b>정기 관리비</b></td><td>민법 위임/도급</td><td>계약서에 명시</td><td>매달 고정</td></tr>
+<tr><td><b>수리비</b> (비정기)</td><td>민법 제623조</td><td>실비 별도 청구</td><td>관리비에 포함 X</td></tr>
+<tr><td>월세 공제</td><td>계약서 명시 시</td><td>월세에서 차감</td><td>계약 조항 필요</td></tr>
+</table>
+<div class="ib"><strong>핵심:</strong> 관리비 = 정기 고정 대가 / 수리비 = 비정기 실비. 혼합 시 세무 문제.</div>
+<div class="sr"><strong>출처:</strong> 민법 제623조 (임대인 수선 의무), 제626조 (상환청구권)</div>
 
-  <h3>8-1. 관리 수수료 법적 근거 및 허용 범위</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>상황</th>
-        <th>법적 근거</th>
-        <th>허용 범위 (실무)</th>
-        <th>금액 예시</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>건물 종합관리<br>(임대관리+수리+점검+세입자 대응)</td>
-        <td>민법 위임·도급<br>소득세법 사업소득</td>
-        <td>월세의 10~15% (최대 약 20%)</td>
-        <td>오피스텔 25만 원 → 2.5~3.7만 원</td>
-      </tr>
-      <tr>
-        <td>오피스텔 3개 합계</td>
-        <td>동일</td>
-        <td>월 7.5~11만 원 (최대 15만 원)</td>
-        <td>25만 원 × 3 기준</td>
-      </tr>
-      <tr>
-        <td>사무실 (월 100만 원)</td>
-        <td>동일</td>
-        <td>월 10~15만 원 (최대 20만 원)</td>
-        <td>월세 기준</td>
-      </tr>
-      <tr>
-        <td style="font-weight:700;">전체 합계</td>
-        <td style="font-weight:700;">동일</td>
-        <td style="font-weight:700;">약 17~26만 원 (최대 약 35만 원)</td>
-        <td style="font-weight:700;">전체 구조 기준</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="eb"><div class="lb">예시 1: 분리 처리 흐름</div>
+<div class="vd">[정기 관리비]
+건물주 --월 17.5만 원--&gt; 관리인
+  증빙: 계약서 + 이체내역
 
-  <div class="box box-blue">
-    <strong>출처</strong>
-    <span class="source"><a href="https://www.law.go.kr/법령/민법" target="_blank">민법 제680조 (위임), 제664조 (도급)</a></span>
-    <span class="source"><a href="https://www.law.go.kr/법령/소득세법" target="_blank">소득세법 제19조 (사업소득)</a></span>
-    <span class="source"><a href="http://www.law.go.kr/DRF/lawSearch.do" target="_blank">법령정보 API (판례·해석)</a></span>
-    <br>판단 정확도 약 90~95% (실제 적용 시 관할 세무서 확인 권장)
-  </div>
+[비정기 수리비]
+50만 원 이하: 관리인 선결제 --&gt; 실비 청구
+50만 원 초과: 건물주 사전 승인 --&gt; 직접 결제
+  증빙: 견적서 + 세금계산서 + 사진
 
-  <h3>8-2. 정기 관리비 vs 수리비 처리 방식</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>항목</th>
-        <th>법적 근거</th>
-        <th>처리 방법</th>
-        <th>핵심 정리</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>정기 관리비</td>
-        <td>민법 위임·도급 / 소득세법</td>
-        <td>계약서에 월 관리수수료 명시</td>
-        <td>매달 고정 관리비</td>
-      </tr>
-      <tr>
-        <td>수리비 (비정기)</td>
-        <td>민법 수선 의무</td>
-        <td>실비로 별도 청구</td>
-        <td>관리비에 포함 X (구분 필수)</td>
-      </tr>
-      <tr>
-        <td>수리비 처리 방식</td>
-        <td>임대관리 계약</td>
-        <td>관리자 대신 결제 후 청구</td>
-        <td>정산 방식</td>
-      </tr>
-      <tr>
-        <td>월세에서 공제</td>
-        <td>계약서 명시 시 가능</td>
-        <td>월세에서 차감 가능</td>
-        <td>계약 필요</td>
-      </tr>
-    </tbody>
-  </table>
+★ 같은 항목으로 처리하면 "부풀리기" 의심</div></div>
 
-  <div class="box box-red">
-    <strong>핵심 — 관리비와 수리비 혼합 금지</strong>
-    <br>관리비(관리 대가) = 매월 고정. 수리비(실비 정산) = 발생 시 별도. 혼합하면 세무 문제 가능. <strong>반드시 구분</strong>하세요.
-    <span class="source"><a href="https://www.law.go.kr/법령/민법" target="_blank">민법 제623조 (수선 의무)</a></span>
-  </div>
+<div class="eb"><div class="lb">예시 2: 수리비 처리 3가지 방법</div>
+<div class="vd">사례: 월세 100만 원, 에어컨 수리 30만 원
 
-  <h3>8-3. 전대차 구조 — 교회 세입자</h3>
+[1. 별도 청구] ★ 추천
+  30만 원 별도 이체, 월세 100만 원 그대로
+  가장 깔끔, 증빙 명확
 
-  <div class="example">
-    <div class="example-title">예시 ① 전대차 관계 구조도</div>
-    <div class="diagram">
-      <div class="diagram-row">
-        <div class="d-node">아버지 (소유자·임대인)</div>
-      </div>
-      <div class="d-arrow">▼ 임대차 계약 (전대 허용 조항 포함)</div>
-      <div class="diagram-row">
-        <div class="d-node highlight">동호회 (임차인·전대인)<br>대표: 87년생</div>
-      </div>
-      <div class="d-arrow">▼ 전대차 계약</div>
-      <div class="diagram-row">
-        <div class="d-node green">교회 (전차인·세입자)<br>월세 28만 원 지급</div>
-      </div>
-    </div>
-    <p><strong>교회 설득 포인트:</strong></p>
-    <ul style="font-size:0.9rem;padding-left:18px;">
-      <li>"관리의 전문성" — 아버님 연세가 있어 관리 단체에 위탁. 법적 책임은 동일하게 보장</li>
-      <li>"세금 계산서 동일" — 계산서 발행 주체만 변경, 교회의 임대료 지출 증빙은 동일하게 가능</li>
-      <li>"소통 편의" — 젊은 대표가 직접 관리하므로 소통·대응이 빠름</li>
-    </ul>
-    <div class="box box-blue">
-      <strong>출처 — 전대차 법적 근거</strong>
-      <span class="source"><a href="https://www.law.go.kr/법령/민법" target="_blank">민법 제629조 (임차권의 양도, 전대의 제한)</a></span>
-      <br>전대(전전세)는 임대인의 동의가 있어야 유효. 아버지의 서면 동의 포함 필수.
-    </div>
-  </div>
+[2. 월세 공제] (계약 조항 필요)
+  이번 달 월세 70만 원만 수금
+  계약서에 공제 조항 필수
 
-  <div class="example">
-    <div class="example-title">예시 ② 월 자금 흐름 종합 (전대차 + 관리비 + 동호회 회비)</div>
-    <div class="diagram">
-      <div class="diagram-row">
-        <div class="d-node">교회 월세<br><strong>28만 원</strong></div>
-        <div class="d-node">동호회 회비<br><strong>180~200만 원</strong></div>
-        <div class="d-node">관리 수수료<br><strong>17~26만 원</strong></div>
-      </div>
-      <div class="d-arrow">▼ 단체 통장 입금</div>
-      <div class="diagram-row">
-        <div class="d-node highlight" style="min-width:300px;">동호회 단체 통장<br>월 총 수입: <strong>225~254만 원</strong></div>
-      </div>
-      <div class="d-arrow">▼ 비용 지출</div>
-      <div class="diagram-row">
-        <div class="d-node green">아버지에게 월세 송금<br>(전대차 차액 유지)</div>
-        <div class="d-node green">연습실·강사·운영비<br>150~185만 원</div>
-      </div>
-      <div class="d-arrow">▼</div>
-      <div class="diagram-row">
-        <div class="d-node" style="border-color:var(--warning);">월 잔여 (과세 대상)<br><strong>40~70만 원</strong><br>연 480~840만 원 → 6% 구간</div>
-      </div>
-    </div>
-  </div>
+[3. 관리비 포함] X 비추천
+  관리비 변동 = 세무서 의심</div></div>
 </div>
 
-<!-- ======================================= -->
-<!-- SECTION 9 -->
-<!-- ======================================= -->
-<div class="section" id="sec9">
-  <h2>9. 법령 출처 종합 정리</h2>
+<!-- 10 -->
+<div class="sc" id="s10"><h2>10. 전대차/비영리단체 명의 구조</h2>
+<div class="vd">+-----------+  임대차  +-----------+  전대차  +-----------+
+| 건물주     | ------&gt; | 관리인     | ------&gt; | 교회       |
+| (아버지)   |         | (87년생)  | 월28만원  | (세입자)   |
++-----------+         +-----------+         +-----------+
+                           |
+                           +-- 비영리 통장 수금
+                           +-- 수수료 공제 후 건물주 송금
+                           +-- 업무 일지 작성
 
-  <p>본 가이드에서 인용한 모든 법령 및 참고 자료입니다.</p>
+법적 요건:
+ 1) 전대 동의서 (민법 629조)
+ 2) 전대차계약서
+ 3) 관리위탁계약서</div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>법령/자료명</th>
-        <th>주요 조항</th>
-        <th>활용 섹션</th>
-        <th>링크</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>소득세법</td>
-        <td>제2조(납세의무), 제12조(비과세), 제19조(사업소득), 제27조(필요경비), 제55조(세율)</td>
-        <td>1, 2, 3, 4, 7, 8</td>
-        <td><a href="https://www.law.go.kr/법령/소득세법" target="_blank">law.go.kr</a></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>소득세법 시행령</td>
-        <td>제55조(필요경비 세부), 제78조의3(차량운행비)</td>
-        <td>3</td>
-        <td><a href="https://www.law.go.kr/법령/소득세법시행령" target="_blank">law.go.kr</a></td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>법인세법</td>
-        <td>제1조(납세의무자), 제3조(비영리법인 과세소득)</td>
-        <td>2, 4</td>
-        <td><a href="https://www.law.go.kr/법령/법인세법" target="_blank">law.go.kr</a></td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>국세기본법</td>
-        <td>제14조(실질과세), 제26조의2(부과제척기간)</td>
-        <td>1, 6</td>
-        <td><a href="https://www.law.go.kr/법령/국세기본법" target="_blank">law.go.kr</a></td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>민법</td>
-        <td>제32조(비영리법인), 제623조(수선의무), 제629조(전대), 제664조(도급), 제680조(위임)</td>
-        <td>4, 5, 7, 8</td>
-        <td><a href="https://www.law.go.kr/법령/민법" target="_blank">law.go.kr</a></td>
-      </tr>
-      <tr>
-        <td>6</td>
-        <td>법인세법 시행령</td>
-        <td>제40조(접대비·회의비)</td>
-        <td>3</td>
-        <td><a href="https://www.law.go.kr/법령/법인세법시행령" target="_blank">law.go.kr</a></td>
-      </tr>
-      <tr>
-        <td>7</td>
-        <td>국세청 고유번호증 안내</td>
-        <td>비영리단체 고유번호 부여 절차</td>
-        <td>4, 5</td>
-        <td><a href="https://www.nts.go.kr" target="_blank">nts.go.kr</a></td>
-      </tr>
-      <tr>
-        <td>8</td>
-        <td>법령정보 API</td>
-        <td>판례·해석 데이터 확인</td>
-        <td>8</td>
-        <td><a href="http://www.law.go.kr/DRF/lawSearch.do" target="_blank">law.go.kr/DRF</a></td>
-      </tr>
-    </tbody>
-  </table>
+<h3>교회 설득 포인트</h3>
+<div class="cg">
+<div class="cc"><h4>"왜 직접 계약 안 해요?"</h4>
+<p>"아버님 연세가 있어 관리 단체에 위탁. 법적 책임은 제가 집니다."</p></div>
+<div class="cc"><h4>"세금계산서는?"</h4>
+<p>"발행 주체만 바뀔 뿐, 교회 지출 증빙은 동일합니다."</p></div>
+</div>
+<div class="sr"><strong>출처:</strong> 민법 제629조, 부가가치세법 제26조 제1항 제18호 (종교단체 면세)</div>
 
-  <div class="box box-yellow">
-    <strong>면책 고지</strong><br>
-    본 가이드는 일반적인 정보 제공을 목적으로 하며, 개별 세무·법률 상담을 대체하지 않습니다.
-    실제 적용 시 반드시 세무사·변호사와 상담하시기 바랍니다.
-    세법은 매년 개정되므로, 적용 시점의 최신 법령을 확인하세요.
-    <br><br>
-    <strong>2026년 4월 기준 작성 · 소득세법 등 2026년 시행 기준 반영</strong>
-  </div>
+<div class="eb"><div class="lb">예시 1: 자금 흐름 (월 기준)</div>
+<div class="vd">교회 --&gt; 28만 원 --&gt; 단체 통장
+                        +-- 수수료: 2.8만 원 (10%)
+                        +-- 건물주: 25.2만 원
+
+동호회 회비 --&gt; 220만 원 --&gt; 단체 통장
+                             +-- 교육비: 80만 원
+                             +-- 임차료: 50만 원
+                             +-- 운영비: 40만 원
+                             +-- 기타+적립: 50만 원
+
+관리인 수입: 17.5만+2.8만 = 월 20.3만 원
+연 약 243만 원 --&gt; 세율 6%</div></div>
+
+<div class="eb"><div class="lb">예시 2: 상속세 대비 효과</div>
+<div class="vd">[현재] 모든 수입 --&gt; 아버지 통장
+  소득 UP --&gt; 종합소득세 UP --&gt; 상속재산 UP
+
+[개선] 단체 분리 수입 --&gt; 단체 통장
+  아버지 소득 DOWN --&gt; 세금 DOWN --&gt; 상속재산 DOWN
+
+★ 단체 수입은 아버지 재산에서 제외
+  (단, 실체 없는 페이퍼 단체이면 합산 과세!)</div></div>
+
+<div class="db"><b>핵심 경고:</b> 페이퍼 단체이면 국세기본법 14조(실질과세)에 따라 아버지에게 합산. 반드시 실제 활동 + 증빙 필수.</div>
 </div>
 
-<!-- ======================================= -->
-<!-- SECTION 10: DOCX Downloads -->
-<!-- ======================================= -->
-<div class="section" id="sec10">
-  <h2>10. 계약서·정관 DOCX 다운로드</h2>
-  <p>아래 6종의 문서를 DOCX 파일로 다운로드할 수 있습니다. 모든 문서에 법적 근거가 명시되어 있으며, 빈칸을 채워 바로 사용할 수 있습니다.</p>
-
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>문서명</th>
-        <th>용도</th>
-        <th>다운로드</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td><strong>동호회 정관(규약)</strong></td>
-        <td>고유번호증 발급 신청용 · 11개 조항 완비</td>
-        <td><a class="btn-download" href="contracts/01_%EB%8F%99%ED%98%B8%ED%9A%8C_%EC%A0%95%EA%B4%80_%EA%B7%9C%EC%95%BD.docx" download>다운로드</a></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td><strong>장소 임대차 계약서</strong></td>
-        <td>건물주 → 동호회 · 임대료 비용 처리 근거</td>
-        <td><a class="btn-download" href="contracts/02_%EC%9E%A5%EC%86%8C_%EC%9E%84%EB%8C%80%EC%B0%A8_%EA%B3%84%EC%95%BD%EC%84%9C.docx" download>다운로드</a></td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td><strong>건물관리 위탁 계약서</strong></td>
-        <td>건물주 → 동호회/관리자 · 관리 수수료 근거</td>
-        <td><a class="btn-download" href="contracts/03_%EA%B1%B4%EB%AC%BC%EA%B4%80%EB%A6%AC_%EC%9C%84%ED%83%81_%EA%B3%84%EC%95%BD%EC%84%9C.docx" download>다운로드</a></td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td><strong>전대차 계약서</strong></td>
-        <td>건물주 → 동호회 → 세입자(교회) · 3자 계약</td>
-        <td><a class="btn-download" href="contracts/04_%EC%A0%84%EB%8C%80%EC%B0%A8_%EA%B3%84%EC%95%BD%EC%84%9C.docx" download>다운로드</a></td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td><strong>교육 용역 계약서</strong></td>
-        <td>동호회 → 강사 · 교육비 비용 처리 + 원천징수</td>
-        <td><a class="btn-download" href="contracts/05_%EA%B5%90%EC%9C%A1_%EC%9A%A9%EC%97%AD_%EA%B3%84%EC%95%BD%EC%84%9C.docx" download>다운로드</a></td>
-      </tr>
-      <tr>
-        <td>6</td>
-        <td><strong>회비 납부 확인서</strong></td>
-        <td>회원 → 동호회 · 과거 거래 소급 증빙용 · 월별 상세 포함</td>
-        <td><a class="btn-download" href="contracts/06_%ED%9A%8C%EB%B9%84_%EB%82%A9%EB%B6%80_%ED%99%95%EC%9D%B8%EC%84%9C.docx" download>다운로드</a></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="box box-green">
-    <strong>사용 방법</strong><br>
-    1. 위 버튼 클릭하여 DOCX 파일 다운로드<br>
-    2. Microsoft Word 또는 한글(HWP 호환)로 열기<br>
-    3. 밑줄(_____) 부분에 실제 정보 기입<br>
-    4. 체크박스(□) 해당 항목 선택 표시<br>
-    5. 출력 후 서명·날인하여 사용
-  </div>
-
-  <div class="box box-yellow">
-    <strong>각 문서별 법적 근거 요약</strong><br>
-    <table style="margin:8px 0;font-size:0.85rem;">
-      <tr><td><strong>정관</strong></td><td>국세기본법 제13조, 국세청 고유번호 부여 지침</td></tr>
-      <tr><td><strong>임대차</strong></td><td>민법 제618조, 제623조 / 소득세법 제27조(필요경비)</td></tr>
-      <tr><td><strong>관리위탁</strong></td><td>민법 제680조(위임), 제664조(도급) / 소득세법 제19조</td></tr>
-      <tr><td><strong>전대차</strong></td><td>민법 제629조(전대 제한), 제630조(전차인 권리)</td></tr>
-      <tr><td><strong>교육용역</strong></td><td>민법 제664조(도급) / 소득세법 제19조, 제127조(원천징수)</td></tr>
-      <tr><td><strong>회비확인서</strong></td><td>소득세법 제12조(비과세) / 국세기본법 제14조(실질과세)</td></tr>
-    </table>
-  </div>
+<!-- 출처 종합 -->
+<div class="sc"><h2>법령/판례 출처 종합</h2>
+<table>
+<tr><th>#</th><th>법령</th><th>조항</th><th>내용</th><th>섹션</th></tr>
+<tr><td>1</td><td>소득세법</td><td>제55조</td><td>종합소득세 세율 6%~45%</td><td>1,2,3</td></tr>
+<tr><td>2</td><td>소득세법</td><td>제19조</td><td>사업소득의 범위</td><td>2,8</td></tr>
+<tr><td>3</td><td>소득세법</td><td>제21조</td><td>기타소득의 범위</td><td>2</td></tr>
+<tr><td>4</td><td>국세기본법</td><td>제14조</td><td>실질과세 원칙</td><td>2,10</td></tr>
+<tr><td>5</td><td>법인세법</td><td>제3조</td><td>비영리법인 과세소득</td><td>2,4</td></tr>
+<tr><td>6</td><td>법인세법</td><td>제29조</td><td>고유목적사업준비금</td><td>3</td></tr>
+<tr><td>7</td><td>민법</td><td>제32조</td><td>비영리법인 설립</td><td>4</td></tr>
+<tr><td>8</td><td>국세기본법 시행규칙</td><td>제7조</td><td>고유번호 부여</td><td>4,5</td></tr>
+<tr><td>9</td><td>상증세법</td><td>제53조</td><td>증여공제 5,000만/10년</td><td>6</td></tr>
+<tr><td>10</td><td>민법</td><td>제629조</td><td>전대의 제한</td><td>7,10</td></tr>
+<tr><td>11</td><td>민법</td><td>제623조</td><td>임대인 수선 의무</td><td>9</td></tr>
+<tr><td>12</td><td>민법</td><td>제680조</td><td>위임</td><td>7,8</td></tr>
+<tr><td>13</td><td>부가가치세법</td><td>제26조1항18호</td><td>종교단체 면세</td><td>7,10</td></tr>
+<tr><td>14</td><td>대법원 2017두47564</td><td>판례</td><td>실질적 귀속자 과세</td><td>2</td></tr>
+<tr><td>15</td><td>대법원 2015두52037</td><td>판례</td><td>가족 간 증여 추정</td><td>6</td></tr>
+<tr><td>16</td><td>대법원 2013두16362</td><td>판례</td><td>관리용역 시가 판단</td><td>8</td></tr>
+</table>
+<div class="ib"><strong>법령:</strong> <a href="https://www.law.go.kr" target="_blank">국가법령정보센터</a> | <strong>판례:</strong> <a href="https://glaw.scourt.go.kr" target="_blank">대법원 종합법률정보</a> | <strong>세무:</strong> <a href="https://www.nts.go.kr" target="_blank">국세청 홈택스</a> (126)</div>
 </div>
 
-</div><!-- /container -->
+<!-- 체크리스트 -->
+<div class="sc"><h2>실행 체크리스트</h2>
+<h3>즉시 (1~2주)</h3>
+<ul class="ck"><li>정관 초안 작성</li><li>창립총회 + 회의록</li><li>세무서 고유번호증 신청</li><li>단체 통장 개설</li><li>회비대장 양식 준비</li></ul>
+<h3>1개월 내</h3>
+<ul class="ck"><li>관리 위탁 계약서 체결</li><li>전대차 동의서 (아버지)</li><li>교회 전대차 계약</li><li>업무 일지 시작</li><li>과거 거래 출력/분류</li></ul>
+<h3>3개월 내</h3>
+<ul class="ck"><li>거래 재분류 완료</li><li>차용증/확인서 작성</li><li>첫 분기 결산</li><li>세무사 상담</li></ul>
+</div>
 
-<footer>
-  <p>비영리단체 대표자·명의 구조 및 절세 종합 가이드 | 2026년 4월 기준</p>
-  <p>법령 출처: <a href="https://www.law.go.kr" target="_blank">국가법령정보센터</a> · <a href="https://www.nts.go.kr" target="_blank">국세청</a></p>
-  <p style="margin-top:8px;color:var(--gray-400);font-size:0.8rem;">본 문서는 정보 제공 목적이며 법률·세무 상담을 대체하지 않습니다.</p>
-</footer>
+<div class="ft">
+<p><b>면책:</b> 일반 정보 제공 목적이며, 법률/세무 자문을 대체하지 않습니다. 반드시 세무사/법률 전문가와 상담하세요.</p>
+<p>작성일: 2026년 4월 11일 | 법령 기준: 2026년</p>
+<p><a href="https://www.law.go.kr" target="_blank">국가법령정보센터</a> | <a href="https://glaw.scourt.go.kr" target="_blank">대법원 종합법률정보</a> | <a href="https://www.nts.go.kr" target="_blank">국세청</a></p>
+</div>
 
+</div>
 </body>
 </html>
