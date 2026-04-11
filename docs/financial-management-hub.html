@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>재무 관리 종합 허브 — 습관 + AI 명령어 + 엑셀 + DOCX</title>
+<style>
+:root{--p:#1a56db;--pl:#e8f0fe;--w:#f59e0b;--wl:#fef3c7;--d:#ef4444;--dl:#fee2e2;--s:#10b981;--sl:#d1fae5;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g600:#4b5563;--g800:#1f2937;--v:#7c3aed;--vl:#ede9fe}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard','Noto Sans KR',sans-serif;background:var(--g50);color:var(--g800);line-height:1.7;font-size:15px}
+.hd{background:linear-gradient(135deg,#1e3a8a,#7c3aed 50%,#a78bfa);color:#fff;padding:3rem 1.5rem;text-align:center}
+.hd h1{font-size:1.9rem;margin-bottom:.4rem}.hd p{opacity:.9;font-size:1.05rem}
+.badge{display:inline-block;background:rgba(255,255,255,.2);border-radius:20px;padding:4px 16px;font-size:.85rem;margin-top:.8rem}
+.ct{max-width:1200px;margin:0 auto;padding:1.5rem}
+.sc{background:#fff;border-radius:12px;padding:1.8rem;margin-bottom:1.8rem;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.sc h2{font-size:1.4rem;color:var(--p);border-bottom:2px solid var(--pl);padding-bottom:.4rem;margin-bottom:1.2rem}
+.sc h3{font-size:1.1rem;margin:1.2rem 0 .6rem}
+table{width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.88rem}
+th,td{border:1px solid var(--g200);padding:.55rem .7rem;text-align:left;vertical-align:top}
+th{background:var(--g100);font-weight:600;white-space:nowrap}
+tr:nth-child(even){background:var(--g50)}
+.ib{background:var(--pl);border-left:4px solid var(--p);padding:.8rem 1rem;border-radius:0 8px 8px 0;margin:.8rem 0;font-size:.92rem}
+.wb{background:var(--wl);border-left:4px solid var(--w);padding:.8rem 1rem;border-radius:0 8px 8px 0;margin:.8rem 0;font-size:.92rem}
+.db{background:var(--dl);border-left:4px solid var(--d);padding:.8rem 1rem;border-radius:0 8px 8px 0;margin:.8rem 0;font-size:.92rem}
+.sb{background:var(--sl);border-left:4px solid var(--s);padding:.8rem 1rem;border-radius:0 8px 8px 0;margin:.8rem 0;font-size:.92rem}
+.vb{background:var(--vl);border-left:4px solid var(--v);padding:.8rem 1rem;border-radius:0 8px 8px 0;margin:.8rem 0;font-size:.92rem}
+.role{display:inline-block;padding:3px 12px;border-radius:15px;font-size:.8rem;font-weight:700;margin:2px}
+.role-girl{background:#dbeafe;color:#1e40af}.role-dad{background:#fef3c7;color:#92400e}
+.role-member{background:#dcfce7;color:#166534}.role-pres{background:#ede9fe;color:#5b21b6}
+pre.cmd{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:1rem;margin:.8rem 0;font-size:.85rem;overflow-x:auto;white-space:pre-wrap;line-height:1.6;font-family:'D2Coding','Consolas',monospace}
+pre.cmd .comment{color:#6c7086}pre.cmd .highlight{color:#f9e2af}
+.btn{display:inline-block;background:var(--p);color:#fff;padding:8px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;margin:4px}
+.btn:hover{background:#1e40af}
+.btn-green{background:var(--s)}.btn-green:hover{background:#059669}
+.btn-purple{background:var(--v)}.btn-purple:hover{background:#6d28d9}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.card{border:2px solid var(--g200);border-radius:10px;padding:1rem}
+.card h4{margin:0 0 .5rem;font-size:.95rem}
+.toc{background:#fff;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.toc h2{font-size:1.2rem;margin-bottom:.8rem;color:var(--p)}.toc ol{padding-left:1.5rem;font-size:.95rem}.toc li{margin-bottom:.3rem}
+.toc a{color:var(--p);text-decoration:none}.toc a:hover{text-decoration:underline}
+.ft{text-align:center;padding:2rem;color:var(--g600);font-size:.85rem;border-top:1px solid var(--g200);margin-top:2rem}
+.copy-btn{background:var(--g200);border:none;padding:4px 12px;border-radius:6px;font-size:.78rem;cursor:pointer;float:right;margin-top:-5px}
+.copy-btn:hover{background:var(--g100)}
+</style>
+<script>
+function copyCmd(id){
+  const el=document.getElementById(id);
+  navigator.clipboard.writeText(el.textContent.trim());
+  const btn=el.parentElement.querySelector('.copy-btn');
+  btn.textContent='복사됨!';
+  setTimeout(()=>btn.textContent='복사',1500);
+}
+</script>
+</head>
+<body>
+<div class="hd">
+<h1>재무 관리 종합 허브</h1>
+<p>AI 명령어 + 엑셀 템플릿 + DOCX 서류 + 습관 가이드 — 원스톱</p>
+<div class="badge">CSV 3종 | DOCX 9종 | AI 프롬프트 15개 | 구글시트 호환</div>
+</div>
+<div class="ct">
+
+<div class="toc"><h2>목차</h2>
+<ol>
+<li><a href="#s1">다운로드 센터 — 엑셀(CSV) + DOCX 전체</a></li>
+<li><a href="#s2">AI 명령어 모음 — 단계별 복사-붙여넣기</a></li>
+<li><a href="#s3">구글 시트 연동 가이드</a></li>
+<li><a href="#s4">역할별 체크리스트 (딸 20개 / 아버지 9개 / 회원 4개 / 회장 4개)</a></li>
+<li><a href="#s5">비용 항목 120가지 (금액 포함)</a></li>
+<li><a href="#s6">월간 자금 흐름 시각화</a></li>
+<li><a href="#s7">세금 달력 12개월</a></li>
+</ol></div>
+
+<!-- ===== 1. 다운로드 센터 ===== -->
+<div class="sc" id="s1"><h2>1. 다운로드 센터</h2>
+
+<h3>엑셀(CSV) 템플릿 — 구글 시트에 바로 붙여넣기 가능</h3>
+<table>
+<tr><th>#</th><th>파일명</th><th>내용</th><th>다운로드</th></tr>
+<tr><td>1</td><td>월간 지출 기록장</td><td>날짜/구분/카테고리/항목/금액/증빙 — 매주 입력용</td><td><a class="btn-green" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/templates/monthly_expense.csv" download>CSV</a></td></tr>
+<tr><td>2</td><td>아버지-딸 자금 추적</td><td>출발→도착 계좌 / 금액 / 용도 / 증빙 — 자금 흐름 기록</td><td><a class="btn-green" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/templates/fund_tracking.csv" download>CSV</a></td></tr>
+<tr><td>3</td><td>거래소 손익 기록</td><td>매수/매도 / 수수료 / 실현손익 — 가상자산 세금 대비</td><td><a class="btn-green" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/templates/exchange_pnl.csv" download>CSV</a></td></tr>
+</table>
+
+<h3>계약서/정관 DOCX (6종)</h3>
+<table>
+<tr><th>#</th><th>문서명</th><th>다운로드</th></tr>
+<tr><td>1</td><td>동호회 정관(규약) — 21개 조항</td><td><a class="btn" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/docx_contracts/01_Articles_of_Association.docx" download>DOCX</a></td></tr>
+<tr><td>2</td><td>장소 임대차 계약서</td><td><a class="btn" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/docx_contracts/02_Venue_Lease_Agreement.docx" download>DOCX</a></td></tr>
+<tr><td>3</td><td>건물관리 위탁 계약서</td><td><a class="btn" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/docx_contracts/03_Building_Management_Contract.docx" download>DOCX</a></td></tr>
+<tr><td>4</td><td>전대차 계약서 (3자)</td><td><a class="btn" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/docx_contracts/04_Sublease_Agreement.docx" download>DOCX</a></td></tr>
+<tr><td>5</td><td>교육 용역 계약서</td><td><a class="btn" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/docx_contracts/05_Education_Service_Contract.docx" download>DOCX</a></td></tr>
+<tr><td>6</td><td>회비 납부 확인서</td><td><a class="btn" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/docx_contracts/06_Membership_Fee_Receipt.docx" download>DOCX</a></td></tr>
+</table>
+
+<h3>세금 신고 DOCX (3종)</h3>
+<table>
+<tr><th>#</th><th>문서명</th><th>다운로드</th></tr>
+<tr><td>7</td><td>종합소득세 신고 체크리스트 (5단계)</td><td><a class="btn-purple" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/docx_contracts/07_Tax_Filing_Checklist.docx" download>DOCX</a></td></tr>
+<tr><td>8</td><td>원천징수 이행상황 신고 가이드</td><td><a class="btn-purple" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/docx_contracts/08_Withholding_Tax_Guide.docx" download>DOCX</a></td></tr>
+<tr><td>9</td><td>연간 세금 캘린더 + 준비 서류 13단계</td><td><a class="btn-purple" href="https://github.com/geben147-create/ai-coding-methodology/raw/main/docx_contracts/09_Tax_Calendar_Documents.docx" download>DOCX</a></td></tr>
+</table>
+</div>
+
+<!-- ===== 2. AI 명령어 ===== -->
+<div class="sc" id="s2"><h2>2. AI 명령어 모음 — 단계별 복사-붙여넣기</h2>
+<div class="ib"><b>사용법:</b> 각 명령어를 ChatGPT, Claude, Gemini 등에 복사-붙여넣기 하세요. AI가 바로 정리해줍니다.</div>
+
+<h3>매일 — 영수증/지출 기록</h3>
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd1')">복사</button>
+<pre class="cmd" id="cmd1"><span class="comment"># AI 명령어 1: 오늘 지출 기록</span>
+아래 형식으로 오늘 지출을 정리해줘. 엑셀에 바로 붙여넣을 수 있게 탭으로 구분해줘.
+
+형식: 날짜 | 구분 | 카테고리 | 항목 | 상세내용 | 금액 | 결제수단 | 증빙유형 | 메모
+
+오늘 지출:
+- <span class="highlight">[여기에 오늘 쓴 내역 적기]</span>
+- 예: 마트에서 과일 3만원 카드결제, 주유 5만원, 복사 1만5천원</pre></div>
+
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd2')">복사</button>
+<pre class="cmd" id="cmd2"><span class="comment"># AI 명령어 2: 영수증 사진 → 텍스트 변환</span>
+이 영수증 사진을 보고 아래 형식으로 정리해줘:
+날짜 | 가게명 | 항목 | 금액 | 결제수단
+
+<span class="highlight">[영수증 사진 첨부]</span></pre></div>
+
+<h3>매주 — 주간 정산</h3>
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd3')">복사</button>
+<pre class="cmd" id="cmd3"><span class="comment"># AI 명령어 3: 주간 합계 계산</span>
+아래 이번 주 지출 내역의 카테고리별 합계를 계산해줘.
+카테고리: 식비, 교통, 교육, 사무, 시설, 통신, 기타
+
+이번 주 지출:
+<span class="highlight">[엑셀에서 복사해서 붙여넣기]</span></pre></div>
+
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd4')">복사</button>
+<pre class="cmd" id="cmd4"><span class="comment"># AI 명령어 4: 회비 입금 확인</span>
+아래 통장 내역에서 회비 입금을 확인해줘.
+회원 목록: 김OO, 이OO, 박OO, 최OO, 정OO, 강OO, 조OO, 윤OO, 장OO, 한OO
+월 회비: 220,000원
+
+이번 달 통장 입금 내역:
+<span class="highlight">[통장 내역 복사-붙여넣기]</span>
+
+미입금자와 입금 완료자를 구분해서 알려줘.</pre></div>
+
+<h3>매월 — 월간 정산</h3>
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd5')">복사</button>
+<pre class="cmd" id="cmd5"><span class="comment"># AI 명령어 5: 월간 정산 보고서 생성</span>
+아래 데이터로 월간 정산 보고서를 만들어줘.
+
+총 수입: <span class="highlight">[금액]</span>원
+총 지출: <span class="highlight">[금액]</span>원
+
+카테고리별 지출:
+<span class="highlight">[엑셀 월간 요약 복사-붙여넣기]</span>
+
+다음을 포함해줘:
+1. 카테고리별 지출 비율 (파이차트 설명)
+2. 전월 대비 변동
+3. 비용처리율 (지출/수입)
+4. 다음 달 주의사항</pre></div>
+
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd6')">복사</button>
+<pre class="cmd" id="cmd6"><span class="comment"># AI 명령어 6: 강사비 원천징수 계산</span>
+강사비 원천징수를 계산해줘.
+
+강사명: <span class="highlight">[이름]</span>
+약정 강사비: <span class="highlight">[금액]</span>원
+
+다음을 계산해줘:
+- 소득세 (3%)
+- 지방소득세 (0.3%)
+- 원천징수 합계
+- 강사 실수령액
+- 이체할 금액</pre></div>
+
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd7')">복사</button>
+<pre class="cmd" id="cmd7"><span class="comment"># AI 명령어 7: 관리 업무 일지 작성</span>
+아래 내용으로 이번 달 건물 관리 업무 일지를 A4 1장 분량으로 작성해줘.
+
+기간: <span class="highlight">[월]</span>
+관리 대상: 오피스텔 3실 + 사무실 1실
+
+이번 달 있었던 일:
+<span class="highlight">[세입자 민원, 수리, 점검 등 메모]</span>
+
+형식: 날짜 | 업무내용 | 처리결과 | 비고</pre></div>
+
+<h3>분기/연간 — 세금 준비</h3>
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd8')">복사</button>
+<pre class="cmd" id="cmd8"><span class="comment"># AI 명령어 8: 분기 회비 사용 내역 공개문 작성</span>
+아래 데이터로 회원에게 보낼 분기 회비 사용 내역 공개문을 작성해줘.
+카톡으로 보낼 거라 간결하게.
+
+기간: <span class="highlight">[O분기]</span>
+총 수입: <span class="highlight">[금액]</span>원
+총 지출: <span class="highlight">[금액]</span>원
+잔여: <span class="highlight">[금액]</span>원
+
+카테고리별 지출:
+<span class="highlight">[엑셀 분기 요약 붙여넣기]</span></pre></div>
+
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd9')">복사</button>
+<pre class="cmd" id="cmd9"><span class="comment"># AI 명령어 9: 종합소득세 예상 세액 계산</span>
+종합소득세를 미리 계산해줘.
+
+연간 총 수입: <span class="highlight">[금액]</span>원
+연간 총 비용(필요경비): <span class="highlight">[금액]</span>원
+
+다음을 계산해줘:
+1. 과세표준 (수입 - 비용)
+2. 적용 세율 (2026년 기준)
+3. 산출 세액
+4. 지방소득세 (10%)
+5. 총 납부 예상액
+6. 비용을 안 했을 때와 비교해서 절세 효과</pre></div>
+
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd10')">복사</button>
+<pre class="cmd" id="cmd10"><span class="comment"># AI 명령어 10: 연말 비용 소진 계획</span>
+올해 남은 예산으로 비용 소진 계획을 세워줘.
+
+현재까지 비용 처리 총액: <span class="highlight">[금액]</span>원
+연간 수입 예상: <span class="highlight">[금액]</span>원
+남은 기간: <span class="highlight">[O개월]</span>
+목표 비용처리율: 75% 이상
+
+다음을 제안해줘:
+1. 추가로 비용 처리할 수 있는 항목 (합법적)
+2. 우선순위 (절세 효과 큰 순)
+3. 주의사항</pre></div>
+
+<h3>특수 상황</h3>
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd11')">복사</button>
+<pre class="cmd" id="cmd11"><span class="comment"># AI 명령어 11: 거래소 손익 정리 (가상자산)</span>
+아래 거래 내역으로 연간 실현손익을 계산해줘.
+
+거래 내역:
+<span class="highlight">[거래소에서 다운받은 CSV 붙여넣기]</span>
+
+다음을 계산해줘:
+1. 종목별 실현손익
+2. 연간 총 실현손익
+3. 기본공제 250만원 적용 후 과세 대상
+4. 예상 세금 (22%)</pre></div>
+
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd12')">복사</button>
+<pre class="cmd" id="cmd12"><span class="comment"># AI 명령어 12: 과거 거래 내역 성격 분류</span>
+아래 통장 거래 내역의 성격을 분류해줘.
+
+분류 기준:
+- 회비 (정기적 유사금액 이체)
+- 교육비 (강사/교재 관련)
+- 임대료
+- 기타 (분류 불가)
+
+거래 내역:
+<span class="highlight">[통장 내역 복사-붙여넣기]</span>
+
+각 거래에 대해: 날짜 | 금액 | 추정 성격 | 확신도(높음/중간/낮음) | 필요 증빙</pre></div>
+</div>
+
+<!-- ===== 3. 구글 시트 ===== -->
+<div class="sc" id="s3"><h2>3. 구글 시트 연동 가이드</h2>
+<div class="sb"><b>CSV 파일 → 구글 시트 변환 방법 (3분)</b><br><br>
+1. <a href="https://sheets.google.com" target="_blank">sheets.google.com</a> 접속<br>
+2. "빈 스프레드시트" 클릭<br>
+3. 파일 → 가져오기 → 업로드 → 다운받은 CSV 파일 선택<br>
+4. "쉼표" 구분자 선택 → 가져오기<br>
+5. 시트 이름 변경 (예: "4월 지출")<br><br>
+<b>팁:</b> 월별로 시트 탭을 추가하면 연간 관리 가능!</div>
+
+<div style="position:relative"><button class="copy-btn" onclick="copyCmd('cmd13')">복사</button>
+<pre class="cmd" id="cmd13"><span class="comment"># AI 명령어 13: 구글 시트 수식 생성</span>
+구글 시트에서 사용할 수식을 만들어줘.
+
+시트 구조:
+A열: 날짜, B열: 구분(수입/지출), C열: 카테고리, D열: 항목, E열: 금액
+
+필요한 수식:
+1. 총 수입 합계 (B열이 "수입"인 것만)
+2. 총 지출 합계 (B열이 "지출"인 것만)
+3. 카테고리별 합계 (식비, 교통, 교육 등)
+4. 잔여금 (수입 - 지출)
+5. 비용처리율 (지출/수입 x 100)</pre></div>
+</div>
+
+<!-- ===== 4. 역할별 체크리스트 ===== -->
+<div class="sc" id="s4"><h2>4. 역할별 체크리스트</h2>
+
+<h3><span class="role role-girl">딸 (87년생, 대표)</span> — 20개 항목</h3>
+<table>
+<tr><th>주기</th><th>#</th><th>행동</th><th>소요</th></tr>
+<tr style="background:#dbeafe"><td rowspan="4"><b>매일</b></td><td>1</td><td>동호회 관련 지출 시 영수증 받기</td><td>10초</td></tr>
+<tr style="background:#dbeafe"><td>2</td><td>영수증 사진 찍어서 "영수증" 폴더 저장</td><td>5초</td></tr>
+<tr style="background:#dbeafe"><td>3</td><td>카드 결제 우선 (현금 대신)</td><td>0초</td></tr>
+<tr style="background:#dbeafe"><td>4</td><td>영수증 뒤에 용도 메모</td><td>10초</td></tr>
+<tr><td rowspan="4"><b>매주</b></td><td>5</td><td>영수증 봉투에 분류 정리</td><td>10분</td></tr>
+<tr><td>6</td><td>엑셀/구글시트에 지출 입력</td><td>15분</td></tr>
+<tr><td>7</td><td>단체 통장 잔액 확인</td><td>3분</td></tr>
+<tr><td>8</td><td>회비 입금 확인 + 미납자 리마인드</td><td>5분</td></tr>
+<tr style="background:#fef3c7"><td rowspan="8"><b>매월</b></td><td>9</td><td>강사비 지급 + 원천징수 (3.3%)</td><td>20분</td></tr>
+<tr style="background:#fef3c7"><td>10</td><td>임대료 아버지에게 이체</td><td>3분</td></tr>
+<tr style="background:#fef3c7"><td>11</td><td>관리수수료 입금 확인</td><td>2분</td></tr>
+<tr style="background:#fef3c7"><td>12</td><td>교회 월세 입금 확인</td><td>2분</td></tr>
+<tr style="background:#fef3c7"><td>13</td><td>월간 수입/지출 정산표 작성</td><td>30분</td></tr>
+<tr style="background:#fef3c7"><td>14</td><td>영수증 봉투 밀봉 + 라벨</td><td>5분</td></tr>
+<tr style="background:#fef3c7"><td>15</td><td>관리 업무 일지 작성 (A4 1장)</td><td>20분</td></tr>
+<tr style="background:#fef3c7"><td>16</td><td>아버지 영수증 수집</td><td>5분</td></tr>
+<tr style="background:#ede9fe"><td rowspan="2"><b>분기</b></td><td>17</td><td>회비 사용 내역 회원에게 공개</td><td>30분</td></tr>
+<tr style="background:#ede9fe"><td>18</td><td>통장 거래내역 CSV 백업</td><td>5분</td></tr>
+<tr style="background:#fee2e2"><td rowspan="2"><b>연간</b></td><td>19</td><td>종합소득세 신고 (5월)</td><td>3시간</td></tr>
+<tr style="background:#fee2e2"><td>20</td><td>원천세 반기납 신고 (1월, 7월)</td><td>1시간</td></tr>
+</table>
+
+<h3><span class="role role-dad">아버지 (건물주)</span> — 9개 항목</h3>
+<table>
+<tr><th>주기</th><th>#</th><th>행동</th></tr>
+<tr><td>매일</td><td>1</td><td>건물 관련 지출 영수증 보관 (버리지 않기!)</td></tr>
+<tr><td>매일</td><td>2</td><td>가능하면 카드 결제 (현금 대신)</td></tr>
+<tr><td>매주</td><td>3</td><td>모은 영수증 딸에게 전달</td></tr>
+<tr><td>매월</td><td>4</td><td>관리수수료 단체통장으로 이체</td></tr>
+<tr><td>매월</td><td>5</td><td>수리 필요 시 딸에게 알리기</td></tr>
+<tr><td>매월</td><td>6</td><td>50만 원 초과 수리 승인</td></tr>
+<tr><td>처음1회</td><td>7</td><td>임대차 계약서 서명</td></tr>
+<tr><td>처음1회</td><td>8</td><td>관리위탁 계약서 서명</td></tr>
+<tr><td>처음1회</td><td>9</td><td>전대차 동의서 서명</td></tr>
+</table>
+
+<h3><span class="role role-member">동호회원</span> — 4개 항목</h3>
+<table>
+<tr><th>#</th><th>행동</th><th>주기</th></tr>
+<tr><td>1</td><td>회비 단체통장으로 이체 (이체 메모에 "OO 4월 회비" 기입)</td><td>매월 5일까지</td></tr>
+<tr><td>2</td><td>현금 납부 시 확인서 서명</td><td>수시</td></tr>
+<tr><td>3</td><td>행사 때 쓴 영수증 대표에게 제출</td><td>수시</td></tr>
+<tr><td>4</td><td>정기총회 참석</td><td>연 1회</td></tr>
+</table>
+
+<h3><span class="role role-pres">회장님 (명목 대표)</span> — 4개 항목</h3>
+<table>
+<tr><th>#</th><th>행동</th><th>주기</th></tr>
+<tr><td>1</td><td>정기총회 의장 (딸이 자료 다 준비해줌)</td><td>연 1회</td></tr>
+<tr><td>2</td><td>고유번호증 갱신 시 서명</td><td>변경 시</td></tr>
+<tr><td>3</td><td>정관 변경 시 서명</td><td>변경 시</td></tr>
+<tr><td>4</td><td>그 외 할 일 없음</td><td>—</td></tr>
+</table>
+</div>
+
+<!-- ===== 5. 비용 120가지 ===== -->
+<div class="sc" id="s5"><h2>5. 비용 항목 120가지 (월 예상 금액 포함)</h2>
+<table>
+<tr><th>카테고리</th><th>항목 (번호)</th><th>월 예상</th><th>연 예상</th></tr>
+<tr style="background:#dbeafe"><td colspan="4"><b>A. 식비 (15개)</b></td></tr>
+<tr><td></td><td>1.연습간식 2.과일 3.음료 4.임원회의식사 5.강사접대 6.행사도시락 7.커피/티백 8.생수 9.다과 10.떡/과자 11.케이터링 12.종이컵 13.설탕/프림 14.냉장고비품 15.디저트</td><td>8~15만</td><td>96~180만</td></tr>
+<tr style="background:#dcfce7"><td colspan="4"><b>B. 교통 (12개)</b></td></tr>
+<tr><td></td><td>16.주유비 17.톨게이트 18.주차비 19.세차 20.타이어 21.엔진오일 22.정비 23.버스/지하철 24.택시 25.KTX 26.대리운전 27.택배/퀵</td><td>5~15만</td><td>60~180만</td></tr>
+<tr style="background:#fef3c7"><td colspan="4"><b>C. 의료/건강 (15개)</b></td></tr>
+<tr><td></td><td>28.단체상해보험 29.행사보험 30.응급치료비 31.구급상자 32.소독약품 33.마스크 34.손소독제 35.체온계 36.혈압계 37.건강검진지원 38.AED렌탈 39.안전교육 40.소방교육 41.위생용품 42.방역소독</td><td>3~8만</td><td>36~96만</td></tr>
+<tr style="background:#ede9fe"><td colspan="4"><b>D. 교육 (10개)</b></td></tr>
+<tr><td></td><td>43.정기강사비 44.특별강사비 45.교재 46.악보 47.온라인강의 48.참고도서 49.교육SW 50.워크숍 51.자격시험비 52.교육영상구독</td><td>30~80만</td><td>360~960만</td></tr>
+<tr style="background:#fce7f3"><td colspan="4"><b>E. 주거/시설 (15개)</b></td></tr>
+<tr><td></td><td>53.임대료 54.관리비 55.전기 56.수도 57.가스 58.인터넷 59.전기수리 60.배관수리 61.도배 62.조명교체 63.에어컨 64.보일러 65.청소용품 66.정수기 67.소화기</td><td>50~80만</td><td>600~960만</td></tr>
+<tr style="background:#dbeafe"><td colspan="4"><b>F. 보험/세금 (8개)</b></td></tr>
+<tr><td></td><td>68.화재보험 69.시설배상보험 70.차량보험(업무분) 71.원천징수세 72.인지세 73.환경부담금 74.재산세분담 75.종량제</td><td>3~10만</td><td>36~120만</td></tr>
+<tr style="background:#dcfce7"><td colspan="4"><b>G. 기부/경조사 (8개)</b></td></tr>
+<tr><td></td><td>76.회원경조사 77.지역봉사 78.기관후원 79.장학금 80.재해기부 81.연말기부 82.단체기부 83.물품기부</td><td>2~5만</td><td>24~60만</td></tr>
+<tr style="background:#fef3c7"><td colspan="4"><b>H. 의류/유니폼 (10개)</b></td></tr>
+<tr><td></td><td>84.단체티셔츠 85.공연의상 86.의상대여 87.명찰 88.모자/캡 89.앞치마 90.운동화(활동용) 91.세탁비 92.수선비 93.엠블럼제작</td><td>2~8만</td><td>24~96만</td></tr>
+<tr style="background:#ede9fe"><td colspan="4"><b>I. 문화/행사 (12개)</b></td></tr>
+<tr><td></td><td>94.공연대관 95.조명렌탈 96.음향렌탈 97.무대장치 98.현수막 99.포스터 100.초청장 101.꽃다발 102.트로피 103.기념품 104.사진촬영 105.영상촬영</td><td>5~25만</td><td>60~300만</td></tr>
+<tr style="background:#fce7f3"><td colspan="4"><b>J. 기타/사무 (15개)</b></td></tr>
+<tr><td></td><td>106.복사용지 107.프린터잉크 108.볼펜/마커 109.파일/바인더 110.스테이플러 111.도장제작 112.명함 113.세무사자문 114.법률자문 115.회계기장 116.은행수수료 117.택배비 118.팩스/우편 119.공동인증서 120.홈페이지비용</td><td>5~15만</td><td>60~180만</td></tr>
+</table>
+<div class="sb"><b>120가지 합계:</b> 월 113~261만 원 / 연 1,356~3,132만 원<br>실제 발생한 항목만 영수증과 함께 비용 처리!</div>
+</div>
+
+<!-- ===== 6. 자금 흐름 ===== -->
+<div class="sc" id="s6"><h2>6. 월간 자금 흐름 시각화</h2>
+<pre class="cmd" style="background:#fff;color:var(--g800);border:2px solid var(--g200)">
+  ┌─────── 수입 (IN) ──────────────────────────────┐
+  │                                                  │
+  │  회원 10명 x 22만    = <b style="color:#10b981">220만</b>  ──┐              │
+  │  교회 월세            = <b style="color:#10b981"> 28만</b>  ──┤              │
+  │  관리수수료 175만x10% = <b style="color:#10b981">17.5만</b> ──┤              │
+  │                                  ▼              │
+  │                        ┌──────────────┐         │
+  │                        │  단체 통장    │         │
+  │                        │  <b>265.5만/월</b>  │         │
+  │                        └──────┬───────┘         │
+  └───────────────────────────────┼─────────────────┘
+                                  │
+  ┌─────── 지출 (OUT) ────────────┼─────────────────┐
+  │                               ▼                  │
+  │  임대료(→아버지)        <b style="color:#ef4444">50만</b>                  │
+  │  원임대료 송금          <b style="color:#ef4444">20만</b>                  │
+  │  강사비                 <b style="color:#ef4444">80만</b>                  │
+  │  교재/소모품            <b style="color:#ef4444">10만</b>                  │
+  │  간식/회의비             <b style="color:#ef4444">8만</b>                  │
+  │  교통비                 <b style="color:#ef4444">10만</b>                  │
+  │  통신비                  <b style="color:#ef4444">3만</b>                  │
+  │  사무/인쇄               <b style="color:#ef4444">5만</b>                  │
+  │  행사적립                <b style="color:#ef4444">10만</b>                 │
+  │  수리비(평균)            <b style="color:#ef4444"> 5만</b>                 │
+  │  ────────────────────────────                    │
+  │  합계                   <b>201만</b>                    │
+  └──────────────────────────────────────────────────┘
+
+  ┌─────── 결과 ──────────────────────────────────────┐
+  │  월 잔여:  265.5 - 201 = <b style="color:#7c3aed">64.5만</b> (이월)          │
+  │  연간 잔여: <b style="color:#7c3aed">774만</b> → 세율 6% → <b>세금 약 51만/년</b>  │
+  │                                                    │
+  │  비용처리 안 하면? 2,640만 전액 과세               │
+  │  → 세금 약 270만 → <b style="color:#10b981">절세 효과: 연 219만 원</b>       │
+  └────────────────────────────────────────────────────┘
+</pre>
+</div>
+
+<!-- ===== 7. 세금 달력 ===== -->
+<div class="sc" id="s7"><h2>7. 세금 달력 12개월</h2>
+<table>
+<tr><th>월</th><th>세금/신고</th><th>마감</th><th>담당</th><th>준비물</th></tr>
+<tr style="background:var(--dl)"><td><b>1월</b></td><td>원천세 반기납(7~12월분)<br>정기총회</td><td>1/10<br>1월 중</td><td><span class="role role-girl">딸</span></td><td>원천징수이행상황신고서<br>결산보고서</td></tr>
+<tr><td><b>2월</b></td><td>전년도 결산 완료</td><td>2월 말</td><td><span class="role role-girl">딸</span></td><td>수입지출 결산서</td></tr>
+<tr style="background:var(--wl)"><td><b>3월</b></td><td>지급명세서 제출</td><td>3/10</td><td><span class="role role-girl">딸</span></td><td>사업소득 지급명세서</td></tr>
+<tr><td><b>4월</b></td><td>종소세 준비</td><td>4월 말</td><td><span class="role role-girl">딸</span></td><td>통장/카드내역서, 영수증 정리</td></tr>
+<tr style="background:var(--dl)"><td><b>5월</b></td><td><b>종합소득세 신고</b></td><td><b>5/31</b></td><td><span class="role role-girl">딸</span></td><td>신고서 + 모든 증빙</td></tr>
+<tr style="background:var(--wl)"><td><b>6월</b></td><td>지방소득세 납부</td><td>6/30</td><td><span class="role role-girl">딸</span></td><td>납부서</td></tr>
+<tr style="background:var(--dl)"><td><b>7월</b></td><td>원천세 반기납(1~6월분)</td><td>7/10</td><td><span class="role role-girl">딸</span></td><td>원천징수이행상황신고서</td></tr>
+<tr><td><b>8월</b></td><td>하반기 예산 점검</td><td>—</td><td><span class="role role-girl">딸</span></td><td>상반기 정산표</td></tr>
+<tr><td><b>9~10월</b></td><td>분기 공개 + 비용 소진 계획</td><td>—</td><td><span class="role role-girl">딸</span></td><td>비용 사용률 점검</td></tr>
+<tr style="background:var(--wl)"><td><b>11월</b></td><td>비용 집중 집행</td><td>—</td><td><span class="role role-girl">딸</span></td><td>견적서, 영수증</td></tr>
+<tr style="background:var(--wl)"><td><b>12월</b></td><td>연간 결산 준비<br>회비 완납 확인</td><td>12/31</td><td><span class="role role-girl">딸</span></td><td>연간 수입지출표</td></tr>
+</table>
+</div>
+
+</div>
+<div class="ft">
+<p>재무 관리 종합 허브 | 2026년 4월 기준</p>
+<p><a href="https://www.law.go.kr" target="_blank">국가법령정보센터</a> | <a href="https://www.nts.go.kr" target="_blank">국세청</a> | <a href="https://www.hometax.go.kr" target="_blank">홈택스</a></p>
+<p style="color:#999;font-size:.8rem;margin-top:.5rem">본 문서는 정보 제공 목적이며 법률/세무 상담을 대체하지 않습니다.</p>
+</div>
+</body>
+</html>
