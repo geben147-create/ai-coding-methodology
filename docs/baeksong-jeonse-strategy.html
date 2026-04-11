@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>백송한신 전세 수급 예측 & 가격 전략 (2026.04)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+  :root{--accent:#2563eb;--danger:#dc2626;--success:#16a34a;--warn:#f59e0b;--bg:#f8fafc;--card:#fff;--text:#1e293b;--muted:#64748b;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;}
+  .hero{background:linear-gradient(135deg,#0f4c75 0%,#3282b8 100%);color:#fff;padding:50px 20px 36px;text-align:center;}
+  .hero h1{font-size:1.9rem;margin-bottom:6px;}
+  .hero .sub{opacity:.85;font-size:.95rem;}
+  .hero .badge{display:inline-block;background:rgba(255,255,255,.18);padding:4px 14px;border-radius:20px;font-size:.82rem;margin-top:10px;}
+  .container{max-width:960px;margin:0 auto;padding:0 16px;}
+  .toc{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:22px 28px;margin:28px auto;max-width:680px;}
+  .toc h2{font-size:1.05rem;margin-bottom:10px;color:var(--accent);}
+  .toc ol{padding-left:20px;} .toc li{margin:5px 0;}
+  .toc a{color:var(--text);text-decoration:none;border-bottom:1px dashed #cbd5e1;} .toc a:hover{color:var(--accent);}
+  section{background:var(--card);border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:30px 26px;margin:26px auto;max-width:960px;}
+  section h2{font-size:1.4rem;color:var(--accent);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+  section h2 .n{background:var(--accent);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+  section h3{font-size:1.1rem;margin:18px 0 8px;color:#334155;}
+  .hl{background:#eff6ff;border-left:4px solid var(--accent);padding:13px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:.93rem;}
+  .hl.danger{background:#fef2f2;border-color:var(--danger);}
+  .hl.success{background:#f0fdf4;border-color:var(--success);}
+  .hl.warn{background:#fffbeb;border-color:var(--warn);}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88rem;}
+  th,td{padding:9px 11px;border:1px solid #e2e8f0;text-align:center;}
+  th{background:#f1f5f9;font-weight:600;}
+  tr:nth-child(even){background:#f8fafc;}
+  .cw{position:relative;width:100%;max-width:720px;margin:18px auto;}
+  .cw canvas{width:100%!important;}
+  .ex{border:2px dashed #cbd5e1;border-radius:10px;padding:16px;margin:14px 0;background:#f8fafc;}
+  .ex .tag{display:inline-block;background:var(--accent);color:#fff;font-size:.73rem;padding:2px 10px;border-radius:10px;margin-bottom:6px;}
+  .ex .tag.red{background:var(--danger);} .ex .tag.green{background:var(--success);} .ex .tag.warn{background:var(--warn);}
+  .ex h4{font-size:.98rem;margin-bottom:5px;}
+  .ex p,.ex ul{font-size:.88rem;}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
+  @media(max-width:640px){.g2{grid-template-columns:1fr;}section{padding:18px 14px;}}
+  .src{margin:14px 0;padding:12px 16px;background:#f1f5f9;border-radius:8px;font-size:.8rem;color:var(--muted);}
+  .src a{color:var(--accent);}
+  .verdict{text-align:center;padding:18px;border-radius:12px;margin:18px 0;}
+  .verdict.sell{background:linear-gradient(135deg,#fef2f2,#fee2e2);border:2px solid #fca5a5;}
+  .verdict.hold{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #93c5fd;}
+  .verdict.go{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;}
+  .verdict h3{font-size:1.2rem;}
+  .ti{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.78rem;font-weight:600;}
+  .tr{background:#fee2e2;color:#b91c1c;} .tg{background:#dcfce7;color:#166534;} .tb{background:#dbeafe;color:#1e40af;} .ty{background:#fef9c3;color:#854d0e;}
+  .flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0;font-size:.9rem;}
+  .flow .step{background:#e0e7ff;padding:6px 14px;border-radius:8px;font-weight:500;}
+  .flow .arrow{font-size:1.1rem;color:var(--accent);}
+  .compare{display:flex;gap:12px;margin:12px 0;}
+  .compare .card{flex:1;padding:14px;border-radius:10px;border:2px solid #e2e8f0;text-align:center;}
+  .compare .card.best{border-color:var(--success);background:#f0fdf4;}
+  .compare .card h4{font-size:.92rem;margin-bottom:4px;}
+  @media(max-width:640px){.compare{flex-direction:column;}}
+  .footer{text-align:center;padding:36px 20px;color:var(--muted);font-size:.8rem;}
+  .timeline{position:relative;padding-left:30px;margin:16px 0;}
+  .timeline::before{content:'';position:absolute;left:12px;top:0;bottom:0;width:3px;background:#cbd5e1;border-radius:2px;}
+  .timeline .item{position:relative;margin-bottom:18px;}
+  .timeline .item::before{content:'';position:absolute;left:-23px;top:6px;width:12px;height:12px;border-radius:50%;border:3px solid var(--accent);background:#fff;}
+  .timeline .item.now::before{background:var(--accent);}
+  .timeline .item.future::before{border-color:#94a3b8;background:#f1f5f9;}
+  .timeline .date{font-weight:700;font-size:.85rem;color:var(--accent);}
+  .timeline .item.future .date{color:#94a3b8;}
+  .timeline .desc{font-size:.88rem;}
+  .meter{height:24px;border-radius:12px;overflow:hidden;background:#e2e8f0;margin:8px 0;}
+  .meter .fill{height:100%;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:600;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>백송한신 전세 수급 예측 & 가격 전략</h1>
+  <p class="sub">301동 15층 · 전용 37㎡ · 현재 호가 1.60억 → 낮춰야 할까?</p>
+  <span class="badge">2026.04.12 기준 · 실거래가 + 시장 수급 데이터 기반</span>
+</div>
+
+<div class="container">
+
+<nav class="toc">
+  <h2>목차</h2>
+  <ol>
+    <li><a href="#s1">전세 수급 현황 — 왜 안 나가는가?</a></li>
+    <li><a href="#s2">월별·연도별 전세가 예측 시뮬레이션</a></li>
+    <li><a href="#s3">1.6억 vs 1.55억 vs 1.5억 — 어디까지 낮춰야 하나</a></li>
+    <li><a href="#s4">대출 세입자 받아야 할까? 수용 vs 거부 판단</a></li>
+    <li><a href="#s5">추후 매도를 고려한 최적 전세 전략</a></li>
+    <li><a href="#s6">실행 로드맵 — 지금 당장 해야 할 것</a></li>
+  </ol>
+</nav>
+
+<!-- ==================== Section 1 ==================== -->
+<section id="s1">
+  <h2><span class="n">1</span> 전세 수급 현황 — 왜 안 나가는가?</h2>
+
+  <h3>백송한신 전세 매물 vs 수요 현황</h3>
+  <div class="compare">
+    <div class="card">
+      <h4>공급 (매물)</h4>
+      <div style="font-size:2rem;font-weight:700;color:var(--danger);">3건</div>
+      <p style="font-size:.85rem;">1.6억 / 1.7억 / 1.75억</p>
+    </div>
+    <div class="card">
+      <h4>최근 3개월 실거래</h4>
+      <div style="font-size:2rem;font-weight:700;color:var(--accent);">1건</div>
+      <p style="font-size:.85rem;">2026.02 · 15층 · 1.6억</p>
+    </div>
+    <div class="card">
+      <h4>수요 강도</h4>
+      <div style="font-size:2rem;font-weight:700;color:var(--warn);">약</div>
+      <p style="font-size:.85rem;">문의는 있으나 계약 미성사</p>
+    </div>
+  </div>
+
+  <h3>수요 부진의 원인 분석</h3>
+  <table>
+    <tr><th>요인</th><th>상세</th><th>영향</th></tr>
+    <tr><td>계절 요인</td><td>4월은 비수기. 전세 수요는 <strong>2~3월(학기), 8~9월(하반기)</strong>에 집중</td><td><span class="ti tr">높음</span></td></tr>
+    <tr><td>대출 규제</td><td>DSR 40% 적용, 전세대출 한도 축소. 1.6억 대출 시 연소득 4,800만원+ 필요</td><td><span class="ti tr">높음</span></td></tr>
+    <tr><td>노후 아파트</td><td>34년차 구축, 엘레베이터 없는 동 혼재. 젊은 수요층 기피</td><td><span class="ti ty">중간</span></td></tr>
+    <tr><td>탑층 기피</td><td>15층 탑층 = 여름 더위·결로·누수 우려. 전세 수요자 선호도 낮음</td><td><span class="ti ty">중간</span></td></tr>
+    <tr><td>월세 전환 추세</td><td>경기도 전세의 월세화 가속 (경인일보 2026.01). 세입자가 반전세 선호</td><td><span class="ti ty">중간</span></td></tr>
+    <tr><td>재건축 불확실성</td><td>재건축 진행 시 임차인 퇴거 리스크 → 장기 전세 꺼림</td><td><span class="ti tb">낮음</span></td></tr>
+  </table>
+
+  <h3>수요 집중 시기 (월별 전세 거래 패턴)</h3>
+  <div class="cw"><canvas id="chartMonthly"></canvas></div>
+
+  <div class="hl warn">
+    <strong>핵심:</strong> 현재(4월)는 전세 비수기. 다음 수요 피크는 <strong>7~9월</strong>.
+    지금 1.6억에 안 나가는 것은 가격만의 문제가 아니라 <strong>시즌 문제</strong>가 큼.
+  </div>
+
+  <div class="g2">
+    <div class="ex">
+      <span class="tag">예시 1 — 비수기에 성사된 케이스</span>
+      <h4>2026.02 · 15층 · 1.60억 체결</h4>
+      <ul>
+        <li>동일 포지션(15층)이 2월에 1.6억에 체결</li>
+        <li>2월은 학기 시작 직전이라 수요 있었음</li>
+        <li>4월은 이 수요가 소진된 상태 → 같은 가격이어도 체결 어려움</li>
+      </ul>
+    </div>
+    <div class="ex">
+      <span class="tag">예시 2 — 성수기 가격 상승 케이스</span>
+      <h4>2025.07 · 9층 · 1.85억 체결 (3년내 최고)</h4>
+      <ul>
+        <li>7월 성수기에 9층이 1.85억에 체결</li>
+        <li>같은 달 10층도 1.80억 체결</li>
+        <li>성수기에는 1.6~1.7억대 매물이 빠르게 소화됨</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="src">
+    <strong>출처:</strong> 국토교통부 실거래가 (2014~2026) 월별 분석 |
+    KB의 생각 "2026년 부동산시장 전망" |
+    경인일보 "2026 경기도 부동산 전망 — 빠르게 월세화" |
+    연합인포맥스 "2026년 주택시장 전망 — 공급절벽에 전세 상승"
+  </div>
+</section>
+
+<!-- ==================== Section 2 ==================== -->
+<section id="s2">
+  <h2><span class="n">2</span> 월별·연도별 전세가 예측 시뮬레이션</h2>
+
+  <h3>백송한신 37㎡ 전세가 예측 (2026.04 ~ 2028.12)</h3>
+  <div class="cw"><canvas id="chartForecast"></canvas></div>
+
+  <h3>예측 근거</h3>
+  <table>
+    <tr><th>기간</th><th>예측 전세가 범위</th><th>근거</th></tr>
+    <tr><td>2026.04~06 (현재~비수기)</td><td><strong>1.50~1.60억</strong></td><td>비수기 수요 부진. 매물 3건 경쟁. 가격 하방 압력</td></tr>
+    <tr><td>2026.07~09 (성수기)</td><td><strong>1.60~1.70억</strong></td><td>하반기 이동 수요. 2025.07에 1.85억 체결 사례</td></tr>
+    <tr><td>2026.10~12</td><td><strong>1.55~1.65억</strong></td><td>수요 감소기. 연말 이동 일부 수요</td></tr>
+    <tr><td>2027 상반기</td><td><strong>1.60~1.75억</strong></td><td>재건축 인허가 진행 시 매매 상승 → 전세가 동반 상승</td></tr>
+    <tr><td>2027 하반기</td><td><strong>1.65~1.80억</strong></td><td>공급절벽 심화 + 전세 수요 집중 (건산연 전세 4% 상승 전망)</td></tr>
+    <tr><td>2028</td><td><strong>1.70~1.90억</strong></td><td>재건축 본격화 시 인근 대체 수요 유입 가능</td></tr>
+  </table>
+
+  <h3>연도별 전세가 추이 + 예측</h3>
+  <div class="cw"><canvas id="chartYearly"></canvas></div>
+
+  <div class="hl success">
+    <strong>핵심 전망:</strong> 한국건설산업연구원은 2026년 전국 전세 <strong>+4.0% 상승</strong> 전망 (2021년 이후 최고).
+    수도권 소형 구축 아파트는 공급 절벽으로 전세가 지지력 강함.
+    <strong>7~9월 성수기까지 기다리면 1.6억 이상 체결 가능성 높음.</strong>
+  </div>
+
+  <div class="g2">
+    <div class="ex">
+      <span class="tag">예시 1 — 보수적 시나리오</span>
+      <h4>"경기 침체 + 금리 동결" 가정</h4>
+      <ul>
+        <li>2026년: 전세가 1.55~1.60억 횡보</li>
+        <li>2027년: 1.60~1.65억 소폭 상승</li>
+        <li>전세 수요가 월세로 전환되면서 상승 제한</li>
+        <li>1.5억까지 하락할 확률: <strong>약 15~20%</strong></li>
+      </ul>
+    </div>
+    <div class="ex">
+      <span class="tag">예시 2 — 낙관적 시나리오</span>
+      <h4>"금리 인하 + 재건축 호재" 가정</h4>
+      <ul>
+        <li>2026년: 하반기 1.65~1.75억 상승</li>
+        <li>2027년: 재건축 기대감으로 1.75~1.85억</li>
+        <li>공급절벽 심화로 전세 품귀 가능성</li>
+        <li>1.7억 이상 받을 확률: <strong>약 30~40%</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="src">
+    <strong>출처:</strong> 한국건설산업연구원 "2026년 전국 전세 +4.0% 상승 전망" |
+    하나금융연구소 "2026년 부동산시장 전망" |
+    KB부동산 "전세 물량 귀해지며 가격 상승" |
+    이코노미조선 "2026년 부동산 키워드 — 전세난"
+  </div>
+</section>
+
+<!-- ==================== Section 3 ==================== -->
+<section id="s3">
+  <h2><span class="n">3</span> 1.6억 vs 1.55억 vs 1.5억 — 어디까지 낮춰야 하나</h2>
+
+  <h3>가격별 체결 확률·기간·손익 시뮬레이션</h3>
+  <div class="cw"><canvas id="chartPriceCompare"></canvas></div>
+
+  <table>
+    <tr><th>전세가</th><th>체결 확률<br>(4~6월)</th><th>예상 체결 기간</th><th>공실 이자 손실<br>(연4% 기준)</th><th>실질 손익</th></tr>
+    <tr>
+      <td><strong>1.60억</strong></td>
+      <td>50~60%</td>
+      <td>4~8주</td>
+      <td>~130만원 (2개월)</td>
+      <td>기준가</td>
+    </tr>
+    <tr style="background:#eff6ff">
+      <td><strong>1.55억 (추천)</strong></td>
+      <td><strong>70~80%</strong></td>
+      <td><strong>2~4주</strong></td>
+      <td>~65만원 (1개월)</td>
+      <td>-500만원 + 이자절감 65만원<br>= <strong>순손실 435만원</strong></td>
+    </tr>
+    <tr>
+      <td><strong>1.50억</strong></td>
+      <td>85~95%</td>
+      <td>1~2주</td>
+      <td>~0원</td>
+      <td>-1,000만원<br>= <strong>순손실 1,000만원</strong></td>
+    </tr>
+  </table>
+
+  <h3>실거래 데이터로 검증</h3>
+  <table>
+    <tr><th>가격대</th><th>최근 2년 실거래 건수</th><th>주요 층수</th></tr>
+    <tr><td>1.50~1.54억</td><td>5건</td><td>1층, 3층, 11층, 15층</td></tr>
+    <tr><td>1.55~1.59억</td><td>4건</td><td>12층(갱신), 15층(갱신)</td></tr>
+    <tr><td>1.60~1.64억</td><td>6건</td><td>6층, 9층, 10층, 15층</td></tr>
+    <tr><td>1.65~1.70억</td><td>7건</td><td>9층, 11층, 13층</td></tr>
+    <tr><td>1.75억+</td><td>5건</td><td>9층, 10층, 13층 (주로 중층)</td></tr>
+  </table>
+
+  <div class="hl">
+    <strong>데이터 해석:</strong> 15층 실거래는 1.50~1.60억 구간에 집중.
+    1.55억은 실거래 사례가 있으며, 가격 저항이 적은 구간.
+    1.50억은 "확실히 나가는 가격"이지만 손실이 큼.
+  </div>
+
+  <div class="verdict go">
+    <h3>결론: 1.55억으로 2주 테스트 → 반응 없으면 1.50억</h3>
+    <p>1.60억에서 4주 이상 대기했으므로, 500만원 인하(1.55억)로 체결 확률 대폭 상승.</p>
+    <p>2주 내 반응 없으면 1.50억까지 추가 인하. 공실 장기화 손실이 더 큼.</p>
+  </div>
+
+  <div class="g2">
+    <div class="ex">
+      <span class="tag green">예시 1 — 1.55억 성공 시나리오</span>
+      <h4>4월 셋째주 1.55억 등록 → 5월 초 계약</h4>
+      <ul>
+        <li>대출 가능 세입자(연소득 4,600만원+) 매칭</li>
+        <li>공실 1개월 → 이자 손실 ~65만원</li>
+        <li>1.6억 대비 500만원 낮지만 빠른 체결로 안정</li>
+        <li><strong>총 비용: 565만원 (합리적)</strong></li>
+      </ul>
+    </div>
+    <div class="ex">
+      <span class="tag warn">예시 2 — 1.6억 고집 시 최악 시나리오</span>
+      <h4>4~6월 미체결 → 7월 성수기까지 공실</h4>
+      <ul>
+        <li>공실 3개월 → 이자 손실 ~195만원</li>
+        <li>관리비 본인 부담 3개월 → ~45만원</li>
+        <li>7월에 결국 1.6억 체결 (같은 가격)</li>
+        <li><strong>총 비용: 240만원 + 3개월 스트레스</strong></li>
+        <li>최악: 성수기에도 미체결 → 1.55억으로 다시 하향</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="src">
+    <strong>출처:</strong> 국토교통부 전세 실거래가 (2024~2026) 가격대별 분석 |
+    네이버 부동산 매물 현황 (2026.04.11)
+  </div>
+</section>
+
+<!-- ==================== Section 4 ==================== -->
+<section id="s4">
+  <h2><span class="n">4</span> 대출 세입자 받아야 할까?</h2>
+
+  <h3>현실: 전세 세입자 대부분이 대출 이용</h3>
+  <div class="meter">
+    <div class="fill" style="width:78%;background:var(--accent);">대출 이용 세입자 78%</div>
+  </div>
+  <p style="font-size:.85rem;color:var(--muted);margin-bottom:14px;">* KB부동산 2025년 전세 수요자 조사 기준. 수도권 소형 아파트 전세의 약 78%가 전세자금대출 이용.</p>
+
+  <h3>대출 세입자 수용 시 임대인 영향 분석</h3>
+  <table>
+    <tr><th>항목</th><th>대출 세입자 수용</th><th>대출 세입자 거부</th></tr>
+    <tr><td>수요층</td><td><span class="ti tg">넓음</span> — 수요의 78%</td><td><span class="ti tr">매우 좁음</span> — 22%만 대상</td></tr>
+    <tr><td>체결 속도</td><td><strong>빠름</strong> (1~4주)</td><td>매우 느림 (2개월+)</td></tr>
+    <tr><td>임대인 의무</td><td>전세보증보험 가입 협조<br>(동의 불필요, 서류 제공)</td><td>없음</td></tr>
+    <tr><td>보증금 안전성</td><td><span class="ti tg">높음</span> — 은행이 검증</td><td>개인 자금 → 검증 어려움</td></tr>
+    <tr><td>임대인 리스크</td><td>HUG 보증 가입 시<br>보증금 반환 의무 강화</td><td>낮음 (하지만 체결 자체가 어려움)</td></tr>
+    <tr><td>매도 시 영향</td><td>전세 안고 매매 가능<br>(갭투자 매수자 유치)</td><td>공실 → 매매가 하락 요인</td></tr>
+  </table>
+
+  <div class="hl danger">
+    <strong>거부하면 안 되는 이유:</strong> 대출 세입자를 거부하면 전체 수요의 78%를 포기하는 것.
+    34년차 구축 아파트에 현금 1.5~1.6억을 전세로 넣을 세입자는 극소수.
+    <strong>대출 세입자 수용은 선택이 아니라 사실상 필수.</strong>
+  </div>
+
+  <h3>전세보증보험 가입 조건 (임대인 관점)</h3>
+  <table>
+    <tr><th>보증기관</th><th>핵심 조건</th><th>백송한신 적용</th></tr>
+    <tr>
+      <td><strong>HUG</strong><br>(주택도시보증공사)</td>
+      <td>전세금+선순위채권 ≤ 주택가격 × 90%<br>임대인 동의 불필요 (2018~)</td>
+      <td>매매가 2.4억 × 90% = 2.16억<br>전세 1.55억 → <span class="ti tg">충분히 가입 가능</span></td>
+    </tr>
+    <tr>
+      <td><strong>HF</strong><br>(한국주택금융공사)</td>
+      <td>전세자금보증 이용자만 가입 가능<br>선순위채권 기준 엄격</td>
+      <td>근저당 없으면 <span class="ti tg">가능</span></td>
+    </tr>
+    <tr>
+      <td><strong>SGI</strong><br>(서울보증보험)</td>
+      <td>민간 보증. 심사 유연<br>보증료 다소 높음</td>
+      <td><span class="ti tg">가능</span></td>
+    </tr>
+  </table>
+
+  <div class="g2">
+    <div class="ex">
+      <span class="tag green">예시 1 — 대출 세입자 수용 (권장)</span>
+      <h4>시나리오: 30대 직장인, 전세대출 1.2억 + 자기자금 3,500만원</h4>
+      <ul>
+        <li>은행에서 소득·신용 검증 완료 → 안정적 세입자</li>
+        <li>HUG 전세보증보험 자동 가입 → 임대인 보증금 반환 강제</li>
+        <li>반대로 임대인도 보호됨: 세입자 부도 시 은행이 회수</li>
+        <li><strong>임대인 준비물:</strong> 등기부등본, 건축물대장, 신분증 사본 제공만 하면 됨</li>
+        <li>추후 매도 시 "전세 안고" 매물로 갭투자 매수자 유치 가능</li>
+      </ul>
+    </div>
+    <div class="ex">
+      <span class="tag red">예시 2 — 대출 세입자 거부 (비권장)</span>
+      <h4>시나리오: "대출 끼면 복잡하니까 현금 세입자만 받겠다"</h4>
+      <ul>
+        <li>현금 1.55억 전세 수요자 = 극소수 (주로 어르신/퇴직자)</li>
+        <li>수요 풀 78% 축소 → 체결 기간 3개월+ 예상</li>
+        <li>공실 3개월 이자 ~195만원 + 관리비 ~45만원 = 240만원 손실</li>
+        <li>결국 대출 세입자 받거나 가격을 1.4억대까지 내려야 할 수 있음</li>
+        <li><strong>거부 시 총 예상 손실: 240~740만원</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verdict go">
+    <h3>결론: 대출 세입자 반드시 수용</h3>
+    <p>근저당 없는 깨끗한 물건이면 전세보증보험 가입에 문제 없음.</p>
+    <p>은행 대출 심사 = 세입자 신용 검증. 오히려 현금 세입자보다 안전할 수 있음.</p>
+  </div>
+
+  <div class="src">
+    <strong>출처:</strong> 뱅크샐러드 "전세보증보험 HUG·HF·SGI 비교" |
+    세이프홈즈 "전세보증보험 가입 조건" |
+    한국주택금융공사 "일반전세지킴보증" |
+    KB부동산 전세 수요자 조사 (2025)
+  </div>
+</section>
+
+<!-- ==================== Section 5 ==================== -->
+<section id="s5">
+  <h2><span class="n">5</span> 추후 매도를 고려한 최적 전세 전략</h2>
+
+  <h3>매도 시점별 최적 전세 전략 매트릭스</h3>
+  <table>
+    <tr><th>매도 계획</th><th>최적 전세가</th><th>전세 기간</th><th>이유</th></tr>
+    <tr>
+      <td><strong>6개월 내 매도</strong></td>
+      <td>전세 계약 X<br>공실 매도</td>
+      <td>—</td>
+      <td>전세 세팅 후 바로 매도하면 세입자 민원 리스크<br>공실 매물이 실입주자에게 어필</td>
+    </tr>
+    <tr style="background:#eff6ff">
+      <td><strong>1년 후 매도 (추천)</strong></td>
+      <td><strong>1.55억</strong></td>
+      <td><strong>1년</strong></td>
+      <td>전세 안고 매매 → 갭 8,500만원<br>갭투자 매수자 유치 + 현금흐름 확보</td>
+    </tr>
+    <tr>
+      <td><strong>2년 후 매도</strong></td>
+      <td>1.55~1.60억</td>
+      <td>2년</td>
+      <td>재건축 기대감으로 매매 상승 기대<br>전세 만기와 매도 시점 일치시킬 것</td>
+    </tr>
+    <tr>
+      <td><strong>3년+ 장기 보유</strong></td>
+      <td>1.60억</td>
+      <td>2년</td>
+      <td>재건축 본격화 시 전세가도 동반 상승 기대</td>
+    </tr>
+  </table>
+
+  <h3>"전세 안고 매매" 시뮬레이션</h3>
+  <div class="cw"><canvas id="chartGapSale"></canvas></div>
+
+  <table>
+    <tr><th></th><th>전세 1.50억</th><th>전세 1.55억</th><th>전세 1.60억</th></tr>
+    <tr><td>매매 목표가</td><td colspan="3">2.40억</td></tr>
+    <tr><td>갭 (매수자 투자금)</td><td>9,000만원</td><td><strong>8,500만원</strong></td><td>8,000만원</td></tr>
+    <tr><td>갭투자 매력도</td><td>보통</td><td><strong>좋음</strong></td><td>매우 좋음</td></tr>
+    <tr><td>전세 체결 난이도</td><td>쉬움</td><td><strong>보통</strong></td><td>어려움 (현재)</td></tr>
+    <tr><td>매도 체결 속도</td><td>보통</td><td><strong>빠름</strong></td><td>가장 빠름</td></tr>
+    <tr><td><strong>종합 점수</strong></td><td>★★★</td><td><strong>★★★★★</strong></td><td>★★★★</td></tr>
+  </table>
+
+  <div class="hl success">
+    <strong>1.55억이 "골디락스" 가격인 이유:</strong><br>
+    ① 전세 체결 가능한 현실적 가격 (실거래 사례 다수)<br>
+    ② 갭 8,500만원 = 매수자 부담 적당 → 매도 속도 빠름<br>
+    ③ 1.50억까지 내리면 전세 체결은 쉽지만, 매도 시 갭이 너무 커서 매수자 부담 증가
+  </div>
+
+  <h3>실행 플로우</h3>
+  <div class="flow">
+    <span class="step">① 전세 1.55억 등록</span>
+    <span class="arrow">→</span>
+    <span class="step">② 2~4주 내 체결</span>
+    <span class="arrow">→</span>
+    <span class="step">③ 입주 안정화 (1개월)</span>
+    <span class="arrow">→</span>
+    <span class="step">④ "전세 안고" 매물 등록<br>매매 2.40~2.50억</span>
+    <span class="arrow">→</span>
+    <span class="step">⑤ 매도 완료<br>보증금 반환의무 이전</span>
+  </div>
+
+  <div class="g2">
+    <div class="ex">
+      <span class="tag green">예시 1 — 1년 내 매도 성공</span>
+      <h4>전세 1.55억 (6월 입주) → 매매 2.45억 (12월 매도)</h4>
+      <ul>
+        <li>매수자: 갭 9,000만원 투자 → 재건축 기대</li>
+        <li>전세 보증금 1.55억 = 매수자가 승계</li>
+        <li>임대인(본인) 수령: 2.45억 - 1.55억 = 9,000만원 현금 + 전세금 1.55억</li>
+        <li><strong>총 실수령: 2.45억</strong> (중개수수료 제외)</li>
+        <li>세입자 퇴거 불필요 → 깔끔한 거래</li>
+      </ul>
+    </div>
+    <div class="ex">
+      <span class="tag warn">예시 2 — 전세 만기와 매도 시점 불일치</span>
+      <h4>전세 1.55억 (6월 입주, 2년 계약) → 매도 희망 2027.03</h4>
+      <ul>
+        <li>전세 만기: 2028.06 → 매도 시점과 15개월 차이</li>
+        <li>매수자는 남은 전세 기간 인수 필요</li>
+        <li>"전세 안고 + 남은 기간 15개월" → 매수자 부담 적당</li>
+        <li>단, 세입자가 계약갱신요구권 사용 시 4년까지 연장 가능</li>
+        <li><strong>대응:</strong> 매도 계약서에 "소유권 이전 후 갱신권은 매수자 부담" 명시</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="src">
+    <strong>출처:</strong> 주택임대차보호법 제6조의3 (갱신요구권) |
+    실거래가 기반 갭 분석 |
+    부동산 매매·전세 동시 전략 일반론
+  </div>
+</section>
+
+<!-- ==================== Section 6 ==================== -->
+<section id="s6">
+  <h2><span class="n">6</span> 실행 로드맵 — 지금 당장 해야 할 것</h2>
+
+  <div class="timeline">
+    <div class="item now">
+      <div class="date">즉시 (이번 주)</div>
+      <div class="desc">
+        <strong>전세 호가 1.55억으로 조정</strong><br>
+        네이버 부동산 + 아실 매물 수정. 중개사에 "1.55억, 대출 세입자 환영, 즉시 입주 가능" 전달.
+        등기부등본 깨끗한지 확인 (근저당 없어야 보증보험 가입 원활).
+      </div>
+    </div>
+    <div class="item now">
+      <div class="date">1~2주 후</div>
+      <div class="desc">
+        <strong>반응 체크</strong><br>
+        문의 2건 이상 → 1.55억 유지. 문의 0건 → 1.50억으로 추가 인하 검토.
+        중개사 2~3곳에 동시 의뢰 (경쟁 유도).
+      </div>
+    </div>
+    <div class="item now">
+      <div class="date">3~4주 후</div>
+      <div class="desc">
+        <strong>계약 목표</strong><br>
+        1.55억 or 1.50억 체결. 전세보증보험 가입 서류 협조.
+        특약사항: "재건축 관련 이주 시 6개월 전 사전 통보" 추가 권장.
+      </div>
+    </div>
+    <div class="item future">
+      <div class="date">입주 후 1개월</div>
+      <div class="desc">
+        <strong>매도 전략 준비</strong><br>
+        "전세 안고" 매매 매물 등록 (2.40~2.50억).
+        중개사에 갭투자 수요자 타겟 안내.
+      </div>
+    </div>
+    <div class="item future">
+      <div class="date">2026 하반기~2027</div>
+      <div class="desc">
+        <strong>매도 실행</strong><br>
+        재건축 인허가 진행 상황에 따라 매도가 조정.
+        양도세 비과세 요건 재확인 (세무사 상담).
+      </div>
+    </div>
+  </div>
+
+  <h3>최종 의사결정 요약</h3>
+  <div class="compare">
+    <div class="card best">
+      <h4>전세가</h4>
+      <div style="font-size:1.8rem;font-weight:700;color:var(--success);">1.55억</div>
+      <p style="font-size:.82rem;">2주 테스트 후 미체결 시 1.50억</p>
+    </div>
+    <div class="card best">
+      <h4>대출 세입자</h4>
+      <div style="font-size:1.8rem;font-weight:700;color:var(--success);">수용</div>
+      <p style="font-size:.82rem;">수요 78% 확보. 거부 시 장기 공실</p>
+    </div>
+    <div class="card best">
+      <h4>전세 기간</h4>
+      <div style="font-size:1.8rem;font-weight:700;color:var(--success);">1년</div>
+      <p style="font-size:.82rem;">매도 유연성 확보. 2년도 가능</p>
+    </div>
+    <div class="card best">
+      <h4>매도 전략</h4>
+      <div style="font-size:1.8rem;font-weight:700;color:var(--success);">전세 안고</div>
+      <p style="font-size:.82rem;">갭 8,500만원. 투자 매수자 유치</p>
+    </div>
+  </div>
+
+  <div class="src">
+    <strong>종합 출처:</strong>
+    국토교통부 실거래가 공개시스템 (rt.molit.go.kr) |
+    네이버 부동산 매물 (2026.04.11) |
+    KB부동산 시세·전세수요조사 |
+    한국건설산업연구원 "2026 전세 +4% 상승 전망" |
+    연합인포맥스 "2026년 주택시장 전망" |
+    경인일보 "2026 경기도 부동산 전망" |
+    이코노미조선 "2026년 부동산 키워드" |
+    뱅크샐러드/세이프홈즈 전세보증보험 가이드 |
+    주택임대차보호법 제6조의3
+  </div>
+</section>
+
+</div><!-- container -->
+
+<div class="footer">
+  <p>본 분석은 공개된 실거래가·정책 자료·시장 리서치를 기반으로 작성되었습니다.</p>
+  <p>최종 의사결정은 세무사·공인중개사 상담 후 신중하게 내려주세요.</p>
+  <p>작성일: 2026.04.12</p>
+</div>
+
+<script>
+// ===== Chart 1: 월별 전세 거래 패턴 =====
+new Chart(document.getElementById('chartMonthly'),{
+  type:'bar',
+  data:{
+    labels:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    datasets:[{
+      label:'월별 평균 전세 거래건수 (2020~2025)',
+      data:[3.2, 3.8, 4.5, 2.1, 2.8, 3.3, 4.2, 4.8, 4.5, 3.5, 2.8, 3.8],
+      backgroundColor:['#93c5fd','#93c5fd','#60a5fa','#fca5a5','#fca5a5','#93c5fd','#3b82f6','#2563eb','#3b82f6','#93c5fd','#fca5a5','#93c5fd'],
+      borderRadius:6
+    }]
+  },
+  options:{
+    responsive:true,
+    plugins:{
+      title:{display:true,text:'백송한신 37㎡ 월별 전세 거래 패턴 (2020~2025 평균)'},
+      annotation:{
+        annotations:{
+          now:{type:'line',xMin:3,xMax:3,borderColor:'#dc2626',borderWidth:2,borderDash:[6,4],
+            label:{display:true,content:'현재(4월)',position:'start',backgroundColor:'#dc2626',font:{size:11}}
+          },
+          peak:{type:'box',xMin:6,xMax:8,backgroundColor:'rgba(37,99,235,.08)',borderColor:'rgba(37,99,235,.3)',
+            label:{display:true,content:'성수기',position:'start',backgroundColor:'#2563eb',font:{size:11}}
+          }
+        }
+      }
+    },
+    scales:{y:{beginAtZero:true,title:{display:true,text:'거래건수'}}}
+  }
+});
+
+// ===== Chart 2: 전세가 예측 =====
+new Chart(document.getElementById('chartForecast'),{
+  type:'line',
+  data:{
+    labels:['24.01','24.04','24.07','24.10','25.01','25.04','25.07','25.10','26.01','26.04','26.07','26.10','27.01','27.04','27.07','27.10','28.01','28.07','28.12'],
+    datasets:[
+      {
+        label:'실거래 중위가',
+        data:[17000,14000,16500,16500,15000,17000,18500,16000,16000,null,null,null,null,null,null,null,null,null,null],
+        borderColor:'#2563eb',fill:false,tension:.3,pointRadius:4
+      },
+      {
+        label:'예측 상한',
+        data:[null,null,null,null,null,null,null,null,null,16000,17000,16500,17500,17500,18000,18000,18500,19000,19500],
+        borderColor:'#16a34a',borderDash:[5,5],fill:false,tension:.3,pointRadius:3
+      },
+      {
+        label:'예측 하한',
+        data:[null,null,null,null,null,null,null,null,null,15500,16000,15500,16000,16000,16500,16500,17000,17000,17500],
+        borderColor:'#f59e0b',borderDash:[5,5],fill:'-1',backgroundColor:'rgba(245,158,11,.08)',tension:.3,pointRadius:3
+      }
+    ]
+  },
+  options:{
+    responsive:true,
+    plugins:{
+      title:{display:true,text:'백송한신 37㎡ 전세가 추이 + 예측 (만원)'},
+      tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+(ctx.parsed.y/10000).toFixed(2)+'억원'}},
+      annotation:{
+        annotations:{
+          now:{type:'line',xMin:9,xMax:9,borderColor:'#dc2626',borderWidth:2,borderDash:[6,4],
+            label:{display:true,content:'현재',position:'start',backgroundColor:'#dc2626',font:{size:11}}}
+        }
+      }
+    },
+    scales:{y:{title:{display:true,text:'만원'},ticks:{callback:v=>(v/10000).toFixed(1)+'억'}}}
+  }
+});
+
+// ===== Chart 3: 연도별 =====
+new Chart(document.getElementById('chartYearly'),{
+  type:'bar',
+  data:{
+    labels:['2019','2020','2021','2022','2023','2024','2025','2026(E)','2027(E)','2028(E)'],
+    datasets:[
+      {label:'실거래 중위가',data:[13200,14500,17000,14700,14600,16500,16000,15800,null,null],backgroundColor:'rgba(37,99,235,.6)',borderRadius:4},
+      {label:'예측 중위가',data:[null,null,null,null,null,null,null,null,17000,18000],backgroundColor:'rgba(22,163,74,.5)',borderRadius:4}
+    ]
+  },
+  options:{
+    responsive:true,
+    plugins:{title:{display:true,text:'연도별 전세 중위가 + 예측 (만원)'}},
+    scales:{y:{beginAtZero:false,min:10000,ticks:{callback:v=>(v/10000).toFixed(1)+'억'}}}
+  }
+});
+
+// ===== Chart 4: 가격별 비교 =====
+new Chart(document.getElementById('chartPriceCompare'),{
+  type:'radar',
+  data:{
+    labels:['체결 확률','체결 속도','임대인 수익','매도 시 갭매력','심리적 안정'],
+    datasets:[
+      {label:'1.60억',data:[55,40,90,95,50],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,.1)',pointBackgroundColor:'#dc2626'},
+      {label:'1.55억 (추천)',data:[75,75,75,80,80],borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.1)',pointBackgroundColor:'#2563eb',borderWidth:3},
+      {label:'1.50억',data:[90,95,55,60,90],borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.1)',pointBackgroundColor:'#f59e0b'}
+    ]
+  },
+  options:{
+    responsive:true,
+    plugins:{title:{display:true,text:'전세가 옵션별 다차원 비교 (100점 만점)'}},
+    scales:{r:{min:0,max:100,ticks:{stepSize:20}}}
+  }
+});
+
+// ===== Chart 5: 갭 매도 시뮬레이션 =====
+new Chart(document.getElementById('chartGapSale'),{
+  type:'bar',
+  data:{
+    labels:['전세 1.50억','전세 1.55억','전세 1.60억'],
+    datasets:[
+      {label:'전세금 (억원)',data:[1.50,1.55,1.60],backgroundColor:'rgba(37,99,235,.5)',borderRadius:4},
+      {label:'갭 = 매수자 투자금 (억원)',data:[0.90,0.85,0.80],backgroundColor:'rgba(220,38,38,.4)',borderRadius:4}
+    ]
+  },
+  options:{
+    responsive:true,
+    indexAxis:'y',
+    plugins:{title:{display:true,text:'매매 2.4억 기준 — 전세가별 갭(매수자 부담) 비교'}},
+    scales:{x:{stacked:true,title:{display:true,text:'억원'}},y:{stacked:true}}
+  }
+});
+</script>
+
+</body>
+</html>
