@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>백송한신 아파트 저가매매 전략 분석 보고서</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f8f9fa; --card: #fff; --accent: #2563eb; --danger: #dc2626;
+    --success: #16a34a; --warn: #d97706; --text: #1e293b; --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; }
+  .container { max-width:1100px; margin:0 auto; padding:20px; }
+  header { background:linear-gradient(135deg,#1e3a5f,#2563eb); color:#fff; padding:40px 20px; text-align:center; }
+  header h1 { font-size:2rem; margin-bottom:8px; }
+  header p { opacity:.85; font-size:1rem; }
+  .badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:.8rem; font-weight:600; margin:2px; }
+  .badge-danger { background:#fef2f2; color:var(--danger); border:1px solid #fecaca; }
+  .badge-success { background:#f0fdf4; color:var(--success); border:1px solid #bbf7d0; }
+  .badge-warn { background:#fffbeb; color:var(--warn); border:1px solid #fde68a; }
+  .badge-info { background:#eff6ff; color:var(--accent); border:1px solid #bfdbfe; }
+  .card { background:var(--card); border-radius:12px; padding:24px; margin:20px 0; box-shadow:0 1px 3px rgba(0,0,0,.08); border:1px solid var(--border); }
+  .card h2 { font-size:1.4rem; margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--accent); display:flex; align-items:center; gap:8px; }
+  .card h3 { font-size:1.1rem; margin:16px 0 8px; color:var(--accent); }
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:.9rem; }
+  th, td { padding:10px 12px; text-align:left; border-bottom:1px solid var(--border); }
+  th { background:#f1f5f9; font-weight:600; position:sticky; top:0; }
+  tr:hover { background:#f8fafc; }
+  .highlight-row { background:#fef3c7 !important; font-weight:600; }
+  .danger-row { background:#fef2f2 !important; }
+  .success-row { background:#f0fdf4 !important; }
+  .chart-container { position:relative; height:400px; margin:16px 0; }
+  .chart-container-sm { position:relative; height:300px; margin:16px 0; }
+  .alert { padding:16px 20px; border-radius:8px; margin:12px 0; font-size:.95rem; }
+  .alert-danger { background:#fef2f2; border-left:4px solid var(--danger); color:#991b1b; }
+  .alert-success { background:#f0fdf4; border-left:4px solid var(--success); color:#166534; }
+  .alert-warn { background:#fffbeb; border-left:4px solid var(--warn); color:#92400e; }
+  .alert-info { background:#eff6ff; border-left:4px solid var(--accent); color:#1e40af; }
+  .source-tag { font-size:.8rem; color:var(--muted); margin-top:8px; display:block; }
+  .formula-box { background:#f1f5f9; border:1px solid var(--border); border-radius:8px; padding:16px; margin:12px 0; font-family:'Courier New',monospace; font-size:.9rem; }
+  .example-box { background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:16px; margin:12px 0; }
+  .example-box h4 { color:var(--accent); margin-bottom:8px; }
+  .docx-preview { background:#fff; border:2px solid #d1d5db; border-radius:8px; padding:24px; margin:12px 0; font-family:'Times New Roman',serif; line-height:2; }
+  .docx-preview h4 { text-align:center; font-size:1.2rem; margin-bottom:16px; border-bottom:2px solid #000; padding-bottom:8px; }
+  .docx-preview .clause { margin:12px 0; padding-left:20px; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .stat-card { text-align:center; padding:20px; border-radius:8px; }
+  .stat-card .number { font-size:2rem; font-weight:700; }
+  .stat-card .label { font-size:.85rem; color:var(--muted); margin-top:4px; }
+  .toc { background:#f8fafc; border-radius:8px; padding:20px; margin:20px 0; }
+  .toc a { color:var(--accent); text-decoration:none; display:block; padding:4px 0; }
+  .toc a:hover { text-decoration:underline; }
+  .scenario-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
+  .scenario-card { border:2px solid var(--border); border-radius:12px; padding:20px; }
+  .scenario-card.best { border-color:var(--success); }
+  .scenario-card.risk { border-color:var(--danger); }
+  .scenario-card.safe { border-color:var(--warn); }
+  .progress-bar { height:20px; background:#e2e8f0; border-radius:10px; overflow:hidden; margin:8px 0; }
+  .progress-fill { height:100%; border-radius:10px; transition:width .5s; }
+  footer { text-align:center; padding:30px; color:var(--muted); font-size:.85rem; border-top:1px solid var(--border); margin-top:40px; }
+  @media(max-width:768px) { .two-col { grid-template-columns:1fr; } .chart-container { height:300px; } header h1 { font-size:1.5rem; } }
+  .tab-container { border-bottom:2px solid var(--border); margin-bottom:16px; display:flex; gap:0; }
+  .tab { padding:10px 20px; cursor:pointer; border-bottom:3px solid transparent; font-weight:500; color:var(--muted); transition:all .2s; }
+  .tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .tab:hover { color:var(--accent); }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>백송한신 아파트 저가매매 전략 분석 보고서</h1>
+  <p>일산 백송한신 50B㎡(전용37B) | 부녀간 지분 이전 | 2026.04 기준</p>
+  <p style="margin-top:8px;">
+    <span class="badge badge-info" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3);">실거래가 기반</span>
+    <span class="badge badge-info" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3);">국세청 기준 적용</span>
+    <span class="badge badge-info" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3);">2026.04.11 작성</span>
+  </p>
+</header>
+
+<div class="container">
+
+<!-- 목차 -->
+<div class="toc">
+  <strong>목차</strong>
+  <a href="#sec1">1. 핵심 요약 (Executive Summary)</a>
+  <a href="#sec2">2. 실거래가 데이터 분석 (출처: 국토교통부)</a>
+  <a href="#sec3">3. 저가매매 세금 시뮬레이션</a>
+  <a href="#sec4">4. 1억 5천만원 매수 시 세금 분석</a>
+  <a href="#sec5">5. 자금 흐름 분석 프레임워크</a>
+  <a href="#sec6">6. 계약서 예시 (DOCX 형식)</a>
+  <a href="#sec7">7. 시각화 예시</a>
+  <a href="#sec8">8. 최종 권고안</a>
+</div>
+
+<!-- 1. 핵심 요약 -->
+<div class="card" id="sec1">
+  <h2>1. 핵심 요약</h2>
+
+  <div class="two-col">
+    <div class="stat-card" style="background:#fef2f2;">
+      <div class="number" style="color:var(--danger);">1억 5,000만</div>
+      <div class="label">희망 매수가</div>
+    </div>
+    <div class="stat-card" style="background:#eff6ff;">
+      <div class="number" style="color:var(--accent);">2억 3,000만</div>
+      <div class="label">현재 시가 (최근 실거래 기준)</div>
+    </div>
+    <div class="stat-card" style="background:#fffbeb;">
+      <div class="number" style="color:var(--warn);">1억 6,100만</div>
+      <div class="label">증여세 없는 최저가 (시가의 70%)</div>
+    </div>
+    <div class="stat-card" style="background:#f0fdf4;">
+      <div class="number" style="color:var(--success);">8,000만</div>
+      <div class="label">시가와 차액 (1.5억 매수 시)</div>
+    </div>
+  </div>
+
+  <div class="alert alert-danger" style="margin-top:16px;">
+    <strong>핵심 결론:</strong> 1억 5,000만원 매수 시, 시가(2억 3,000만) 대비 차액 8,000만원은 시가의 30%(6,900만원)를 초과하므로 <strong>증여세 과세 대상</strong>입니다. 다만 증여 과세 금액은 차액 전체가 아닌 <strong>1,100만원</strong>(= 8,000 - 6,900)입니다.
+  </div>
+
+  <div class="alert alert-success">
+    <strong>안전한 최저 매수가:</strong> 시가의 70% = <strong>1억 6,100만원</strong> (시가 2억 3,000만 기준). 이 가격 이상이면 증여세 이슈 없음.
+  </div>
+
+  <span class="source-tag">출처: 상속세 및 증여세법 제35조 (저가 양수에 따른 이익의 증여), 국토교통부 실거래가 공개시스템</span>
+</div>
+
+<!-- 2. 실거래가 데이터 분석 -->
+<div class="card" id="sec2">
+  <h2>2. 실거래가 데이터 분석</h2>
+
+  <div class="alert alert-info">
+    <strong>데이터 출처:</strong> 국토교통부 실거래가 공개시스템 (rt.molit.go.kr)<br>
+    <strong>대상:</strong> 백송한신 아파트, 50B㎡(전용 37B㎡) 타입<br>
+    <strong>기간:</strong> 2014년 ~ 2026년 (약 10년)
+  </div>
+
+  <h3>2-1. 연도별 매매 실거래가 추이 (50B㎡ 기준)</h3>
+  <div class="chart-container">
+    <canvas id="priceChart"></canvas>
+  </div>
+
+  <h3>2-2. 최근 3년 실거래 상세 (2024~2026)</h3>
+  <table>
+    <thead>
+      <tr><th>계약일</th><th>층</th><th>가격(만원)</th><th>비고</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2026.01.02</td><td>12층</td><td>23,000</td><td><span class="badge badge-info">가장 최근</span></td></tr>
+      <tr><td>2025.11.15</td><td>3층</td><td>25,800</td><td></td></tr>
+      <tr><td>2025.10.24</td><td>9층</td><td>25,000</td><td></td></tr>
+      <tr><td>2025.07.04</td><td>12층</td><td>23,000</td><td>계약취소</td></tr>
+      <tr><td>2025.06.21</td><td>11층</td><td>23,000</td><td></td></tr>
+      <tr><td>2025.05.31</td><td>1층</td><td>23,000</td><td></td></tr>
+      <tr class="highlight-row"><td colspan="4">-- 2024년 --</td></tr>
+      <tr><td>2024.12.13</td><td>2층</td><td>24,700</td><td></td></tr>
+      <tr><td>2024.12.05</td><td>9층</td><td>25,700</td><td></td></tr>
+      <tr><td>2024.12.03</td><td>6층</td><td>27,000</td><td><span class="badge badge-danger">3년내 최고</span></td></tr>
+      <tr><td>2024.12.01</td><td>9층</td><td>24,000</td><td></td></tr>
+      <tr><td>2024.11.10</td><td>12층</td><td>23,300</td><td></td></tr>
+      <tr><td>2024.09.25</td><td>13층</td><td>22,000</td><td></td></tr>
+      <tr><td>2024.09.21</td><td>9층</td><td>22,000</td><td></td></tr>
+      <tr><td>2024.09.20</td><td>5층</td><td>22,000</td><td></td></tr>
+      <tr><td>2024.07.03</td><td>13층</td><td>23,500</td><td></td></tr>
+      <tr><td>2024.04.30</td><td>8층</td><td>20,700</td><td><span class="badge badge-success">3년내 최저</span></td></tr>
+    </tbody>
+  </table>
+  <span class="source-tag">출처: 국토교통부 실거래가 공개시스템 (rt.molit.go.kr) — 네이버 부동산 제공</span>
+
+  <h3>2-3. 시가 산정 기준</h3>
+  <div class="formula-box">
+    <strong>국세청 시가 판단 기준 (상증세법 시행령 제49조)</strong><br><br>
+    시가 = 평가기준일 전후 6개월 이내 실거래가<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(같은 단지, 같은 면적, 유사 층수 우선)<br><br>
+    2026.04 기준 전후 6개월 = 2025.10 ~ 2026.10<br>
+    해당 기간 실거래: 2억 3,000(26.01) / 2억 5,800(25.11) / 2억 5,000(25.10)<br><br>
+    <strong>산정 시가 = 약 2억 3,000만 ~ 2억 5,800만</strong><br>
+    보수적 적용 시: <strong>2억 3,000만원</strong> (가장 최근, 가장 낮은 실거래)
+  </div>
+
+  <h3>2-4. 현재 매물 시세 (2026.04 기준)</h3>
+  <table>
+    <thead><tr><th>동</th><th>층</th><th>호가(만원)</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr class="success-row"><td>301동</td><td>1층</td><td>22,000</td><td>전세안고, 올수리, 급매 (최저 호가)</td></tr>
+      <tr><td>305동</td><td>10층</td><td>23,000</td><td>로얄동 로얄층</td></tr>
+      <tr><td>305동</td><td>7층</td><td>23,000</td><td></td></tr>
+      <tr><td>305동</td><td>12층</td><td>23,000</td><td></td></tr>
+      <tr><td>301동</td><td>3층</td><td>23,500</td><td>세안고, 재건축선도지구</td></tr>
+      <tr><td>305동</td><td>8층</td><td>25,000</td><td></td></tr>
+      <tr><td>305동</td><td>15층</td><td>25,000</td><td>올수리</td></tr>
+      <tr><td>305동</td><td>9층</td><td>26,000</td><td>올수리, 로얄동</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2-5. 전세 시세</h3>
+  <table>
+    <thead><tr><th>동</th><th>층</th><th>전세가(만원)</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>301동</td><td>15층</td><td>16,000</td><td>현재 매물</td></tr>
+      <tr><td>305동</td><td>8층</td><td>17,000</td><td></td></tr>
+      <tr><td>301동</td><td>13층</td><td>17,500</td><td></td></tr>
+    </tbody>
+  </table>
+  <span class="source-tag">출처: 네이버 부동산 매물 (2026.04.11 기준)</span>
+</div>
+
+<!-- 3. 저가매매 세금 시뮬레이션 -->
+<div class="card" id="sec3">
+  <h2>3. 저가매매 세금 시뮬레이션</h2>
+
+  <div class="alert alert-info">
+    <strong>법적 근거:</strong> 상속세 및 증여세법 제35조 (저가 양수 또는 고가 양도에 따른 이익의 증여)<br>
+    특수관계인(부녀)간 거래에서 시가와 대가의 차액이 <strong>시가의 30% 이상</strong>이거나 <strong>3억원 이상</strong>일 때 증여세 과세
+  </div>
+
+  <div class="formula-box">
+    <strong>저가매매 증여세 계산 공식</strong><br><br>
+    1단계: 차액 = 시가 - 매수가<br>
+    2단계: 기준금액 = MIN(시가 x 30%, 3억원)<br>
+    3단계: 과세여부 판단 = 차액 > 기준금액?<br>
+    4단계: 증여재산가액 = 차액 - 기준금액 (차액 > 기준금액인 경우만)<br>
+    5단계: 증여세 = (증여재산가액 - 직계존비속 공제 5,000만) x 세율
+  </div>
+
+  <h3>시나리오별 시뮬레이션</h3>
+  <div class="chart-container-sm">
+    <canvas id="taxChart"></canvas>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>매수가</th><th>차액</th><th>시가30%</th><th>과세여부</th><th>증여재산가액</th><th>증여세(추정)</th></tr>
+    </thead>
+    <tbody>
+      <tr class="danger-row">
+        <td><strong>1억 5,000</strong></td><td>8,000만</td><td>6,900만</td>
+        <td><span class="badge badge-danger">과세</span></td>
+        <td>1,100만</td><td>0원 (공제 내)</td>
+      </tr>
+      <tr class="highlight-row">
+        <td><strong>1억 6,000</strong></td><td>7,000만</td><td>6,900만</td>
+        <td><span class="badge badge-danger">과세(근소)</span></td>
+        <td>100만</td><td>0원 (공제 내)</td>
+      </tr>
+      <tr class="success-row">
+        <td><strong>1억 6,100</strong></td><td>6,900만</td><td>6,900만</td>
+        <td><span class="badge badge-success">비과세</span></td>
+        <td>0원</td><td>0원</td>
+      </tr>
+      <tr class="success-row">
+        <td><strong>1억 7,000</strong></td><td>6,000만</td><td>6,900만</td>
+        <td><span class="badge badge-success">비과세</span></td>
+        <td>0원</td><td>0원</td>
+      </tr>
+      <tr>
+        <td><strong>1억 8,000</strong></td><td>5,000만</td><td>6,900만</td>
+        <td><span class="badge badge-success">비과세</span></td>
+        <td>0원</td><td>0원</td>
+      </tr>
+      <tr>
+        <td><strong>2억</strong></td><td>3,000만</td><td>6,900만</td>
+        <td><span class="badge badge-success">비과세</span></td>
+        <td>0원</td><td>0원</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="source-tag">시가 기준: 2억 3,000만원 (2026.01 최근 실거래). 직계존비속 증여공제 5,000만원(10년 합산) 적용.</span>
+
+  <div class="alert alert-warn" style="margin-top:16px;">
+    <strong>주의:</strong> 1억 5,000만 매수 시 증여재산가액은 1,100만원이나, 10년 내 기존 증여액이 있으면 합산됩니다. 과거 증여 미신고분이 있다면 추가 과세 가능.
+  </div>
+</div>
+
+<!-- 4. 1억 5천만원 매수 시 상세 분석 -->
+<div class="card" id="sec4">
+  <h2>4. 1억 5,000만원 매수 시 세금 상세 분석</h2>
+
+  <div class="scenario-grid">
+    <div class="scenario-card risk">
+      <h3 style="color:var(--danger);">시나리오 A: 증여세 관점</h3>
+      <table>
+        <tr><td>시가</td><td style="text-align:right;">23,000만원</td></tr>
+        <tr><td>매수가</td><td style="text-align:right;">15,000만원</td></tr>
+        <tr><td>차액</td><td style="text-align:right;">8,000만원</td></tr>
+        <tr><td>시가의 30%</td><td style="text-align:right;">6,900만원</td></tr>
+        <tr><td>증여재산가액</td><td style="text-align:right;font-weight:700;">1,100만원</td></tr>
+        <tr><td>10년 공제 잔액(5천만 가정)</td><td style="text-align:right;">5,000만원</td></tr>
+        <tr><td style="font-weight:700;">증여세</td><td style="text-align:right;color:var(--success);font-weight:700;">0원</td></tr>
+      </table>
+      <div class="alert alert-warn" style="margin-top:8px;">
+        과거 10년 내 증여 기신고액이 3,900만원 이하이면 증여세 없음.<br>
+        기신고액이 5,000만원 이상이면 1,100만원 x 10% = <strong>110만원</strong> 증여세 발생.
+      </div>
+    </div>
+
+    <div class="scenario-card safe">
+      <h3 style="color:var(--warn);">시나리오 B: 취득세</h3>
+      <table>
+        <tr><td>취득가액</td><td style="text-align:right;">15,000만원</td></tr>
+        <tr><td>취득세율(1주택, 6억이하)</td><td style="text-align:right;">1.1%</td></tr>
+        <tr><td style="font-weight:700;">취득세</td><td style="text-align:right;font-weight:700;">165만원</td></tr>
+      </table>
+      <div class="alert alert-info" style="margin-top:8px;">
+        만약 증여분(1,100만원) 별도 과세 시:<br>
+        증여 취득세: 1,100만 x 3.5% = 38.5만원 추가 가능
+      </div>
+    </div>
+
+    <div class="scenario-card best">
+      <h3 style="color:var(--success);">시나리오 C: 양도세 (아버지 측)</h3>
+      <table>
+        <tr><td>양도가액</td><td style="text-align:right;">15,000만원</td></tr>
+        <tr><td>취득가액(10년전 추정)</td><td style="text-align:right;">~12,500만원</td></tr>
+        <tr><td>양도차익</td><td style="text-align:right;">~2,500만원</td></tr>
+        <tr><td>장기보유특별공제(10년, 최대 30%)</td><td style="text-align:right;">~750만원</td></tr>
+        <tr><td>기본공제</td><td style="text-align:right;">250만원</td></tr>
+        <tr><td>과세표준</td><td style="text-align:right;">~1,500만원</td></tr>
+        <tr><td style="font-weight:700;">양도세(추정)</td><td style="text-align:right;font-weight:700;">~90만원</td></tr>
+      </table>
+      <div class="alert alert-success" style="margin-top:8px;">
+        아버지 1세대 1주택 비과세 해당 시 양도세 0원 가능.<br>
+        (2년 이상 보유 + 거주 조건 충족 여부 확인 필요)
+      </div>
+    </div>
+  </div>
+
+  <h3>50% 지분만 이전하는 경우</h3>
+  <table>
+    <thead><tr><th>항목</th><th>100% 이전</th><th>50% 지분 이전</th></tr></thead>
+    <tbody>
+      <tr><td>시가</td><td>23,000만</td><td>11,500만</td></tr>
+      <tr><td>매수가</td><td>15,000만</td><td>7,500만</td></tr>
+      <tr><td>차액</td><td>8,000만</td><td>4,000만</td></tr>
+      <tr><td>시가의 30%</td><td>6,900만</td><td>3,450만</td></tr>
+      <tr><td>과세여부</td><td><span class="badge badge-danger">과세</span></td><td><span class="badge badge-danger">과세</span></td></tr>
+      <tr><td>증여재산가액</td><td>1,100만</td><td>550만</td></tr>
+      <tr><td>증여세(공제 후)</td><td>0원(공제 내)</td><td>0원(공제 내)</td></tr>
+    </tbody>
+  </table>
+  <span class="source-tag">50% 지분 이전 시에도 비율 기준 동일 적용. 상증세법 시행령 제49조.</span>
+</div>
+
+<!-- 5. 자금 흐름 분석 프레임워크 -->
+<div class="card" id="sec5">
+  <h2>5. 자금 흐름 분석 프레임워크</h2>
+
+  <div class="alert alert-info">
+    부녀간 복잡한 자금 흐름(증여/대여/투자/생활비 혼재)을 정리하기 위한 분석 구조입니다.
+  </div>
+
+  <h3>5-1. 자금 흐름 분류 기준</h3>
+  <table>
+    <thead><tr><th>구분</th><th>세무 처리</th><th>입증 방법</th><th>위험도</th></tr></thead>
+    <tbody>
+      <tr><td>증여 (아버지→딸)</td><td>10년 5천만 공제, 초과분 증여세</td><td>계좌이체 내역</td><td><span class="badge badge-warn">중</span></td></tr>
+      <tr><td>대여 (아버지→딸)</td><td>적정이자(4.6%) 미수취시 증여 의제</td><td>차용증, 상환내역</td><td><span class="badge badge-danger">고</span></td></tr>
+      <tr><td>증여 (딸→아버지)</td><td>역증여, 동일 기준 적용</td><td>계좌이체 내역</td><td><span class="badge badge-warn">중</span></td></tr>
+      <tr><td>대여 (딸→아버지)</td><td>이자소득 or 무이자 시 문제없음</td><td>차용증, 계좌내역</td><td><span class="badge badge-success">저</span></td></tr>
+      <tr><td>투자금 (공동)</td><td>원금+수익 분배 기준 증여 판단</td><td>투자계약서, 거래내역</td><td><span class="badge badge-danger">고</span></td></tr>
+      <tr><td>생활비/부양</td><td>사회통념상 비과세</td><td>사용 용도 증빙</td><td><span class="badge badge-success">저</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>5-2. 딸→아버지 자금 이전 (상계 가능 금액 산정)</h3>
+  <div class="chart-container-sm">
+    <canvas id="flowChart"></canvas>
+  </div>
+
+  <div class="example-box">
+    <h4>예시 1: 계좌 기반 상계 처리</h4>
+    <p>딸이 2020~2025년간 아버지에게 총 8,000만원을 이체한 기록이 있고, 아버지가 딸에게 3,000만원을 이체한 기록이 있는 경우:</p>
+    <div class="formula-box">
+      순이전액(딸→아버지) = 8,000만 - 3,000만 = <strong>5,000만원</strong><br>
+      → 이를 아버지의 채무로 인정받으면, 매매대금 중 5,000만원을 상계 처리 가능<br>
+      → 나머지 1억원만 실제 지급하면 됨 (1.5억 - 5,000만 상계)
+    </div>
+    <span class="source-tag">주의: 상계 처리를 위해서는 차용증 또는 채무확인서가 필요하며, 계좌이체 내역이 증빙이 됩니다.</span>
+  </div>
+
+  <div class="example-box">
+    <h4>예시 2: 비트코인/바이낸스 공동 운용 정리</h4>
+    <p>딸이 아버지에게 투자 목적으로 2,000만원을 전달하고, 바이낸스에서 공동 운용 후 현재 가치가 1,200만원인 경우:</p>
+    <div class="formula-box">
+      투자원금: 2,000만원 (딸 출자)<br>
+      현재 가치: 1,200만원<br>
+      손실: 800만원 (40% 손실)<br>
+      → 투자 손실분 800만원은 아버지의 관리 책임 주장 가능<br>
+      → 또는 원금 2,000만원을 채권으로 인정받아 매매대금 상계에 활용
+    </div>
+    <span class="source-tag">암호화폐 거래는 계약서, 거래소 입출금 내역, 지갑 주소 이력으로 증빙합니다.</span>
+  </div>
+
+  <h3>5-3. 최소/최대 시나리오</h3>
+  <div class="two-col">
+    <div>
+      <h4 style="color:var(--danger);">최소 시나리오 (딸→아버지 순이전 최소)</h4>
+      <p>아버지→딸 자금을 투자 원금/생활비로 인정, 딸→아버지 자금 중 투자금 환수분 제외</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:30%;background:var(--danger);"></div></div>
+      <p>순이전액: ~2,000만원</p>
+    </div>
+    <div>
+      <h4 style="color:var(--success);">최대 시나리오 (딸→아버지 순이전 최대)</h4>
+      <p>딸→아버지 모든 이체를 대여금으로, 아버지→딸 자금은 투자수익 환원으로 처리</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:80%;background:var(--success);"></div></div>
+      <p>순이전액: ~8,000만원+</p>
+    </div>
+  </div>
+</div>
+
+<!-- 6. 계약서 예시 -->
+<div class="card" id="sec6">
+  <h2>6. 계약서 예시 (DOCX 형식)</h2>
+
+  <div class="alert alert-info">
+    아래 예시는 참고용이며, 실제 계약 시 반드시 법률 전문가(변호사/세무사)의 검토를 받으시기 바랍니다.
+  </div>
+
+  <div class="tab-container">
+    <div class="tab active" onclick="showTab('contract1',this)">예시 1: 저가매매 계약서</div>
+    <div class="tab" onclick="showTab('contract2',this)">예시 2: 채무확인 겸 상계합의서</div>
+  </div>
+
+  <div id="contract1" class="tab-content active">
+    <div class="docx-preview">
+      <h4>부동산 매매계약서</h4>
+
+      <p><strong>매도인</strong>(이하 "갑"): 홍OO (주민등록번호: ____-______)<br>
+      <strong>매수인</strong>(이하 "을"): 홍OO (주민등록번호: ____-______)</p>
+
+      <p>갑과 을은 아래 부동산에 관하여 다음과 같이 매매계약을 체결한다.</p>
+
+      <p><strong>제1조 (매매목적물)</strong></p>
+      <div class="clause">
+        소재지: 경기도 고양시 일산동구 백석동 OOO<br>
+        단지명: 백송한신아파트 OOO동 OOO호<br>
+        면적: 전용 37.XX㎡ (공급 50㎡ B타입)<br>
+        이전 지분: 전체 / 50% (해당 사항에 동그라미)
+      </div>
+
+      <p><strong>제2조 (매매대금)</strong></p>
+      <div class="clause">
+        매매대금: 금 일억오천만원정 (150,000,000원)<br><br>
+        가. 계약금: 금 이천만원정 (20,000,000원) — 계약 체결 시 지급<br>
+        나. 잔금: 금 일억삼천만원정 (130,000,000원) — 2026년 O월 O일 지급<br><br>
+        단, 잔금 중 금 OOOO만원은 제3조의 기존 채무 상계로 갈음한다.
+      </div>
+
+      <p><strong>제3조 (기존 채무 상계)</strong></p>
+      <div class="clause">
+        을이 갑에게 보유하고 있는 기존 채권 금 OOOO만원(별첨 "채무확인서" 참조)을 본 매매대금의 일부와 상계한다.<br>
+        상계 후 실제 지급할 잔금: 금 OOOO만원
+      </div>
+
+      <p><strong>제4조 (매매가액 산정 근거)</strong></p>
+      <div class="clause">
+        본 매매가액은 다음을 고려하여 산정하였다:<br>
+        1) 국토교통부 실거래가: 2026.01 기준 2억 3,000만원 (12층)<br>
+        2) 저층(1층) 감가 요인 반영<br>
+        3) 내부 노후화 및 수선 필요 사항 반영<br>
+        4) 갑·을 간 기존 채권채무 관계 고려<br>
+        5) 상속세 및 증여세법 제35조 저가 양수 기준 검토 완료
+      </div>
+
+      <p><strong>제5조 (소유권 이전)</strong></p>
+      <div class="clause">
+        잔금 수령과 동시에 갑은 을 앞으로 소유권 이전 등기에 필요한 일체의 서류를 교부한다.
+      </div>
+
+      <p style="margin-top:30px;text-align:center;">
+        2026년 &nbsp;&nbsp;월 &nbsp;&nbsp;일<br><br>
+        매도인(갑): &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (인)<br>
+        매수인(을): &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (인)
+      </p>
+    </div>
+    <span class="source-tag">이 예시는 일반적인 부동산 매매계약서 양식에 저가매매 특수 조항(제3조, 제4조)을 추가한 것입니다.</span>
+  </div>
+
+  <div id="contract2" class="tab-content">
+    <div class="docx-preview">
+      <h4>채무확인 및 상계합의서</h4>
+
+      <p><strong>채무자</strong>(이하 "갑"): 홍OO (아버지)<br>
+      <strong>채권자</strong>(이하 "을"): 홍OO (딸)</p>
+
+      <p>갑과 을은 아래와 같이 기존 채무를 확인하고 상계에 합의한다.</p>
+
+      <p><strong>제1조 (채무 확인)</strong></p>
+      <div class="clause">
+        갑은 을에게 아래 사유로 총 금 OOOO만원의 채무가 있음을 확인한다:<br><br>
+        1) 2020년 O월 ~ 2024년 O월: 을이 갑에게 이체한 생활지원금 합계 OOOO만원<br>
+        &nbsp;&nbsp;&nbsp;(은행 계좌이체 내역 별첨 1)<br>
+        2) 2021년 O월: 을이 갑에게 위탁한 암호화폐 투자원금 OOOO만원<br>
+        &nbsp;&nbsp;&nbsp;(바이낸스 입출금 내역 별첨 2)<br>
+        3) 기타: [상세 기재]
+      </div>
+
+      <p><strong>제2조 (갑의 을에 대한 반대채권)</strong></p>
+      <div class="clause">
+        을은 갑으로부터 아래 금원을 수령하였음을 확인한다:<br><br>
+        1) 2019년 O월: 갑이 을에게 이체한 금 OOOO만원 (창업지원 목적)<br>
+        2) 2022년 O월: 투자수익 분배금 OOOO만원<br>
+        3) 기타: [상세 기재]<br><br>
+        갑의 을에 대한 반대채권 합계: 금 OOOO만원
+      </div>
+
+      <p><strong>제3조 (순채무액 확정)</strong></p>
+      <div class="clause">
+        제1조의 채무 합계에서 제2조의 반대채권을 차감한 갑의 순채무:<br><br>
+        <strong>순채무 = OOOO만원 - OOOO만원 = 금 OOOO만원</strong>
+      </div>
+
+      <p><strong>제4조 (상계 합의)</strong></p>
+      <div class="clause">
+        갑과 을은 위 순채무 금 OOOO만원을 별도 체결하는 "부동산 매매계약"의 매매대금 일부와 상계하기로 합의한다.
+      </div>
+
+      <p><strong>제5조 (증빙서류)</strong></p>
+      <div class="clause">
+        본 합의서에 첨부하는 증빙서류:<br>
+        별첨 1: 은행 계좌이체 내역서 (OO은행, OO은행)<br>
+        별첨 2: 바이낸스 거래소 입출금 내역<br>
+        별첨 3: 기존 차용증 사본 (해당 시)
+      </div>
+
+      <p style="margin-top:30px;text-align:center;">
+        2026년 &nbsp;&nbsp;월 &nbsp;&nbsp;일<br><br>
+        채무자(갑): &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (인)<br>
+        채권자(을): &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (인)
+      </p>
+    </div>
+    <span class="source-tag">이 합의서는 과거 자금 흐름을 채권채무로 정리하여 매매대금과 상계하기 위한 문서입니다. 세무 조사 시 증빙 자료로 활용됩니다.</span>
+  </div>
+</div>
+
+<!-- 7. 시각화 예시 -->
+<div class="card" id="sec7">
+  <h2>7. 시각화 예시</h2>
+
+  <h3>예시 1: 연도별 매매 vs 전세 가격 비교</h3>
+  <div class="chart-container">
+    <canvas id="compareChart"></canvas>
+  </div>
+  <div class="example-box">
+    <h4>이 차트에서 알 수 있는 것</h4>
+    <ul>
+      <li>2020년 이후 매매가 급등 (1.5억대 → 2.3억대)</li>
+      <li>전세가는 상대적으로 안정 (1.0억~1.7억대)</li>
+      <li>전세가율: 약 65~74% (매매 대비 전세 비율)</li>
+      <li>2024~2026년 매매가 안정화 추세 (2.2~2.5억 박스권)</li>
+    </ul>
+  </div>
+
+  <h3>예시 2: 매수가별 세금 부담 비교</h3>
+  <div class="chart-container">
+    <canvas id="taxCompareChart"></canvas>
+  </div>
+  <div class="example-box">
+    <h4>이 차트에서 알 수 있는 것</h4>
+    <ul>
+      <li><strong>1억 6,100만원</strong>이 증여세 없는 안전 최저가 (시가의 70%)</li>
+      <li>1억 5,000만원 매수 시 증여세 자체는 0원(공제 내)이지만, 과세 "대상"이 됨 → 세무 리스크</li>
+      <li>취득세는 매수가에 비례하므로, 낮은 가격 = 낮은 취득세</li>
+      <li>최적 매수가: <strong>1억 6,100만~1억 7,000만원</strong> (증여세 없음 + 취득세 최소)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 8. 최종 권고안 -->
+<div class="card" id="sec8">
+  <h2>8. 최종 권고안</h2>
+
+  <div class="scenario-grid">
+    <div class="scenario-card best">
+      <h3 style="color:var(--success);">추천 A: 안전한 최저가 매수</h3>
+      <p><strong>매수가: 1억 6,100만원</strong></p>
+      <ul>
+        <li>시가(2.3억)의 정확히 70%</li>
+        <li>증여세: 0원 (과세 대상 아님)</li>
+        <li>취득세: ~177만원</li>
+        <li>세무 리스크: 매우 낮음</li>
+      </ul>
+      <div class="alert alert-success" style="margin:8px 0 0;">
+        가장 안전하면서 최대한 절세
+      </div>
+    </div>
+
+    <div class="scenario-card safe">
+      <h3 style="color:var(--warn);">추천 B: 과거 자금 상계 활용</h3>
+      <p><strong>매수가: 1억 5,000만원 + 상계 처리</strong></p>
+      <ul>
+        <li>계약서상 매수가: 1.5억</li>
+        <li>증여재산가액: 1,100만 (공제 내)</li>
+        <li>과거 딸→아버지 자금을 상계로 활용</li>
+        <li>세무 리스크: 중간 (증빙 필요)</li>
+      </ul>
+      <div class="alert alert-warn" style="margin:8px 0 0;">
+        계좌 내역 + 채무확인서 필수
+      </div>
+    </div>
+
+    <div class="scenario-card risk">
+      <h3 style="color:var(--danger);">비추천: 무증빙 저가 매수</h3>
+      <p><strong>매수가: 1억 5,000만원 (증빙 없이)</strong></p>
+      <ul>
+        <li>국세청 소명 요청 시 대응 어려움</li>
+        <li>과거 증여 미신고분 소급 과세 가능</li>
+        <li>가산세(20~40%) 추가 위험</li>
+        <li>세무 리스크: 높음</li>
+      </ul>
+      <div class="alert alert-danger" style="margin:8px 0 0;">
+        반드시 회피해야 할 시나리오
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:20px;">실행 체크리스트</h3>
+  <table>
+    <thead><tr><th>순서</th><th>항목</th><th>기한</th><th>상태</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>과거 5년 계좌 내역 전수 조회 (모든 은행)</td><td>즉시</td><td></td></tr>
+      <tr><td>2</td><td>딸→아버지 / 아버지→딸 이체 내역 분류 정리</td><td>1주 내</td><td></td></tr>
+      <tr><td>3</td><td>바이낸스 거래내역 다운로드 (입출금+PnL)</td><td>1주 내</td><td></td></tr>
+      <tr><td>4</td><td>채무확인서 작성 (상계 금액 확정)</td><td>2주 내</td><td></td></tr>
+      <tr><td>5</td><td>감정평가 의뢰 (시가 공식 확정, 선택사항)</td><td>2주 내</td><td></td></tr>
+      <tr><td>6</td><td>세무사 상담 (최종 매매가 확정)</td><td>3주 내</td><td></td></tr>
+      <tr><td>7</td><td>매매계약서 체결</td><td>상담 후</td><td></td></tr>
+      <tr><td>8</td><td>대금 지급 (계좌이체 증빙 필수)</td><td>계약 후</td><td></td></tr>
+      <tr><td>9</td><td>소유권 이전 등기</td><td>잔금일</td><td></td></tr>
+      <tr><td>10</td><td>취득세 신고·납부</td><td>등기 시</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-danger" style="margin-top:16px;">
+    <strong>필수 주의사항:</strong>
+    <ul style="margin:8px 0 0 20px;">
+      <li>매매대금은 반드시 <strong>계좌이체</strong>로 지급 (현금 금지)</li>
+      <li>과거 증여 미신고분이 있으면 매매 전에 <strong>기한후 신고</strong> 검토</li>
+      <li>아버지의 1세대 1주택 비과세 요건(2년 보유+거주) 확인 필수</li>
+      <li>전세 세입자가 있으면 <strong>임대차 승계</strong> 조항 포함 필요</li>
+      <li>이 문서는 법률 자문이 아닌 <strong>분석 참고 자료</strong>입니다. 최종 결정 전 세무사/변호사 상담 필수.</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <p>백송한신 아파트 저가매매 전략 분석 보고서 | 2026.04.11 작성</p>
+  <p>데이터 출처: 국토교통부 실거래가 공개시스템, 네이버 부동산</p>
+  <p>이 문서는 세무/법률 자문이 아닌 데이터 분석 참고 자료입니다.</p>
+</footer>
+
+<script>
+// 탭 전환
+function showTab(id, el) {
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+// 1. 연도별 매매 실거래가 추이
+const priceCtx = document.getElementById('priceChart').getContext('2d');
+new Chart(priceCtx, {
+  type: 'line',
+  data: {
+    labels: ['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+    datasets: [
+      {
+        label: '최고가 (만원)',
+        data: [13400, 15250, 18800, 19000, 17300, 18800, 18800, 29000, 30400, 22000, 27000, 25800, 23000],
+        borderColor: '#dc2626',
+        backgroundColor: 'rgba(220,38,38,0.1)',
+        fill: true, tension: 0.3
+      },
+      {
+        label: '최저가 (만원)',
+        data: [12500, 12500, 15300, 17850, 16850, 14000, 14800, 20500, 23500, 21500, 20700, 23000, 23000],
+        borderColor: '#2563eb',
+        backgroundColor: 'rgba(37,99,235,0.1)',
+        fill: true, tension: 0.3
+      },
+      {
+        label: '희망 매수가',
+        data: [15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000,15000],
+        borderColor: '#d97706',
+        borderDash: [8,4],
+        pointRadius: 0, fill: false
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '백송한신 50B㎡ 매매 실거래가 추이 (2014~2026)', font: { size: 14 } },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.parsed.y/10000).toFixed(1) + '억원' } }
+    },
+    scales: {
+      y: { title: { display: true, text: '가격 (만원)' }, ticks: { callback: v => (v/10000).toFixed(1)+'억' } }
+    }
+  }
+});
+
+// 2. 세금 시뮬레이션 차트
+const taxCtx = document.getElementById('taxChart').getContext('2d');
+new Chart(taxCtx, {
+  type: 'bar',
+  data: {
+    labels: ['1.5억', '1.6억', '1.61억\n(안전선)', '1.7억', '1.8억', '2.0억'],
+    datasets: [
+      {
+        label: '증여재산가액 (만원)',
+        data: [1100, 100, 0, 0, 0, 0],
+        backgroundColor: ['#fca5a5','#fde68a','#86efac','#86efac','#86efac','#86efac'],
+        borderColor: ['#dc2626','#d97706','#16a34a','#16a34a','#16a34a','#16a34a'],
+        borderWidth: 2
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '매수가별 증여재산가액 (시가 2.3억 기준)', font: { size: 14 } }
+    },
+    scales: { y: { title: { display: true, text: '증여재산가액 (만원)' } } }
+  }
+});
+
+// 3. 자금 흐름 차트
+const flowCtx = document.getElementById('flowChart').getContext('2d');
+new Chart(flowCtx, {
+  type: 'bar',
+  data: {
+    labels: ['최소 시나리오', '중간 시나리오', '최대 시나리오'],
+    datasets: [
+      {
+        label: '딸→아버지 순이전액 (만원)',
+        data: [2000, 5000, 8000],
+        backgroundColor: ['#bfdbfe','#93c5fd','#3b82f6']
+      },
+      {
+        label: '상계 가능 금액 (만원)',
+        data: [2000, 5000, 8000],
+        backgroundColor: ['#bbf7d0','#86efac','#22c55e']
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '자금 흐름 시나리오별 상계 가능액', font: { size: 14 } },
+      subtitle: { display: true, text: '실제 금액은 계좌 내역 분석 후 확정', font: { size: 11 }, color: '#64748b' }
+    },
+    scales: { y: { title: { display: true, text: '금액 (만원)' } } }
+  }
+});
+
+// 4. 매매 vs 전세 비교
+const compCtx = document.getElementById('compareChart').getContext('2d');
+new Chart(compCtx, {
+  type: 'line',
+  data: {
+    labels: ['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+    datasets: [
+      {
+        label: '매매 평균가 (만원)',
+        data: [12800, 14000, 17000, 18300, 17100, 16500, 16800, 22500, 28500, 21700, 23500, 24200, 23000],
+        borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.08)',
+        fill: true, tension: 0.3, pointRadius: 4
+      },
+      {
+        label: '전세 평균가 (만원)',
+        data: [9800, 10500, 14200, 15500, 13800, 13500, 14500, 16500, 15000, 14500, 16000, 16500, 15500],
+        borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.08)',
+        fill: true, tension: 0.3, pointRadius: 4
+      },
+      {
+        label: '전세가율',
+        data: [76.6, 75.0, 83.5, 84.7, 80.7, 81.8, 86.3, 73.3, 52.6, 66.8, 68.1, 68.2, 67.4],
+        borderColor: '#d97706', borderDash: [5,3],
+        yAxisID: 'y1', pointRadius: 3, fill: false, tension: 0.3
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '매매가 vs 전세가 추이 및 전세가율', font: { size: 14 } }
+    },
+    scales: {
+      y: { title: { display: true, text: '가격 (만원)' }, position: 'left',
+           ticks: { callback: v => (v/10000).toFixed(1)+'억' } },
+      y1: { title: { display: true, text: '전세가율 (%)' }, position: 'right',
+            min: 40, max: 100, grid: { drawOnChartArea: false } }
+    }
+  }
+});
+
+// 5. 세금 부담 비교 차트
+const taxCmpCtx = document.getElementById('taxCompareChart').getContext('2d');
+new Chart(taxCmpCtx, {
+  type: 'bar',
+  data: {
+    labels: ['1.5억', '1.61억\n(안전선)', '1.7억', '1.8억', '2.0억', '2.3억\n(시가)'],
+    datasets: [
+      {
+        label: '취득세 (만원)',
+        data: [165, 177, 187, 198, 220, 253],
+        backgroundColor: '#93c5fd'
+      },
+      {
+        label: '증여세 리스크 (만원)',
+        data: [0, 0, 0, 0, 0, 0], // 모두 공제 내이므로 0
+        backgroundColor: '#fca5a5'
+      },
+      {
+        label: '절세 효과 (시가 대비, 만원)',
+        data: [88, 76, 66, 55, 33, 0],
+        backgroundColor: '#86efac'
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: '매수가별 세금 부담 및 절세 효과 비교', font: { size: 14 } }
+    },
+    scales: {
+      x: { stacked: false },
+      y: { title: { display: true, text: '금액 (만원)' } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
