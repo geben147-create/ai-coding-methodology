@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영상 자동화 파이프라인 — 모듈 구조 맵</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --orange: #d29922;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --pink: #f778ba;
+    --cyan: #39d2c0;
+    --infra: #1a2332;
+    --lock-bg: #2d1b00;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0;
+  }
+
+  /* Header */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #1a1f2e 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .hero h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  .hero p { color: var(--muted); font-size: 1rem; }
+  .hero .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 0.8rem;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* Section headers */
+  .section-header {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Flow diagram */
+  .flow-container {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    overflow-x: auto;
+    margin-bottom: 2rem;
+  }
+  .flow-svg { width: 100%; min-width: 900px; }
+
+  /* Module cards */
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .module-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem;
+    transition: border-color 0.2s;
+  }
+  .module-card:hover { border-color: var(--accent); }
+  .module-card.infra { border-left: 3px solid var(--purple); background: var(--infra); }
+  .module-card.cat { border-left: 3px solid var(--accent); }
+  .module-card.lock { border-left: 3px solid var(--orange); }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .card-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .card-num.infra-tag { background: var(--purple); color: #000; }
+  .card-num.cat-tag { background: var(--accent); color: #000; }
+  .card-title { font-weight: 700; font-size: 1rem; }
+  .card-desc { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.6rem; }
+
+  .sub-list { list-style: none; padding: 0; }
+  .sub-list li {
+    font-size: 0.82rem;
+    padding: 0.25rem 0;
+    padding-left: 1rem;
+    position: relative;
+    color: var(--muted);
+  }
+  .sub-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-weight: 600;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+  }
+  .tag-lock { background: var(--lock-bg); color: var(--orange); border: 1px solid var(--orange); }
+  .tag-parallel { background: #0b2e1a; color: var(--green); border: 1px solid var(--green); }
+  .tag-placeholder { background: #2d1b2d; color: var(--pink); border: 1px solid var(--pink); }
+  .tag-later { background: #1a1a2e; color: var(--muted); border: 1px solid var(--border); }
+
+  /* Tables */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+  }
+  .data-table th {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .data-table td {
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.8rem;
+    color: var(--muted);
+  }
+  .data-table tr:hover td { background: #1c2128; }
+  .lock-icon { color: var(--orange); }
+
+  /* Rules */
+  .rule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+  .rule-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    font-size: 0.85rem;
+  }
+  .rule-item strong { color: var(--cyan); }
+
+  /* Phase timeline */
+  .timeline { position: relative; padding-left: 2rem; margin-bottom: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.6rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .phase-item {
+    position: relative;
+    margin-bottom: 1.2rem;
+    padding: 1rem 1.2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .phase-item::before {
+    content: '';
+    position: absolute;
+    left: -1.65rem;
+    top: 1.2rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .phase-num { font-weight: 700; color: var(--accent); font-size: 0.85rem; }
+  .phase-title { font-weight: 700; margin: 0.2rem 0; }
+  .phase-desc { color: var(--muted); font-size: 0.85rem; }
+  .phase-cats { color: var(--cyan); font-size: 0.8rem; margin-top: 0.3rem; }
+
+  /* Status machine */
+  .status-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: center;
+    margin: 1rem 0 2rem;
+  }
+  .status-step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--green);
+  }
+  .status-arrow { color: var(--muted); font-size: 0.8rem; }
+
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .module-grid { grid-template-columns: 1fr; }
+    .rule-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.5rem; }
+    .container { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>영상 자동화 파이프라인</h1>
+  <p>모듈 카테고리 분해 — 설계 기준 정본 (SSOT)</p>
+  <span class="badge">INFRA 3 + CAT 14 = 17 Units</span>
+</div>
+
+<div class="container">
+
+<!-- ===== FLOW DIAGRAM ===== -->
+<div class="section-header">의존성 흐름도</div>
+<div class="flow-container">
+<svg class="flow-svg" viewBox="0 0 960 720" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background grid -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#bc8cff"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d29922"/>
+    </marker>
+  </defs>
+
+  <!-- INFRA bars -->
+  <rect x="20" y="10" width="180" height="30" rx="6" fill="#1a2332" stroke="#bc8cff" stroke-width="1"/>
+  <text x="110" y="30" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">INFRA-A Sheets</text>
+  <rect x="210" y="10" width="180" height="30" rx="6" fill="#1a2332" stroke="#bc8cff" stroke-width="1"/>
+  <text x="300" y="30" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">INFRA-B API</text>
+  <rect x="400" y="10" width="180" height="30" rx="6" fill="#1a2332" stroke="#bc8cff" stroke-width="1"/>
+  <text x="490" y="30" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">INFRA-C FFmpeg</text>
+
+  <!-- Dashed line from INFRA -->
+  <line x1="300" y1="40" x2="300" y2="60" stroke="#bc8cff" stroke-dasharray="4" stroke-width="1"/>
+  <text x="380" y="55" fill="#8b949e" font-size="9">횡단 — 모든 CAT 공유</text>
+
+  <!-- CAT-0 -->
+  <rect x="350" y="65" width="260" height="40" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="365" y="82" fill="#58a6ff" font-size="10" font-weight="700">CAT-0</text>
+  <text x="415" y="82" fill="#e6edf3" font-size="11">CHANNEL ROUTER</text>
+  <text x="365" y="97" fill="#8b949e" font-size="9">channel_config → 모든 CAT 주입</text>
+
+  <!-- Arrow down from CAT-0 -->
+  <line x1="480" y1="105" x2="480" y2="125" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- CAT-0 side arrows to CAT-6, CAT-7 -->
+  <path d="M610,85 L780,85 L780,420" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="785" y="250" fill="#8b949e" font-size="8" transform="rotate(90,785,250)">channel_config</text>
+
+  <!-- CAT-1 -->
+  <rect x="280" y="130" width="180" height="36" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="295" y="148" fill="#58a6ff" font-size="10" font-weight="700">CAT-1</text>
+  <text x="340" y="148" fill="#e6edf3" font-size="11">INPUT</text>
+  <text x="295" y="160" fill="#8b949e" font-size="8">YouTube / PDF / URL / API</text>
+
+  <!-- Arrow CAT-1 → CAT-2 -->
+  <line x1="460" y1="148" x2="500" y2="148" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- CAT-2 -->
+  <rect x="510" y="130" width="180" height="36" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="525" y="148" fill="#58a6ff" font-size="10" font-weight="700">CAT-2</text>
+  <text x="570" y="148" fill="#e6edf3" font-size="11">SCORING</text>
+  <text x="525" y="160" fill="#8b949e" font-size="8">21 로직 + Top-N</text>
+
+  <!-- Arrow CAT-1,2 → CAT-3 -->
+  <line x1="480" y1="166" x2="480" y2="190" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- CAT-3 (SSOT - highlighted) -->
+  <rect x="320" y="195" width="320" height="44" rx="8" fill="#0d2818" stroke="#3fb950" stroke-width="2"/>
+  <text x="340" y="215" fill="#3fb950" font-size="10" font-weight="700">CAT-3</text>
+  <text x="390" y="215" fill="#e6edf3" font-size="12" font-weight="700">LIBRARY_RESULT (SSOT)</text>
+  <text x="340" y="230" fill="#8b949e" font-size="9">content_id | status machine | read/write/lock_field</text>
+
+  <!-- Arrow CAT-3 → CAT-4 -->
+  <line x1="480" y1="239" x2="480" y2="260" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- CAT-4 -->
+  <rect x="320" y="265" width="320" height="44" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <rect x="595" y="268" width="40" height="16" rx="3" fill="#2d1b00" stroke="#d29922" stroke-width="1"/>
+  <text x="615" y="280" text-anchor="middle" fill="#d29922" font-size="8" font-weight="700">LOCK</text>
+  <text x="340" y="285" fill="#58a6ff" font-size="10" font-weight="700">CAT-4</text>
+  <text x="390" y="285" fill="#e6edf3" font-size="11">STRUCTURE & VISION</text>
+  <text x="340" y="300" fill="#8b949e" font-size="9">outline + keyframe | 4-AB ∥ 4-CD 병렬</text>
+
+  <!-- Arrow CAT-4 → CAT-5 -->
+  <line x1="480" y1="309" x2="480" y2="330" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- CAT-5 -->
+  <rect x="320" y="335" width="320" height="44" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <rect x="595" y="338" width="40" height="16" rx="3" fill="#2d1b00" stroke="#d29922" stroke-width="1"/>
+  <text x="615" y="350" text-anchor="middle" fill="#d29922" font-size="8" font-weight="700">LOCK</text>
+  <text x="340" y="355" fill="#58a6ff" font-size="10" font-weight="700">CAT-5</text>
+  <text x="390" y="355" fill="#e6edf3" font-size="11">WRITING CORE</text>
+  <text x="340" y="370" fill="#8b949e" font-size="9">N-Step Script | Hook | final_merged_text</text>
+
+  <!-- Arrow CAT-5 → CAT-6 -->
+  <line x1="480" y1="379" x2="480" y2="400" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- CAT-6 -->
+  <rect x="320" y="405" width="200" height="36" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="340" y="423" fill="#58a6ff" font-size="10" font-weight="700">CAT-6</text>
+  <text x="390" y="423" fill="#e6edf3" font-size="11">CHARACTER</text>
+  <text x="340" y="435" fill="#8b949e" font-size="8">slot map | 명시적 할당만</text>
+
+  <!-- CAT-7 (beside CAT-6) -->
+  <rect x="540" y="405" width="200" height="36" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="560" y="423" fill="#58a6ff" font-size="10" font-weight="700">CAT-7</text>
+  <text x="610" y="423" fill="#e6edf3" font-size="11">STYLE DIRECTOR</text>
+  <text x="560" y="435" fill="#8b949e" font-size="8">프롬프트 주입 | ref image</text>
+
+  <!-- Arrows CAT-6, CAT-7 → CAT-8 -->
+  <line x1="420" y1="441" x2="420" y2="460" stroke="#58a6ff" stroke-width="1" fill="none"/>
+  <line x1="640" y1="441" x2="640" y2="460" stroke="#58a6ff" stroke-width="1" fill="none"/>
+  <line x1="420" y1="460" x2="640" y2="460" stroke="#58a6ff" stroke-width="1"/>
+  <line x1="480" y1="460" x2="480" y2="475" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- CAT-8 -->
+  <rect x="320" y="480" width="320" height="44" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <rect x="595" y="483" width="40" height="16" rx="3" fill="#2d1b00" stroke="#d29922" stroke-width="1"/>
+  <text x="615" y="495" text-anchor="middle" fill="#d29922" font-size="8" font-weight="700">LOCK</text>
+  <text x="340" y="500" fill="#58a6ff" font-size="10" font-weight="700">CAT-8</text>
+  <text x="390" y="500" fill="#e6edf3" font-size="11">PROMPT ASSEMBLY</text>
+  <text x="340" y="515" fill="#8b949e" font-size="9">template + hashId gatekeeper</text>
+
+  <!-- Arrow CAT-8 → CAT-9 -->
+  <line x1="480" y1="524" x2="480" y2="545" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- CAT-9 (wider, 3 sub-modules) -->
+  <rect x="250" y="550" width="460" height="50" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="270" y="570" fill="#58a6ff" font-size="10" font-weight="700">CAT-9</text>
+  <text x="320" y="570" fill="#e6edf3" font-size="11">MEDIA GENERATION</text>
+  <!-- 3 sub boxes -->
+  <rect x="270" y="578" width="120" height="18" rx="3" fill="#0b2e1a" stroke="#3fb950" stroke-width="0.5"/>
+  <text x="330" y="591" text-anchor="middle" fill="#3fb950" font-size="8">9-A Image</text>
+  <rect x="400" y="578" width="120" height="18" rx="3" fill="#0b2e1a" stroke="#3fb950" stroke-width="0.5"/>
+  <text x="460" y="591" text-anchor="middle" fill="#3fb950" font-size="8">9-B Audio</text>
+  <rect x="530" y="578" width="120" height="18" rx="3" fill="#0b2e1a" stroke="#3fb950" stroke-width="0.5"/>
+  <text x="590" y="591" text-anchor="middle" fill="#3fb950" font-size="8">9-C Thumbnail</text>
+  <text x="665" y="570" fill="#3fb950" font-size="8" font-weight="600">PARALLEL</text>
+
+  <!-- Arrow CAT-9 → CAT-10 -->
+  <line x1="480" y1="600" x2="480" y2="618" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- CAT-10, 11, 12 compact -->
+  <rect x="350" y="623" width="260" height="28" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1"/>
+  <text x="365" y="641" fill="#58a6ff" font-size="9" font-weight="700">CAT-10</text>
+  <text x="415" y="641" fill="#e6edf3" font-size="10">SCENE ORCHESTRATOR</text>
+
+  <line x1="480" y1="651" x2="480" y2="660" stroke="#58a6ff" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="350" y="665" width="260" height="28" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1"/>
+  <text x="365" y="683" fill="#58a6ff" font-size="9" font-weight="700">CAT-11</text>
+  <text x="415" y="683" fill="#e6edf3" font-size="10">VIDEO ASSEMBLY</text>
+
+  <line x1="480" y1="693" x2="480" y2="700" stroke="#58a6ff" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="350" y="705" width="260" height="28" rx="6" fill="#0d2818" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="365" y="723" fill="#3fb950" font-size="9" font-weight="700">CAT-12</text>
+  <text x="415" y="723" fill="#e6edf3" font-size="10">DISTRIBUTION (최종 출력)</text>
+
+  <!-- CAT-13 Verification side -->
+  <rect x="30" y="550" width="180" height="36" rx="8" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+  <text x="50" y="568" fill="#f85149" font-size="10" font-weight="700">CAT-13</text>
+  <text x="105" y="568" fill="#e6edf3" font-size="10">VERIFICATION</text>
+  <text x="50" y="580" fill="#8b949e" font-size="8">전 구간 품질 검증</text>
+  <path d="M120,586 L120,680 L345,680" stroke="#f85149" stroke-width="1" stroke-dasharray="4" fill="none" marker-end="url(#arrow-orange)"/>
+  <text x="130" y="640" fill="#8b949e" font-size="8">전 구간 검증</text>
+</svg>
+</div>
+
+<!-- ===== STATUS MACHINE ===== -->
+<div class="section-header">CAT-3 상태 머신</div>
+<div class="status-flow">
+  <span class="status-step">COLLECTED</span><span class="status-arrow">→</span>
+  <span class="status-step">SCORED</span><span class="status-arrow">→</span>
+  <span class="status-step">SELECTED</span><span class="status-arrow">→</span>
+  <span class="status-step">OUTLINED</span><span class="status-arrow">→</span>
+  <span class="status-step">SCRIPTED</span><span class="status-arrow">→</span>
+  <span class="status-step">STYLED</span><span class="status-arrow">→</span>
+  <span class="status-step">PROMPTED</span><span class="status-arrow">→</span>
+  <span class="status-step">GENERATED</span><span class="status-arrow">→</span>
+  <span class="status-step">ASSEMBLED</span><span class="status-arrow">→</span>
+  <span class="status-step">RENDERED</span><span class="status-arrow">→</span>
+  <span class="status-step">DISTRIBUTED</span>
+</div>
+
+<!-- ===== INFRA ===== -->
+<div class="section-header">INFRA: 인프라 레이어 (모듈 아님 — 횡단 서비스)</div>
+<div class="module-grid">
+  <div class="module-card infra">
+    <div class="card-header">
+      <span class="card-num infra-tag">INFRA-A</span>
+      <span class="card-title">Google Sheets 제어 계층</span>
+    </div>
+    <div class="card-desc">설정 저장소 + 수동 제어판. 읽기는 모든 CAT 허용, 쓰기는 CAT-3만.</div>
+    <ul class="sub-list">
+      <li>스코어링 가중치/필터 (CAT-2)</li>
+      <li>채널별 스타일 프롬프트 (CAT-7)</li>
+      <li>외부 이미지 매핑 (CAT-9)</li>
+      <li>캐릭터 slot map (CAT-6)</li>
+      <li>라우팅 규칙 (동적 브랜칭 없음)</li>
+    </ul>
+  </div>
+  <div class="module-card infra">
+    <div class="card-header">
+      <span class="card-num infra-tag">INFRA-B</span>
+      <span class="card-title">외부 API 레지스트리</span>
+    </div>
+    <div class="card-desc">모든 외부 API 호출의 단일 진입점. 직접 호출 금지.</div>
+    <ul class="sub-list">
+      <li>YouTube V3 / Sheets / Drive API</li>
+      <li>NotebookLM / Gemini / Perplexity</li>
+      <li>Z-Image / VibeVoice / Index TTS</li>
+      <li>OpenAI (대체용) / GenSpark</li>
+      <li>Rate limit + Retry + Fallback 내장</li>
+    </ul>
+  </div>
+  <div class="module-card infra">
+    <div class="card-header">
+      <span class="card-num infra-tag">INFRA-C</span>
+      <span class="card-title">FFmpeg 런타임</span>
+    </div>
+    <div class="card-desc">미디어 처리 공유 엔진. 버전/설치 단일 관리.</div>
+    <ul class="sub-list">
+      <li>Scene detect + Keyframe (CAT-4)</li>
+      <li>슬라이드쇼 → 영상 변환 (CAT-11)</li>
+      <li>클립 병합 / 자막 / BGM (CAT-11)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== MODULE CARDS ===== -->
+<div class="section-header">CAT 0~13: 모듈 상세</div>
+<div class="module-grid">
+
+  <!-- CAT-0 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-0</span>
+      <span class="card-title">CHANNEL ROUTER</span>
+    </div>
+    <div class="card-desc">최상위 분기. channel_id → 불변 config 객체 주입. 채널 간 데이터 격리.</div>
+    <ul class="sub-list">
+      <li>character_set_id → CAT-6</li>
+      <li>style_prompt_id → CAT-7</li>
+      <li>scoring_weights → CAT-2</li>
+      <li>category_rules → CAT-2</li>
+      <li>distribution_target → CAT-12</li>
+    </ul>
+  </div>
+
+  <!-- CAT-1 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-1</span>
+      <span class="card-title">MULTI-SOURCE INPUT</span>
+    </div>
+    <div class="card-desc">원시 데이터 수집 + 정규화. 반드시 CAT-3 경유 출력.</div>
+    <ul class="sub-list">
+      <li>1-A. YouTube V3 수집기 (~50개, 자막, 23카테고리)</li>
+      <li>1-B. URL / PDF / 텍스트 입력</li>
+      <li>1-C. Instagram 크롤러 <span class="tag tag-placeholder">placeholder</span></li>
+      <li>1-D. Research API 보강 (NLM/Gemini/Perplexity)</li>
+      <li>1-E. Source Merger + Normalizer</li>
+    </ul>
+  </div>
+
+  <!-- CAT-2 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-2</span>
+      <span class="card-title">SCORING ENGINE</span>
+    </div>
+    <div class="card-desc">YouTube V3 전용. 21개 로직 + 가중치 결합 → Top-N 선정.</div>
+    <ul class="sub-list">
+      <li>2-A. 21개 로직 (z-VPH, Red Ocean 등, ~80% 작동)</li>
+      <li>2-B. 스코어 결합기 (가중치/정렬/필터)</li>
+      <li>2-C. Top-N 선택기 → CAT-3 상태 업데이트</li>
+      <li>2-D. 제어 옵션 패널 (Sheets, 수동 편집)</li>
+    </ul>
+  </div>
+
+  <!-- CAT-3 -->
+  <div class="module-card cat" style="border-left-color: #3fb950;">
+    <div class="card-header">
+      <span class="card-num cat-tag" style="background:#3fb950;">CAT-3</span>
+      <span class="card-title">LIBRARY_RESULT (SSOT)</span>
+    </div>
+    <div class="card-desc">단일 정본. 모든 파이프라인의 System of Record.</div>
+    <ul class="sub-list">
+      <li>content_id / library_id / channel_id / character_id</li>
+      <li>상태 머신: 11단계 순방향 전이만 가능</li>
+      <li>read(id, fields) / write(id, field, val)</li>
+      <li>lock_field(id, field) / transition(id, status)</li>
+      <li>외부 URL 재조회 금지 / 직접 수정 금지</li>
+    </ul>
+  </div>
+
+  <!-- CAT-4 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-4</span>
+      <span class="card-title">STRUCTURE & VISION</span>
+      <span class="tag tag-lock">LOCK #1</span>
+      <span class="tag tag-parallel">PARALLEL</span>
+    </div>
+    <div class="card-desc">아웃라인 뼈대 + 소스 영상 키프레임 추출. 4-AB/4-CD 병렬.</div>
+    <ul class="sub-list">
+      <li>4-A. n_steps 결정기</li>
+      <li>4-B. 스토리 뼈대 → outline_structure <span class="tag tag-lock">LOCK</span></li>
+      <li>4-C. FFmpeg Scene Detect (INFRA-C)</li>
+      <li>4-D. Keyframe Extraction → vision_prompt_raw (READ-ONLY)</li>
+    </ul>
+  </div>
+
+  <!-- CAT-5 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-5</span>
+      <span class="card-title">WRITING CORE</span>
+      <span class="tag tag-lock">LOCK #2</span>
+    </div>
+    <div class="card-desc">N-Step 스크립트 생성. Step별 개별 프롬프트 입력.</div>
+    <ul class="sub-list">
+      <li>5-A. Outline → 실제 글 Outline</li>
+      <li>5-B. Hook Draft</li>
+      <li>5-C. Final Hook / Title 확정</li>
+      <li>5-D. Step-by-Step 스크립트</li>
+      <li>5-E. Final Merge → final_merged_text <span class="tag tag-lock">LOCK</span></li>
+      <li>5-F. Translation Side-Car <span class="tag tag-later">선택</span></li>
+      <li>5-G. Variant Row Generator <span class="tag tag-later">선택</span></li>
+    </ul>
+  </div>
+
+  <!-- CAT-6 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-6</span>
+      <span class="card-title">CHARACTER RESOLVER</span>
+    </div>
+    <div class="card-desc">장면별 캐릭터/음성 고정. AI 자동 추론 금지 — slot map만.</div>
+    <ul class="sub-list">
+      <li>6-A. Slot Map (금융→곰, 건강→토끼 등)</li>
+      <li>6-B. Scene별 character_id 할당</li>
+      <li>6-C. Scene별 voice_id 할당</li>
+      <li>출력: {scene_id → (character_id, voice_id)}</li>
+    </ul>
+  </div>
+
+  <!-- CAT-7 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-7</span>
+      <span class="card-title">STYLE DIRECTOR</span>
+    </div>
+    <div class="card-desc">시각 일관성. 스타일 "생성" 아님 — "규칙 주입"만.</div>
+    <ul class="sub-list">
+      <li>7-A. Style Profile (mood/camera/lighting/B-roll/색감)</li>
+      <li>7-B. 채널별 고정 프롬프트 (Sheets, 자동삽입)</li>
+      <li>7-C. Reference Image 시스템 <span class="tag tag-later">선택</span></li>
+    </ul>
+  </div>
+
+  <!-- CAT-8 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-8</span>
+      <span class="card-title">PROMPT ASSEMBLY</span>
+      <span class="tag tag-lock">LOCK #3</span>
+    </div>
+    <div class="card-desc">TEXT/IMAGE/VIDEO 최종 프롬프트 조립 + hashId 무결성.</div>
+    <ul class="sub-list">
+      <li>8-A. 프롬프트 템플릿 엔진 (스타일+장면+캐릭터)</li>
+      <li>8-B. Hash 생성기 (SHA256 → hashId)</li>
+      <li>8-C. Hash 검증 게이트키퍼 <span class="tag tag-lock">FAIL=중단</span></li>
+      <li>동적 브랜칭 없음 — 시트 제어 라우팅</li>
+    </ul>
+  </div>
+
+  <!-- CAT-9 -->
+  <div class="module-card cat" style="border-left-color: #3fb950;">
+    <div class="card-header">
+      <span class="card-num cat-tag" style="background:#3fb950;">CAT-9</span>
+      <span class="card-title">MEDIA GENERATION</span>
+      <span class="tag tag-parallel">9A∥9B∥9C</span>
+    </div>
+    <div class="card-desc">이미지 + 음성 + 썸네일. 3개 하위 모듈 내부 병렬.</div>
+    <ul class="sub-list">
+      <li>9-A. Image (Z-Image + 외부 벌크 업로드 + 범위 교체)</li>
+      <li>9-B. Audio (VibeVoice=감정 / IndexTTS=내레이션)</li>
+      <li>9-C. Thumbnail (후순위) <span class="tag tag-later">후순위</span></li>
+    </ul>
+  </div>
+
+  <!-- CAT-10 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-10</span>
+      <span class="card-title">SCENE ORCHESTRATOR</span>
+    </div>
+    <div class="card-desc">장면별 시각 소스 라우팅 + 클립 준비. R47/R40/R48 불변.</div>
+    <ul class="sub-list">
+      <li>10-A. Scene Mode (AI / SLIDE / MIXED)</li>
+      <li>10-B. Scene Duration (N초)</li>
+      <li>10-C. 외부 이미지 → Scene 매핑</li>
+      <li>10-D. 부분 장면 재생성</li>
+    </ul>
+  </div>
+
+  <!-- CAT-11 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-11</span>
+      <span class="card-title">VIDEO ASSEMBLY</span>
+    </div>
+    <div class="card-desc">최종 영상 합성. scene_id가 마스터 단위.</div>
+    <ul class="sub-list">
+      <li>11-A. 슬라이드쇼 → 영상 클립 (INFRA-C)</li>
+      <li>11-B. 클립 병합</li>
+      <li>11-C. 자막 삽입</li>
+      <li>11-D. 배경 음악 삽입</li>
+      <li>11-E. 최종 렌더링 → final_video_url</li>
+    </ul>
+  </div>
+
+  <!-- CAT-12 -->
+  <div class="module-card cat">
+    <div class="card-header">
+      <span class="card-num cat-tag">CAT-12</span>
+      <span class="card-title">SCHEDULING & DISTRIBUTION</span>
+    </div>
+    <div class="card-desc">채널별 독립 배포. 재시도 로직 포함.</div>
+    <ul class="sub-list">
+      <li>12-A. 스케줄러 (예약 게시 큐)</li>
+      <li>12-B. 채널별 배포 라우팅 + 메타데이터/썸네일</li>
+    </ul>
+  </div>
+
+  <!-- CAT-13 -->
+  <div class="module-card cat" style="border-left-color: #f85149;">
+    <div class="card-header">
+      <span class="card-num cat-tag" style="background:#f85149;">CAT-13</span>
+      <span class="card-title">VERIFICATION & QUALITY GATE</span>
+    </div>
+    <div class="card-desc">전 구간 검증. 수정 권한 없음, FAIL 시 해당 CAT 재처리.</div>
+    <ul class="sub-list">
+      <li>13-A. hashId 무결성 검증</li>
+      <li>13-B. GenSpark 100회 배치 테스트</li>
+      <li>13-C. Contract Test (모듈간 스키마)</li>
+      <li>13-D. Staging 검증 (재생 + 동기화)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== MASTER KEYS ===== -->
+<div class="section-header">마스터 키 정의</div>
+<table class="data-table">
+  <thead>
+    <tr><th>키</th><th>역할</th><th>생성 시점</th><th>범위</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>channel_id</strong></td><td>최상위 분기</td><td>CAT-0</td><td>채널 간 데이터/설정 절대 격리</td></tr>
+    <tr><td><strong>content_id</strong></td><td>콘텐츠 추적</td><td>CAT-1</td><td>LIBRARY_RESULT 내 유일 식별자</td></tr>
+    <tr><td><strong>scene_id</strong></td><td>장면 단위 자산 연결</td><td>CAT-4</td><td>스크립트 + 오디오 + 이미지 + 자막</td></tr>
+    <tr><td><strong>character_id</strong></td><td>캐릭터 고정</td><td>CAT-6</td><td>채널 내 slot map 기반</td></tr>
+    <tr><td><strong>voice_id</strong></td><td>음성 고정</td><td>CAT-6</td><td>character_id → voice_id 매핑</td></tr>
+    <tr><td><strong>hashId</strong></td><td>프롬프트 무결성</td><td>CAT-8</td><td>재현성 + 변조 방지</td></tr>
+  </tbody>
+</table>
+
+<!-- ===== LOCK POINTS ===== -->
+<div class="section-header">LOCK 포인트 (3개)</div>
+<table class="data-table">
+  <thead>
+    <tr><th>#</th><th>대상</th><th>생성 모듈</th><th>LOCK 이후</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="lock-icon">1</td><td><strong>outline_structure</strong></td><td>CAT-4</td><td>구조 변경 불가. 변경 시 전체 재실행</td></tr>
+    <tr><td class="lock-icon">2</td><td><strong>final_merged_text</strong></td><td>CAT-5</td><td>스크립트 수정 불가. 변경 시 CAT-8 이후 재실행</td></tr>
+    <tr><td class="lock-icon">3</td><td><strong>hashId</strong></td><td>CAT-8</td><td>프롬프트 변경 불가. 불일치 시 생성 차단</td></tr>
+  </tbody>
+</table>
+
+<!-- ===== MODULE KEY MAP ===== -->
+<div class="section-header">모듈별 키 매핑</div>
+<table class="data-table">
+  <thead>
+    <tr><th>CAT</th><th>입력 키</th><th>출력 키</th><th>LOCK</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>0</td><td>—</td><td>channel_config</td><td>—</td></tr>
+    <tr><td>1</td><td>channel_id</td><td>content_id</td><td>—</td></tr>
+    <tr><td>2</td><td>content_id</td><td>selected_content_ids</td><td>—</td></tr>
+    <tr><td>3</td><td>content_id</td><td>* (SSOT)</td><td>—</td></tr>
+    <tr><td>4</td><td>content_id</td><td>outline_structure, vision_prompt_raw</td><td class="lock-icon">outline_structure</td></tr>
+    <tr><td>5</td><td>content_id, outline</td><td>final_merged_text</td><td class="lock-icon">final_merged_text</td></tr>
+    <tr><td>6</td><td>channel_id, scene_id</td><td>(character_id, voice_id)</td><td>—</td></tr>
+    <tr><td>7</td><td>channel_id</td><td>style_prompt_text</td><td>—</td></tr>
+    <tr><td>8</td><td>scene_id</td><td>assembled_prompts, hashId</td><td class="lock-icon">hashId</td></tr>
+    <tr><td>9</td><td>scene_id, hashId</td><td>image/audio/thumbnail URLs</td><td>—</td></tr>
+    <tr><td>10</td><td>scene_id</td><td>scene_clips</td><td>—</td></tr>
+    <tr><td>11</td><td>scene_id</td><td>final_video_url</td><td>—</td></tr>
+    <tr><td>12</td><td>channel_id</td><td>distribution_result</td><td>—</td></tr>
+    <tr><td>13</td><td>*</td><td>verification_report</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<!-- ===== RULES ===== -->
+<div class="section-header">충돌 방지 핵심 규칙</div>
+<div class="rule-grid">
+  <div class="rule-item"><strong>scene_id = 마스터 키</strong><br>모든 자산(스크립트, 오디오, 이미지, 자막)은 scene_id로만 연결</div>
+  <div class="rule-item"><strong>channel_id = 분기 키</strong><br>채널 간 데이터/설정 절대 공유 안 함</div>
+  <div class="rule-item"><strong>LIBRARY_RESULT = SSOT</strong><br>모든 읽기/쓰기의 단일 진입점</div>
+  <div class="rule-item"><strong>LOCK 3개</strong><br>outline_structure, final_merged_text, hashId — LOCK 이후 수정 불가</div>
+  <div class="rule-item"><strong>기존 워크플로 불변</strong><br>R47, R40, R48 수정 금지 — 새 레이어만 추가</div>
+  <div class="rule-item"><strong>명시적 할당만</strong><br>캐릭터/이미지 매핑에 AI 자동 추론 금지</div>
+  <div class="rule-item"><strong>인프라 ≠ 모듈</strong><br>Sheets, API, FFmpeg는 횡단 인프라 레이어</div>
+  <div class="rule-item"><strong>단방향 의존</strong><br>CAT-N → CAT-(N+k)만 소비. 역방향 금지 (CAT-3 예외)</div>
+</div>
+
+<!-- ===== TIMELINE ===== -->
+<div class="section-header">설계 우선순위 (개발 Phase)</div>
+<div class="timeline">
+  <div class="phase-item">
+    <div class="phase-num">Phase 1</div>
+    <div class="phase-title">기반</div>
+    <div class="phase-desc">채널 라우터 + LIBRARY_RESULT 스키마 + 인프라 인터페이스</div>
+    <div class="phase-cats">CAT-0, CAT-3, INFRA-A/B/C</div>
+  </div>
+  <div class="phase-item">
+    <div class="phase-num">Phase 2</div>
+    <div class="phase-title">입력 + 스코어링</div>
+    <div class="phase-desc">데이터 수집 + 평가 파이프라인. 기존 21개 로직 연결 (~80% 작동)</div>
+    <div class="phase-cats">CAT-1, CAT-2</div>
+  </div>
+  <div class="phase-item">
+    <div class="phase-num">Phase 3</div>
+    <div class="phase-title">콘텐츠 생성</div>
+    <div class="phase-desc">구조 설계 + 스크립트 + 캐릭터/스타일 → 텍스트 파이프라인 완성</div>
+    <div class="phase-cats">CAT-4, CAT-5, CAT-6, CAT-7</div>
+  </div>
+  <div class="phase-item">
+    <div class="phase-num">Phase 4</div>
+    <div class="phase-title">미디어 생성</div>
+    <div class="phase-desc">프롬프트 조립 + 이미지/음성 생성 + 장면 제어. 퀄리티 반복 개선</div>
+    <div class="phase-cats">CAT-8, CAT-9, CAT-10</div>
+  </div>
+  <div class="phase-item">
+    <div class="phase-num">Phase 5</div>
+    <div class="phase-title">합성 + 배포</div>
+    <div class="phase-desc">최종 영상 렌더링 + 스케줄링. R47/R40/R48 워크플로 연결</div>
+    <div class="phase-cats">CAT-11, CAT-12</div>
+  </div>
+  <div class="phase-item">
+    <div class="phase-num">Phase 6</div>
+    <div class="phase-title">검증</div>
+    <div class="phase-desc">전 구간 품질 게이트. 파이프라인 안정화 후 도입</div>
+    <div class="phase-cats">CAT-13</div>
+  </div>
+</div>
+
+<div class="footer">
+  영상 자동화 파이프라인 — 모듈 구조 맵 (최종 정본)<br>
+  INFRA 3 + CAT 14 = 17 Units | LOCK 3 | Master Keys 6<br>
+  최종 업데이트: 2026-04-12
+</div>
+
+</div>
+</body>
+</html>
