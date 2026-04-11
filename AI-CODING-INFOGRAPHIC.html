@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 코딩 전담 통합 방법론 — 인포그래픽</title>
+<style>
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --text: #e6edf3; --muted: #8b949e; --accent: #58a6ff;
+    --green: #3fb950; --yellow: #d29922; --red: #f85149;
+    --purple: #bc8cff; --orange: #f0883e;
+    --mode-a: #3fb950; --mode-b: #58a6ff; --mode-c: #f85149;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.6; padding: 2rem; max-width: 1200px; margin: 0 auto;
+  }
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; text-align: center; }
+  h2 { font-size: 1.4rem; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; color: var(--accent); }
+  .subtitle { text-align: center; color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; }
+
+  /* Cards */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .badge {
+    display: inline-block; padding: 0.2rem 0.7rem; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .badge-a { background: var(--mode-a); color: #000; }
+  .badge-b { background: var(--mode-b); color: #000; }
+  .badge-c { background: var(--mode-c); color: #fff; }
+  .badge-s { background: var(--purple); color: #000; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; }
+  th { background: var(--surface); color: var(--accent); font-weight: 600; }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  /* Flowchart */
+  .flow { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; justify-content: center; margin: 1rem 0; }
+  .flow-step {
+    background: var(--surface); border: 2px solid var(--border);
+    border-radius: 10px; padding: 0.6rem 1rem; font-size: 0.85rem;
+    text-align: center; min-width: 120px; position: relative;
+  }
+  .flow-step.highlight-a { border-color: var(--mode-a); }
+  .flow-step.highlight-b { border-color: var(--mode-b); }
+  .flow-step.highlight-c { border-color: var(--mode-c); }
+  .flow-step.highlight-all { border-color: var(--purple); }
+  .flow-arrow { font-size: 1.5rem; color: var(--muted); }
+  .flow-arrow-down { display: block; text-align: center; font-size: 1.5rem; color: var(--muted); margin: 0.3rem 0; }
+
+  /* Vertical flow */
+  .vflow { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 1rem 0; }
+  .vflow .flow-step { width: 80%; max-width: 500px; }
+  .vflow .flow-arrow-down { margin: 0; }
+
+  /* Grid */
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 700px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* Tags */
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin: 0.1rem; }
+  .tag-green { background: rgba(63,185,80,0.2); color: var(--green); }
+  .tag-blue { background: rgba(88,166,255,0.2); color: var(--accent); }
+  .tag-red { background: rgba(248,81,73,0.2); color: var(--red); }
+  .tag-yellow { background: rgba(210,153,34,0.2); color: var(--yellow); }
+  .tag-purple { background: rgba(188,140,255,0.2); color: var(--purple); }
+
+  /* Code */
+  code { background: rgba(255,255,255,0.08); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; font-family: 'Cascadia Code', 'Fira Code', monospace; }
+  pre { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; overflow-x: auto; margin: 0.8rem 0; font-size: 0.82rem; }
+  pre code { background: none; padding: 0; }
+
+  /* Comparison */
+  .vs-table th:nth-child(2) { background: rgba(63,185,80,0.15); }
+  .vs-table th:nth-child(3) { background: rgba(88,166,255,0.15); }
+  .vs-table th:nth-child(4) { background: rgba(248,81,73,0.15); }
+
+  /* Tier visual */
+  .tier { display: flex; align-items: stretch; gap: 1rem; margin: 1rem 0; }
+  .tier-label {
+    writing-mode: vertical-rl; text-orientation: mixed;
+    padding: 0.5rem; border-radius: 8px 0 0 8px;
+    font-weight: 700; font-size: 0.9rem; display: flex;
+    align-items: center; justify-content: center; min-width: 40px;
+  }
+  .tier-s .tier-label { background: var(--purple); color: #000; }
+  .tier-a .tier-label { background: var(--accent); color: #000; }
+  .tier-b .tier-label { background: var(--muted); color: #000; }
+  .tier-content { flex: 1; }
+
+  /* Warn box */
+  .warn { background: rgba(248,81,73,0.1); border-left: 4px solid var(--red); padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.9rem; }
+  .info { background: rgba(88,166,255,0.1); border-left: 4px solid var(--accent); padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.9rem; }
+
+  /* Progress bar */
+  .progress-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 0.5rem 0; }
+  .progress-bar div { height: 100%; }
+
+  /* Separator */
+  hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  /* Anchor link */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* TOC */
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .toc ol { padding-left: 1.5rem; }
+  .toc li { margin: 0.3rem 0; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<h1>AI 코딩 전담 통합 방법론</h1>
+<p class="subtitle">
+  Claude Opus 4.6 + GPT-5.2-pro + Gemini 3 Pro 교차검증 | 2026-04-11<br>
+  GitHub Spec Kit + BMAD v6 + Karpathy + HumanLayer + Anthropic
+</p>
+
+<!-- TOC -->
+<div class="toc">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#compare">모드 비교표</a></li>
+    <li><a href="#files">파일 역할 맵 (Tier S/A/B)</a></li>
+    <li><a href="#mode-a">Mode A: 소형 프로젝트</a></li>
+    <li><a href="#mode-b">Mode B: 중대형 (Spec Kit)</a></li>
+    <li><a href="#mode-c">Mode C: 대형 (하이브리드)</a></li>
+    <li><a href="#loop">공통 Feature 루프</a></li>
+    <li><a href="#ps-funcs">PowerShell 함수</a></li>
+    <li><a href="#links">핵심 GitHub 링크</a></li>
+    <li><a href="#risks">리스크 & 경고</a></li>
+  </ol>
+</div>
+
+<!-- ==================== COMPARE ==================== -->
+<h2 id="compare">1. 모드 비교표</h2>
+<div class="card">
+  <table class="vs-table">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th><span class="badge badge-a">A</span> 소형</th>
+        <th><span class="badge badge-b">B</span> 중대형</th>
+        <th><span class="badge badge-c">C</span> 대형</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>규모</td><td>스크립트, 도구, 실험</td><td>기능 5+, 상용</td><td>6개월+, 엔터프라이즈</td></tr>
+      <tr><td>기간</td><td>30분 ~ 1일</td><td>며칠 ~ 몇주</td><td>몇달 ~ 1년+</td></tr>
+      <tr><td>Spec Kit</td><td>-</td><td>O</td><td>O</td></tr>
+      <tr><td>BMAD</td><td>-</td><td>-</td><td>O</td></tr>
+      <tr><td>내 템플릿</td><td>7개</td><td>10개</td><td>전체 + BMAD</td></tr>
+      <tr><td>워크플로우</td><td>자유 프롬프트</td><td>speckit 스킬 체인</td><td>speckit + BMAD</td></tr>
+      <tr><td>복잡도</td>
+        <td><div class="progress-bar"><div style="width:25%;background:var(--mode-a)"></div><div style="width:75%;background:var(--border)"></div></div></td>
+        <td><div class="progress-bar"><div style="width:55%;background:var(--mode-b)"></div><div style="width:45%;background:var(--border)"></div></div></td>
+        <td><div class="progress-bar"><div style="width:90%;background:var(--mode-c)"></div><div style="width:10%;background:var(--border)"></div></div></td>
+      </tr>
+      <tr><td>교차검증</td><td>선택</td><td>권장</td><td>필수</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Mode selector -->
+<div class="card">
+  <h3>모드 선택 가이드</h3>
+  <table>
+    <tr><th>상황</th><th>모드</th><th>이유</th></tr>
+    <tr><td>혼자 쓸 스크립트, 도구</td><td><span class="badge badge-a">A</span></td><td>Spec Kit 오버헤드 불필요</td></tr>
+    <tr><td>토이/실험/해커톤</td><td><span class="badge badge-a">A</span></td><td>빠른 시작</td></tr>
+    <tr><td>기능 5-15개, 1-3개월</td><td><span class="badge badge-b">B</span></td><td>Spec Kit이 구조 잡음</td></tr>
+    <tr><td>상용 제품, NFR 중요</td><td><span class="badge badge-b">B</span></td><td>constitution으로 NFR 강제</td></tr>
+    <tr><td>6개월+, 멀티 서브시스템</td><td><span class="badge badge-c">C</span></td><td>BMAD 에이전트 역할 분리</td></tr>
+    <tr><td>엔터프라이즈급</td><td><span class="badge badge-c">C</span></td><td>12+ 에이전트 필요</td></tr>
+  </table>
+</div>
+
+<!-- ==================== FILES ==================== -->
+<h2 id="files">2. 파일 역할 맵</h2>
+
+<div class="card tier tier-s">
+  <div class="tier-label">TIER S</div>
+  <div class="tier-content">
+    <h3>Day 1 필수 (모든 모드)</h3>
+    <table>
+      <tr><th>파일</th><th>역할</th><th>크기</th><th>출처</th></tr>
+      <tr><td><code>AGENTS.md</code></td><td>모든 AI 도구 baseline. 명령어/스타일/금지/검증법</td><td>100-200줄</td><td><a href="https://agents.md">AAIF 표준</a></td></tr>
+      <tr><td><code>CLAUDE.md</code></td><td>Claude 전용 규칙 (AGENTS.md import)</td><td>50-100줄</td><td><a href="https://www.humanlayer.dev/blog/writing-a-good-claude-md">HumanLayer</a></td></tr>
+      <tr><td><code>LEARN.md</code></td><td>오답노트. 같은 실수 반복 방지</td><td>무제한</td><td>HumanLayer/Karpathy</td></tr>
+      <tr><td><code>scratchpad.md</code></td><td>활성 작업 transient (.gitignore)</td><td>100줄 이하</td><td>Gemini 인사이트</td></tr>
+      <tr><td><code>specs/_template/feature.md</code></td><td>WHAT+HOW+TASKS 합본</td><td>200-500줄</td><td><a href="https://github.com/github/spec-kit">Spec Kit</a></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="card tier tier-a">
+  <div class="tier-label">TIER A</div>
+  <div class="tier-content">
+    <h3>병목 보이면 추가 (Week 2-4)</h3>
+    <table>
+      <tr><th>파일</th><th>트리거</th></tr>
+      <tr><td><code>constitution.md</code></td><td>NFR(보안/접근성/성능) 손실 발생 시</td></tr>
+      <tr><td><code>ARCHITECTURE.md</code></td><td>모듈 5개+ / AI가 패턴 모방 실패</td></tr>
+      <tr><td><code>DECISIONS.md</code></td><td>"왜 X 선택?" 같은 질문 반복</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="card tier tier-b" style="opacity:0.7">
+  <div class="tier-label">TIER B</div>
+  <div class="tier-content">
+    <h3>대형/공개 프로젝트만</h3>
+    <table>
+      <tr><th>파일</th><th>시점</th></tr>
+      <tr><td><code>README.md</code></td><td>공개 시</td></tr>
+      <tr><td><code>ROADMAP.md</code></td><td>분기별 마일스톤</td></tr>
+      <tr><td><code>SECURITY.md</code></td><td>보안 정책</td></tr>
+      <tr><td><code>RELEASE.md</code></td><td>버저닝/마이그레이션</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== MODE A ==================== -->
+<h2 id="mode-a">3. <span class="badge badge-a">Mode A</span> 소형 프로젝트</h2>
+
+<div class="card">
+  <div class="card-header">
+    <span class="badge badge-a">A</span>
+    <span>스크립트, 도구, 실험, 해커톤 | 세팅 1분</span>
+  </div>
+
+  <h3>Step-by-Step</h3>
+  <div class="vflow">
+    <div class="flow-step highlight-a"><strong>1</strong> 프로젝트 생성<br><code>ai-new my-tool</code></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-a"><strong>2</strong> AGENTS.md 편집<br><small>프로젝트 명령어/스택 채우기</small></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-a"><strong>3</strong> 브랜치 생성<br><code>ai-start feature-name</code></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-a"><strong>4</strong> Claude Code 시작<br><code>claude</code></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-a"><strong>5</strong> 자유 프롬프트<br><small>"로그인 만들어줘" (TDD)</small></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-a"><strong>6</strong> 검증<br><small>lint + typecheck + test</small></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-a"><strong>7</strong> 마감<br><code>ai-done "feat: xxx" -Merge</code></div>
+  </div>
+
+  <h3>명령어 (수동 실행 시)</h3>
+  <pre><code>cd C:\Users\llorr\dev\repos
+mkdir my-tool && cd my-tool && git init
+
+$kit = 'C:\Users\llorr\dev\kit-templates'
+Copy-Item "$kit\AGENTS.md","$kit\CLAUDE.md","$kit\LEARN.md",`
+          "$kit\scratchpad.md","$kit\ARCHITECTURE.md",`
+          "$kit\DECISIONS.md","$kit\README.md" .
+
+git add -A && git commit -m "chore: initial setup" && git branch -M main
+gh repo create my-tool --private --source=. --push</code></pre>
+</div>
+
+<!-- ==================== MODE B ==================== -->
+<h2 id="mode-b">4. <span class="badge badge-b">Mode B</span> 중대형 (Spec Kit)</h2>
+
+<div class="card">
+  <div class="card-header">
+    <span class="badge badge-b">B</span>
+    <span>기능 5+, 상용 제품 | 세팅 5분 | <strong>추천 기본 모드</strong></span>
+  </div>
+
+  <h3>Step-by-Step</h3>
+  <div class="vflow">
+    <div class="flow-step highlight-b"><strong>1</strong> Spec Kit 초기화<br><code>ai-new my-saas -Mode B</code></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-b"><strong>2</strong> 내 템플릿 덮기<br><small>AGENTS/CLAUDE/LEARN/ARCH/DECISIONS/ROADMAP</small></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-b"><strong>3</strong> 헌법 작성 (1회)<br><code>/speckit.constitution</code></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step" style="border-color:var(--yellow);width:80%;max-width:500px">
+      <strong>기능 루프 (반복)</strong>
+      <div style="display:flex;flex-wrap:wrap;gap:0.3rem;justify-content:center;margin-top:0.5rem">
+        <span class="tag tag-blue">/speckit.specify</span>
+        <span class="tag tag-blue">/speckit.clarify</span>
+        <span class="tag tag-blue">/speckit.plan</span>
+        <span class="tag tag-blue">/speckit.tasks</span>
+        <span class="tag tag-blue">/speckit.analyze</span>
+        <span class="tag tag-blue">/speckit.implement</span>
+      </div>
+    </div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-b"><strong>5</strong> PAL 교차검증<br>
+      <span class="tag tag-purple">consensus</span>
+      <span class="tag tag-purple">codereview</span>
+      <span class="tag tag-purple">secaudit</span>
+    </div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-b"><strong>6</strong> 마감<br><code>ai-done "feat: xxx" -Merge</code></div>
+  </div>
+
+  <h3>명령어 (수동 실행 시)</h3>
+  <pre><code>cd C:\Users\llorr\dev\repos
+$env:PYTHONUTF8 = '1'
+uvx --from git+https://github.com/github/spec-kit.git `
+    specify init my-saas --ai claude
+cd my-saas
+
+$kit = 'C:\Users\llorr\dev\kit-templates'
+Copy-Item "$kit\AGENTS.md","$kit\CLAUDE.md","$kit\LEARN.md",`
+          "$kit\scratchpad.md","$kit\ARCHITECTURE.md",`
+          "$kit\DECISIONS.md","$kit\README.md",`
+          "$kit\ROADMAP.md","$kit\RELEASE.md" . -Force
+
+git add -A && git commit -m "chore: spec-kit + kit setup" && git branch -M main
+gh repo create my-saas --private --source=. --push</code></pre>
+
+  <h3>Claude Code 안에서 (헌법 1회)</h3>
+  <pre><code>/speckit.constitution
+  - 기술 스택: Next.js 15 + FastAPI + PostgreSQL
+  - 보안: OWASP Top 10
+  - 성능: p95 &lt; 200ms
+  - 테스트: TDD 필수, 커버리지 80%+</code></pre>
+
+  <h3>기능마다 반복</h3>
+  <pre><code>/speckit.specify 사용자 로그인 (이메일+패스워드, JWT 24h, rate limit 5/min)
+/speckit.clarify
+/speckit.plan
+/speckit.tasks
+/speckit.analyze
+/speckit.implement</code></pre>
+</div>
+
+<!-- ==================== MODE C ==================== -->
+<h2 id="mode-c">5. <span class="badge badge-c">Mode C</span> 대형 (하이브리드)</h2>
+
+<div class="card">
+  <div class="card-header">
+    <span class="badge badge-c">C</span>
+    <span>6개월+, 멀티 모듈, 역할 분리 | 세팅 10분</span>
+  </div>
+
+  <h3>Step-by-Step</h3>
+  <div class="vflow">
+    <div class="flow-step highlight-c"><strong>1</strong> Spec Kit + BMAD<br><code>ai-new huge-app -Mode C</code></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-c"><strong>2</strong> 내 템플릿 전체 + BMAD 설치<br><code>npx bmad-method install</code></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-c"><strong>3</strong> BMAD 안내<br><code>bmad-help</code></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-c"><strong>4</strong> 헌법 작성<br><code>/speckit.constitution</code></div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step" style="border-color:var(--orange);width:80%;max-width:500px">
+      <strong>BMAD 에이전트 자동 역할</strong>
+      <table style="margin:0.5rem 0;font-size:0.8rem;">
+        <tr><td>PM Agent</td><td>PRD 생성</td></tr>
+        <tr><td>Architect Agent</td><td>아키텍처 설계</td></tr>
+        <tr><td>Dev Agent</td><td>구현</td></tr>
+        <tr><td>QA Agent</td><td>테스트</td></tr>
+        <tr><td>Security Agent</td><td>보안 감사</td></tr>
+      </table>
+    </div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-c"><strong>6</strong> speckit 체인 + PAL 3중 검증</div>
+    <div class="flow-arrow-down">&#8595;</div>
+    <div class="flow-step highlight-c"><strong>7</strong> 마감 + LEARN + DECISIONS</div>
+  </div>
+
+  <h3>명령어 (수동 실행 시)</h3>
+  <pre><code>cd C:\Users\llorr\dev\repos
+uvx --from git+https://github.com/github/spec-kit.git `
+    specify init huge-app --ai claude
+cd huge-app
+
+$kit = 'C:\Users\llorr\dev\kit-templates'
+Copy-Item "$kit\AGENTS.md","$kit\CLAUDE.md","$kit\LEARN.md",`
+          "$kit\scratchpad.md","$kit\ARCHITECTURE.md",`
+          "$kit\DECISIONS.md","$kit\README.md","$kit\RELEASE.md",`
+          "$kit\ROADMAP.md","$kit\SECURITY.md" . -Force
+
+npx bmad-method install
+
+git add -A && git commit -m "chore: hybrid setup" && git branch -M main</code></pre>
+
+  <div class="info">
+    <strong>병렬 작업 (독립적일 때만):</strong> tmux 창 1 = 메인 feature, 창 2 = 테스트, 창 3 = 문서, 창 4 = PAL secaudit
+  </div>
+  <div class="warn">
+    <strong>금지:</strong> 같은 feature를 프론트/백 분리해서 병렬 -> 머지 지옥
+  </div>
+</div>
+
+<!-- ==================== LOOP ==================== -->
+<h2 id="loop">6. 공통 Feature 작업 루프</h2>
+
+<div class="card">
+  <div class="flow">
+    <div class="flow-step highlight-all"><strong>1</strong><br>브랜치 생성<br><code>ai-start login</code></div>
+    <div class="flow-arrow">&#8594;</div>
+    <div class="flow-step highlight-all"><strong>2</strong><br>Claude 시작<br><code>claude</code></div>
+    <div class="flow-arrow">&#8594;</div>
+    <div class="flow-step highlight-all"><strong>3</strong><br>명세 -> 구현<br><small>(모드별 다름)</small></div>
+    <div class="flow-arrow">&#8594;</div>
+    <div class="flow-step highlight-all"><strong>4</strong><br>검증<br><small>lint+type+test</small></div>
+    <div class="flow-arrow">&#8594;</div>
+    <div class="flow-step highlight-all"><strong>5</strong><br>커밋<br><code>ai-done</code></div>
+    <div class="flow-arrow">&#8594;</div>
+    <div class="flow-step highlight-all"><strong>6</strong><br>회고<br><small>LEARN.md</small></div>
+  </div>
+
+  <h3>Step 3: 모드별 차이</h3>
+  <table>
+    <tr><th>Mode</th><th>Claude Code 안에서</th></tr>
+    <tr><td><span class="badge badge-a">A</span></td><td>자유 프롬프트: "로그인 만들어줘"</td></tr>
+    <tr><td><span class="badge badge-b">B</span></td><td><code>/speckit.specify</code> -> <code>/speckit.implement</code> 체인</td></tr>
+    <tr><td><span class="badge badge-c">C</span></td><td><code>bmad-help</code> -> speckit 체인 + BMAD 에이전트</td></tr>
+  </table>
+
+  <h3>검증 명령어 (프로젝트에 맞게)</h3>
+  <pre><code># JavaScript/TypeScript
+npm run lint && npm run typecheck && npm test
+
+# Python
+ruff check . && mypy . && pytest -xvs
+
+# PAL 교차검증 (Mode B/C)
+pal:codereview 최신 변경사항
+pal:secaudit 인증 로직
+pal:precommit 커밋 전 최종</code></pre>
+</div>
+
+<!-- ==================== PS FUNCS ==================== -->
+<h2 id="ps-funcs">7. PowerShell 함수 요약</h2>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr><th>명령어</th><th>기능</th><th>예시</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>ai-new &lt;이름&gt;</code></td><td>Mode A 프로젝트 생성</td><td><code>ai-new my-tool</code></td></tr>
+      <tr><td><code>ai-new &lt;이름&gt; -Mode B</code></td><td>Mode B (Spec Kit)</td><td><code>ai-new my-saas -Mode B</code></td></tr>
+      <tr><td><code>ai-new &lt;이름&gt; -Mode C</code></td><td>Mode C (하이브리드)</td><td><code>ai-new huge-app -Mode C</code></td></tr>
+      <tr><td><code>ai-start &lt;기능명&gt;</code></td><td>feat 브랜치 생성</td><td><code>ai-start login</code></td></tr>
+      <tr><td><code>ai-done "msg"</code></td><td>커밋 + 푸시</td><td><code>ai-done "feat: login"</code></td></tr>
+      <tr><td><code>ai-done "msg" -Merge</code></td><td>커밋 + 푸시 + main 병합</td><td><code>ai-done "feat: login" -Merge</code></td></tr>
+      <tr><td><code>cd-repo &lt;이름&gt;</code></td><td>프로젝트 이동</td><td><code>cd-repo my-tool</code></td></tr>
+      <tr><td><code>cd-out</code></td><td>결과물 폴더 이동</td><td><code>cd-out</code></td></tr>
+      <tr><td><code>ai-check</code></td><td>키트 상태 점검</td><td><code>ai-check</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== LINKS ==================== -->
+<h2 id="links">8. 핵심 GitHub 링크 (좋은 순)</h2>
+
+<div class="card">
+  <table>
+    <tr><th>#</th><th>레포</th><th>용도</th></tr>
+    <tr><td>1</td><td><a href="https://github.com/github/spec-kit">github/spec-kit</a></td><td>constitution/spec/plan/tasks 표준</td></tr>
+    <tr><td>2</td><td><a href="https://github.com/shanraisshan/claude-code-best-practice">shanraisshan/claude-code-best-practice</a></td><td>Claude Code 패턴 (Karpathy/Boris 인용)</td></tr>
+    <tr><td>3</td><td><a href="https://github.com/karpathy/autoresearch">karpathy/autoresearch</a></td><td>Karpathy 단일 markdown 워크플로우</td></tr>
+    <tr><td>4</td><td><a href="https://agents.md">agents.md</a></td><td>AGENTS.md 표준 (60,000+ 레포)</td></tr>
+    <tr><td>5</td><td><a href="https://github.com/bmad-code-org/BMAD-METHOD">bmad-code-org/BMAD-METHOD</a></td><td>BMAD v6 (대형 참고)</td></tr>
+    <tr><td>6</td><td><a href="https://code.claude.com/docs/en/best-practices">Anthropic 공식</a></td><td>Claude Code best practices</td></tr>
+    <tr><td>7</td><td><a href="https://www.humanlayer.dev/blog/writing-a-good-claude-md">HumanLayer</a></td><td>CLAUDE.md lean 가이드</td></tr>
+  </table>
+</div>
+
+<!-- ==================== RISKS ==================== -->
+<h2 id="risks">9. 리스크 & 경고</h2>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>리스크 대응표</h3>
+    <table>
+      <tr><th>리스크</th><th>대응</th></tr>
+      <tr><td>spec/plan 드리프트</td><td>scratchpad.md SSOT</td></tr>
+      <tr><td>tmux 병렬 머지 충돌</td><td>독립 작업만 병렬</td></tr>
+      <tr><td>검증 없이 완료 주장</td><td>PAL precommit 강제</td></tr>
+      <tr><td>LEARN.md 비대화</td><td>50개 넘으면 분리</td></tr>
+      <tr><td>Spec Kit lock-in</td><td>plain markdown, CLI 제거 가능</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>하면 vs 안하면</h3>
+    <table>
+      <tr><th></th><th style="color:var(--green)">하면</th><th style="color:var(--red)">안하면</th></tr>
+      <tr><td>맥락 파악</td><td>즉시</td><td>매번 설명</td></tr>
+      <tr><td>결정 기록</td><td>DECISIONS 누적</td><td>까먹음</td></tr>
+      <tr><td>스펙->코드</td><td>일관</td><td>즉흥적</td></tr>
+      <tr><td>세션 인수인계</td><td>LEARN.md</td><td>다시 설명</td></tr>
+      <tr><td>같은 실수</td><td>자동 차단</td><td>반복</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="warn">
+  <strong>3모델 합의 비추:</strong>
+  BMAD 풀 적용 (1인 초반), markdown 동기화 CI 훅, tmux로 같은 feature 분할, CLAUDE.md에 코드베이스 구조 설명
+</div>
+
+<hr>
+
+<!-- ==================== FOLDER MAP ==================== -->
+<div class="card">
+  <h3>폴더 구조 (Z님 환경)</h3>
+  <pre><code>C:\Users\llorr\dev\
+├── kit-templates\    <- 마스터 템플릿 (읽기 전용)
+├── refs\             <- 세계 표준 원본 (참고용)
+│   ├── spec-kit\
+│   ├── BMAD-METHOD\
+│   ├── autoresearch\
+│   └── claude-code-best-practice\
+├── repos\            <- 실제 작업 (모든 프로젝트)
+└── worktrees\        <- git worktree (병렬)
+
+D:\2026airesult_byclaude\
+└── outputs\          <- 결과물</code></pre>
+</div>
+
+<!-- ==================== ENV ==================== -->
+<div class="card">
+  <h3>환경 추천</h3>
+  <table>
+    <tr><th>순위</th><th>환경</th><th>적합한 상황</th></tr>
+    <tr><td style="color:var(--yellow);font-weight:700">1</td><td>Claude Code CLI (WSL) + Spec Kit</td><td>대부분. PAL MCP 통합, 1M context</td></tr>
+    <tr><td style="color:var(--muted);font-weight:700">2</td><td>Antigravity (VS Code)</td><td>풀스택 웹 프로토타이핑, GUI 필요시</td></tr>
+    <tr><td style="color:var(--muted);font-weight:700">3</td><td>tmux 그리드</td><td>독립 검증/문서/테스트 병렬</td></tr>
+  </table>
+</div>
+
+<p class="subtitle" style="margin-top:3rem">
+  Last updated: 2026-04-11 | Claude Opus 4.6 + GPT-5.2-pro + Gemini 3 Pro 교차검증
+</p>
+
+</body>
+</html>
