@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRUSTA — AI 위험문구 검역 서비스 | 와디즈 펀딩</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+  :root {
+    --blue: #1A4DFF;
+    --blue-light: #EEF2FF;
+    --blue-dark: #0F2E99;
+    --red: #FF3B30;
+    --red-light: #FFF0EF;
+    --green: #34C759;
+    --green-light: #EDFAF2;
+    --yellow: #FF9500;
+    --yellow-light: #FFF4E5;
+    --gray-50: #F5F6F8;
+    --gray-100: #EAECF0;
+    --gray-200: #D1D5DB;
+    --gray-400: #9CA3AF;
+    --gray-600: #6B7280;
+    --gray-800: #1F2937;
+    --black: #0A0A0A;
+    --white: #FFFFFF;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.10);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.14);
+    --shadow-blue: 0 8px 32px rgba(26,77,255,0.24);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--gray-50);
+    color: var(--black);
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: var(--white);
+  }
+
+  /* ── 공통 섹션 ── */
+  section { padding: 40px 20px; }
+  section + section { border-top: 8px solid var(--gray-50); }
+
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--blue-light); color: var(--blue);
+    font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+    padding: 4px 12px; border-radius: 100px;
+    margin-bottom: 16px;
+  }
+  .tag-red { background: var(--red-light); color: var(--red); }
+  .tag-green { background: var(--green-light); color: var(--green); }
+
+  h1 { font-size: 26px; font-weight: 900; line-height: 1.3; }
+  h2 { font-size: 22px; font-weight: 800; line-height: 1.35; }
+  h3 { font-size: 17px; font-weight: 700; line-height: 1.4; }
+  p  { font-size: 15px; line-height: 1.7; color: var(--gray-600); }
+
+  .card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .card-dark {
+    background: var(--gray-800);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    color: var(--white);
+  }
+  .card-blue {
+    background: var(--blue);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    color: var(--white);
+  }
+
+  .btn-primary {
+    display: block; width: 100%;
+    background: var(--blue); color: var(--white);
+    font-size: 17px; font-weight: 700;
+    padding: 18px; border-radius: var(--radius-md);
+    text-align: center; text-decoration: none;
+    border: none; cursor: pointer;
+    box-shadow: var(--shadow-blue);
+  }
+  .btn-outline {
+    display: block; width: 100%;
+    background: transparent; color: var(--blue);
+    font-size: 15px; font-weight: 600;
+    padding: 14px; border-radius: var(--radius-md);
+    text-align: center; text-decoration: none;
+    border: 2px solid var(--blue); cursor: pointer;
+    margin-top: 12px;
+  }
+
+  /* ── 01 히어로 ── */
+  #hero {
+    background: linear-gradient(160deg, #0A1A6E 0%, #1A4DFF 100%);
+    padding: 48px 20px 40px;
+    color: var(--white);
+  }
+  #hero .pre-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.18); color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    padding: 5px 14px; border-radius: 100px; margin-bottom: 20px;
+  }
+  #hero h1 { font-size: 28px; font-weight: 900; line-height: 1.28; color: #fff; margin-bottom: 16px; }
+  #hero .sub { font-size: 15px; color: rgba(255,255,255,0.78); line-height: 1.65; margin-bottom: 28px; }
+
+  .ai-filter-card {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    backdrop-filter: blur(12px);
+  }
+  .ai-filter-card .label { font-size: 11px; color: rgba(255,255,255,0.6); font-weight: 600; margin-bottom: 12px; letter-spacing: 0.06em; }
+  .text-flow { display: flex; flex-direction: column; gap: 10px; }
+  .text-bubble {
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    position: relative;
+  }
+  .text-bubble.danger {
+    background: rgba(255,59,48,0.25);
+    color: #FFB3AF;
+    border: 1px solid rgba(255,59,48,0.4);
+  }
+  .text-bubble.safe {
+    background: rgba(52,199,89,0.22);
+    color: #8EFFA8;
+    border: 1px solid rgba(52,199,89,0.35);
+  }
+  .text-bubble .badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 100px;
+    margin-right: 6px;
+  }
+  .badge-danger { background: var(--red); color: #fff; }
+  .badge-safe { background: var(--green); color: #fff; }
+
+  .stats-row {
+    display: flex; gap: 12px; margin-top: 20px;
+  }
+  .stat-chip {
+    flex: 1; background: rgba(255,255,255,0.14);
+    border-radius: var(--radius-sm);
+    padding: 12px 10px; text-align: center;
+  }
+  .stat-chip .num { font-size: 22px; font-weight: 900; color: #fff; }
+  .stat-chip .desc { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+  /* ── 02 위험 문구 ── */
+  .pill-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .pill {
+    padding: 8px 14px; border-radius: 100px;
+    font-size: 13px; font-weight: 600;
+  }
+  .pill-red { background: var(--red-light); color: var(--red); }
+  .pill-blue { background: var(--blue-light); color: var(--blue); }
+  .pill-gray { background: var(--gray-100); color: var(--gray-600); }
+
+  /* ── 03 자가진단 ── */
+  .check-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--gray-50); border-radius: var(--radius-sm);
+    padding: 14px;
+  }
+  .check-box {
+    width: 22px; height: 22px; flex-shrink: 0;
+    border-radius: 6px; border: 2px solid var(--gray-200);
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .check-box.checked { background: var(--blue); border-color: var(--blue); }
+  .check-box.checked::after { content: '✓'; color: #fff; font-size: 13px; font-weight: 700; }
+  .check-text { font-size: 14px; line-height: 1.5; color: var(--gray-800); }
+
+  /* ── 04 문제의 본질 ── */
+  .compare-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-top: 20px;
+  }
+  .compare-card {
+    border-radius: var(--radius-md); padding: 16px;
+  }
+  .compare-card.before { background: var(--red-light); }
+  .compare-card.after  { background: var(--green-light); }
+  .compare-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .compare-card.before .compare-label { color: var(--red); }
+  .compare-card.after  .compare-label { color: var(--green); }
+  .compare-card p { font-size: 13px; line-height: 1.6; color: var(--gray-800); }
+
+  /* ── 05 TRUSTA 소개 ── */
+  .logo-big {
+    width: 72px; height: 72px;
+    background: var(--blue); border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 900; color: #fff;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-blue);
+  }
+  .step-cards { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+  .step-card {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--gray-50); border-radius: var(--radius-md); padding: 16px;
+  }
+  .step-num {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: var(--blue); border-radius: 50%;
+    color: #fff; font-size: 14px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-body h3 { font-size: 15px; margin-bottom: 4px; }
+  .step-body p  { font-size: 13px; }
+
+  /* ── 07 Before/After 흐름 ── */
+  .flow-card {
+    border-radius: var(--radius-md); overflow: hidden;
+    box-shadow: var(--shadow-sm); margin-top: 16px;
+  }
+  .flow-before {
+    background: #FFF0EF; padding: 16px;
+    border-left: 4px solid var(--red);
+  }
+  .flow-arrow {
+    background: var(--gray-50); padding: 10px;
+    text-align: center; font-size: 20px; color: var(--blue);
+  }
+  .flow-after {
+    background: var(--green-light); padding: 16px;
+    border-left: 4px solid var(--green);
+  }
+  .flow-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .flow-before .flow-label { color: var(--red); }
+  .flow-after  .flow-label { color: var(--green); }
+  .flow-text { font-size: 14px; line-height: 1.55; color: var(--gray-800); }
+
+  /* ── 08 리포트 ── */
+  .report-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-top: 20px;
+  }
+  .report-chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: var(--radius-sm);
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9);
+  }
+
+  /* ── 10 대행과 차이 ── */
+  .compare-table {
+    width: 100%; border-collapse: collapse;
+    margin-top: 20px; border-radius: var(--radius-md);
+    overflow: hidden; font-size: 13px;
+  }
+  .compare-table th {
+    padding: 12px 10px; text-align: center; font-weight: 700;
+    background: var(--gray-100); color: var(--gray-800);
+  }
+  .compare-table th.trusta-col { background: var(--blue); color: #fff; }
+  .compare-table td {
+    padding: 12px 10px; text-align: center;
+    border-top: 1px solid var(--gray-100); color: var(--gray-600);
+  }
+  .compare-table td.trusta-col {
+    background: var(--blue-light); color: var(--blue); font-weight: 600;
+  }
+  .compare-table tr:hover td { background: var(--gray-50); }
+  .compare-table tr:hover td.trusta-col { background: #E0E9FF; }
+
+  /* ── 11 고객 유형 ── */
+  .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+  .type-card {
+    background: var(--gray-50); border-radius: var(--radius-md);
+    padding: 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .type-icon { font-size: 24px; }
+  .type-text { font-size: 13px; font-weight: 600; color: var(--gray-800); line-height: 1.4; }
+
+  /* ── 12 핵심 기능 ── */
+  .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+  .feature-card {
+    background: var(--white); border-radius: var(--radius-md);
+    padding: 18px; box-shadow: var(--shadow-sm);
+  }
+  .feature-icon { font-size: 28px; margin-bottom: 10px; }
+  .feature-card h3 { font-size: 14px; margin-bottom: 6px; }
+  .feature-card p  { font-size: 12px; }
+
+  /* ── 리워드 ── */
+  .reward-cards { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+  .reward-card {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--gray-50); border-radius: var(--radius-md);
+    padding: 18px;
+  }
+  .reward-num {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--blue); color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900;
+  }
+  .reward-card.featured { background: var(--blue); }
+  .reward-card.featured .reward-num { background: rgba(255,255,255,0.25); }
+  .reward-card.featured .reward-title { color: #fff; }
+  .reward-card.featured .reward-desc  { color: rgba(255,255,255,0.75); }
+  .reward-title { font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+  .reward-desc  { font-size: 13px; color: var(--gray-600); }
+  .reward-price {
+    margin-left: auto; flex-shrink: 0;
+    font-size: 16px; font-weight: 800; color: var(--blue);
+  }
+  .reward-card.featured .reward-price { color: #fff; }
+
+  /* ── FAQ ── */
+  .faq-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+  .faq-item {
+    background: var(--gray-50); border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .faq-q {
+    padding: 16px; font-size: 14px; font-weight: 700;
+    color: var(--gray-800); cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .faq-a {
+    padding: 0 16px 16px; font-size: 13px; color: var(--gray-600);
+    line-height: 1.65; display: none;
+  }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .faq-q { color: var(--blue); }
+
+  /* ── 주의 ── */
+  .warning-card {
+    background: #FFF9EC; border-radius: var(--radius-md);
+    padding: 18px; border-left: 4px solid var(--yellow);
+    margin-top: 20px;
+  }
+  .warning-card .w-title { font-size: 14px; font-weight: 700; color: var(--yellow); margin-bottom: 8px; }
+  .warning-card ul { padding-left: 18px; }
+  .warning-card li { font-size: 13px; color: var(--gray-800); line-height: 1.7; }
+
+  /* ── CTA 섹션 ── */
+  #cta {
+    background: linear-gradient(160deg, #0F2E99 0%, #1A4DFF 100%);
+    padding: 48px 20px 56px;
+    text-align: center; color: #fff;
+  }
+  #cta h2 { font-size: 24px; color: #fff; margin-bottom: 10px; }
+  #cta p  { color: rgba(255,255,255,0.75); margin-bottom: 28px; }
+  #cta .btn-white {
+    display: block; background: #fff; color: var(--blue);
+    font-size: 17px; font-weight: 800; padding: 18px;
+    border-radius: var(--radius-md); text-decoration: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  #cta .sub-link {
+    display: block; margin-top: 14px;
+    color: rgba(255,255,255,0.6); font-size: 13px; text-decoration: none;
+  }
+
+  /* ── 진행률 바 ── */
+  .progress-wrap { margin-top: 24px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+  .progress-bar { height: 8px; background: rgba(255,255,255,0.2); border-radius: 100px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #fff; border-radius: 100px; width: 64%; }
+
+  /* ── 구분선 ── */
+  .divider { width: 40px; height: 3px; background: var(--blue); border-radius: 2px; margin: 14px 0 20px; }
+
+  .highlight { color: var(--blue); }
+  .highlight-red { color: var(--red); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+  01. 히어로
+══════════════════════════════════════ -->
+<section id="hero">
+  <div class="pre-tag">🛡️ AI 위험문구 검역 서비스</div>
+  <h1>브랜드를 지키는<br>AI 안전장치,<br><span style="color:#7EB3FF">TRUSTA</span></h1>
+  <p class="sub">마케팅 문구 속 숨은 위험 표현을<br>AI가 자동으로 찾아내고 대안을 제시합니다.</p>
+
+  <div class="ai-filter-card">
+    <div class="label">AI FILTER 실시간 시연</div>
+    <div class="text-flow">
+      <div class="text-bubble danger">
+        <span class="badge badge-danger">위험</span>
+        "100% 효과 보장! 사용 즉시 효과"
+      </div>
+      <div style="text-align:center; color:rgba(255,255,255,0.5); font-size:18px; padding:4px 0;">↓</div>
+      <div class="text-bubble safe">
+        <span class="badge badge-safe">안전</span>
+        "임상 테스트를 거친 성분으로 꼼꼼하게 설계"
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-chip">
+        <div class="num">0.8초</div>
+        <div class="desc">평균 검역 시간</div>
+      </div>
+      <div class="stat-chip">
+        <div class="num">94%</div>
+        <div class="desc">위험문구 탐지율</div>
+      </div>
+      <div class="stat-chip">
+        <div class="num">3개</div>
+        <div class="desc">대안 자동 생성</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>🔥 Early Bird 64% 달성</span>
+      <span>D-12</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill"></div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  02. 이런 문구, 지금도 올리고 있지 않나요?
+══════════════════════════════════════ -->
+<section id="risk-phrases">
+  <div class="tag tag-red">⚠️ 위험 문구 예시</div>
+  <h2>지금도 이런 문구,<br>올리고 있지 않나요?</h2>
+  <div class="divider"></div>
+  <p>아래 표현들은 광고심의에서 <span class="highlight-red">즉각 삭제·과태료</span> 대상이 되는 문구입니다.</p>
+
+  <div class="pill-grid">
+    <span class="pill pill-red">100% 효과 보장</span>
+    <span class="pill pill-red">사용 즉시 효과</span>
+    <span class="pill pill-red">1등 브랜드</span>
+    <span class="pill pill-red">의사 추천</span>
+    <span class="pill pill-red">특허받은 성분</span>
+    <span class="pill pill-red">부작용 없음</span>
+    <span class="pill pill-red">자연 치유</span>
+  </div>
+
+  <div style="margin-top:24px; padding:16px; background:var(--red-light); border-radius:var(--radius-md);">
+    <p style="font-size:13px; color:var(--red); font-weight:600;">
+      📍 규제 기관: 식품의약품안전처 · 공정거래위원회 · 방송통신심의위원회<br>
+      <span style="color:var(--gray-600); font-weight:400;">국가마다 기준이 달라 해외 진출 시 더욱 복잡합니다.</span>
+    </p>
+    <div class="pill-grid" style="margin-top:12px;">
+      <span class="pill pill-gray">🇰🇷 한국</span>
+      <span class="pill pill-gray">🇺🇸 미국 FTC</span>
+      <span class="pill pill-gray">🇪🇺 EU</span>
+      <span class="pill pill-gray">🇯🇵 일본</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  03. 우리 브랜드 자가진단
+══════════════════════════════════════ -->
+<section id="self-check">
+  <div class="tag">📋 자가진단 체크리스트</div>
+  <h2>우리 브랜드,<br>안전한가요?</h2>
+  <div class="divider"></div>
+
+  <div class="check-list">
+    <div class="check-item">
+      <div class="check-box checked"></div>
+      <p class="check-text">SNS 게시물에 "효과 있음"이라는 표현을 사용한 적이 있다</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box checked"></div>
+      <p class="check-text">광고 카피를 직접 작성하거나 AI로 생성한 적이 있다</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box checked"></div>
+      <p class="check-text">제품 상세페이지를 외주 또는 직접 제작한다</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <p class="check-text">광고심의 전문가의 검토를 받은 적이 없다</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box checked"></div>
+      <p class="check-text">해외 마케팅을 계획 중이거나 진행 중이다</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <p class="check-text">심의 규정 변경 사항을 주기적으로 확인하지 못하고 있다</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box checked"></div>
+      <p class="check-text">팀원이 올린 마케팅 문구를 일일이 다 검토하기 어렵다</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box checked"></div>
+      <p class="check-text">과거에 플랫폼 광고가 반려·삭제된 경험이 있다</p>
+    </div>
+  </div>
+
+  <div style="margin-top:20px; padding:16px; background:var(--blue-light); border-radius:var(--radius-md);">
+    <p style="font-size:14px; color:var(--blue); font-weight:700;">
+      ✓ 3개 이상 해당되면?<br>
+      <span style="font-weight:400; color:var(--gray-800);">지금 당장 TRUSTA 도입이 필요한 브랜드입니다.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  04. 문제의 본질
+══════════════════════════════════════ -->
+<section id="problem">
+  <div class="tag tag-red">🔍 문제의 본질</div>
+  <h2>문제는 "나쁜 의도"가<br>아니라 "모름"입니다</h2>
+  <div class="divider"></div>
+  <p>규정을 몰랐거나, 변경 사항을 놓쳤거나,<br>빠르게 만들다 보니 놓친 것들입니다.</p>
+
+  <div class="compare-grid">
+    <div class="compare-card before">
+      <div class="compare-label">❌ 지금까지</div>
+      <p>올리고 나서 삭제 당하고, 수정하고, 다시 올리는 반복</p>
+    </div>
+    <div class="compare-card after">
+      <div class="compare-label">✅ TRUSTA 이후</div>
+      <p>올리기 전에 AI가 먼저 검토, 안전한 문구만 게시</p>
+    </div>
+    <div class="compare-card before">
+      <div class="compare-label">❌ 비용</div>
+      <p>전문 법무팀 월 수백만원, 심의 대행 건당 10~30만원</p>
+    </div>
+    <div class="compare-card after">
+      <div class="compare-label">✅ TRUSTA</div>
+      <p>무제한 검역, 월 구독 방식, 팀 전체 사용 가능</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  보너스 A. 왜 지금인가
+══════════════════════════════════════ -->
+<section id="why-now" style="background:var(--gray-800); padding:40px 20px;">
+  <div class="tag" style="background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.9);">⏰ 왜 지금인가</div>
+  <h2 style="color:#fff;">규제는 강화되고,<br>AI 카피는 늘어납니다</h2>
+  <div class="divider" style="background:rgba(255,255,255,0.3);"></div>
+
+  <div style="display:flex; flex-direction:column; gap:14px; margin-top:20px;">
+    <div class="card-dark" style="border:1px solid rgba(255,255,255,0.12);">
+      <div style="font-size:22px; font-weight:900; color:var(--blue); margin-bottom:6px;">2024년</div>
+      <p style="color:rgba(255,255,255,0.7); font-size:14px;">식약처 표시광고 행정처분 전년 대비 <strong style="color:#fff;">2.3배 증가</strong></p>
+    </div>
+    <div class="card-dark" style="border:1px solid rgba(255,255,255,0.12);">
+      <div style="font-size:22px; font-weight:900; color:var(--yellow); margin-bottom:6px;">AI 생성 카피</div>
+      <p style="color:rgba(255,255,255,0.7); font-size:14px;">ChatGPT·Claude가 만든 문구는 <strong style="color:#fff;">규정을 모릅니다</strong></p>
+    </div>
+    <div class="card-dark" style="border:1px solid rgba(255,255,255,0.12);">
+      <div style="font-size:22px; font-weight:900; color:var(--green); margin-bottom:6px;">Threads·인스타</div>
+      <p style="color:rgba(255,255,255,0.7); font-size:14px;">AI 업로드 자동화로 <strong style="color:#fff;">게시 속도가 올라갈수록</strong> 위험도 커집니다</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  05. TRUSTA 소개
+══════════════════════════════════════ -->
+<section id="intro">
+  <div class="logo-big">T</div>
+  <div class="tag">🤖 TRUSTA란</div>
+  <h2>Trust + Audit =<br><span class="highlight">TRUSTA</span></h2>
+  <div class="divider"></div>
+  <p>광고·마케팅 문구를 업로드하면 AI가<br>위험 표현을 탐지하고 안전한 대안을 제시합니다.</p>
+
+  <div class="step-cards">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>문구 입력</h3>
+        <p>텍스트, URL, 파일을 붙여넣기만 하면 됩니다</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>AI 자동 검역</h3>
+        <p>0.8초 안에 위험 표현 탐지 + 위험 등급 분류</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>안전 문구 수령</h3>
+        <p>규정에 맞는 대안 문구 3개를 즉시 제공</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  06. 사용 방법
+══════════════════════════════════════ -->
+<section id="how-to">
+  <div class="tag">📱 사용 방법</div>
+  <h2>3단계로 끝나는<br>광고 안전 검증</h2>
+  <div class="divider"></div>
+
+  <div style="display:flex; flex-direction:column; gap:0; margin-top:20px;">
+    <div style="display:flex; gap:16px; padding:16px 0; border-bottom:1px solid var(--gray-100);">
+      <div style="font-size:32px; font-weight:900; color:var(--blue); min-width:40px;">01</div>
+      <div>
+        <h3>문구 업로드</h3>
+        <p style="margin-top:4px;">SNS 게시물, 상세페이지, 광고 카피 텍스트를 붙여넣거나 URL을 입력합니다.</p>
+      </div>
+    </div>
+    <div style="display:flex; gap:16px; padding:16px 0; border-bottom:1px solid var(--gray-100);">
+      <div style="font-size:32px; font-weight:900; color:var(--blue); min-width:40px;">02</div>
+      <div>
+        <h3>AI 분석 리포트 수령</h3>
+        <p style="margin-top:4px;">위험 표현 10개 항목별로 분류된 리포트와 위험도 점수를 받습니다.</p>
+      </div>
+    </div>
+    <div style="display:flex; gap:16px; padding:16px 0;">
+      <div style="font-size:32px; font-weight:900; color:var(--blue); min-width:40px;">03</div>
+      <div>
+        <h3>안전 문구로 교체</h3>
+        <p style="margin-top:4px;">AI가 제안한 대안 문구 중 선택하거나, 직접 수정 후 바로 게시합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  07. Before / After
+══════════════════════════════════════ -->
+<section id="before-after">
+  <div class="tag">🔄 Before / After</div>
+  <h2>실제 변환 사례</h2>
+  <div class="divider"></div>
+
+  <div class="flow-card">
+    <div class="flow-before">
+      <div class="flow-label">❌ BEFORE — 위험 문구</div>
+      <p class="flow-text">"이 제품은 임상적으로 검증된 성분으로 다이어트 효과가 100% 보장됩니다. 의사도 추천하는 최고의 선택!"</p>
+    </div>
+    <div class="flow-arrow">⬇ AI 검역</div>
+    <div class="flow-after">
+      <div class="flow-label">✅ AFTER — 안전 문구</div>
+      <p class="flow-text">"연구를 기반으로 개발된 성분을 사용한 건강 관리 제품입니다. 꾸준한 사용과 균형 잡힌 식습관으로 건강한 생활을 지원합니다."</p>
+    </div>
+  </div>
+
+  <div class="flow-card" style="margin-top:16px;">
+    <div class="flow-before">
+      <div class="flow-label">❌ BEFORE — 과장 광고</div>
+      <p class="flow-text">"단 7일 만에 10kg 감량! 부작용 전혀 없는 천연 성분으로 만든 기적의 다이어트 보조제"</p>
+    </div>
+    <div class="flow-arrow">⬇ AI 검역</div>
+    <div class="flow-after">
+      <div class="flow-label">✅ AFTER — 안전 문구</div>
+      <p class="flow-text">"천연 식물성 원료를 활용해 만든 건강기능식품으로, 균형 잡힌 식단과 함께 건강한 체중 관리를 돕습니다."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  08. 리포트 10개 항목
+══════════════════════════════════════ -->
+<section id="report" style="background:var(--gray-800); padding:40px 20px;">
+  <div class="tag" style="background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.9);">📊 분석 리포트</div>
+  <h2 style="color:#fff;">AI가 분석하는<br>10가지 위험 항목</h2>
+  <div class="divider" style="background:rgba(255,255,255,0.2);"></div>
+
+  <div class="report-grid">
+    <div class="report-chip">① 효능·효과 과장</div>
+    <div class="report-chip">② 비교 우위 표현</div>
+    <div class="report-chip">③ 최상급 표현</div>
+    <div class="report-chip">④ 보증·추천 문구</div>
+    <div class="report-chip">⑤ 의학적 효과 주장</div>
+    <div class="report-chip">⑥ 안전성 보장</div>
+    <div class="report-chip">⑦ 임상 과장</div>
+    <div class="report-chip">⑧ 수치·통계 오용</div>
+    <div class="report-chip">⑨ 허위 원산지</div>
+    <div class="report-chip">⑩ 법적 분쟁 소지</div>
+  </div>
+
+  <div style="margin-top:20px; padding:16px; background:rgba(255,255,255,0.07); border-radius:var(--radius-md);">
+    <p style="font-size:13px; color:rgba(255,255,255,0.7); line-height:1.65;">
+      각 항목별 <strong style="color:#fff;">위험 등급(🔴고·🟡중·🟢저)</strong>과<br>
+      해당 법령 조항, 개선 방향을 함께 제공합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  09. Threads 자동화 운영
+══════════════════════════════════════ -->
+<section id="threads">
+  <div class="tag">🧵 Threads 운영</div>
+  <h2>Threads 자동 업로드도<br>TRUSTA가 먼저 검역합니다</h2>
+  <div class="divider"></div>
+  <p>AI로 생성한 Threads 게시물은 규정을 모릅니다.<br>자동 업로드 전 TRUSTA가 게이트키퍼 역할을 합니다.</p>
+
+  <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
+    <div class="card" style="border-left:3px solid var(--blue);">
+      <div style="font-size:11px; font-weight:700; color:var(--gray-400); margin-bottom:6px;">AI 생성 초안</div>
+      <p style="font-size:14px; color:var(--gray-800);">"이 성분은 의학적으로 검증된 피부 재생 효과가 있습니다 🌿"</p>
+      <div style="margin-top:8px;"><span class="pill pill-red" style="font-size:11px;">위험 탐지</span></div>
+    </div>
+    <div style="text-align:center; color:var(--blue); font-size:22px; padding:4px 0;">↓ TRUSTA 검역</div>
+    <div class="card" style="border-left:3px solid var(--green);">
+      <div style="font-size:11px; font-weight:700; color:var(--gray-400); margin-bottom:6px;">검역 통과 문구</div>
+      <p style="font-size:14px; color:var(--gray-800);">"피부 연구를 바탕으로 개발된 성분이 피부 건강을 지원합니다 🌿"</p>
+      <div style="margin-top:8px;"><span class="pill pill-green" style="font-size:11px;">✓ 안전 승인</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--green);">
+      <div style="font-size:11px; font-weight:700; color:var(--gray-400); margin-bottom:6px;">자동 업로드</div>
+      <p style="font-size:14px; color:var(--gray-800);">"자연에서 얻은 원료로 만든 스킨케어, 매일 꾸준히 사용해보세요 ✨"</p>
+      <div style="margin-top:8px;"><span class="pill pill-green" style="font-size:11px;">✓ 안전 승인</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  10. 대행과의 차이
+══════════════════════════════════════ -->
+<section id="vs">
+  <div class="tag">⚖️ 비교</div>
+  <h2>심의 대행사 vs TRUSTA</h2>
+  <div class="divider"></div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>심의 대행사</th>
+        <th class="trusta-col">TRUSTA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>속도</td>
+        <td>2~5 영업일</td>
+        <td class="trusta-col">0.8초</td>
+      </tr>
+      <tr>
+        <td>비용</td>
+        <td>건당 10~30만원</td>
+        <td class="trusta-col">월 정액제</td>
+      </tr>
+      <tr>
+        <td>가용량</td>
+        <td>요청 건수 제한</td>
+        <td class="trusta-col">무제한</td>
+      </tr>
+      <tr>
+        <td>팀 사용</td>
+        <td>담당자 1명</td>
+        <td class="trusta-col">전 팀원</td>
+      </tr>
+      <tr>
+        <td>대안 제시</td>
+        <td>수정 의뢰 필요</td>
+        <td class="trusta-col">즉시 자동 생성</td>
+      </tr>
+      <tr>
+        <td>규정 업데이트</td>
+        <td>수동 반영</td>
+        <td class="trusta-col">AI 자동 학습</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════════
+  11. 필요한 브랜드 유형
+══════════════════════════════════════ -->
+<section id="who">
+  <div class="tag">🎯 이런 브랜드에게</div>
+  <h2>TRUSTA가 필요한<br>브랜드 유형</h2>
+  <div class="divider"></div>
+
+  <div class="type-grid">
+    <div class="type-card">
+      <div class="type-icon">💊</div>
+      <div class="type-text">건강기능식품·<br>보조제 브랜드</div>
+    </div>
+    <div class="type-card">
+      <div class="type-icon">🧴</div>
+      <div class="type-text">화장품·<br>스킨케어 브랜드</div>
+    </div>
+    <div class="type-card">
+      <div class="type-icon">🏥</div>
+      <div class="type-text">의료기기·<br>헬스케어 서비스</div>
+    </div>
+    <div class="type-card">
+      <div class="type-icon">🍱</div>
+      <div class="type-text">식품·<br>음료 브랜드</div>
+    </div>
+    <div class="type-card">
+      <div class="type-icon">🤖</div>
+      <div class="type-text">AI 마케팅<br>자동화 팀</div>
+    </div>
+    <div class="type-card">
+      <div class="type-icon">🌐</div>
+      <div class="type-text">해외 진출<br>준비 브랜드</div>
+    </div>
+    <div class="type-card">
+      <div class="type-icon">📱</div>
+      <div class="type-text">SNS 마케팅<br>에이전시</div>
+    </div>
+    <div class="type-card">
+      <div class="type-icon">🏪</div>
+      <div class="type-text">D2C·<br>이커머스 브랜드</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  12. 핵심 기능
+══════════════════════════════════════ -->
+<section id="features">
+  <div class="tag">⚡ 핵심 기능</div>
+  <h2>TRUSTA 6가지<br>핵심 기능</h2>
+  <div class="divider"></div>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3>실시간 위험 탐지</h3>
+      <p>0.8초 내 10개 카테고리 분석</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✍️</div>
+      <h3>대안 문구 자동생성</h3>
+      <p>안전한 대안 3개 즉시 제공</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>위험 등급 리포트</h3>
+      <p>고·중·저 등급 + 법령 조항</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <h3>다국가 규정 지원</h3>
+      <p>한국·미국·EU·일본 동시 검역</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>API 연동</h3>
+      <p>자동화 워크플로우에 바로 연결</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <h3>팀 협업 기능</h3>
+      <p>검역 이력 공유 + 승인 워크플로</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  보너스 B. 초기 파트너 혜택
+══════════════════════════════════════ -->
+<section id="partner" style="background:linear-gradient(160deg,#0A1A6E 0%,#1A4DFF 100%); padding:40px 20px;">
+  <div class="tag" style="background:rgba(255,255,255,0.15); color:#fff;">🤝 초기 파트너 혜택</div>
+  <h2 style="color:#fff;">와디즈 펀딩 참여자에게만<br>드리는 특별 혜택</h2>
+  <div class="divider" style="background:rgba(255,255,255,0.3);"></div>
+  <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
+    <div style="display:flex; align-items:center; gap:12px; padding:12px; background:rgba(255,255,255,0.1); border-radius:var(--radius-sm);">
+      <span style="font-size:20px;">🎁</span>
+      <p style="font-size:14px; color:#fff;">정식 출시 전 <strong>3개월 무료 사용</strong></p>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; padding:12px; background:rgba(255,255,255,0.1); border-radius:var(--radius-sm);">
+      <span style="font-size:20px;">💬</span>
+      <p style="font-size:14px; color:#fff;">전용 슬랙 채널 + 개발팀 직접 소통</p>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; padding:12px; background:rgba(255,255,255,0.1); border-radius:var(--radius-sm);">
+      <span style="font-size:20px;">🛠️</span>
+      <p style="font-size:14px; color:#fff;">피드백 기반 맞춤 기능 우선 개발</p>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; padding:12px; background:rgba(255,255,255,0.1); border-radius:var(--radius-sm);">
+      <span style="font-size:20px;">🏷️</span>
+      <p style="font-size:14px; color:#fff;">정식 출시 후 <strong>30% 평생 할인</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  13. 리워드
+══════════════════════════════════════ -->
+<section id="rewards">
+  <div class="tag">🎀 리워드</div>
+  <h2>펀딩 리워드</h2>
+  <div class="divider"></div>
+
+  <div class="reward-cards">
+    <div class="reward-card">
+      <div class="reward-num">01</div>
+      <div>
+        <div class="reward-title">얼리버드 스타터</div>
+        <div class="reward-desc">1인 계정 · 3개월 무료 이용</div>
+      </div>
+      <div class="reward-price">29,000원</div>
+    </div>
+    <div class="reward-card">
+      <div class="reward-num">02</div>
+      <div>
+        <div class="reward-title">팀 플랜 얼리버드</div>
+        <div class="reward-desc">최대 5인 · 3개월 무료</div>
+      </div>
+      <div class="reward-price">79,000원</div>
+    </div>
+    <div class="reward-card">
+      <div class="reward-num">03</div>
+      <div>
+        <div class="reward-title">추천 파트너 배지</div>
+        <div class="reward-desc">팀 플랜 + 공식 추천 파트너 등록</div>
+      </div>
+      <div class="reward-price">149,000원</div>
+    </div>
+    <div class="reward-card featured">
+      <div class="reward-num">04</div>
+      <div>
+        <div class="reward-title">비즈니스 플랜</div>
+        <div class="reward-desc">무제한 계정 · 6개월 무료 + API</div>
+      </div>
+      <div class="reward-price">290,000원</div>
+    </div>
+    <div class="reward-card">
+      <div class="reward-num">05</div>
+      <div>
+        <div class="reward-title">엔터프라이즈 파운더</div>
+        <div class="reward-desc">맞춤 온보딩 + 1년 무료 + 개발 참여</div>
+      </div>
+      <div class="reward-price">590,000원</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  14. 주의사항 + FAQ + CTA
+══════════════════════════════════════ -->
+<section id="notice">
+  <div class="tag">📌 유의사항</div>
+  <h2>펀딩 전 확인사항</h2>
+
+  <div class="warning-card">
+    <div class="w-title">⚠️ 반드시 확인해주세요</div>
+    <ul>
+      <li>TRUSTA는 법적 보증이 아닌 AI 기반 보조 도구입니다</li>
+      <li>최종 법적 판단은 전문 법무팀과 함께 진행하세요</li>
+      <li>정식 서비스는 2024년 Q3 출시 예정입니다</li>
+      <li>리워드 배송은 펀딩 완료 후 4~6주 소요됩니다</li>
+      <li>환불은 와디즈 정책에 따릅니다</li>
+    </ul>
+  </div>
+
+  <div class="tag" style="margin-top:32px;">❓ 자주 묻는 질문</div>
+  <div class="faq-list">
+    <div class="faq-item open">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Q. AI가 법적 책임도 보장해주나요?
+        <span>▾</span>
+      </div>
+      <div class="faq-a">아니요. TRUSTA는 위험 가능성을 사전에 발견하는 보조 도구입니다. 법적 최종 판단은 전문가와 함께해야 합니다. 다만 위험 문구를 사전에 걸러냄으로써 분쟁 가능성을 현저히 낮출 수 있습니다.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Q. 어떤 언어와 국가를 지원하나요?
+        <span>▾</span>
+      </div>
+      <div class="faq-a">현재 한국어와 영어를 지원하며, 한국(식약처·공정위), 미국(FTC), EU(EASA), 일본(소비자청) 기준을 탑재하고 있습니다. 향후 중국어·일본어와 추가 국가 기준을 지속 업데이트합니다.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Q. API 연동은 어떻게 하나요?
+        <span>▾</span>
+      </div>
+      <div class="faq-a">REST API 형태로 제공됩니다. Make(Integromat), Zapier, n8n 등 자동화 도구와 손쉽게 연동되며, 직접 코드로 연동하는 경우 상세 문서를 제공해드립니다. 엔터프라이즈 파운더 리워드의 경우 온보딩 세션을 통해 직접 설정을 도와드립니다.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Q. Threads 자동화 연동은 언제부터 되나요?
+        <span>▾</span>
+      </div>
+      <div class="faq-a">정식 출시(2024 Q3)와 함께 Threads API 연동을 지원할 예정입니다. 현재 베타 테스터를 모집 중이며, 얼리버드 참여자에게 우선 베타 접근 권한을 드립니다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  CTA
+══════════════════════════════════════ -->
+<section id="cta">
+  <div style="font-size:48px; margin-bottom:12px;">🛡️</div>
+  <h2>브랜드를 지금 지키세요</h2>
+  <p>문구 하나로 브랜드 전체가 흔들리기 전에,<br>TRUSTA가 먼저 막아드립니다.</p>
+  <a href="#" class="btn-white">🚀 와디즈에서 펀딩 참여하기</a>
+  <a href="#" class="sub-link">무료 체험 먼저 해보기 →</a>
+</section>
+
+<script>
+  // FAQ toggle already handled inline via onclick
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
