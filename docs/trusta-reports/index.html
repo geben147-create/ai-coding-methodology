@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRUSTA Report Design Gallery</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter','Noto Sans KR',sans-serif; background:#0F0F12; color:#fff; min-height:100vh; }
+
+  .hero {
+    padding: 72px 48px 48px;
+    text-align: center;
+    background: linear-gradient(135deg, #13131A 0%, #1A1A26 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(123,97,255,0.12); border: 1px solid rgba(123,97,255,0.3);
+    border-radius: 20px; padding: 6px 16px;
+    font-size: 11px; font-weight: 600; color: #A78BFA;
+    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;
+  }
+
+  .hero-title { font-size: 44px; font-weight: 800; letter-spacing: -2px; margin-bottom: 16px; line-height: 1.1; }
+  .hero-title span { color: #7B61FF; }
+  .hero-desc { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.8; max-width: 580px; margin: 0 auto; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+    padding: 52px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: #17171C;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(123,97,255,0.4);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(123,97,255,0.15);
+  }
+
+  .card-thumb {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-thumb .glow {
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.4;
+  }
+
+  .card-thumb .num {
+    position: absolute;
+    top: 16px; left: 20px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .c1 .card-thumb { background: linear-gradient(135deg, #0B1B3A 0%, #1A2B5A 100%); }
+  .c1 .card-thumb .glow { background: #C9A84C; }
+  .c2 .card-thumb { background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); }
+  .c2 .card-thumb .glow { background: #4F46E5; }
+  .c3 .card-thumb { background: linear-gradient(135deg, #1A1A18 0%, #2A2A28 100%); }
+  .c3 .card-thumb .glow { background: #888; }
+  .c4 .card-thumb { background: linear-gradient(135deg, #2A1A12 0%, #3A2A18 100%); }
+  .c4 .card-thumb .glow { background: #E8543A; }
+  .c5 .card-thumb { background: linear-gradient(135deg, #0A0A12 0%, #16162A 100%); }
+  .c5 .card-thumb .glow { background: #7B61FF; }
+
+  .card-body { padding: 24px; flex: 1; }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 3px 10px; border-radius: 4px;
+    letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .c1 .card-tag { background: rgba(201,168,76,0.15); color: #C9A84C; }
+  .c2 .card-tag { background: rgba(79,70,229,0.15); color: #818CF8; }
+  .c3 .card-tag { background: rgba(180,180,180,0.12); color: #AAA; }
+  .c4 .card-tag { background: rgba(232,84,58,0.12); color: #E8543A; }
+  .c5 .card-tag { background: rgba(123,97,255,0.15); color: #A78BFA; }
+
+  .card-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #F0F0F8; }
+  .card-desc { font-size: 12.5px; color: rgba(255,255,255,0.4); line-height: 1.7; }
+
+  .card-footer {
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-pages { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+  .card-btn {
+    font-size: 11px; font-weight: 600;
+    color: #7B61FF;
+    display: flex; align-items: center; gap: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-bar {
+    text-align: center;
+    padding: 32px 48px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">● TRUSTA Report Design Gallery</div>
+  <div class="hero-title">화장품 리스크 진단 리포트<br><span>디자인 스타일 5종</span></div>
+  <div class="hero-desc">
+    LUMIX BEAUTY · 아쿠아 비타민C 세럼 분석 결과를<br>
+    5가지 디자인 스타일로 제작한 TRUSTA 리포트 갤러리입니다.
+  </div>
+</div>
+
+<div class="grid">
+
+  <a class="card c1" href="trusta_report_style1_consulting.html" target="_blank">
+    <div class="card-thumb">
+      <div class="glow"></div>
+      <div class="num">Style 01</div>
+      💼
+    </div>
+    <div class="card-body">
+      <span class="card-tag">Premium Consulting</span>
+      <div class="card-title">프리미엄 컨설팅형</div>
+      <div class="card-desc">네이비·골드 컬러. McKinsey·Deloitte 스타일. 엄격한 법무 테이블과 Executive Summary 구조로 고급감 있는 B2B 신뢰감 전달.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-pages">6 pages</span>
+      <span class="card-btn">열기 →</span>
+    </div>
+  </a>
+
+  <a class="card c2" href="trusta_report_style2_saas.html" target="_blank">
+    <div class="card-thumb">
+      <div class="glow"></div>
+      <div class="num">Style 02</div>
+      📊
+    </div>
+    <div class="card-body">
+      <span class="card-tag">SaaS Dashboard</span>
+      <div class="card-title">SaaS 대시보드형</div>
+      <div class="card-desc">보라·청록 라이트모드. 카드 기반 UI, 진행바, 색상 배지. 현대적이고 직관적인 분석 리포트 스타일. SaaS 제품 고객용.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-pages">6 pages</span>
+      <span class="card-btn">열기 →</span>
+    </div>
+  </a>
+
+  <a class="card c3" href="trusta_report_style3_compliance.html" target="_blank">
+    <div class="card-thumb">
+      <div class="glow"></div>
+      <div class="num">Style 03</div>
+      📋
+    </div>
+    <div class="card-body">
+      <span class="card-tag">Regulatory Compliance</span>
+      <div class="card-title">규제 컴플라이언스형</div>
+      <div class="card-desc">정부 문서 형식. 법령 조항 번호 체계, 단색 타이포그래피. 법무·식약처 제출용 공식 문서 스타일. 가장 공신력 있는 형태.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-pages">6 pages</span>
+      <span class="card-btn">열기 →</span>
+    </div>
+  </a>
+
+  <a class="card c4" href="trusta_report_style4_brand.html" target="_blank">
+    <div class="card-thumb">
+      <div class="glow"></div>
+      <div class="num">Style 04</div>
+      🎨
+    </div>
+    <div class="card-body">
+      <span class="card-tag">Brand Diagnosis</span>
+      <div class="card-title">브랜드 진단형</div>
+      <div class="card-desc">코랄·샌드 웜톤. 브랜드 친화적 스토리텔링 구조. 마케터와 브랜드 담당자를 위한 직관적이고 따뜻한 리포트 형식.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-pages">6 pages</span>
+      <span class="card-btn">열기 →</span>
+    </div>
+  </a>
+
+  <a class="card c5" href="trusta_report_style5_investment.html" target="_blank">
+    <div class="card-thumb">
+      <div class="glow"></div>
+      <div class="num">Style 05</div>
+      🚀
+    </div>
+    <div class="card-body">
+      <span class="card-tag">Investment / Proposal</span>
+      <div class="card-title">투자·제안서형</div>
+      <div class="card-desc">다크모드, 퍼플 글로우, JetBrains Mono. 투자 덱 감성. VC·투자자·C-level 경영진 대상 임팩트 있는 데이터 제안서 스타일.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-pages">6 pages</span>
+      <span class="card-btn">열기 →</span>
+    </div>
+  </a>
+
+</div>
+
+<div class="footer-bar">
+  TRUSTA AI Compliance Engine v2.4 · 2026.05.19 · TRS-2026-0412<br>
+  본 갤러리는 LUMIX BEAUTY CO. 의뢰 리포트 디자인 시안입니다.
+</div>
+
+</body>
+</html>
