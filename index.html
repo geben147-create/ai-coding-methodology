@@ -1,546 +1,1025 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 코딩 전담 통합 방법론 — 인포그래픽</title>
-<style>
-  :root {
-    --bg: #0d1117; --surface: #161b22; --border: #30363d;
-    --text: #e6edf3; --muted: #8b949e; --accent: #58a6ff;
-    --green: #3fb950; --yellow: #d29922; --red: #f85149;
-    --purple: #bc8cff; --orange: #f0883e;
-    --mode-a: #3fb950; --mode-b: #58a6ff; --mode-c: #f85149;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Segoe UI', -apple-system, sans-serif;
-    background: var(--bg); color: var(--text);
-    line-height: 1.6; padding: 2rem; max-width: 1200px; margin: 0 auto;
-  }
-  h1 { font-size: 2rem; margin-bottom: 0.5rem; text-align: center; }
-  h2 { font-size: 1.4rem; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
-  h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; color: var(--accent); }
-  .subtitle { text-align: center; color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; }
-
-  /* Cards */
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
-  .card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
-  .badge {
-    display: inline-block; padding: 0.2rem 0.7rem; border-radius: 20px;
-    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .badge-a { background: var(--mode-a); color: #000; }
-  .badge-b { background: var(--mode-b); color: #000; }
-  .badge-c { background: var(--mode-c); color: #fff; }
-  .badge-s { background: var(--purple); color: #000; }
-
-  /* Tables */
-  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
-  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; }
-  th { background: var(--surface); color: var(--accent); font-weight: 600; }
-  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-
-  /* Flowchart */
-  .flow { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; justify-content: center; margin: 1rem 0; }
-  .flow-step {
-    background: var(--surface); border: 2px solid var(--border);
-    border-radius: 10px; padding: 0.6rem 1rem; font-size: 0.85rem;
-    text-align: center; min-width: 120px; position: relative;
-  }
-  .flow-step.highlight-a { border-color: var(--mode-a); }
-  .flow-step.highlight-b { border-color: var(--mode-b); }
-  .flow-step.highlight-c { border-color: var(--mode-c); }
-  .flow-step.highlight-all { border-color: var(--purple); }
-  .flow-arrow { font-size: 1.5rem; color: var(--muted); }
-  .flow-arrow-down { display: block; text-align: center; font-size: 1.5rem; color: var(--muted); margin: 0.3rem 0; }
-
-  /* Vertical flow */
-  .vflow { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 1rem 0; }
-  .vflow .flow-step { width: 80%; max-width: 500px; }
-  .vflow .flow-arrow-down { margin: 0; }
-
-  /* Grid */
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  @media (max-width: 700px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
-
-  /* Tags */
-  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin: 0.1rem; }
-  .tag-green { background: rgba(63,185,80,0.2); color: var(--green); }
-  .tag-blue { background: rgba(88,166,255,0.2); color: var(--accent); }
-  .tag-red { background: rgba(248,81,73,0.2); color: var(--red); }
-  .tag-yellow { background: rgba(210,153,34,0.2); color: var(--yellow); }
-  .tag-purple { background: rgba(188,140,255,0.2); color: var(--purple); }
-
-  /* Code */
-  code { background: rgba(255,255,255,0.08); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; font-family: 'Cascadia Code', 'Fira Code', monospace; }
-  pre { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; overflow-x: auto; margin: 0.8rem 0; font-size: 0.82rem; }
-  pre code { background: none; padding: 0; }
-
-  /* Comparison */
-  .vs-table th:nth-child(2) { background: rgba(63,185,80,0.15); }
-  .vs-table th:nth-child(3) { background: rgba(88,166,255,0.15); }
-  .vs-table th:nth-child(4) { background: rgba(248,81,73,0.15); }
-
-  /* Tier visual */
-  .tier { display: flex; align-items: stretch; gap: 1rem; margin: 1rem 0; }
-  .tier-label {
-    writing-mode: vertical-rl; text-orientation: mixed;
-    padding: 0.5rem; border-radius: 8px 0 0 8px;
-    font-weight: 700; font-size: 0.9rem; display: flex;
-    align-items: center; justify-content: center; min-width: 40px;
-  }
-  .tier-s .tier-label { background: var(--purple); color: #000; }
-  .tier-a .tier-label { background: var(--accent); color: #000; }
-  .tier-b .tier-label { background: var(--muted); color: #000; }
-  .tier-content { flex: 1; }
-
-  /* Warn box */
-  .warn { background: rgba(248,81,73,0.1); border-left: 4px solid var(--red); padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.9rem; }
-  .info { background: rgba(88,166,255,0.1); border-left: 4px solid var(--accent); padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.9rem; }
-
-  /* Progress bar */
-  .progress-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 0.5rem 0; }
-  .progress-bar div { height: 100%; }
-
-  /* Separator */
-  hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
-
-  /* Anchor link */
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-
-  /* TOC */
-  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
-  .toc ol { padding-left: 1.5rem; }
-  .toc li { margin: 0.3rem 0; font-size: 0.9rem; }
-</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TRUSTA — 해외 진출 전, 화장품 문구부터 검역하세요</title>
+<link rel="stylesheet" href="design-system/colors_and_type.css" />
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+<main class="page">
 
-<h1>AI 코딩 전담 통합 방법론</h1>
-<p class="subtitle">
-  Claude Opus 4.6 + GPT-5.2-pro + Gemini 3 Pro 교차검증 | 2026-04-11<br>
-  GitHub Spec Kit + BMAD v6 + Karpathy + HumanLayer + Anthropic
-</p>
-
-<!-- TOC -->
-<div class="toc">
-  <strong>목차</strong>
-  <ol>
-    <li><a href="#compare">모드 비교표</a></li>
-    <li><a href="#files">파일 역할 맵 (Tier S/A/B)</a></li>
-    <li><a href="#mode-a">Mode A: 소형 프로젝트</a></li>
-    <li><a href="#mode-b">Mode B: 중대형 (Spec Kit)</a></li>
-    <li><a href="#mode-c">Mode C: 대형 (하이브리드)</a></li>
-    <li><a href="#loop">공통 Feature 루프</a></li>
-    <li><a href="#ps-funcs">PowerShell 함수</a></li>
-    <li><a href="#links">핵심 GitHub 링크</a></li>
-    <li><a href="#risks">리스크 & 경고</a></li>
-  </ol>
+<!-- ============================================================ -->
+<!-- TOPBAR                                                       -->
+<!-- ============================================================ -->
+<div class="topbar" data-screen-label="00 Topbar">
+  <span class="accent">WADIZ</span>
+  <span class="dot">●</span>
+  K-뷰티 해외 콘텐츠 RegTech SaaS
+  <span class="dot">●</span>
+  <span class="accent">D-12</span>&nbsp;오픈예정 알림 신청
 </div>
 
-<!-- ==================== COMPARE ==================== -->
-<h2 id="compare">1. 모드 비교표</h2>
-<div class="card">
-  <table class="vs-table">
+<!-- ============================================================ -->
+<!-- 01. HERO                                                     -->
+<!-- ============================================================ -->
+<section id="hero" class="center" data-screen-label="01 Hero">
+  <div class="pill lg">TRUSTA</div>
+
+  <p class="sub-line" style="margin-top: 28px;">
+    번역은 끝났는데,<br />
+    이 문구 해외에서 괜찮을까요?
+  </p>
+
+  <h1 class="h-hero" style="margin-top: 20px;">
+    해외 진출 전,<br />
+    <span class="hl-thick">화장품 문구</span>부터<br />
+    검역하세요.
+  </h1>
+
+  <p class="text-2" style="margin-top: 24px; font-size: 15px; line-height: 1.7;">
+    K-뷰티 브랜드가 해외로 나가기 전,<br />
+    제품 설명과 SNS 문구의 <b>고위험 표현을 1차 점검</b>하고<br />
+    현지 소비자가 자연스럽게 읽는 언어로 바꿉니다.
+  </p>
+
+  <!-- Hero dashboard preview -->
+  <div class="dash" style="margin-top: 40px; text-align: left;">
+    <div class="dash-bar">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="url">trusta.ai / risk-check</span>
+    </div>
+    <div class="dash-body">
+      <div class="text-3 small bold" style="letter-spacing: 0.06em;">원문 검토</div>
+      <p class="dash-source" style="margin-top: 10px;">
+        하루의 피로를 덜어주는,<br />
+        <span class="risk-hi">피부 재생</span> 효과로 환절기에도
+        <span class="risk-mid">트러블 완화</span>까지 챙기는<br />
+        <span class="risk-hi">항염 케어</span> 세럼.
+      </p>
+      <div class="score-card" style="margin-top: 20px;">
+        <div class="label">RISK SCORE</div>
+        <div class="value">82<span class="total"> / 100</span></div>
+        <div class="bar"><i></i></div>
+        <div class="meta">고위험 표현 2개 · 보통 위험 1개 발견</div>
+      </div>
+    </div>
+  </div>
+
+  <a href="/auth/signup.html" class="cta" style="margin-top: 36px; text-decoration: none;">
+    내 브랜드 문구 10개 먼저 점검하기 <span class="arrow">→</span>
+  </a>
+  <p class="text-3 tiny" style="margin-top: 12px;">샘플 진단 리포트 무료 제공 · 신청 즉시 시작</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- 02. PROBLEM: risky phrase chips                              -->
+<!-- ============================================================ -->
+<section id="problem" class="bg-paper2" data-screen-label="02 Problem">
+  <div class="center">
+    <div class="pill sm" style="background: var(--warn-red); color: white;">ISSUE 01</div>
+    <h2 class="h-section" style="margin-top: 20px;">
+      이런 표현,<br />
+      익숙하지 않나요?
+    </h2>
+    <p class="text-3" style="margin-top: 14px; font-size: 15px;">
+      한국 상세페이지에서는 자주 쓰는 표현이지만,<br />
+      해외 광고·자사몰·SNS에서는 다르게 읽힐 수 있습니다.
+    </p>
+  </div>
+
+  <div class="flex-wrap" style="margin-top: 32px; justify-content: center;">
+    <span class="chip-risk high"><span class="dot"></span>피부 재생</span>
+    <span class="chip-risk high"><span class="dot"></span>트러블 완화</span>
+    <span class="chip-risk high"><span class="dot"></span>항염 케어</span>
+    <span class="chip-risk med"><span class="dot"></span>디톡스</span>
+    <span class="chip-risk high"><span class="dot"></span>미백 효과</span>
+    <span class="chip-risk high"><span class="dot"></span>자연 치유</span>
+    <span class="chip-risk high"><span class="dot"></span>피부 장벽 회복</span>
+    <span class="chip-risk med"><span class="dot"></span>손상 피부 개선</span>
+    <span class="chip-risk high"><span class="dot"></span>노화 방지</span>
+    <span class="chip-risk high"><span class="dot"></span>즉각 리프팅</span>
+  </div>
+
+  <div class="card" style="margin-top: 40px;">
+    <span class="plus">+</span>
+    <h3 class="h-card">대부분의 작은 브랜드는</h3>
+    <p class="text-2" style="margin-top: 10px; line-height: 1.6;">
+      콘텐츠를 만들기 <b>전</b>에는<br />
+      어떤 표현이 위험한지 알기 어렵습니다.<br />
+      <span class="callout-blue">발행 후 수정은 늘 늦습니다.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 03. TRANSLATION PROBLEM                                      -->
+<!-- ============================================================ -->
+<section id="translation-problem" data-screen-label="03 Translation problem">
+  <div class="center">
+    <div class="pill sm">ISSUE 02</div>
+    <h2 class="h-section" style="margin-top: 20px;">
+      번역은 했습니다.<br />
+      그런데 <span class="hl">현지인이 읽으면</span><br />
+      어색합니다.
+    </h2>
+  </div>
+
+  <div class="stack-16" style="margin-top: 36px;">
+    <div class="card compact">
+      <span class="plus">+</span>
+      <div class="text-3 small bold" style="letter-spacing: 0.06em;">KOREAN</div>
+      <p class="h-card" style="margin-top: 6px;">"피부를 되살리는 크림"</p>
+    </div>
+    <div class="card compact">
+      <span class="plus">+</span>
+      <div class="text-3 small bold" style="letter-spacing: 0.06em;">EN · 그대로 번역</div>
+      <p class="h-card" style="margin-top: 6px;">"A cream that revives your skin."</p>
+      <p class="callout-blue" style="margin-top: 8px;">→ 의약품 claim처럼 읽힐 수 있음</p>
+    </div>
+    <div class="card compact" style="border-color: var(--ink); box-shadow: 0 6px 0 var(--ink);">
+      <span class="plus">+</span>
+      <div class="text-3 small bold" style="letter-spacing: 0.06em; color: var(--yellow-edge);">TRUSTA</div>
+      <p class="h-card" style="margin-top: 6px;">"A comforting moisturizer for days<br />when your skin feels dry and tired."</p>
+      <p class="text-3 small" style="margin-top: 8px;">→ 매력은 살리고, 표현 리스크는 낮춤</p>
+    </div>
+  </div>
+
+  <p class="text-2" style="margin-top: 36px; font-size: 15px; line-height: 1.7; text-align: center;">
+    해외 콘텐츠는 <b>단어를 바꾸는 일이 아닙니다.</b><br />
+    규정상 조심해야 할 표현을 확인하고,<br />
+    플랫폼에서 민감한 표현을 줄이고,<br />
+    현지 소비자가 실제로 읽는 말투로 다시 만드는 과정입니다.
+  </p>
+</section>
+
+<!-- ============================================================ -->
+<!-- 04. TARGET CUSTOMERS                                         -->
+<!-- ============================================================ -->
+<section id="target" class="bg-paper2" data-screen-label="04 Target">
+  <div class="center">
+    <div class="pill sm">FOR</div>
+    <h2 class="h-section" style="margin-top: 20px;">
+      이런 브랜드라면<br />
+      <span class="hl">먼저 점검하세요.</span>
+    </h2>
+  </div>
+
+  <ul class="check-list" style="margin-top: 36px;">
+    <li><span class="box">✓</span>해외 판매를 준비하는 한국 화장품 브랜드</li>
+    <li><span class="box">✓</span>영어·일본어·중국어 상세페이지가 필요한 브랜드</li>
+    <li><span class="box">✓</span>Threads, Instagram, TikTok, 쇼피, 큐텐, 아마존, 자사몰을 준비하는 브랜드</li>
+    <li><span class="box">✓</span>내부에 해외 규정·글로벌 마케팅 담당자가 없는 <b>1~10인 규모</b> 브랜드</li>
+    <li><span class="box">✓</span>마케팅 대행을 맡겼지만 문구 리스크까지는 불안한 브랜드</li>
+    <li><span class="box">✓</span>번역은 했지만 현지인이 읽기에 어색한 브랜드</li>
+    <li><span class="box">✓</span>제품 설명·상세페이지·SNS 카피가 따로 노는 브랜드</li>
+    <li><span class="box">✓</span>브랜드 톤앤매너를 유지하면서 해외 콘텐츠를 만들고 싶은 브랜드</li>
+  </ul>
+
+  <a href="/auth/signup.html" class="cta ghost" style="margin-top: 36px; text-decoration: none;">
+    우리 브랜드도 해당되는지 확인하기 <span class="arrow" style="color: var(--yellow-edge);">→</span>
+  </a>
+</section>
+
+<!-- ============================================================ -->
+<!-- 05. SOLUTION INTRO                                           -->
+<!-- ============================================================ -->
+<section id="solution-intro" class="bg-ink center" data-screen-label="05 Solution intro">
+  <div class="pill yellow">SOLUTION</div>
+  <h2 class="h-section invert" style="margin-top: 24px;">
+    단순 번역이 아닙니다.<br />
+    단순 SNS 대행도<br />
+    <span style="color: var(--yellow);">아닙니다.</span>
+  </h2>
+
+  <p style="color: var(--ink-4); margin-top: 28px; font-size: 15px; line-height: 1.8;">
+    TRUSTA는 문구를 예쁘게 바꾸는 서비스가 아닙니다.<br />
+    그 전에 먼저 묻습니다.
+  </p>
+
+  <div class="stack-12" style="margin-top: 28px; text-align: left;">
+    <p style="color: var(--paper); font-size: 15px; font-weight: 500;">— 이 표현이 해외에서 너무 강하게 읽히지는 않는가?</p>
+    <p style="color: var(--paper); font-size: 15px; font-weight: 500;">— 의약품적 표현처럼 보일 가능성은 없는가?</p>
+    <p style="color: var(--paper); font-size: 15px; font-weight: 500;">— 플랫폼 광고 기준에서 민감한 표현은 없는가?</p>
+    <p style="color: var(--paper); font-size: 15px; font-weight: 500;">— 현지 소비자가 보기엔 번역체처럼 느껴지지 않는가?</p>
+    <p style="color: var(--paper); font-size: 15px; font-weight: 500;">— 우리 브랜드의 말투와 맞는가?</p>
+  </div>
+
+  <p style="color: var(--yellow); margin-top: 32px; font-weight: 700; font-size: 16px; line-height: 1.7;">
+    표현 리스크 1차 점검<br />
+    → 현지어 콘텐츠 변환<br />
+    → Threads 중심 콘텐츠 운영 지원<br />
+    하나의 흐름으로 연결합니다.
+  </p>
+</section>
+
+<!-- ============================================================ -->
+<!-- 06. 7-STEP PROCESS                                           -->
+<!-- ============================================================ -->
+<section id="process" data-screen-label="06 Process">
+  <div class="center">
+    <div class="pill">HOW IT WORKS</div>
+    <h2 class="h-section" style="margin-top: 20px;">
+      TRUSTA 작동 방식<br />
+      <span style="font-size: 0.7em; color: var(--ink-3); font-weight: 700;">7 STEPS</span>
+    </h2>
+  </div>
+
+  <div class="step-flow" style="margin-top: 36px;">
+    <div class="step"><span class="num">01</span><span class="label">문구 입력</span></div>
+    <div class="step"><span class="num">02</span><span class="label">고위험 표현 탐지</span></div>
+    <div class="step"><span class="num">03</span><span class="label">위험도 · 수정 우선순위</span></div>
+    <div class="step"><span class="num">04</span><span class="label">위험 사유 설명</span></div>
+    <div class="step"><span class="num">05</span><span class="label">안전한 대체문구 제안</span></div>
+    <div class="step"><span class="num">06</span><span class="label">현지어 콘텐츠 변환</span></div>
+    <div class="step" style="background: var(--ink); border-color: var(--ink);">
+      <span class="num">07</span>
+      <span class="label" style="color: var(--paper);">Threads 게시 후보 추천</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 07. DASHBOARD MOCKUP                                         -->
+<!-- ============================================================ -->
+<section id="dashboard" class="bg-paper2" data-screen-label="07 Dashboard">
+  <div class="center">
+    <div class="pill sm">STEP 02–05</div>
+    <h2 class="h-section" style="margin-top: 20px;">
+      위험한 문장을<br />
+      한눈에 확인합니다.
+    </h2>
+  </div>
+
+  <div class="dash" style="margin-top: 36px;">
+    <div class="dash-bar">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="url">trusta.ai / report · 2026.05</span>
+    </div>
+    <div class="dash-body stack-24">
+
+      <!-- Source -->
+      <div>
+        <div class="dash-section-title">01. 원문 문구</div>
+        <p class="dash-source" style="margin-top: 10px;">
+          민감해진 피부에 <span class="risk-hi">피부 장벽을 회복</span>시켜주는
+          <span class="risk-mid">진정</span> 크림.
+          하루의 <span class="risk-hi">트러블</span>을 잠재우고
+          <span class="risk-hi">피부 재생</span>까지 돕는 데일리 케어.
+        </p>
+      </div>
+
+      <!-- Score -->
+      <div class="grid-2">
+        <div class="score-card">
+          <div class="label">RISK SCORE</div>
+          <div class="value">82<span class="total">/100</span></div>
+          <div class="bar"><i></i></div>
+        </div>
+        <div class="score-card" style="background: var(--paper); color: var(--ink); border: 2.5px solid var(--ink); padding: 20px;">
+          <div class="label" style="color: var(--ink-3);">발견된 위험</div>
+          <div style="display: flex; gap: 10px; margin-top: 10px; align-items: baseline;">
+            <span style="font-family: var(--font-display); font-weight: 900; font-size: 36px; color: var(--warn-red); line-height: 1;">3</span>
+            <span style="font-size: 13px; color: var(--ink-3); font-weight: 700;">고위험</span>
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 4px; align-items: baseline;">
+            <span style="font-family: var(--font-display); font-weight: 900; font-size: 24px; color: #C99A00; line-height: 1;">1</span>
+            <span style="font-size: 13px; color: var(--ink-3); font-weight: 700;">보통</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reasons -->
+      <div>
+        <div class="dash-section-title">02. 위험 사유</div>
+        <div class="stack-12" style="margin-top: 12px;">
+          <div class="reason-card">
+            <div class="top">
+              <span>"피부 장벽을 회복"</span>
+              <span class="tag">HIGH</span>
+            </div>
+            <p>피부 구조·기능 변화처럼 읽힐 여지가 있어 의약품 claim으로 해석될 수 있습니다.</p>
+          </div>
+          <div class="reason-card">
+            <div class="top">
+              <span>"피부 재생"</span>
+              <span class="tag">HIGH</span>
+            </div>
+            <p>치료·재생 효과 표현은 해외 라벨링 기준에서 주의가 필요합니다.</p>
+          </div>
+          <div class="reason-card med">
+            <div class="top">
+              <span>"진정"</span>
+              <span class="tag">MID</span>
+            </div>
+            <p>플랫폼 광고 기준에 따라 표현 완화가 권장될 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alt copy -->
+      <div>
+        <div class="dash-section-title">03. 안전한 대체문구</div>
+        <div class="stack-12" style="margin-top: 12px;">
+          <div class="alt-card">
+            <div class="from">민감해진 피부에 피부 장벽을 회복시켜주는 진정 크림</div>
+            <div class="to">건조함으로 예민해진 피부에 편안한 보습감을 더하는 데일리 크림</div>
+          </div>
+          <div class="alt-card">
+            <div class="from">하루의 트러블을 잠재우고 피부 재생까지 돕는 케어</div>
+            <div class="to">하루의 번들거림이 신경 쓰이는 날, 산뜻하게 정돈해주는 데일리 케어</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 08. LOCALIZATION                                             -->
+<!-- ============================================================ -->
+<section id="localization" data-screen-label="08 Localization">
+  <div class="center">
+    <div class="pill sm">STEP 06</div>
+    <h2 class="h-section" style="margin-top: 20px;">
+      번역체가 아니라,<br />
+      <span class="hl">현지인이 읽는</span><br />
+      문장으로.
+    </h2>
+    <p class="text-3" style="margin-top: 14px; font-size: 14px;">
+      영어 · 일본어 · 중국어 + Threads 후보까지<br />한 흐름에서 만듭니다.
+    </p>
+  </div>
+
+  <div class="stack-16" style="margin-top: 36px;">
+
+    <div class="lang-card">
+      <div class="hd">
+        <span class="flag">🇰🇷 KOREAN · 원문</span>
+        <span class="meta">SOURCE</span>
+      </div>
+      <div class="bd">피부 장벽을 회복시켜주는 진정 크림</div>
+    </div>
+
+    <div class="lang-card">
+      <div class="hd">
+        <span class="flag">🇺🇸 ENGLISH</span>
+        <span class="meta">EN-US · GLOBAL</span>
+      </div>
+      <div class="bd">A comforting moisturizer for days when your skin feels dry and sensitive.</div>
+    </div>
+
+    <div class="lang-card">
+      <div class="hd">
+        <span class="flag">🇯🇵 日本語</span>
+        <span class="meta">JA-JP</span>
+      </div>
+      <div class="bd">乾燥でゆらぎやすい肌に、やさしい保湿感を届けるクリーム。</div>
+    </div>
+
+    <div class="lang-card">
+      <div class="hd">
+        <span class="flag">🇨🇳 中文 (简体)</span>
+        <span class="meta">ZH-CN</span>
+      </div>
+      <div class="bd">适合干燥、敏感状态下使用的舒适保湿面霜。</div>
+    </div>
+
+    <div class="lang-card threads">
+      <div class="hd">
+        <span class="flag">@ THREADS · 게시 후보</span>
+        <span class="meta">COMMUNITY TONE</span>
+      </div>
+      <div class="bd">Your skin doesn't always need a dramatic promise.<br />Sometimes it just needs a calm, comfortable layer of moisture.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 09. THREADS OPERATION                                        -->
+<!-- ============================================================ -->
+<section id="threads" class="bg-paper2" data-screen-label="09 Threads">
+  <div class="center">
+    <div class="pill sm">STEP 07</div>
+    <h2 class="h-section" style="margin-top: 20px;">
+      해외 SNS는<br />
+      크게 벌리기보다,<br />
+      <span class="hl">반응 보기 쉬운<br />문장부터.</span>
+    </h2>
+    <p class="text-2" style="margin-top: 18px; font-size: 15px; line-height: 1.7;">
+      TRUSTA는 Threads 중심으로<br />
+      <b>게시 후보 · 콘텐츠 캘린더 · 성과 리포트</b>를 함께 제안합니다.
+    </p>
+  </div>
+
+  <!-- Calendar mock -->
+  <div style="margin-top: 32px;">
+    <div class="text-3 small bold" style="letter-spacing: 0.06em; margin-bottom: 8px;">콘텐츠 캘린더 · 2026.05</div>
+    <div class="calendar">
+      <div class="cal-h">SUN</div><div class="cal-h">MON</div><div class="cal-h">TUE</div>
+      <div class="cal-h">WED</div><div class="cal-h">THU</div><div class="cal-h">FRI</div>
+      <div class="cal-h">SAT</div>
+
+      <div class="cal-day muted"><div class="d">27</div></div>
+      <div class="cal-day muted"><div class="d">28</div></div>
+      <div class="cal-day muted"><div class="d">29</div></div>
+      <div class="cal-day muted"><div class="d">30</div></div>
+      <div class="cal-day"><div class="d">1</div></div>
+      <div class="cal-day"><div class="d">2</div><div class="ev">EN 후킹</div></div>
+      <div class="cal-day"><div class="d">3</div></div>
+
+      <div class="cal-day"><div class="d">4</div><div class="ev alt">JP 톤</div></div>
+      <div class="cal-day"><div class="d">5</div></div>
+      <div class="cal-day"><div class="d">6</div><div class="ev">EN 후킹</div></div>
+      <div class="cal-day"><div class="d">7</div></div>
+      <div class="cal-day"><div class="d">8</div><div class="ev warn">점검</div></div>
+      <div class="cal-day"><div class="d">9</div><div class="ev">EN 사용기</div></div>
+      <div class="cal-day"><div class="d">10</div></div>
+
+      <div class="cal-day"><div class="d">11</div><div class="ev alt">JP 톤</div></div>
+      <div class="cal-day"><div class="d">12</div></div>
+      <div class="cal-day"><div class="d">13</div><div class="ev">EN 질문형</div></div>
+      <div class="cal-day"><div class="d">14</div></div>
+      <div class="cal-day"><div class="d">15</div><div class="ev">EN 후킹</div></div>
+      <div class="cal-day"><div class="d">16</div></div>
+      <div class="cal-day"><div class="d">17</div><div class="ev alt">리포트</div></div>
+    </div>
+  </div>
+
+  <!-- Threads post candidates -->
+  <div class="grid-2" style="margin-top: 28px;">
+    <div class="card tight" style="padding: 14px 16px;">
+      <div class="text-3 tiny bold">후킹</div>
+      <p style="font-size: 14px; font-weight: 600; color: var(--ink); margin-top: 4px; line-height: 1.45;">
+        K-beauty isn't only about glow — sometimes it's just calm.
+      </p>
+    </div>
+    <div class="card tight" style="padding: 14px 16px;">
+      <div class="text-3 tiny bold">질문형</div>
+      <p style="font-size: 14px; font-weight: 600; color: var(--ink); margin-top: 4px; line-height: 1.45;">
+        What does your skin actually need on a tired day?
+      </p>
+    </div>
+    <div class="card tight" style="padding: 14px 16px;">
+      <div class="text-3 tiny bold">사용 상황</div>
+      <p style="font-size: 14px; font-weight: 600; color: var(--ink); margin-top: 4px; line-height: 1.45;">
+        Layer one. Sleep eight. Wake up calmer.
+      </p>
+    </div>
+    <div class="card tight" style="padding: 14px 16px;">
+      <div class="text-3 tiny bold">브랜드 스토리</div>
+      <p style="font-size: 14px; font-weight: 600; color: var(--ink); margin-top: 4px; line-height: 1.45;">
+        We didn't want to promise too much. So we didn't.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 10. TRUST / OFFICIAL SOURCES                                 -->
+<!-- ============================================================ -->
+<section id="trust" data-screen-label="10 Trust">
+  <div class="center">
+    <div class="pill sm">REFERENCE</div>
+    <h2 class="h-section" style="margin-top: 20px;">
+      공식 기준을<br />
+      <span class="hl">함께 봅니다.</span>
+    </h2>
+    <p class="text-3" style="margin-top: 14px; font-size: 14px; line-height: 1.7;">
+      TRUSTA는 단정하지 않습니다.<br />
+      공식 자료를 참고해 <b>발행 전 내부 점검 기준</b>을 제공합니다.
+    </p>
+  </div>
+
+  <div class="stack-16" style="margin-top: 36px;">
+    <div class="source-card">
+      <span class="badge">FDA</span>
+      <p class="quote">"화장품으로 판매되는 제품이라도 질병 치료·신체 구조 변화처럼 보이는 표현을 사용하면 의약품 claim으로 해석될 수 있습니다."</p>
+      <p class="src">U.S. Food and Drug Administration · Cosmetics Labeling Claims</p>
+    </div>
+    <div class="source-card">
+      <span class="badge">EU</span>
+      <p class="quote">"Directive (EU) 2024/825를 통해 그린워싱·지속가능성 표현에 대한 소비자 보호 규칙을 강화합니다. (2026.09 시행)"</p>
+      <p class="src">European Commission · Sustainable Consumption</p>
+    </div>
+    <div class="source-card">
+      <span class="badge">META</span>
+      <p class="quote">"건강·웰니스 및 화장품 시술 관련 광고 표현은 부정적 자기 인식 유발, 외모 압박 등과 연결될 수 있어 주의가 필요합니다."</p>
+      <p class="src">Meta Transparency Center · Ad Standards</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 32px; background: var(--paper-2); border-color: var(--ink); box-shadow: 0 6px 0 var(--ink);">
+    <span class="plus">+</span>
+    <h3 class="h-card">규정 감각 · 플랫폼 감각 · 현지 언어 감각</h3>
+    <p class="text-2" style="margin-top: 10px; line-height: 1.65;">
+      이 세 가지가 함께 필요합니다.<br />
+      TRUSTA는 이 기준을 바탕으로<br />
+      브랜드가 발행 <b>전</b> 내부에서 점검할 수 있는 흐름을 제공합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 11. COMPARISON TABLE                                         -->
+<!-- ============================================================ -->
+<section id="compare" class="bg-paper2" data-screen-label="11 Compare">
+  <div class="center">
+    <div class="pill sm">COMPARE</div>
+    <h2 class="h-section" style="margin-top: 20px;">
+      번역회사도,<br />
+      SNS 대행사도,<br />
+      <span class="hl">고가 컨설팅도 아닙니다.</span>
+    </h2>
+  </div>
+
+  <table class="cmp" style="margin-top: 32px;">
     <thead>
       <tr>
         <th>항목</th>
-        <th><span class="badge badge-a">A</span> 소형</th>
-        <th><span class="badge badge-b">B</span> 중대형</th>
-        <th><span class="badge badge-c">C</span> 대형</th>
+        <th>일반 번역</th>
+        <th>SNS 대행</th>
+        <th>규제 컨설팅</th>
+        <th class="trusta">TRUSTA</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td>규모</td><td>스크립트, 도구, 실험</td><td>기능 5+, 상용</td><td>6개월+, 엔터프라이즈</td></tr>
-      <tr><td>기간</td><td>30분 ~ 1일</td><td>며칠 ~ 몇주</td><td>몇달 ~ 1년+</td></tr>
-      <tr><td>Spec Kit</td><td>-</td><td>O</td><td>O</td></tr>
-      <tr><td>BMAD</td><td>-</td><td>-</td><td>O</td></tr>
-      <tr><td>내 템플릿</td><td>7개</td><td>10개</td><td>전체 + BMAD</td></tr>
-      <tr><td>워크플로우</td><td>자유 프롬프트</td><td>speckit 스킬 체인</td><td>speckit + BMAD</td></tr>
-      <tr><td>복잡도</td>
-        <td><div class="progress-bar"><div style="width:25%;background:var(--mode-a)"></div><div style="width:75%;background:var(--border)"></div></div></td>
-        <td><div class="progress-bar"><div style="width:55%;background:var(--mode-b)"></div><div style="width:45%;background:var(--border)"></div></div></td>
-        <td><div class="progress-bar"><div style="width:90%;background:var(--mode-c)"></div><div style="width:10%;background:var(--border)"></div></div></td>
-      </tr>
-      <tr><td>교차검증</td><td>선택</td><td>권장</td><td>필수</td></tr>
+      <tr><td class="row-label">문구 번역</td><td><span class="y">●</span></td><td>일부</td><td>제한적</td><td class="trusta">●</td></tr>
+      <tr><td class="row-label">고위험 표현 탐지</td><td><span class="n">—</span></td><td><span class="n">—</span></td><td><span class="y">●</span></td><td class="trusta">●</td></tr>
+      <tr><td class="row-label">위험 사유 설명</td><td><span class="n">—</span></td><td><span class="n">—</span></td><td><span class="y">●</span></td><td class="trusta">●</td></tr>
+      <tr><td class="row-label">대체문구 제안</td><td>일부</td><td><span class="y">●</span></td><td>제한적</td><td class="trusta">●</td></tr>
+      <tr><td class="row-label">현지 커뮤니티형 톤</td><td>제한적</td><td>일부</td><td><span class="n">—</span></td><td class="trusta">●</td></tr>
+      <tr><td class="row-label">Threads 게시 후보</td><td><span class="n">—</span></td><td><span class="y">●</span></td><td><span class="n">—</span></td><td class="trusta">●</td></tr>
+      <tr><td class="row-label">콘텐츠 캘린더</td><td><span class="n">—</span></td><td><span class="y">●</span></td><td><span class="n">—</span></td><td class="trusta">●</td></tr>
+      <tr><td class="row-label">작은 브랜드용 반복 점검</td><td>어려움</td><td>일부</td><td>비용↑</td><td class="trusta">●</td></tr>
     </tbody>
   </table>
-</div>
 
-<!-- Mode selector -->
-<div class="card">
-  <h3>모드 선택 가이드</h3>
-  <table>
-    <tr><th>상황</th><th>모드</th><th>이유</th></tr>
-    <tr><td>혼자 쓸 스크립트, 도구</td><td><span class="badge badge-a">A</span></td><td>Spec Kit 오버헤드 불필요</td></tr>
-    <tr><td>토이/실험/해커톤</td><td><span class="badge badge-a">A</span></td><td>빠른 시작</td></tr>
-    <tr><td>기능 5-15개, 1-3개월</td><td><span class="badge badge-b">B</span></td><td>Spec Kit이 구조 잡음</td></tr>
-    <tr><td>상용 제품, NFR 중요</td><td><span class="badge badge-b">B</span></td><td>constitution으로 NFR 강제</td></tr>
-    <tr><td>6개월+, 멀티 서브시스템</td><td><span class="badge badge-c">C</span></td><td>BMAD 에이전트 역할 분리</td></tr>
-    <tr><td>엔터프라이즈급</td><td><span class="badge badge-c">C</span></td><td>12+ 에이전트 필요</td></tr>
-  </table>
-</div>
+  <p class="text-2 small" style="margin-top: 24px; text-align: center; line-height: 1.7;">
+    TRUSTA는<br />
+    <b>K-뷰티 브랜드가 해외 콘텐츠를 만들기 전</b><br />
+    문구를 먼저 점검하고, 현지어 콘텐츠로 바꾸고,<br />
+    Threads 중심 운영 흐름까지 이어가도록 돕는 <b>운영형 SaaS</b>입니다.
+  </p>
+</section>
 
-<!-- ==================== FILES ==================== -->
-<h2 id="files">2. 파일 역할 맵</h2>
-
-<div class="card tier tier-s">
-  <div class="tier-label">TIER S</div>
-  <div class="tier-content">
-    <h3>Day 1 필수 (모든 모드)</h3>
-    <table>
-      <tr><th>파일</th><th>역할</th><th>크기</th><th>출처</th></tr>
-      <tr><td><code>AGENTS.md</code></td><td>모든 AI 도구 baseline. 명령어/스타일/금지/검증법</td><td>100-200줄</td><td><a href="https://agents.md">AAIF 표준</a></td></tr>
-      <tr><td><code>CLAUDE.md</code></td><td>Claude 전용 규칙 (AGENTS.md import)</td><td>50-100줄</td><td><a href="https://www.humanlayer.dev/blog/writing-a-good-claude-md">HumanLayer</a></td></tr>
-      <tr><td><code>LEARN.md</code></td><td>오답노트. 같은 실수 반복 방지</td><td>무제한</td><td>HumanLayer/Karpathy</td></tr>
-      <tr><td><code>scratchpad.md</code></td><td>활성 작업 transient (.gitignore)</td><td>100줄 이하</td><td>Gemini 인사이트</td></tr>
-      <tr><td><code>specs/_template/feature.md</code></td><td>WHAT+HOW+TASKS 합본</td><td>200-500줄</td><td><a href="https://github.com/github/spec-kit">Spec Kit</a></td></tr>
-    </table>
-  </div>
-</div>
-
-<div class="card tier tier-a">
-  <div class="tier-label">TIER A</div>
-  <div class="tier-content">
-    <h3>병목 보이면 추가 (Week 2-4)</h3>
-    <table>
-      <tr><th>파일</th><th>트리거</th></tr>
-      <tr><td><code>constitution.md</code></td><td>NFR(보안/접근성/성능) 손실 발생 시</td></tr>
-      <tr><td><code>ARCHITECTURE.md</code></td><td>모듈 5개+ / AI가 패턴 모방 실패</td></tr>
-      <tr><td><code>DECISIONS.md</code></td><td>"왜 X 선택?" 같은 질문 반복</td></tr>
-    </table>
-  </div>
-</div>
-
-<div class="card tier tier-b" style="opacity:0.7">
-  <div class="tier-label">TIER B</div>
-  <div class="tier-content">
-    <h3>대형/공개 프로젝트만</h3>
-    <table>
-      <tr><th>파일</th><th>시점</th></tr>
-      <tr><td><code>README.md</code></td><td>공개 시</td></tr>
-      <tr><td><code>ROADMAP.md</code></td><td>분기별 마일스톤</td></tr>
-      <tr><td><code>SECURITY.md</code></td><td>보안 정책</td></tr>
-      <tr><td><code>RELEASE.md</code></td><td>버저닝/마이그레이션</td></tr>
-    </table>
-  </div>
-</div>
-
-<!-- ==================== MODE A ==================== -->
-<h2 id="mode-a">3. <span class="badge badge-a">Mode A</span> 소형 프로젝트</h2>
-
-<div class="card">
-  <div class="card-header">
-    <span class="badge badge-a">A</span>
-    <span>스크립트, 도구, 실험, 해커톤 | 세팅 1분</span>
+<!-- ============================================================ -->
+<!-- 12. REWARD PACKAGES                                          -->
+<!-- ============================================================ -->
+<section class="no-pad-x" data-screen-label="12 Packages">
+  <div class="center" style="padding: var(--s-80) var(--s-32) var(--s-40);">
+    <div class="pill lg">리워드 구성</div>
+    <h2 class="h-section" style="margin-top: 24px;">
+      와디즈<br />
+      <span class="hl">특별 구성</span>
+    </h2>
+    <p class="text-3" style="margin-top: 14px; font-size: 14px;">
+      펀딩 참여 브랜드에게는 TRUSTA 베타 리포트를 가장 먼저 제공합니다.
+    </p>
   </div>
 
-  <h3>Step-by-Step</h3>
-  <div class="vflow">
-    <div class="flow-step highlight-a"><strong>1</strong> 프로젝트 생성<br><code>ai-new my-tool</code></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-a"><strong>2</strong> AGENTS.md 편집<br><small>프로젝트 명령어/스택 채우기</small></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-a"><strong>3</strong> 브랜치 생성<br><code>ai-start feature-name</code></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-a"><strong>4</strong> Claude Code 시작<br><code>claude</code></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-a"><strong>5</strong> 자유 프롬프트<br><small>"로그인 만들어줘" (TDD)</small></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-a"><strong>6</strong> 검증<br><small>lint + typecheck + test</small></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-a"><strong>7</strong> 마감<br><code>ai-done "feat: xxx" -Merge</code></div>
-  </div>
+  <!-- PACKAGE 01 -->
+  <div class="pkg-block">
+    <div class="center">
+      <div class="pill">PACKAGE 01</div>
+      <p class="sub-line" style="margin-top: 24px;">처음 TRUSTA를 경험하는 브랜드를 위한</p>
+      <h2 class="h-section" style="margin-top: 12px;">
+        샘플 문구<br />
+        진단 리포트
+      </h2>
+    </div>
 
-  <h3>명령어 (수동 실행 시)</h3>
-  <pre><code>cd C:\Users\llorr\dev\repos
-mkdir my-tool && cd my-tool && git init
-
-$kit = 'C:\Users\llorr\dev\kit-templates'
-Copy-Item "$kit\AGENTS.md","$kit\CLAUDE.md","$kit\LEARN.md",`
-          "$kit\scratchpad.md","$kit\ARCHITECTURE.md",`
-          "$kit\DECISIONS.md","$kit\README.md" .
-
-git add -A && git commit -m "chore: initial setup" && git branch -M main
-gh repo create my-tool --private --source=. --push</code></pre>
-</div>
-
-<!-- ==================== MODE B ==================== -->
-<h2 id="mode-b">4. <span class="badge badge-b">Mode B</span> 중대형 (Spec Kit)</h2>
-
-<div class="card">
-  <div class="card-header">
-    <span class="badge badge-b">B</span>
-    <span>기능 5+, 상용 제품 | 세팅 5분 | <strong>추천 기본 모드</strong></span>
-  </div>
-
-  <h3>Step-by-Step</h3>
-  <div class="vflow">
-    <div class="flow-step highlight-b"><strong>1</strong> Spec Kit 초기화<br><code>ai-new my-saas -Mode B</code></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-b"><strong>2</strong> 내 템플릿 덮기<br><small>AGENTS/CLAUDE/LEARN/ARCH/DECISIONS/ROADMAP</small></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-b"><strong>3</strong> 헌법 작성 (1회)<br><code>/speckit.constitution</code></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step" style="border-color:var(--yellow);width:80%;max-width:500px">
-      <strong>기능 루프 (반복)</strong>
-      <div style="display:flex;flex-wrap:wrap;gap:0.3rem;justify-content:center;margin-top:0.5rem">
-        <span class="tag tag-blue">/speckit.specify</span>
-        <span class="tag tag-blue">/speckit.clarify</span>
-        <span class="tag tag-blue">/speckit.plan</span>
-        <span class="tag tag-blue">/speckit.tasks</span>
-        <span class="tag tag-blue">/speckit.analyze</span>
-        <span class="tag tag-blue">/speckit.implement</span>
+    <div class="stack-24" style="margin-top: 40px;">
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #FFFCE2 0%, #fff 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 36px; color: var(--ink);">10</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">브랜드 문구 10개 1차 점검</h3>
+          <p class="text-2 small" style="margin-top: 6px;">제품 설명·SNS 카피·상세페이지에서<br />가져온 10개 문장을 종합 진단</p>
+        </div>
+      </div>
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #FFD9DB 0%, #fff 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 36px; color: var(--warn-red);">82</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">위험도 스코어 + 사유 설명</h3>
+          <p class="text-2 small" style="margin-top: 6px;">High / Mid / Low + 왜 위험한지<br />브랜드 회의용 언어로 정리</p>
+        </div>
+      </div>
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #E8F4FF 0%, #fff 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 24px; color: var(--info-blue);">EN/JP<br />/CN</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">대체문구 + 현지어 변환 예시</h3>
+          <p class="text-2 small" style="margin-top: 6px;">영어·일본어·중국어 후보 문장 제공</p>
+        </div>
       </div>
     </div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-b"><strong>5</strong> PAL 교차검증<br>
-      <span class="tag tag-purple">consensus</span>
-      <span class="tag tag-purple">codereview</span>
-      <span class="tag tag-purple">secaudit</span>
+
+    <div class="price-slab">
+      <div class="strike-wrap"><span>정가&nbsp;390,000원</span></div>
+      <div class="now">
+        <span class="label">슈퍼 얼리버드</span>
+        <span class="num">99,000</span>
+        <span class="won">원</span>
+      </div>
+      <ul class="foot dash-list" style="list-style: none;">
+        <li>샘플 진단 리포트 PDF 1부 제공</li>
+        <li>점검 문구는 신청 후 1주 내 회신</li>
+        <li>리워드 발송 일정: 펀딩 종료 후 2주 이내</li>
+      </ul>
     </div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-b"><strong>6</strong> 마감<br><code>ai-done "feat: xxx" -Merge</code></div>
   </div>
 
-  <h3>명령어 (수동 실행 시)</h3>
-  <pre><code>cd C:\Users\llorr\dev\repos
-$env:PYTHONUTF8 = '1'
-uvx --from git+https://github.com/github/spec-kit.git `
-    specify init my-saas --ai claude
-cd my-saas
-
-$kit = 'C:\Users\llorr\dev\kit-templates'
-Copy-Item "$kit\AGENTS.md","$kit\CLAUDE.md","$kit\LEARN.md",`
-          "$kit\scratchpad.md","$kit\ARCHITECTURE.md",`
-          "$kit\DECISIONS.md","$kit\README.md",`
-          "$kit\ROADMAP.md","$kit\RELEASE.md" . -Force
-
-git add -A && git commit -m "chore: spec-kit + kit setup" && git branch -M main
-gh repo create my-saas --private --source=. --push</code></pre>
-
-  <h3>Claude Code 안에서 (헌법 1회)</h3>
-  <pre><code>/speckit.constitution
-  - 기술 스택: Next.js 15 + FastAPI + PostgreSQL
-  - 보안: OWASP Top 10
-  - 성능: p95 &lt; 200ms
-  - 테스트: TDD 필수, 커버리지 80%+</code></pre>
-
-  <h3>기능마다 반복</h3>
-  <pre><code>/speckit.specify 사용자 로그인 (이메일+패스워드, JWT 24h, rate limit 5/min)
-/speckit.clarify
-/speckit.plan
-/speckit.tasks
-/speckit.analyze
-/speckit.implement</code></pre>
-</div>
-
-<!-- ==================== MODE C ==================== -->
-<h2 id="mode-c">5. <span class="badge badge-c">Mode C</span> 대형 (하이브리드)</h2>
-
-<div class="card">
-  <div class="card-header">
-    <span class="badge badge-c">C</span>
-    <span>6개월+, 멀티 모듈, 역할 분리 | 세팅 10분</span>
-  </div>
-
-  <h3>Step-by-Step</h3>
-  <div class="vflow">
-    <div class="flow-step highlight-c"><strong>1</strong> Spec Kit + BMAD<br><code>ai-new huge-app -Mode C</code></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-c"><strong>2</strong> 내 템플릿 전체 + BMAD 설치<br><code>npx bmad-method install</code></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-c"><strong>3</strong> BMAD 안내<br><code>bmad-help</code></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-c"><strong>4</strong> 헌법 작성<br><code>/speckit.constitution</code></div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step" style="border-color:var(--orange);width:80%;max-width:500px">
-      <strong>BMAD 에이전트 자동 역할</strong>
-      <table style="margin:0.5rem 0;font-size:0.8rem;">
-        <tr><td>PM Agent</td><td>PRD 생성</td></tr>
-        <tr><td>Architect Agent</td><td>아키텍처 설계</td></tr>
-        <tr><td>Dev Agent</td><td>구현</td></tr>
-        <tr><td>QA Agent</td><td>테스트</td></tr>
-        <tr><td>Security Agent</td><td>보안 감사</td></tr>
-      </table>
+  <!-- PACKAGE 02 -->
+  <div class="pkg-block bg-paper2" style="background: var(--paper-2);">
+    <div class="center">
+      <div class="pill">PACKAGE 02</div>
+      <p class="sub-line" style="margin-top: 24px;">자사몰·쇼피·큐텐·아마존을 준비하는 브랜드를 위한</p>
+      <h2 class="h-section" style="margin-top: 12px;">
+        상세페이지 문구<br />
+        점검 패키지
+      </h2>
     </div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-c"><strong>6</strong> speckit 체인 + PAL 3중 검증</div>
-    <div class="flow-arrow-down">&#8595;</div>
-    <div class="flow-step highlight-c"><strong>7</strong> 마감 + LEARN + DECISIONS</div>
+
+    <div class="stack-24" style="margin-top: 40px;">
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #FFF59A 0%, #fff 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 32px; color: var(--ink);">50</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">상세페이지 문장 50개 점검</h3>
+          <p class="text-2 small" style="margin-top: 6px;">제품 설명·기능 표현·헤드라인 등<br />상세페이지 핵심 문장 전체 진단</p>
+        </div>
+      </div>
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #FFE4D1 0%, #fff 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 20px; color: var(--ink);">우선<br />순위</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">문장별 수정 우선순위</h3>
+          <p class="text-2 small" style="margin-top: 6px;">"강하게 수정 / 완화 / 유지" 3단계로<br />어디부터 손볼지 정리</p>
+        </div>
+      </div>
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #DAF4E3 0%, #fff 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 24px; color: #1F8A4F;">EN<br />JP<br />CN</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">3개 언어 현지화 후보</h3>
+          <p class="text-2 small" style="margin-top: 6px;">바이어·자사몰용 번역 후보 + 톤 가이드</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-slab">
+      <div class="strike-wrap"><span>정가&nbsp;1,200,000원</span></div>
+      <div class="now">
+        <span class="label">슈퍼 얼리버드</span>
+        <span class="num">490,000</span>
+        <span class="won">원</span>
+      </div>
+      <ul class="foot dash-list" style="list-style: none;">
+        <li>상세페이지 단일 제품 1개 기준</li>
+        <li>제품 2개 이상은 별도 옵션으로 추가</li>
+        <li>리포트 PDF + 수정안 워크북 제공</li>
+      </ul>
+    </div>
   </div>
 
-  <h3>명령어 (수동 실행 시)</h3>
-  <pre><code>cd C:\Users\llorr\dev\repos
-uvx --from git+https://github.com/github/spec-kit.git `
-    specify init huge-app --ai claude
-cd huge-app
+  <!-- PACKAGE 03 -->
+  <div class="pkg-block">
+    <div class="center">
+      <div class="pill">PACKAGE 03</div>
+      <p class="sub-line" style="margin-top: 24px;">해외 SNS를 새로 시작하려는 브랜드를 위한</p>
+      <h2 class="h-section" style="margin-top: 12px;">
+        SNS 콘텐츠<br />
+        점검 패키지
+      </h2>
+    </div>
 
-$kit = 'C:\Users\llorr\dev\kit-templates'
-Copy-Item "$kit\AGENTS.md","$kit\CLAUDE.md","$kit\LEARN.md",`
-          "$kit\scratchpad.md","$kit\ARCHITECTURE.md",`
-          "$kit\DECISIONS.md","$kit\README.md","$kit\RELEASE.md",`
-          "$kit\ROADMAP.md","$kit\SECURITY.md" . -Force
+    <div class="stack-24" style="margin-top: 40px;">
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #111 0%, #333 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 32px; color: var(--yellow);">@</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">Threads · IG · TikTok 게시 후보</h3>
+          <p class="text-2 small" style="margin-top: 6px;">후킹·질문형·사용기·브랜드 스토리<br />4유형 × 채널별 후보 제공</p>
+        </div>
+      </div>
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #FFF0B8 0%, #fff 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 22px; color: var(--ink);">발행<br />전 점검</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">게시 전 문구 점검</h3>
+          <p class="text-2 small" style="margin-top: 6px;">플랫폼 광고 기준 기반<br />민감 표현 사전 필터링</p>
+        </div>
+      </div>
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #E8F4FF 0%, #fff 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 28px; color: var(--info-blue);">톤</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">브랜드 톤앤매너 가이드</h3>
+          <p class="text-2 small" style="margin-top: 6px;">현지 커뮤니티형 말투를 유지하는<br />브랜드 결 가이드 문서</p>
+        </div>
+      </div>
+    </div>
 
-npx bmad-method install
-
-git add -A && git commit -m "chore: hybrid setup" && git branch -M main</code></pre>
-
-  <div class="info">
-    <strong>병렬 작업 (독립적일 때만):</strong> tmux 창 1 = 메인 feature, 창 2 = 테스트, 창 3 = 문서, 창 4 = PAL secaudit
+    <div class="price-slab">
+      <div class="strike-wrap"><span>정가&nbsp;1,800,000원</span></div>
+      <div class="now">
+        <span class="label">슈퍼 얼리버드</span>
+        <span class="num">790,000</span>
+        <span class="won">원</span>
+      </div>
+      <ul class="foot dash-list" style="list-style: none;">
+        <li>월간 SNS 콘텐츠 30건 기준</li>
+        <li>채널 추가 시 옵션 선택</li>
+        <li>리포트 + 게시 후보 워크북 제공</li>
+      </ul>
+    </div>
   </div>
-  <div class="warn">
-    <strong>금지:</strong> 같은 feature를 프론트/백 분리해서 병렬 -> 머지 지옥
+
+  <!-- PACKAGE 04 -->
+  <div class="pkg-block" style="background: var(--paper-2);">
+    <div class="center">
+      <div class="pill yellow" style="background: var(--yellow); color: var(--ink);">⚑ PACKAGE 04 · BEST</div>
+      <p class="sub-line" style="margin-top: 24px;">내부 인력이 부족하지만 꾸준히 해외 콘텐츠를 운영하고 싶은 브랜드를 위한</p>
+      <h2 class="h-section" style="margin-top: 12px;">
+        TRUSTA<br />
+        <span class="hl">운영형 패키지</span>
+      </h2>
+    </div>
+
+    <div class="stack-24" style="margin-top: 40px;">
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #FFE600 0%, #FFF59A 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 22px; color: var(--ink);">월간<br />운영</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">월간 콘텐츠 캘린더 제안</h3>
+          <p class="text-2 small" style="margin-top: 6px;">이번 주 · 다음 주 · 테스트 콘텐츠까지<br />운영 흐름 설계</p>
+        </div>
+      </div>
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #111 0%, #444 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 26px; color: var(--yellow);">10×</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">게시 후보 매월 10건 이상</h3>
+          <p class="text-2 small" style="margin-top: 6px;">Threads 중심 + IG 보조<br />브랜드 결에 맞춘 게시 후보</p>
+        </div>
+      </div>
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #DAF4E3 0%, #fff 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 22px; color: #1F8A4F;">REPORT</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">성과 리포트 + 다음 개선안</h3>
+          <p class="text-2 small" style="margin-top: 6px;">반응 데이터 기반으로<br />다음 콘텐츠 방향 제안</p>
+        </div>
+      </div>
+      <div class="card row">
+        <span class="plus">+</span>
+        <div class="visual" style="background: linear-gradient(180deg, #FFD9DB 0%, #fff 100%);">
+          <span style="font-family: var(--font-display); font-weight: 900; font-size: 22px; color: var(--warn-red);">무제한<br />점검</span>
+        </div>
+        <div class="body">
+          <h3 class="h-card">발행 전 문구 점검 무제한</h3>
+          <p class="text-2 small" style="margin-top: 6px;">계약 기간 내 콘텐츠는<br />언제든 사전 점검</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-slab">
+      <div class="strike-wrap"><span>정가&nbsp;4,500,000원 / 3개월</span></div>
+      <div class="now">
+        <span class="label">슈퍼 얼리버드</span>
+        <span class="num">1,990,000</span>
+        <span class="won">원</span>
+      </div>
+      <ul class="foot dash-list" style="list-style: none;">
+        <li>3개월 운영형 기준</li>
+        <li>제품군 확장 시 별도 협의</li>
+        <li>월간 리포트 + 분기 리뷰 미팅 포함</li>
+      </ul>
+    </div>
   </div>
-</div>
+</section>
 
-<!-- ==================== LOOP ==================== -->
-<h2 id="loop">6. 공통 Feature 작업 루프</h2>
-
-<div class="card">
-  <div class="flow">
-    <div class="flow-step highlight-all"><strong>1</strong><br>브랜치 생성<br><code>ai-start login</code></div>
-    <div class="flow-arrow">&#8594;</div>
-    <div class="flow-step highlight-all"><strong>2</strong><br>Claude 시작<br><code>claude</code></div>
-    <div class="flow-arrow">&#8594;</div>
-    <div class="flow-step highlight-all"><strong>3</strong><br>명세 -> 구현<br><small>(모드별 다름)</small></div>
-    <div class="flow-arrow">&#8594;</div>
-    <div class="flow-step highlight-all"><strong>4</strong><br>검증<br><small>lint+type+test</small></div>
-    <div class="flow-arrow">&#8594;</div>
-    <div class="flow-step highlight-all"><strong>5</strong><br>커밋<br><code>ai-done</code></div>
-    <div class="flow-arrow">&#8594;</div>
-    <div class="flow-step highlight-all"><strong>6</strong><br>회고<br><small>LEARN.md</small></div>
+<!-- ============================================================ -->
+<!-- 13. SAMPLE REPORT TABLE                                      -->
+<!-- ============================================================ -->
+<section id="sample-report" data-screen-label="13 Sample report">
+  <div class="center">
+    <div class="pill sm">SAMPLE</div>
+    <h2 class="h-section" style="margin-top: 20px;">
+      샘플 리포트<br />
+      <span class="hl">미리보기</span>
+    </h2>
+    <p class="text-3" style="margin-top: 14px; font-size: 14px;">
+      모든 리워드에 동일한 양식의 진단 리포트가 제공됩니다.
+    </p>
   </div>
 
-  <h3>Step 3: 모드별 차이</h3>
-  <table>
-    <tr><th>Mode</th><th>Claude Code 안에서</th></tr>
-    <tr><td><span class="badge badge-a">A</span></td><td>자유 프롬프트: "로그인 만들어줘"</td></tr>
-    <tr><td><span class="badge badge-b">B</span></td><td><code>/speckit.specify</code> -> <code>/speckit.implement</code> 체인</td></tr>
-    <tr><td><span class="badge badge-c">C</span></td><td><code>bmad-help</code> -> speckit 체인 + BMAD 에이전트</td></tr>
-  </table>
-
-  <h3>검증 명령어 (프로젝트에 맞게)</h3>
-  <pre><code># JavaScript/TypeScript
-npm run lint && npm run typecheck && npm test
-
-# Python
-ruff check . && mypy . && pytest -xvs
-
-# PAL 교차검증 (Mode B/C)
-pal:codereview 최신 변경사항
-pal:secaudit 인증 로직
-pal:precommit 커밋 전 최종</code></pre>
-</div>
-
-<!-- ==================== PS FUNCS ==================== -->
-<h2 id="ps-funcs">7. PowerShell 함수 요약</h2>
-
-<div class="card">
-  <table>
+  <table class="cmp" style="margin-top: 32px; font-size: 13px;">
     <thead>
-      <tr><th>명령어</th><th>기능</th><th>예시</th></tr>
+      <tr>
+        <th style="text-align: left; padding-left: 16px;">원문</th>
+        <th style="width: 72px;">위험도</th>
+        <th class="trusta" style="text-align: left; padding-left: 16px;">TRUSTA 대체문구</th>
+      </tr>
     </thead>
     <tbody>
-      <tr><td><code>ai-new &lt;이름&gt;</code></td><td>Mode A 프로젝트 생성</td><td><code>ai-new my-tool</code></td></tr>
-      <tr><td><code>ai-new &lt;이름&gt; -Mode B</code></td><td>Mode B (Spec Kit)</td><td><code>ai-new my-saas -Mode B</code></td></tr>
-      <tr><td><code>ai-new &lt;이름&gt; -Mode C</code></td><td>Mode C (하이브리드)</td><td><code>ai-new huge-app -Mode C</code></td></tr>
-      <tr><td><code>ai-start &lt;기능명&gt;</code></td><td>feat 브랜치 생성</td><td><code>ai-start login</code></td></tr>
-      <tr><td><code>ai-done "msg"</code></td><td>커밋 + 푸시</td><td><code>ai-done "feat: login"</code></td></tr>
-      <tr><td><code>ai-done "msg" -Merge</code></td><td>커밋 + 푸시 + main 병합</td><td><code>ai-done "feat: login" -Merge</code></td></tr>
-      <tr><td><code>cd-repo &lt;이름&gt;</code></td><td>프로젝트 이동</td><td><code>cd-repo my-tool</code></td></tr>
-      <tr><td><code>cd-out</code></td><td>결과물 폴더 이동</td><td><code>cd-out</code></td></tr>
-      <tr><td><code>ai-check</code></td><td>키트 상태 점검</td><td><code>ai-check</code></td></tr>
+      <tr>
+        <td style="text-align: left;" class="row-label">피부 재생 크림</td>
+        <td><span class="chip-risk high" style="font-size: 11px; padding: 4px 10px;"><span class="dot"></span>HIGH</span></td>
+        <td class="trusta" style="text-align: left;">건조하고 지친 피부에 편안한 보습감을 주는 크림</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;" class="row-label">트러블 완화 세럼</td>
+        <td><span class="chip-risk high" style="font-size: 11px; padding: 4px 10px;"><span class="dot"></span>HIGH</span></td>
+        <td class="trusta" style="text-align: left;">피부 컨디션이 신경 쓰이는 날 산뜻하게 사용하기 좋은 세럼</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;" class="row-label">항염 케어 앰플</td>
+        <td><span class="chip-risk high" style="font-size: 11px; padding: 4px 10px;"><span class="dot"></span>HIGH</span></td>
+        <td class="trusta" style="text-align: left;">예민하게 느껴지는 피부를 편안하게 감싸는 앰플</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;" class="row-label">디톡스 클렌저</td>
+        <td><span class="chip-risk med" style="font-size: 11px; padding: 4px 10px;"><span class="dot"></span>MID</span></td>
+        <td class="trusta" style="text-align: left;">하루 동안 쌓인 노폐물을 산뜻하게 씻어내는 클렌저</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;" class="row-label">자연 치유 밤</td>
+        <td><span class="chip-risk high" style="font-size: 11px; padding: 4px 10px;"><span class="dot"></span>HIGH</span></td>
+        <td class="trusta" style="text-align: left;">자연 유래 성분의 부드러운 보습감을 전하는 밤</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;" class="row-label">미백 효과</td>
+        <td><span class="chip-risk high" style="font-size: 11px; padding: 4px 10px;"><span class="dot"></span>HIGH</span></td>
+        <td class="trusta" style="text-align: left;">맑고 균일해 보이는 피부 인상을 위한 톤 케어</td>
+      </tr>
     </tbody>
   </table>
-</div>
+</section>
 
-<!-- ==================== LINKS ==================== -->
-<h2 id="links">8. 핵심 GitHub 링크 (좋은 순)</h2>
-
-<div class="card">
-  <table>
-    <tr><th>#</th><th>레포</th><th>용도</th></tr>
-    <tr><td>1</td><td><a href="https://github.com/github/spec-kit">github/spec-kit</a></td><td>constitution/spec/plan/tasks 표준</td></tr>
-    <tr><td>2</td><td><a href="https://github.com/shanraisshan/claude-code-best-practice">shanraisshan/claude-code-best-practice</a></td><td>Claude Code 패턴 (Karpathy/Boris 인용)</td></tr>
-    <tr><td>3</td><td><a href="https://github.com/karpathy/autoresearch">karpathy/autoresearch</a></td><td>Karpathy 단일 markdown 워크플로우</td></tr>
-    <tr><td>4</td><td><a href="https://agents.md">agents.md</a></td><td>AGENTS.md 표준 (60,000+ 레포)</td></tr>
-    <tr><td>5</td><td><a href="https://github.com/bmad-code-org/BMAD-METHOD">bmad-code-org/BMAD-METHOD</a></td><td>BMAD v6 (대형 참고)</td></tr>
-    <tr><td>6</td><td><a href="https://code.claude.com/docs/en/best-practices">Anthropic 공식</a></td><td>Claude Code best practices</td></tr>
-    <tr><td>7</td><td><a href="https://www.humanlayer.dev/blog/writing-a-good-claude-md">HumanLayer</a></td><td>CLAUDE.md lean 가이드</td></tr>
-  </table>
-</div>
-
-<!-- ==================== RISKS ==================== -->
-<h2 id="risks">9. 리스크 & 경고</h2>
-
-<div class="grid-2">
-  <div class="card">
-    <h3>리스크 대응표</h3>
-    <table>
-      <tr><th>리스크</th><th>대응</th></tr>
-      <tr><td>spec/plan 드리프트</td><td>scratchpad.md SSOT</td></tr>
-      <tr><td>tmux 병렬 머지 충돌</td><td>독립 작업만 병렬</td></tr>
-      <tr><td>검증 없이 완료 주장</td><td>PAL precommit 강제</td></tr>
-      <tr><td>LEARN.md 비대화</td><td>50개 넘으면 분리</td></tr>
-      <tr><td>Spec Kit lock-in</td><td>plain markdown, CLI 제거 가능</td></tr>
-    </table>
+<!-- ============================================================ -->
+<!-- 14. FAQ                                                      -->
+<!-- ============================================================ -->
+<section id="faq" class="bg-paper2" data-screen-label="14 FAQ">
+  <div class="center">
+    <div class="pill sm">FAQ</div>
+    <h2 class="h-section" style="margin-top: 20px;">자주 묻는 질문</h2>
   </div>
 
-  <div class="card">
-    <h3>하면 vs 안하면</h3>
-    <table>
-      <tr><th></th><th style="color:var(--green)">하면</th><th style="color:var(--red)">안하면</th></tr>
-      <tr><td>맥락 파악</td><td>즉시</td><td>매번 설명</td></tr>
-      <tr><td>결정 기록</td><td>DECISIONS 누적</td><td>까먹음</td></tr>
-      <tr><td>스펙->코드</td><td>일관</td><td>즉흥적</td></tr>
-      <tr><td>세션 인수인계</td><td>LEARN.md</td><td>다시 설명</td></tr>
-      <tr><td>같은 실수</td><td>자동 차단</td><td>반복</td></tr>
-    </table>
+  <div class="faq" style="margin-top: 36px;">
+
+    <details>
+      <summary>
+        <span class="q">Q</span>
+        <span>TRUSTA는 공식 심사나 인증 서비스인가요?</span>
+        <span class="arr">▾</span>
+      </summary>
+      <div class="ans">
+        <p>아닙니다. TRUSTA는 해외 광고·표현 리스크를 <b>1차로 점검</b>하고, 주의가 필요한 문구를 정리하는 <b>내부 점검용 SaaS</b>입니다.</p>
+        <p>최종 판단이 필요한 경우 국가별 전문가 검토와 함께 활용하는 것을 권장합니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q">Q</span>
+        <span>작은 브랜드도 사용할 수 있나요?</span>
+        <span class="arr">▾</span>
+      </summary>
+      <div class="ans">
+        <p>네. 오히려 내부에 해외 규정 담당자나 글로벌 콘텐츠 담당자가 없는 <b>1~10인 규모 브랜드</b>를 가장 먼저 생각하고 설계했습니다.</p>
+        <p>문구를 붙여넣고, 위험 표현을 확인하고, 수정 후보를 받아보는 방식으로 시작할 수 있습니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q">Q</span>
+        <span>이미 번역된 상세페이지도 점검할 수 있나요?</span>
+        <span class="arr">▾</span>
+      </summary>
+      <div class="ans">
+        <p>가능합니다. 한국어 원문뿐 아니라 영어·일본어·중국어로 번역된 문장도 점검 대상이 될 수 있습니다.</p>
+        <p>번역이 맞는지뿐 아니라 현지 소비자에게 자연스럽게 읽히는지도 함께 봅니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q">Q</span>
+        <span>SNS 운영을 대신해주는 서비스인가요?</span>
+        <span class="arr">▾</span>
+      </summary>
+      <div class="ans">
+        <p>전체 SNS를 대신 운영하는 대행 서비스는 아닙니다.</p>
+        <p>대신 Threads 중심 콘텐츠 운영 지원, 게시 후보 추천, 콘텐츠 캘린더 제안, 발행 전 문구 점검, 성과 리포트와 개선안을 제공합니다.</p>
+        <p>브랜드가 직접 운영하되 문장과 방향을 더 안전하고 자연스럽게 잡을 수 있도록 돕습니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q">Q</span>
+        <span>어떤 채널에 활용할 수 있나요?</span>
+        <span class="arr">▾</span>
+      </summary>
+      <div class="ans">
+        <p>Threads · Instagram · TikTok · 쇼피 · 큐텐 · 아마존 · 자사몰 · 바이어 제안서 · 해외 상세페이지 · 제품 소개서 등</p>
+        <p>해외 소비자와 만나는 문장이라면 먼저 점검할 수 있습니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q">Q</span>
+        <span>꼭 화장품 브랜드만 가능한가요?</span>
+        <span class="arr">▾</span>
+      </summary>
+      <div class="ans">
+        <p>초기에는 K-뷰티 화장품 브랜드에 집중합니다. 특히 스킨케어·클렌저·앰플·세럼·크림·마스크팩 등 효능 표현이 자주 들어가는 제품군에 적합합니다.</p>
+      </div>
+    </details>
+
   </div>
-</div>
+</section>
 
-<div class="warn">
-  <strong>3모델 합의 비추:</strong>
-  BMAD 풀 적용 (1인 초반), markdown 동기화 CI 훅, tmux로 같은 feature 분할, CLAUDE.md에 코드베이스 구조 설명
-</div>
+<!-- ============================================================ -->
+<!-- 15. FINAL CTA                                                -->
+<!-- ============================================================ -->
+<section id="final-cta" class="bg-ink center" data-screen-label="15 Final CTA">
+  <div class="pill yellow">FINAL</div>
+  <h2 class="h-section invert" style="margin-top: 28px;">
+    해외 진출 전,<br />
+    <span style="color: var(--yellow);">화장품 문구</span>부터<br />
+    검역하세요.
+  </h2>
+  <p style="color: var(--ink-4); margin-top: 24px; font-size: 14px; line-height: 1.7;">
+    제품력은 그대로,<br />
+    표현은 더 안전하게.
+  </p>
 
-<hr>
+  <a href="/auth/signup.html" class="cta yellow" style="margin-top: 36px; text-decoration: none;">
+    내 브랜드 문구 10개 무료 진단 신청하기 <span class="arrow" style="color: var(--ink);">→</span>
+  </a>
 
-<!-- ==================== FOLDER MAP ==================== -->
-<div class="card">
-  <h3>폴더 구조 (Z님 환경)</h3>
-  <pre><code>C:\Users\llorr\dev\
-├── kit-templates\    <- 마스터 템플릿 (읽기 전용)
-├── refs\             <- 세계 표준 원본 (참고용)
-│   ├── spec-kit\
-│   ├── BMAD-METHOD\
-│   ├── autoresearch\
-│   └── claude-code-best-practice\
-├── repos\            <- 실제 작업 (모든 프로젝트)
-└── worktrees\        <- git worktree (병렬)
+  <p style="color: var(--ink-4); margin-top: 16px; font-size: 12px;">
+    와디즈 펀딩 종료 후 2주 내 리포트 발송
+  </p>
+</section>
 
-D:\2026airesult_byclaude\
-└── outputs\          <- 결과물</code></pre>
-</div>
+<!-- ============================================================ -->
+<!-- FOOTER                                                       -->
+<!-- ============================================================ -->
+<footer style="background: #0a0a0a; color: var(--ink-4); padding: 36px 32px; text-align: center; font-size: 12px; line-height: 1.7;">
+  <div style="color: var(--yellow); font-family: var(--font-display); font-weight: 900; font-size: 18px; letter-spacing: 0.04em;">TRUSTA</div>
+  <p style="margin-top: 12px;">
+    K-뷰티 브랜드의 해외 콘텐츠 문장 안전망<br />
+    K-Beauty Overseas Content RegTech SaaS
+  </p>
+  <p style="margin-top: 16px; color: #555; font-size: 11px;">
+    © 2026 TRUSTA. 본 페이지는 와디즈 상세페이지 디자인 시안입니다.
+  </p>
+</footer>
 
-<!-- ==================== ENV ==================== -->
-<div class="card">
-  <h3>환경 추천</h3>
-  <table>
-    <tr><th>순위</th><th>환경</th><th>적합한 상황</th></tr>
-    <tr><td style="color:var(--yellow);font-weight:700">1</td><td>Claude Code CLI (WSL) + Spec Kit</td><td>대부분. PAL MCP 통합, 1M context</td></tr>
-    <tr><td style="color:var(--muted);font-weight:700">2</td><td>Antigravity (VS Code)</td><td>풀스택 웹 프로토타이핑, GUI 필요시</td></tr>
-    <tr><td style="color:var(--muted);font-weight:700">3</td><td>tmux 그리드</td><td>독립 검증/문서/테스트 병렬</td></tr>
-  </table>
-</div>
+</main>
 
-<p class="subtitle" style="margin-top:3rem">
-  Last updated: 2026-04-11 | Claude Opus 4.6 + GPT-5.2-pro + Gemini 3 Pro 교차검증
-</p>
+<!-- Tweaks panel mount point -->
+<div id="tweaks-root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks.jsx"></script>
 
 </body>
 </html>

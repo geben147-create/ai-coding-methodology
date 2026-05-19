@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TRUSTA · 로그인</title>
+<link rel="stylesheet" href="../design-system/colors_and_type.css" />
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+<main class="page">
+
+<div class="topbar">
+  <a href="../index.html" style="text-decoration: none; color: inherit;">
+    <span class="accent">TRUSTA</span>
+  </a>
+  <span class="dot">●</span>
+  로그인
+</div>
+
+<section class="center" style="padding-bottom: var(--s-32);">
+  <div class="pill lg" style="margin-top: var(--s-48);">TRUSTA</div>
+  <h1 class="h-section" style="margin-top: 24px;">로그인</h1>
+  <p class="text-2" style="margin-top: 12px; font-size: 15px;">
+    계정에 로그인하여 서비스를 이용하세요.
+  </p>
+</section>
+
+<section style="padding-top: 0; padding-bottom: var(--s-64);">
+  <form id="login-form" class="form-card" novalidate>
+
+    <div class="field">
+      <label class="l" for="f-email">이메일</label>
+      <input id="f-email" name="email" type="email" autocomplete="email"
+             placeholder="brand@example.com" required />
+    </div>
+
+    <div class="field">
+      <label class="l" for="f-pw">비밀번호</label>
+      <input id="f-pw" name="password" type="password" autocomplete="current-password"
+             placeholder="비밀번호 입력" required />
+    </div>
+
+    <button type="submit" class="cta" id="submit-btn" style="margin-top: 28px;">
+      <span class="label">로그인</span>
+      <span class="arrow">→</span>
+    </button>
+
+    <div class="submit-error" id="submit-error">
+      이메일 또는 비밀번호가 올바르지 않습니다.
+    </div>
+
+    <p style="text-align: center; margin-top: 22px; font-size: 14px; color: var(--ink-3);">
+      아직 계정이 없으신가요?
+      <a href="./signup.html"
+         style="color: var(--ink); font-weight: 700; text-decoration: underline;">3일 무료로 시작하기</a>
+    </p>
+  </form>
+</section>
+
+<footer style="background: #0a0a0a; color: var(--ink-4); padding: 28px 32px; text-align: center; font-size: 12px; line-height: 1.7;">
+  <div style="color: var(--yellow); font-family: var(--font-display); font-weight: 900; font-size: 16px; letter-spacing: 0.04em;">TRUSTA</div>
+  <p style="margin-top: 8px; color: #555; font-size: 11px;">© 2026 TRUSTA.</p>
+</footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/trusta-config.js"></script>
+<script>
+(function () {
+  const cfg = window.TRUSTA_CONFIG;
+  const sb  = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+
+  // 이미 로그인 중이면 대시보드로
+  sb.auth.getSession().then(({ data: { session } }) => {
+    if (session) window.location.href = '/dashboard.html';
+  });
+
+  const form      = document.getElementById('login-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const errBanner = document.getElementById('submit-error');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const labelEl = submitBtn.querySelector('.label');
+    submitBtn.disabled = true;
+    labelEl.textContent = '로그인 중…';
+    errBanner.classList.remove('is-shown');
+
+    const email    = document.getElementById('f-email').value.trim();
+    const password = document.getElementById('f-pw').value;
+
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      errBanner.textContent = '이메일 또는 비밀번호가 올바르지 않습니다.';
+      errBanner.classList.add('is-shown');
+      submitBtn.disabled = false;
+      labelEl.textContent = '로그인';
+      return;
+    }
+
+    // 무료체험 만료 여부 확인
+    const { data: profile } = await sb
+      .from('profiles')
+      .select('trial_status, trial_ends_at, plan')
+      .eq('id', data.user.id)
+      .single();
+
+    if (profile) {
+      const isPaid   = ['standard', 'growth', 'admin'].includes(profile.plan);
+      const trialEnd = profile.trial_ends_at ? new Date(profile.trial_ends_at) : null;
+      const expired  = !isPaid && (profile.trial_status === 'expired' || (trialEnd && new Date() > trialEnd));
+
+      if (expired) {
+        if (profile.trial_status !== 'expired') {
+          await sb.from('profiles').update({ trial_status: 'expired' }).eq('id', data.user.id);
+        }
+        window.location.href = '/trial-expired.html';
+        return;
+      }
+    }
+
+    window.location.href = '/dashboard.html';
+  });
+})();
+</script>
+</body>
+</html>

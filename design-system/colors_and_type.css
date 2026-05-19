@@ -1,0 +1,247 @@
+/* =========================================================================
+   Wolcheon Design System — Colors, Type, Spacing, Radii, Shadow
+   =========================================================================
+   See README.md for the why. This file is the single source of truth for
+   visual foundations. Import into any page:
+
+     <link rel="stylesheet" href="colors_and_type.css">
+
+   ========================================================================= */
+
+/* Pretendard — primary face. Korean + Latin, weights 100–900.
+   Loaded from the official CDN. Substitute for Gmarket Sans / Black-weight
+   Korean sans seen in the source landing pages. */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+
+:root {
+  /* ---------- COLOR ---------- */
+  --ink:         #111111;  /* headlines, CTA pills, footer slab, + badge */
+  --ink-2:       #222222;  /* body */
+  --ink-3:       #6B6B6B;  /* sub-copy, footnote labels */
+  --ink-4:       #9A9A9A;  /* disabled, dividers on dark */
+
+  --paper:       #FFFFFF;  /* page background */
+  --paper-2:     #F4F4F4;  /* section dividers, image-block backdrops */
+  --paper-3:     #EFEFEF;  /* soft photo gel */
+
+  --yellow:      #FFE600;  /* primary brand accent — price, highlights, + glyph */
+  --yellow-soft: #FFF59A;  /* highlight-bar fill behind text */
+  --yellow-edge: #F5C400;  /* card stroke + chunky drop shadow */
+
+  --info-blue:   #3B82F6;  /* sub-callout under headlines */
+  --warn-red:    #E11D48;  /* sparingly: urgent strikethroughs */
+
+  /* Semantic aliases */
+  --fg-1: var(--ink);
+  --fg-2: var(--ink-2);
+  --fg-3: var(--ink-3);
+  --bg-1: var(--paper);
+  --bg-2: var(--paper-2);
+  --accent: var(--yellow);
+  --accent-edge: var(--yellow-edge);
+
+  /* ---------- TYPE ---------- */
+  --font-sans: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
+               "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+  --font-display: var(--font-sans); /* same family, used at heavier weight */
+
+  /* Weights */
+  --w-regular: 400;
+  --w-medium:  500;
+  --w-semi:    600;
+  --w-bold:    700;
+  --w-extra:   800;
+  --w-black:   900;
+
+  /* Sizes (rem, base 16) */
+  --fs-12: 0.75rem;
+  --fs-14: 0.875rem;
+  --fs-16: 1rem;
+  --fs-18: 1.125rem;
+  --fs-20: 1.25rem;
+  --fs-24: 1.5rem;
+  --fs-28: 1.75rem;
+  --fs-32: 2rem;
+  --fs-40: 2.5rem;
+  --fs-48: 3rem;
+  --fs-56: 3.5rem;
+  --fs-64: 4rem;
+
+  /* Line heights */
+  --lh-tight: 1.15;
+  --lh-snug:  1.3;
+  --lh-body:  1.55;
+
+  /* Tracking (letter-spacing) */
+  --tr-tight: -0.03em;
+  --tr-snug:  -0.015em;
+  --tr-zero:   0;
+
+  /* ---------- SPACING ---------- */
+  --s-2:   2px;
+  --s-4:   4px;
+  --s-8:   8px;
+  --s-12:  12px;
+  --s-16:  16px;
+  --s-20:  20px;
+  --s-24:  24px;
+  --s-32:  32px;
+  --s-40:  40px;
+  --s-48:  48px;
+  --s-56:  56px;
+  --s-64:  64px;
+  --s-80:  80px;
+  --s-96:  96px;
+
+  /* ---------- RADII ---------- */
+  --r-sm:    8px;
+  --r-md:    16px;
+  --r-lg:    24px;   /* yellow-stroke cards */
+  --r-xl:    32px;
+  --r-pill:  9999px; /* package badge, CTA pills */
+
+  /* ---------- BORDERS ---------- */
+  --bw-card:   2.5px; /* yellow stroke on cards */
+  --bw-thick:  3px;
+  --bw-focus:  2px;
+
+  /* ---------- SHADOWS ---------- */
+  /* Chunky cartoon shadow under yellow cards — offset down, no blur. */
+  --shadow-card-yellow: 0 6px 0 rgba(245, 196, 0, 0.22);
+  /* Soft hover lift. */
+  --shadow-hover:       0 10px 24px rgba(0, 0, 0, 0.08), 0 4px 0 rgba(245, 196, 0, 0.22);
+  /* Black slab inset for the price footer (none — kept flat). */
+  --shadow-slab:        none;
+
+  /* ---------- MOTION ---------- */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast:   120ms;
+  --t-med:    180ms;
+  --t-slow:   320ms;
+
+  /* ---------- LAYOUT ---------- */
+  --col-max:  720px;  /* the long-form landing column */
+  --gutter:   24px;
+}
+
+/* =========================================================================
+   Base + semantic elements
+   ========================================================================= */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-16);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headlines — the heaviest weight the brand uses. Tight, two-line bias. */
+h1, .h-display {
+  font-family: var(--font-display);
+  font-weight: var(--w-black);
+  font-size: var(--fs-48);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+  color: var(--ink);
+  margin: 0;
+}
+
+h2, .h-1 {
+  font-family: var(--font-display);
+  font-weight: var(--w-black);
+  font-size: var(--fs-32);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+  color: var(--ink);
+  margin: 0;
+}
+
+h3, .h-2 {
+  font-weight: var(--w-bold);
+  font-size: var(--fs-24);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tr-snug);
+  color: var(--ink);
+  margin: 0;
+}
+
+h4, .h-3 {
+  font-weight: var(--w-bold);
+  font-size: var(--fs-20);
+  line-height: var(--lh-snug);
+  color: var(--ink);
+  margin: 0;
+}
+
+p, .body {
+  font-weight: var(--w-regular);
+  font-size: var(--fs-16);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+  margin: 0;
+}
+
+.body-strong {
+  font-weight: var(--w-bold);
+  color: var(--ink);
+}
+
+.body-sub {
+  font-size: var(--fs-14);
+  color: var(--ink-3);
+}
+
+.eyebrow {
+  font-size: var(--fs-14);
+  font-weight: var(--w-medium);
+  color: var(--ink-2);
+}
+
+.caption {
+  font-size: var(--fs-12);
+  color: var(--ink-3);
+  line-height: var(--lh-snug);
+}
+
+/* Price reveal — the single biggest, heaviest piece of type in the system. */
+.price {
+  font-family: var(--font-display);
+  font-weight: var(--w-black);
+  font-size: var(--fs-56);
+  letter-spacing: -0.04em;
+  color: var(--yellow);
+  line-height: 1;
+}
+.price .won {
+  font-weight: var(--w-extra);
+  font-size: 0.7em;
+  margin-left: 0.05em;
+}
+.price-strike {
+  font-weight: var(--w-medium);
+  font-size: var(--fs-16);
+  color: var(--ink-4);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+/* Highlight bar (yellow underline behind a phrase). */
+.hl {
+  background: linear-gradient(transparent 60%, var(--yellow) 60%);
+  padding: 0 0.05em;
+}
+
+/* Sub-callout under a headline, e.g. "임대계약서 제공시 19만원 추가" */
+.callout-blue {
+  color: var(--info-blue);
+  font-weight: var(--w-bold);
+  font-size: var(--fs-14);
+}
+
+code, pre, .mono {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
+}

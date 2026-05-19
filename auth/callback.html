@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TRUSTA · 인증 처리 중</title>
+<link rel="stylesheet" href="../design-system/colors_and_type.css" />
+<style>
+  body {
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: var(--font-sans);
+  }
+  .wrap {
+    text-align: center;
+    padding: 32px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 24px;
+    color: var(--yellow);
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+  }
+  .msg {
+    font-size: 16px;
+    color: var(--ink-4);
+    line-height: 1.6;
+  }
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(255,230,0,0.2);
+    border-top-color: var(--yellow);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">TRUSTA</div>
+  <div class="spinner"></div>
+  <p class="msg" id="msg">이메일 인증을 처리하고 있습니다…</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/trusta-config.js"></script>
+<script>
+(async function () {
+  const cfg = window.TRUSTA_CONFIG;
+  const sb  = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+  const msg = document.getElementById('msg');
+
+  try {
+    // PKCE 흐름: URL 쿼리에 code 파라미터가 있으면 세션으로 교환
+    const params = new URLSearchParams(window.location.search);
+    const code   = params.get('code');
+    if (code) {
+      await sb.auth.exchangeCodeForSession(code);
+    }
+
+    const { data: { session } } = await sb.auth.getSession();
+
+    if (session) {
+      msg.textContent = '인증 완료! 대시보드로 이동합니다…';
+      setTimeout(() => { window.location.href = '/dashboard.html'; }, 800);
+    } else {
+      msg.textContent = '인증에 실패했습니다. 다시 시도해 주세요.';
+      setTimeout(() => { window.location.href = '/auth/login.html'; }, 2000);
+    }
+  } catch (err) {
+    console.error('[TRUSTA callback]', err);
+    msg.textContent = '오류가 발생했습니다. 로그인 페이지로 이동합니다.';
+    setTimeout(() => { window.location.href = '/auth/login.html'; }, 2000);
+  }
+})();
+</script>
+</body>
+</html>

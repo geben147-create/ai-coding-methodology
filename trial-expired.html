@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TRUSTA · 무료체험 종료</title>
+<link rel="stylesheet" href="design-system/colors_and_type.css" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<main class="page">
+
+<div class="topbar">
+  <a href="index.html" style="text-decoration: none; color: inherit;">
+    <span class="accent">TRUSTA</span>
+  </a>
+  <span class="dot">●</span>
+  무료체험 종료
+</div>
+
+<!-- 메인 메시지 -->
+<section class="bg-ink center"
+         style="min-height: 70vh; display: flex; flex-direction: column;
+                align-items: center; justify-content: center; padding: 80px 32px;">
+
+  <div class="pill yellow">EXPIRED</div>
+
+  <h1 class="h-section invert" style="margin-top: 28px; color: var(--paper);">
+    무료체험 기간이<br />
+    <span style="color: var(--yellow);">종료</span>되었습니다.
+  </h1>
+
+  <p style="color: var(--ink-4); margin-top: 24px; font-size: 16px; line-height: 1.75; text-align: center;">
+    계속 이용하려면<br />
+    <b style="color: var(--paper);">TRUSTA 플랜을 신청</b>해주세요.
+  </p>
+
+  <!-- 플랜 혜택 카드 -->
+  <div style="margin-top: 40px; width: 100%; max-width: 420px;
+              background: rgba(255,255,255,0.06);
+              border: 1.5px solid rgba(255,255,255,0.15);
+              border-radius: 18px; padding: 24px;">
+    <div class="text-3 small bold" style="letter-spacing: 0.08em; color: var(--yellow); margin-bottom: 16px;">
+      TRUSTA 플랜 혜택
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; gap: 12px; align-items: flex-start; color: var(--paper); font-size: 14px;">
+        <span style="color: var(--yellow); font-weight: 900; flex-shrink: 0;">✓</span>
+        K-뷰티 해외 문구 리스크 진단 (무제한)
+      </div>
+      <div style="display: flex; gap: 12px; align-items: flex-start; color: var(--paper); font-size: 14px;">
+        <span style="color: var(--yellow); font-weight: 900; flex-shrink: 0;">✓</span>
+        EN · JP · CN 현지어 콘텐츠 변환
+      </div>
+      <div style="display: flex; gap: 12px; align-items: flex-start; color: var(--paper); font-size: 14px;">
+        <span style="color: var(--yellow); font-weight: 900; flex-shrink: 0;">✓</span>
+        Threads 중심 콘텐츠 이정 지원
+      </div>
+      <div style="display: flex; gap: 12px; align-items: flex-start; color: var(--paper); font-size: 14px;">
+        <span style="color: var(--yellow); font-weight: 900; flex-shrink: 0;">✓</span>
+        월간 성과 리포트 + 다음 개선안 제안
+      </div>
+      <div style="display: flex; gap: 12px; align-items: flex-start; color: var(--paper); font-size: 14px;">
+        <span style="color: var(--yellow); font-weight: 900; flex-shrink: 0;">✓</span>
+        발행 전 문구 무제한 사전 점검
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA 버튼들 -->
+  <a href="mailto:hello@trusta.ai?subject=TRUSTA 플랜 신청 문의"
+     class="cta yellow"
+     style="margin-top: 36px; width: 100%; max-width: 420px; text-decoration: none;">
+    플랜 신청 문의하기
+    <span class="arrow" style="color: var(--ink);">→</span>
+  </a>
+
+  <button id="logout-btn"
+          style="margin-top: 14px; width: 100%; max-width: 420px;
+                 background: transparent; border: 2px solid rgba(255,255,255,0.2);
+                 color: var(--ink-4); font-family: var(--font-sans); font-size: 16px;
+                 font-weight: var(--w-bold); padding: 16px 22px; border-radius: var(--r-pill);
+                 cursor: pointer; transition: border-color 0.15s, color 0.15s;"
+          onmouseover="this.style.borderColor='rgba(255,255,255,0.5)'; this.style.color='var(--paper)'"
+          onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.color='var(--ink-4)'">
+    다른 계정으로 로그인
+  </button>
+
+  <a href="index.html"
+     style="margin-top: 14px; font-size: 14px; color: var(--ink-4); text-decoration: underline;">
+    홈으로 돌아가기
+  </a>
+</section>
+
+<footer style="background: #0a0a0a; color: var(--ink-4); padding: 28px 32px; text-align: center; font-size: 12px; line-height: 1.7;">
+  <div style="color: var(--yellow); font-family: var(--font-display); font-weight: 900; font-size: 16px; letter-spacing: 0.04em;">TRUSTA</div>
+  <p style="margin-top: 8px; color: #555; font-size: 11px;">© 2026 TRUSTA. K-Beauty Overseas Content RegTech SaaS</p>
+</footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/trusta-config.js"></script>
+<script>
+(function () {
+  const cfg = window.TRUSTA_CONFIG;
+  const sb  = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    await sb.auth.signOut();
+    window.location.href = '/auth/login.html';
+  });
+})();
+</script>
+</body>
+</html>

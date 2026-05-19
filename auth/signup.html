@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TRUSTA · 무료체험 시작하기</title>
+<link rel="stylesheet" href="../design-system/colors_and_type.css" />
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+<main class="page">
+
+<div class="topbar">
+  <a href="../index.html" style="text-decoration: none; color: inherit;">
+    <span class="accent">TRUSTA</span>
+  </a>
+  <span class="dot">●</span>
+  3일 무료체험 시작
+</div>
+
+<section class="center" style="padding-bottom: var(--s-32);">
+  <div class="pill lg" style="margin-top: var(--s-48);">TRUSTA</div>
+
+  <h1 class="h-hero" style="margin-top: 24px;">
+    3일 <span class="hl-thick">무료</span>로<br />
+    시작하세요.
+  </h1>
+
+  <p class="text-2" style="margin-top: 16px; font-size: 15px; line-height: 1.7;">
+    이메일로 가입하면 즉시<br />
+    K-뷰티 해외 문구 리스크 진단 서비스를<br />
+    3일간 무료로 이용할 수 있습니다.
+  </p>
+</section>
+
+<section style="padding-top: 0; padding-bottom: var(--s-64);">
+  <form id="signup-form" class="form-card" novalidate>
+
+    <div class="text-3 small bold" style="letter-spacing: 0.06em; margin-bottom: 22px;">
+      이메일로 가입하기
+    </div>
+
+    <div class="field">
+      <label class="l" for="f-email">이메일 <span class="req">필수</span></label>
+      <input id="f-email" name="email" type="email" autocomplete="email"
+             placeholder="brand@example.com" required />
+      <p class="err-msg">올바른 이메일 형식을 입력해 주세요.</p>
+    </div>
+
+    <div class="field">
+      <label class="l" for="f-pw">비밀번호 <span class="req">필수</span></label>
+      <p class="hint">6자 이상으로 설정해 주세요.</p>
+      <input id="f-pw" name="password" type="password" autocomplete="new-password"
+             placeholder="6자 이상" required minlength="6" />
+      <p class="err-msg">비밀번호는 6자 이상이어야 합니다.</p>
+    </div>
+
+    <div style="border-top: 1.5px solid var(--paper-3); margin: 28px 0 22px;"></div>
+
+    <div class="text-3 small bold" style="letter-spacing: 0.06em; margin-bottom: 16px;">
+      동의 항목
+    </div>
+
+    <!-- 개인정보 수집·이용 동의 (필수) -->
+    <div class="consent" id="c-privacy">
+      <div class="row" id="row-privacy" style="cursor: pointer;">
+        <span class="checkbox" id="chk-privacy">✓</span>
+        <div class="text">
+          <div class="title">
+            개인정보 수집·이용 동의
+            <span class="req">필수</span>
+          </div>
+          <div class="body">
+            서비스 제공을 위해 이메일을 수집·이용합니다.
+            <details onclick="event.stopPropagation()">
+              <summary>전문 보기</summary>
+              <div class="full">
+                <b>수집 항목</b>: 이메일, 서비스 이용 기록<br />
+                <b>이용 목적</b>: 회원 인증, 무료체험 관리, 서비스 제공<br />
+                <b>보유 기간</b>: 회원 탈퇴 시까지<br />
+                <b>거부 권리</b>: 동의 거부 시 서비스 이용이 제한됩니다.
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 마케팅 수신 동의 (선택) -->
+    <div class="consent" id="c-marketing" style="margin-top: 12px;">
+      <div class="row" id="row-marketing" style="cursor: pointer;">
+        <span class="checkbox" id="chk-marketing">✓</span>
+        <div class="text">
+          <div class="title">
+            마케팅·뉴스레터 수신 동의
+            <span class="opt">선택</span>
+          </div>
+          <div class="body">
+            화장품 해외 규제 업데이트, 이벤트, 신규 기능 안내를 이메일로 받습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="cta is-disabled" id="submit-btn" disabled
+            style="margin-top: 28px;">
+      <span class="label">3일 무료체험 시작하기</span>
+      <span class="arrow">→</span>
+    </button>
+
+    <div class="submit-error" id="submit-error"></div>
+
+    <p style="text-align: center; margin-top: 22px; font-size: 14px; color: var(--ink-3);">
+      이미 계정이 있으신가요?
+      <a href="./login.html"
+         style="color: var(--ink); font-weight: 700; text-decoration: underline;">로그인</a>
+    </p>
+  </form>
+</section>
+
+<footer style="background: #0a0a0a; color: var(--ink-4); padding: 28px 32px; text-align: center; font-size: 12px; line-height: 1.7;">
+  <div style="color: var(--yellow); font-family: var(--font-display); font-weight: 900; font-size: 16px; letter-spacing: 0.04em;">TRUSTA</div>
+  <p style="margin-top: 8px; color: #555; font-size: 11px;">© 2026 TRUSTA. K-Beauty Overseas Content RegTech SaaS</p>
+</footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/trusta-config.js"></script>
+<script>
+(function () {
+  const cfg = window.TRUSTA_CONFIG;
+  const sb  = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+
+  // 이미 로그인 중이면 대시보드로
+  sb.auth.getSession().then(({ data: { session } }) => {
+    if (session) window.location.href = '/dashboard.html';
+  });
+
+  const form      = document.getElementById('signup-form');
+  const emailEl   = document.getElementById('f-email');
+  const pwEl      = document.getElementById('f-pw');
+  const submitBtn = document.getElementById('submit-btn');
+  const errBanner = document.getElementById('submit-error');
+
+  let privacyChecked  = false;
+  let marketingChecked = false;
+
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v).trim());
+  }
+
+  function validate() {
+    const ok = isValidEmail(emailEl.value) && pwEl.value.length >= 6 && privacyChecked;
+    submitBtn.disabled = !ok;
+    submitBtn.classList.toggle('is-disabled', !ok);
+  }
+
+  function toggleConsent(id, rowId, chkId, getVal, setVal) {
+    document.getElementById(rowId).addEventListener('click', () => {
+      setVal(!getVal());
+      const wrap = document.getElementById(id);
+      const chk  = document.getElementById(chkId);
+      wrap.classList.toggle('checked', getVal());
+      chk.style.color = getVal() ? 'var(--yellow)' : 'transparent';
+      validate();
+    });
+  }
+
+  toggleConsent('c-privacy',   'row-privacy',   'chk-privacy',
+    () => privacyChecked,  (v) => { privacyChecked = v; });
+  toggleConsent('c-marketing', 'row-marketing',  'chk-marketing',
+    () => marketingChecked, (v) => { marketingChecked = v; });
+
+  emailEl.addEventListener('input', validate);
+  pwEl.addEventListener('input', validate);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!privacyChecked) {
+      showError('개인정보 수집·이용 동의는 필수입니다.');
+      return;
+    }
+
+    const labelEl = submitBtn.querySelector('.label');
+    submitBtn.disabled = true;
+    submitBtn.classList.add('is-loading');
+    errBanner.classList.remove('is-shown');
+    labelEl.textContent = '처리 중…';
+
+    const { data, error } = await sb.auth.signUp({
+      email:    emailEl.value.trim(),
+      password: pwEl.value,
+      options: {
+        data: {
+          privacy_agreed:   true,
+          marketing_agreed: marketingChecked,
+        },
+        emailRedirectTo: window.location.origin + '/auth/callback.html',
+      },
+    });
+
+    if (error) {
+      showError(friendlyError(error.message));
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('is-loading');
+      labelEl.textContent = '3일 무료체험 시작하기';
+      return;
+    }
+
+    if (data.session) {
+      // 이메일 확인 없이 즉시 로그인 (Supabase 설정에서 Confirm email 비활성화 시)
+      window.location.href = '/dashboard.html';
+    } else {
+      // 이메일 확인 대기
+      form.innerHTML = `
+        <div style="text-align: center; padding: 32px 0;">
+          <div class="pill" style="background: #1F8A4F; color: white; margin-bottom: 24px;">✓ 전송 완료</div>
+          <h2 class="h-section" style="margin-top: 0;">이메일을 확인해주세요</h2>
+          <p class="text-2" style="margin-top: 18px; font-size: 15px; line-height: 1.7;">
+            <b>${emailEl.value.trim()}</b>으로<br />
+            가입 확인 링크를 보냈습니다.<br />
+            링크를 클릭하면 자동으로 로그인됩니다.
+          </p>
+          <p class="text-3 small" style="margin-top: 16px;">
+            이메일이 보이지 않으면 스팸 폴더를 확인해 주세요.
+          </p>
+          <a href="./login.html" class="cta ghost" style="margin-top: 28px; text-decoration: none;">
+            로그인 화면으로
+          </a>
+        </div>`;
+    }
+  });
+
+  function showError(msg) {
+    errBanner.textContent = msg;
+    errBanner.classList.add('is-shown');
+  }
+
+  function friendlyError(msg) {
+    if (msg.includes('already registered')) return '이미 가입된 이메일입니다. 로그인해 주세요.';
+    if (msg.includes('Password'))          return '비밀번호는 6자 이상이어야 합니다.';
+    if (msg.includes('valid email'))       return '올바른 이메일 형식을 입력해 주세요.';
+    return msg || '오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+  }
+
+  validate();
+})();
+</script>
+</body>
+</html>
