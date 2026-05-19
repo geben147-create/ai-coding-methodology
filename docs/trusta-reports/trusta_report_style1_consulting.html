@@ -2,1428 +2,248 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRUSTA Report — Style 1: Premium Consulting</title>
+<title>TRUSTA Report — Style 1 Consulting</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
-  :root {
-    --navy: #0B1B3A;
-    --navy-mid: #142247;
-    --gold: #C9A84C;
-    --gold-light: #E8C97A;
-    --gold-pale: #FBF3DF;
-    --slate: #3A4A6B;
-    --white: #FFFFFF;
-    --off-white: #F8F9FC;
-    --text-dark: #1A1A2E;
-    --text-mid: #444466;
-    --text-light: #888899;
-    --red: #C0392B;
-    --orange: #D35400;
-    --green: #1A7A4A;
-    --border: #D4D8E8;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Inter', 'Noto Sans KR', sans-serif;
-    background: #EDEFF5;
-    color: var(--text-dark);
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .page {
-    width: 794px;
-    min-height: 1123px;
-    background: var(--white);
-    margin: 32px auto;
-    position: relative;
-    box-shadow: 0 4px 40px rgba(0,0,0,0.12);
-    overflow: hidden;
-  }
-
-  /* ── COVER PAGE ── */
-  .cover {
-    background: var(--navy);
-    height: 1123px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cover-bg-lines {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image:
-      repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(201,168,76,0.04) 60px, rgba(201,168,76,0.04) 61px),
-      repeating-linear-gradient(-45deg, transparent, transparent 60px, rgba(201,168,76,0.04) 60px, rgba(201,168,76,0.04) 61px);
-  }
-
-  .cover-accent-bar {
-    position: absolute;
-    left: 0; top: 0;
-    width: 6px;
-    height: 100%;
-    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
-  }
-
-  .cover-top-band {
-    background: rgba(201,168,76,0.1);
-    border-bottom: 1px solid rgba(201,168,76,0.3);
-    padding: 20px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .cover-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .cover-logo-icon {
-    width: 36px;
-    height: 36px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 16px;
-    color: var(--navy);
-    letter-spacing: -1px;
-  }
-
-  .cover-logo-text {
-    color: var(--white);
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 2px;
-  }
-
-  .cover-logo-sub {
-    color: var(--gold);
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-top: 2px;
-  }
-
-  .cover-date {
-    color: rgba(255,255,255,0.5);
-    font-size: 12px;
-    text-align: right;
-    letter-spacing: 1px;
-  }
-
-  .cover-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 60px 60px 80px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .cover-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(201,168,76,0.15);
-    border: 1px solid rgba(201,168,76,0.4);
-    border-radius: 2px;
-    padding: 6px 16px;
-    color: var(--gold);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 40px;
-    width: fit-content;
-  }
-
-  .cover-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 46px;
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1.2;
-    margin-bottom: 12px;
-  }
-
-  .cover-title-sub {
-    font-size: 20px;
-    color: var(--gold-light);
-    font-weight: 300;
-    letter-spacing: 1px;
-    margin-bottom: 48px;
-  }
-
-  .cover-divider {
-    width: 80px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-    margin-bottom: 48px;
-  }
-
-  .cover-meta-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    max-width: 500px;
-    margin-bottom: 60px;
-  }
-
-  .cover-meta-item label {
-    display: block;
-    color: rgba(255,255,255,0.4);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .cover-meta-item .value {
-    color: var(--white);
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  .cover-risk-summary {
-    display: flex;
-    gap: 24px;
-  }
-
-  .risk-pill {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 4px;
-    padding: 16px 24px;
-    min-width: 100px;
-  }
-
-  .risk-pill.danger { border-color: rgba(192,57,43,0.5); background: rgba(192,57,43,0.1); }
-  .risk-pill.warning { border-color: rgba(211,84,0,0.5); background: rgba(211,84,0,0.1); }
-  .risk-pill.safe { border-color: rgba(26,122,74,0.5); background: rgba(26,122,74,0.1); }
-
-  .risk-pill .count {
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .risk-pill.danger .count { color: #E74C3C; }
-  .risk-pill.warning .count { color: #E67E22; }
-  .risk-pill.safe .count { color: #2ECC71; }
-
-  .risk-pill .label {
-    font-size: 11px;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 1px;
-  }
-
-  .cover-footer {
-    padding: 24px 60px;
-    border-top: 1px solid rgba(201,168,76,0.2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .cover-footer-text {
-    color: rgba(255,255,255,0.3);
-    font-size: 11px;
-    letter-spacing: 1px;
-  }
-
-  .cover-confidential {
-    color: var(--gold);
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    border: 1px solid rgba(201,168,76,0.3);
-    padding: 4px 12px;
-    border-radius: 2px;
-  }
-
-  /* ── INNER PAGES ── */
-  .page-inner {
-    padding: 0;
-  }
-
-  .page-header {
-    background: var(--navy);
-    padding: 20px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-  }
-
-  .page-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-  }
-
-  .page-header-logo {
-    color: var(--white);
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 2px;
-  }
-
-  .page-header-logo span { color: var(--gold); }
-
-  .page-header-info {
-    text-align: right;
-    color: rgba(255,255,255,0.4);
-    font-size: 11px;
-    line-height: 1.5;
-  }
-
-  .page-body {
-    padding: 48px;
-  }
-
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 32px;
-  }
-
-  .section-num {
-    width: 32px;
-    height: 32px;
-    background: var(--navy);
-    color: var(--gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  .section-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--navy);
-    letter-spacing: -0.5px;
-  }
-
-  .section-sub {
-    font-size: 12px;
-    color: var(--text-light);
-    margin-top: 2px;
-    letter-spacing: 0.5px;
-  }
-
-  /* Executive Summary */
-  .exec-summary-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 36px;
-  }
-
-  .exec-card {
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .exec-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 4px;
-    height: 100%;
-  }
-
-  .exec-card.critical::before { background: var(--red); }
-  .exec-card.warning::before { background: var(--orange); }
-  .exec-card.info::before { background: var(--navy); }
-
-  .exec-card-value {
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-
-  .exec-card.critical .exec-card-value { color: var(--red); }
-  .exec-card.warning .exec-card-value { color: var(--orange); }
-  .exec-card.info .exec-card-value { color: var(--navy); }
-
-  .exec-card-label {
-    font-size: 12px;
-    color: var(--text-light);
-    line-height: 1.4;
-  }
-
-  .exec-card-badge {
-    position: absolute;
-    top: 16px; right: 16px;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 2px;
-  }
-
-  .exec-card.critical .exec-card-badge { background: rgba(192,57,43,0.1); color: var(--red); }
-  .exec-card.warning .exec-card-badge { background: rgba(211,84,0,0.1); color: var(--orange); }
-
-  .finding-box {
-    background: var(--gold-pale);
-    border-left: 4px solid var(--gold);
-    border-radius: 0 6px 6px 0;
-    padding: 20px 24px;
-    margin-bottom: 20px;
-  }
-
-  .finding-box h4 {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .finding-box p {
-    font-size: 13px;
-    color: var(--text-mid);
-    line-height: 1.7;
-  }
-
-  /* Risk Table */
-  .risk-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 32px;
-  }
-
-  .risk-table thead tr {
-    background: var(--navy);
-  }
-
-  .risk-table thead th {
-    color: var(--white);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 14px 16px;
-    text-align: left;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-
-  .risk-table thead th:first-child { border-radius: 4px 0 0 0; }
-  .risk-table thead th:last-child { border-radius: 0 4px 0 0; }
-
-  .risk-table tbody tr:nth-child(even) { background: var(--off-white); }
-  .risk-table tbody tr { border-bottom: 1px solid var(--border); }
-
-  .risk-table tbody td {
-    padding: 14px 16px;
-    font-size: 12.5px;
-    vertical-align: top;
-  }
-
-  .risk-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 4px 10px;
-    border-radius: 3px;
-    font-size: 11px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .risk-badge.high { background: rgba(192,57,43,0.1); color: var(--red); border: 1px solid rgba(192,57,43,0.2); }
-  .risk-badge.mid { background: rgba(211,84,0,0.1); color: var(--orange); border: 1px solid rgba(211,84,0,0.2); }
-  .risk-badge.low { background: rgba(26,122,74,0.1); color: var(--green); border: 1px solid rgba(26,122,74,0.2); }
-
-  .claim-text {
-    font-style: italic;
-    color: var(--text-mid);
-    background: rgba(0,0,0,0.03);
-    padding: 4px 8px;
-    border-radius: 3px;
-    font-size: 12px;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .basis-text {
-    font-size: 11.5px;
-    color: var(--text-light);
-    line-height: 1.5;
-  }
-
-  /* Before/After */
-  .comparison-item {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 20px;
-    overflow: hidden;
-  }
-
-  .comparison-header {
-    background: var(--off-white);
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .comparison-claim-num {
-    font-size: 11px;
-    color: var(--text-light);
-    font-weight: 600;
-    letter-spacing: 1px;
-  }
-
-  .comparison-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .comparison-before, .comparison-after {
-    padding: 20px;
-  }
-
-  .comparison-before {
-    border-right: 1px solid var(--border);
-    background: rgba(192,57,43,0.02);
-  }
-
-  .comparison-after {
-    background: rgba(26,122,74,0.02);
-  }
-
-  .comparison-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .comparison-before .comparison-label { color: var(--red); }
-  .comparison-after .comparison-label { color: var(--green); }
-
-  .comparison-text {
-    font-size: 13px;
-    line-height: 1.7;
-    color: var(--text-dark);
-    font-style: italic;
-  }
-
-  .comparison-reason {
-    margin-top: 10px;
-    font-size: 11.5px;
-    color: var(--text-light);
-    line-height: 1.5;
-    padding-top: 10px;
-    border-top: 1px dashed var(--border);
-  }
-
-  /* Country Table */
-  .country-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .country-table th {
-    background: var(--slate);
-    color: var(--white);
-    font-size: 11px;
-    padding: 12px 14px;
-    text-align: center;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-
-  .country-table th:first-child { text-align: left; }
-
-  .country-table td {
-    padding: 12px 14px;
-    font-size: 12px;
-    border-bottom: 1px solid var(--border);
-    text-align: center;
-    vertical-align: middle;
-  }
-
-  .country-table td:first-child { text-align: left; font-weight: 500; }
-  .country-table tbody tr:nth-child(odd) { background: var(--off-white); }
-
-  .status-dot {
-    display: inline-block;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    margin-right: 4px;
-  }
-
-  .dot-red { background: var(--red); }
-  .dot-orange { background: var(--orange); }
-  .dot-green { background: var(--green); }
-  .dot-gray { background: #B0B0C0; }
-
-  /* Recommendations */
-  .rec-list { list-style: none; }
-
-  .rec-item {
-    display: flex;
-    gap: 16px;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--border);
-    align-items: flex-start;
-  }
-
-  .rec-item:last-child { border-bottom: none; }
-
-  .rec-priority {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--white);
-    margin-top: 2px;
-  }
-
-  .rec-priority.p1 { background: var(--red); }
-  .rec-priority.p2 { background: var(--orange); }
-  .rec-priority.p3 { background: var(--navy); }
-
-  .rec-content h5 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 6px;
-  }
-
-  .rec-content p {
-    font-size: 12.5px;
-    color: var(--text-mid);
-    line-height: 1.6;
-  }
-
-  .rec-meta {
-    margin-top: 8px;
-    display: flex;
-    gap: 12px;
-  }
-
-  .rec-tag {
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 2px;
-    background: var(--off-white);
-    border: 1px solid var(--border);
-    color: var(--text-light);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-
-  /* Page footer */
-  .page-footer {
-    border-top: 1px solid var(--border);
-    padding: 16px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--off-white);
-  }
-
-  .page-footer-left {
-    font-size: 11px;
-    color: var(--text-light);
-  }
-
-  .page-num {
-    font-size: 11px;
-    color: var(--text-light);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .page-num::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* TOC */
-  .toc-list { list-style: none; }
-
-  .toc-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px dashed var(--border);
-  }
-
-  .toc-num {
-    width: 32px;
-    color: var(--gold);
-    font-weight: 700;
-    font-size: 12px;
-  }
-
-  .toc-title {
-    flex: 1;
-    font-size: 13px;
-    color: var(--text-dark);
-  }
-
-  .toc-dots {
-    flex: 1;
-    border-bottom: 1px dotted var(--border);
-    margin: 0 12px;
-  }
-
-  .toc-page {
-    font-size: 12px;
-    color: var(--text-light);
-    font-weight: 500;
-    min-width: 20px;
-    text-align: right;
-  }
-
-  .highlight-box {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--slate) 100%);
-    border-radius: 8px;
-    padding: 28px 32px;
-    color: var(--white);
-    margin-bottom: 32px;
-  }
-
-  .highlight-box h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--gold);
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .highlight-box p {
-    font-size: 13px;
-    line-height: 1.8;
-    color: rgba(255,255,255,0.8);
-  }
-
-  .score-bar-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 14px;
-  }
-
-  .score-bar-label {
-    width: 140px;
-    font-size: 12px;
-    color: var(--text-mid);
-    flex-shrink: 0;
-  }
-
-  .score-bar-track {
-    flex: 1;
-    height: 8px;
-    background: var(--off-white);
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-
-  .score-bar-fill {
-    height: 100%;
-    border-radius: 4px;
-  }
-
-  .score-bar-val {
-    width: 40px;
-    text-align: right;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-dark);
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{width:794px;height:1123px;overflow:hidden;background:#fff;font-family:'Noto Sans KR',sans-serif;font-size:9px;color:#1a1a2e;}
+  header{width:794px;height:44px;background:#0B1B3A;display:flex;align-items:center;justify-content:space-between;padding:0 18px;}
+  .logo{font-size:16px;font-weight:700;color:#C9A84C;letter-spacing:2px;}
+  .hdr-info{display:flex;flex-direction:column;align-items:flex-end;gap:1px;}
+  .hdr-product{font-size:9px;color:#C9A84C;font-weight:500;}
+  .hdr-meta{font-size:8px;color:rgba(255,255,255,0.65);}
+  .kpi-strip{width:794px;height:64px;background:#F5F3EE;border-bottom:2px solid #C9A84C;display:flex;align-items:center;justify-content:space-around;padding:0 14px;}
+  .kpi-box{display:flex;flex-direction:column;align-items:center;gap:3px;}
+  .kpi-val{font-size:22px;font-weight:700;color:#0B1B3A;line-height:1;}
+  .kpi-val.red{color:#B91C1C;}.kpi-val.amber{color:#C9A84C;}.kpi-val.blue{color:#1e40af;}.kpi-val.green{color:#166534;}
+  .kpi-label{font-size:8px;color:#555;text-align:center;}
+  .kpi-divider{width:1px;height:38px;background:#D0C9BB;}
+  .main-body{width:794px;height:985px;display:flex;overflow:hidden;}
+  .col-left{width:432px;border-right:1px solid #D8D2C4;padding:9px 12px;display:flex;flex-direction:column;gap:7px;overflow:hidden;}
+  .col-right{width:362px;padding:9px 12px;display:flex;flex-direction:column;gap:7px;overflow:hidden;}
+  .sec-title{font-size:10px;font-weight:700;color:#0B1B3A;border-bottom:1.5px solid #C9A84C;padding-bottom:2px;margin-bottom:4px;letter-spacing:0.5px;text-transform:uppercase;}
+  table.risk{width:100%;border-collapse:collapse;}
+  table.risk th{background:#0B1B3A;color:#C9A84C;font-size:8px;font-weight:600;padding:3px 5px;text-align:left;}
+  table.risk td{font-size:8px;padding:3px 5px;border-bottom:1px solid #E8E2D8;vertical-align:middle;}
+  table.risk tr:nth-child(even) td{background:#F9F7F3;}
+  .badge{display:inline-block;padding:1px 5px;border-radius:2px;font-size:7.5px;font-weight:700;}
+  .badge.red{background:#FEE2E2;color:#991B1B;}.badge.amber{background:#FEF3C7;color:#92400E;}
+  table.matrix{width:100%;border-collapse:collapse;}
+  table.matrix th{background:#0B1B3A;color:#C9A84C;font-size:7.5px;font-weight:600;padding:2px 4px;text-align:center;}
+  table.matrix td{font-size:7.5px;padding:2px 4px;text-align:center;border-bottom:1px solid #E8E2D8;}
+  table.matrix td:first-child{text-align:left;font-weight:600;}
+  .dr{color:#B91C1C;font-weight:700;}.da{color:#D97706;font-weight:700;}.dg{color:#16A34A;font-weight:700;}
+  .summary-box{background:#0B1B3A;border-radius:3px;padding:7px 9px;color:#fff;}
+  .summary-box p{font-size:8px;line-height:1.55;}
+  .summary-box strong{color:#C9A84C;}
+  .ba-item{margin-bottom:6px;}
+  .ba-num{font-size:8px;font-weight:700;color:#0B1B3A;margin-bottom:2px;}
+  .ba-row{display:flex;gap:4px;}
+  .ba-cell{flex:1;padding:4px 5px;border-radius:2px;font-size:8px;line-height:1.4;}
+  .ba-cell.before{background:#FEE2E2;border-left:2px solid #B91C1C;color:#7f1d1d;}
+  .ba-cell.after{background:#DCFCE7;border-left:2px solid #16A34A;color:#14532d;}
+  .ba-label{font-size:7px;font-weight:700;margin-bottom:1px;opacity:0.7;}
+  .rec-item{display:flex;gap:5px;align-items:flex-start;margin-bottom:5px;}
+  .rec-tag{min-width:32px;padding:1px 4px;border-radius:2px;font-size:7px;font-weight:700;text-align:center;white-space:nowrap;}
+  .rec-tag.em{background:#FEE2E2;color:#B91C1C;}.rec-tag.st{background:#FEF3C7;color:#92400E;}
+  .rec-tag.md{background:#DBEAFE;color:#1e40af;}.rec-tag.lg{background:#D1FAE5;color:#065F46;}
+  .rec-content p{font-size:8px;line-height:1.4;color:#1a1a2e;}
+  .rec-content .rec-meta{font-size:7.5px;color:#666;margin-top:1px;}
+  footer{width:794px;height:30px;background:#0B1B3A;display:flex;align-items:center;justify-content:space-between;padding:0 18px;}
+  footer .fl{font-size:7.5px;color:#C9A84C;}
+  footer .fr{font-size:7px;color:rgba(255,255,255,0.5);}
 </style>
 </head>
 <body>
 
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     PAGE 1 — COVER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<div class="page cover">
-  <div class="cover-bg-lines"></div>
-  <div class="cover-accent-bar"></div>
-
-  <div class="cover-top-band">
-    <div class="cover-logo">
-      <div class="cover-logo-icon">TR</div>
-      <div>
-        <div class="cover-logo-text">TRUSTA</div>
-        <div class="cover-logo-sub">Cosmetic Compliance AI</div>
-      </div>
-    </div>
-    <div class="cover-date">
-      발행일 2026.05.19<br>
-      보고서 번호 TRS-2026-0412
-    </div>
+<header>
+  <div class="logo">TRUSTA</div>
+  <div class="hdr-info">
+    <div class="hdr-product">LUMIX BEAUTY CO. &nbsp;&middot;&nbsp; 아쿠아 비타민C 세럼</div>
+    <div class="hdr-meta">TRS-2026-0412 &nbsp;&middot;&nbsp; 2026.05.19 &nbsp;&middot;&nbsp; Cosmetic Compliance Report</div>
   </div>
+</header>
 
-  <div class="cover-main">
-    <div class="cover-tag">
-      <span>●</span> Confidential — Client Restricted
-    </div>
-
-    <div class="cover-title">화장품 표시·광고<br>리스크 진단 리포트</div>
-    <div class="cover-title-sub">Cosmetic Claims Risk Assessment Report</div>
-    <div class="cover-divider"></div>
-
-    <div class="cover-meta-grid">
-      <div class="cover-meta-item">
-        <label>의뢰 브랜드</label>
-        <div class="value">LUMIX BEAUTY CO.</div>
-      </div>
-      <div class="cover-meta-item">
-        <label>분석 제품</label>
-        <div class="value">아쿠아 비타민C 세럼</div>
-      </div>
-      <div class="cover-meta-item">
-        <label>분석 국가</label>
-        <div class="value">한국 · 미국 · EU · 일본</div>
-      </div>
-      <div class="cover-meta-item">
-        <label>분석 문구 수</label>
-        <div class="value">광고 문구 5개 항목</div>
-      </div>
-    </div>
-
-    <div class="cover-risk-summary">
-      <div class="risk-pill danger">
-        <div class="count">3</div>
-        <div class="label">즉시 수정</div>
-      </div>
-      <div class="risk-pill warning">
-        <div class="count">2</div>
-        <div class="label">주의 필요</div>
-      </div>
-      <div class="risk-pill safe">
-        <div class="count">0</div>
-        <div class="label">문제없음</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="cover-footer">
-    <div class="cover-footer-text">
-      본 보고서는 TRUSTA AI 분석 엔진 v2.4 기반으로 생성되었습니다.<br>
-      법적 효력을 위해서는 전문 법무팀 검토를 권장합니다.
-    </div>
-    <div class="cover-confidential">Confidential</div>
-  </div>
+<div class="kpi-strip">
+  <div class="kpi-box"><div class="kpi-val red">3</div><div class="kpi-label">즉시수정</div></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-box"><div class="kpi-val amber">2</div><div class="kpi-label">주의</div></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-box"><div class="kpi-val blue">4</div><div class="kpi-label">분석 법역</div></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-box"><div class="kpi-val green">60%</div><div class="kpi-label">즉시수정율</div></div>
 </div>
 
+<div class="main-body">
 
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     PAGE 2 — TABLE OF CONTENTS + EXEC SUMMARY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<div class="page page-inner">
-  <div class="page-header">
-    <div class="page-header-logo">TRUST<span>A</span></div>
-    <div class="page-header-info">
-      아쿠아 비타민C 세럼 | LUMIX BEAUTY CO.<br>
-      보고서 번호 TRS-2026-0412
+  <div class="col-left">
+    <div>
+      <div class="sec-title">클레임 리스크 분석</div>
+      <table class="risk">
+        <thead>
+          <tr>
+            <th style="width:16px">#</th>
+            <th>클레임 문구</th>
+            <th style="width:44px">판정</th>
+            <th style="width:100px">적용 법령</th>
+            <th style="width:28px">법역</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>①</td>
+            <td>"임상실험으로 단 7일 만에 미백 효과 확인"</td>
+            <td><span class="badge red">즉시수정</span></td>
+            <td>화장품법§13, FTC§5</td>
+            <td>&#127472;&#127479;&#127482;&#127480;</td>
+          </tr>
+          <tr>
+            <td>②</td>
+            <td>"의사가 권장하는 피부 재생 포뮬러"</td>
+            <td><span class="badge red">즉시수정</span></td>
+            <td>시행규칙 별표5, EU Art.20</td>
+            <td>&#127472;&#127479;&#127466;&#127482;</td>
+          </tr>
+          <tr>
+            <td>③</td>
+            <td>"100% 자연유래·주름 99% 개선"</td>
+            <td><span class="badge red">즉시수정</span></td>
+            <td>표시광고법§3, 경품표시법§4</td>
+            <td>&#127472;&#127479;&#127471;&#127477;</td>
+          </tr>
+          <tr>
+            <td>④</td>
+            <td>"모든 피부 타입에 안전한 무자극"</td>
+            <td><span class="badge amber">주의</span></td>
+            <td>EU SCCS 가이던스</td>
+            <td>&#127466;&#127482;&#127482;&#127480;</td>
+          </tr>
+          <tr>
+            <td>⑤</td>
+            <td>"FDA 승인 원료·즉각 피부 개선"</td>
+            <td><span class="badge amber">주의</span></td>
+            <td>FTC§255.2</td>
+            <td>&#127482;&#127480;&#127472;&#127479;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <div class="sec-title">국가별 위반 매트릭스</div>
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th style="width:60px;text-align:left">법역</th>
+            <th>① 미백</th><th>② 의사</th><th>③ 99%</th><th>④ 무자극</th><th>⑤ FDA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>&#127472;&#127479; 한국</td>
+            <td><span class="dr">위반</span></td><td><span class="dr">위반</span></td><td><span class="dr">위반</span></td><td><span class="da">주의</span></td><td><span class="da">주의</span></td>
+          </tr>
+          <tr>
+            <td>&#127482;&#127480; 미국</td>
+            <td><span class="dr">위반</span></td><td><span class="da">주의</span></td><td><span class="da">주의</span></td><td><span class="da">주의</span></td><td><span class="dr">위반</span></td>
+          </tr>
+          <tr>
+            <td>&#127466;&#127482; EU</td>
+            <td><span class="da">주의</span></td><td><span class="dr">위반</span></td><td><span class="da">주의</span></td><td><span class="da">주의</span></td><td><span class="dg">양호</span></td>
+          </tr>
+          <tr>
+            <td>&#127471;&#127477; 일본</td>
+            <td><span class="da">주의</span></td><td><span class="dr">위반</span></td><td><span class="dr">위반</span></td><td><span class="dg">양호</span></td><td><span class="dg">양호</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="summary-box">
+      <p>총 <strong>5건</strong>의 클레임 분석 결과, <strong>즉시수정 3건</strong>(60%)&middot;<strong>주의 2건</strong>(40%) 확인. 클레임 ①②③은 화장품법§13, EU Art.20, 표시광고법§3 복수 법령 위반으로 <strong>즉각 집행중단</strong> 필요. 클레임 ④⑤는 위반 수준 미달이나 규제 강화 추세 고려한 <strong>선제적 개선</strong> 권고.</p>
     </div>
   </div>
 
-  <div class="page-body">
-    <div class="section-label">
-      <div class="section-num">01</div>
-      <div>
-        <div class="section-title">Executive Summary</div>
-        <div class="section-sub">핵심 진단 결과 요약</div>
-      </div>
-    </div>
+  <div class="col-right">
+    <div>
+      <div class="sec-title">수정 전 &middot; 후 비교</div>
 
-    <div class="highlight-box">
-      <h3>종합 진단 의견</h3>
-      <p>
-        분석 대상 광고 문구 5건 중 <strong>3건(60%)이 즉시 수정이 필요</strong>한 고위험 표현을 포함하고 있습니다.
-        특히 "임상실험 7일 미백 확인", "의사 권장 처방", "99% 주름 개선" 표현은 국내 화장품법 제13조 및
-        미국 FTC 가이드라인 위반 가능성이 높아 <strong>법적 조치 및 광고 정지 위험</strong>이 존재합니다.
-        즉각적인 광고 문구 수정 및 법무 검토를 권장합니다.
-      </p>
-    </div>
-
-    <div class="exec-summary-grid">
-      <div class="exec-card critical">
-        <div class="exec-card-badge">HIGH RISK</div>
-        <div class="exec-card-value">3건</div>
-        <div class="exec-card-label">즉시 수정 필요<br>법규 위반 가능성 높음</div>
-      </div>
-      <div class="exec-card warning">
-        <div class="exec-card-badge">CAUTION</div>
-        <div class="exec-card-value">2건</div>
-        <div class="exec-card-label">주의 요망<br>국가별 기준 상이</div>
-      </div>
-      <div class="exec-card info">
-        <div class="exec-card-value">4개국</div>
-        <div class="exec-card-label">규제 분석 대상<br>한국·미국·EU·일본</div>
-      </div>
-    </div>
-
-    <div class="section-label" style="margin-top:36px;">
-      <div class="section-num" style="background:var(--slate);">—</div>
-      <div>
-        <div class="section-title">목차</div>
-        <div class="section-sub">Contents</div>
-      </div>
-    </div>
-
-    <ul class="toc-list">
-      <li class="toc-item">
-        <span class="toc-num">01</span>
-        <span class="toc-title">Executive Summary — 핵심 진단 결과</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">02</span>
-      </li>
-      <li class="toc-item">
-        <span class="toc-num">02</span>
-        <span class="toc-title">위험 문구 상세 분석표</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">03</span>
-      </li>
-      <li class="toc-item">
-        <span class="toc-num">03</span>
-        <span class="toc-title">수정 전후 비교표</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">04</span>
-      </li>
-      <li class="toc-item">
-        <span class="toc-num">04</span>
-        <span class="toc-title">국가별 규제 주의사항</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">05</span>
-      </li>
-      <li class="toc-item">
-        <span class="toc-num">05</span>
-        <span class="toc-title">최종 권고사항 및 조치 계획</span>
-        <span class="toc-dots"></span>
-        <span class="toc-page">06</span>
-      </li>
-    </ul>
-  </div>
-
-  <div class="page-footer">
-    <div class="page-footer-left">TRUSTA Cosmetic Compliance Report — Confidential</div>
-    <div class="page-num">02</div>
-  </div>
-</div>
-
-
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     PAGE 3 — RISK ANALYSIS TABLE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<div class="page page-inner">
-  <div class="page-header">
-    <div class="page-header-logo">TRUST<span>A</span></div>
-    <div class="page-header-info">
-      아쿠아 비타민C 세럼 | LUMIX BEAUTY CO.<br>
-      보고서 번호 TRS-2026-0412
-    </div>
-  </div>
-
-  <div class="page-body">
-    <div class="section-label">
-      <div class="section-num">02</div>
-      <div>
-        <div class="section-title">위험 문구 상세 분석표</div>
-        <div class="section-sub">Risk Phrase Analysis — 5 Claims Reviewed</div>
-      </div>
-    </div>
-
-    <table class="risk-table">
-      <thead>
-        <tr>
-          <th style="width:28px;">#</th>
-          <th style="width:220px;">분석 대상 문구</th>
-          <th style="width:90px;">위험 등급</th>
-          <th>위반 근거 / 규제 조항</th>
-          <th style="width:90px;">적용 국가</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="font-weight:700;color:var(--text-light);">①</td>
-          <td>
-            <span class="claim-text">"임상실험으로 단 7일 만에<br>미백 효과 확인"</span>
-          </td>
-          <td><span class="risk-badge high">● 즉시수정</span></td>
-          <td>
-            <span class="basis-text">
-              화장품법 제13조 ①항 — 의약품적 효능 암시 금지.<br>
-              "임상실험" 표현은 의약품에 한정된 용어. 구체적 기간(7일) 병기 시 효능 과장 해당.<br>
-              FTC Act §5: Substantiation required for "clinically tested" claims.
-            </span>
-          </td>
-          <td style="text-align:center;">
-            <span class="risk-badge high" style="display:inline-block;margin:2px;">🇰🇷 KR</span><br>
-            <span class="risk-badge high" style="display:inline-block;margin:2px;">🇺🇸 US</span>
-          </td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;color:var(--text-light);">②</td>
-          <td>
-            <span class="claim-text">"의사가 권장하는<br>피부 재생 포뮬러"</span>
-          </td>
-          <td><span class="risk-badge high">● 즉시수정</span></td>
-          <td>
-            <span class="basis-text">
-              화장품법 시행규칙 별표 5 — 의사·약사 추천 표현 금지.<br>
-              "피부 재생"은 의약품적 효능 표현으로 화장품 기능성 고시 범위 초과.<br>
-              EU Cosmetics Reg. 1223/2009 Art. 20: Medical endorsement prohibited.
-            </span>
-          </td>
-          <td style="text-align:center;">
-            <span class="risk-badge high" style="display:inline-block;margin:2px;">🇰🇷 KR</span><br>
-            <span class="risk-badge high" style="display:inline-block;margin:2px;">🇪🇺 EU</span>
-          </td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;color:var(--text-light);">③</td>
-          <td>
-            <span class="claim-text">"100% 자연 유래 성분으로<br>주름을 99% 개선"</span>
-          </td>
-          <td><span class="risk-badge high">● 즉시수정</span></td>
-          <td>
-            <span class="basis-text">
-              공정거래위원회 표시광고법 — 수치 표기 시 객관적 근거 의무.<br>
-              "99% 개선"은 의약품 수준 효능 주장. "100% 자연 유래" 역시 성분 조성 허위 가능성 검토 필요.<br>
-              일본 경품표시법 4조: 우량오인표시 해당 가능성.
-            </span>
-          </td>
-          <td style="text-align:center;">
-            <span class="risk-badge high" style="display:inline-block;margin:2px;">🇰🇷 KR</span><br>
-            <span class="risk-badge high" style="display:inline-block;margin:2px;">🇯🇵 JP</span>
-          </td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;color:var(--text-light);">④</td>
-          <td>
-            <span class="claim-text">"모든 피부 타입에 안전한<br>무자극 처방"</span>
-          </td>
-          <td><span class="risk-badge mid">▲ 주의</span></td>
-          <td>
-            <span class="basis-text">
-              "모든 피부 타입"의 절대적 안전 주장은 과장 표현 해당 가능.<br>
-              인체적용시험 데이터 미보유 시 문제. EU: "hypoallergenic" 표현 가이던스 참조 권장.
-            </span>
-          </td>
-          <td style="text-align:center;">
-            <span class="risk-badge mid" style="display:inline-block;margin:2px;">🇪🇺 EU</span><br>
-            <span class="risk-badge mid" style="display:inline-block;margin:2px;">🇺🇸 US</span>
-          </td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;color:var(--text-light);">⑤</td>
-          <td>
-            <span class="claim-text">"FDA 승인 원료 함유로<br>즉각적인 피부 개선"</span>
-          </td>
-          <td><span class="risk-badge mid">▲ 주의</span></td>
-          <td>
-            <span class="basis-text">
-              FDA는 화장품 성분을 별도 "승인"하지 않음. "FDA 승인 원료" 표현 자체가 오해 유발.<br>
-              "즉각적 피부 개선"은 기능성 화장품 범위 검토 필요.
-              FTC Endorsement Guide §255.2: False impressions about government approval prohibited.
-            </span>
-          </td>
-          <td style="text-align:center;">
-            <span class="risk-badge mid" style="display:inline-block;margin:2px;">🇺🇸 US</span><br>
-            <span class="risk-badge mid" style="display:inline-block;margin:2px;">🇰🇷 KR</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="finding-box">
-      <h4>위험도 종합 평가</h4>
-      <p>
-        5건의 분석 문구 중 한국·미국에서 <strong>동시에 위반 가능성이 있는 문구가 3건</strong>으로
-        복수 법역에서 법적 리스크가 집중됩니다. 특히 ①·②·③번 문구는 광고 집행 즉시 행정처분 또는
-        소비자 신고 대상이 될 수 있으므로 신속한 조치를 권고합니다.
-      </p>
-    </div>
-  </div>
-
-  <div class="page-footer">
-    <div class="page-footer-left">TRUSTA Cosmetic Compliance Report — Confidential</div>
-    <div class="page-num">03</div>
-  </div>
-</div>
-
-
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     PAGE 4 — BEFORE / AFTER COMPARISON
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<div class="page page-inner">
-  <div class="page-header">
-    <div class="page-header-logo">TRUST<span>A</span></div>
-    <div class="page-header-info">
-      아쿠아 비타민C 세럼 | LUMIX BEAUTY CO.<br>
-      보고서 번호 TRS-2026-0412
-    </div>
-  </div>
-
-  <div class="page-body">
-    <div class="section-label">
-      <div class="section-num">03</div>
-      <div>
-        <div class="section-title">수정 전후 비교표</div>
-        <div class="section-sub">Before &amp; After Claim Revision</div>
-      </div>
-    </div>
-
-    <div class="comparison-item">
-      <div class="comparison-header">
-        <span class="comparison-claim-num">CLAIM ① — HIGH RISK</span>
-        <span class="risk-badge high">즉시수정</span>
-      </div>
-      <div class="comparison-body">
-        <div class="comparison-before">
-          <div class="comparison-label">✕ 수정 전</div>
-          <div class="comparison-text">"임상실험을 통해 단 7일 만에 미백 효과 확인"</div>
-          <div class="comparison-reason">→ "임상실험" 및 구체적 기간(7일) 표현이 의약품적 효능 암시에 해당</div>
+      <div class="ba-item">
+        <div class="ba-num">① 미백 클레임</div>
+        <div class="ba-row">
+          <div class="ba-cell before"><div class="ba-label">BEFORE</div>"임상실험으로 단 7일 만에 미백 효과 확인"</div>
+          <div class="ba-cell after"><div class="ba-label">AFTER</div>"체험 평가에서 피부 투명도 개선 경험 확인"</div>
         </div>
-        <div class="comparison-after">
-          <div class="comparison-label">✓ 수정 후</div>
-          <div class="comparison-text">"사용자 체험 평가에서 피부 투명도 개선 경험 확인"</div>
-          <div class="comparison-reason">→ 주관적 사용 경험으로 표현, 의약품 혼동 회피, 소비자 체험 범주 유지</div>
+      </div>
+
+      <div class="ba-item">
+        <div class="ba-num">② 의사 권장 클레임</div>
+        <div class="ba-row">
+          <div class="ba-cell before"><div class="ba-label">BEFORE</div>"의사가 권장하는 피부 재생 포뮬러"</div>
+          <div class="ba-cell after"><div class="ba-label">AFTER</div>"피부과학 연구 성분으로 개발된 케어 세럼"</div>
+        </div>
+      </div>
+
+      <div class="ba-item">
+        <div class="ba-num">③ 수치 클레임</div>
+        <div class="ba-row">
+          <div class="ba-cell before"><div class="ba-label">BEFORE</div>"100% 자연유래 성분·주름 99% 개선"</div>
+          <div class="ba-cell after"><div class="ba-label">AFTER</div>"식물 유래 포뮬러로 피부 결 개선에 도움"</div>
+        </div>
+      </div>
+
+      <div class="ba-item">
+        <div class="ba-num">⑤ FDA 클레임</div>
+        <div class="ba-row">
+          <div class="ba-cell before"><div class="ba-label">BEFORE</div>"FDA 승인 원료·즉각 피부 개선"</div>
+          <div class="ba-cell after"><div class="ba-label">AFTER</div>"FDA 등록 시설에서 제조된 안심 성분"</div>
         </div>
       </div>
     </div>
 
-    <div class="comparison-item">
-      <div class="comparison-header">
-        <span class="comparison-claim-num">CLAIM ② — HIGH RISK</span>
-        <span class="risk-badge high">즉시수정</span>
-      </div>
-      <div class="comparison-body">
-        <div class="comparison-before">
-          <div class="comparison-label">✕ 수정 전</div>
-          <div class="comparison-text">"의사가 권장하는 피부 재생 포뮬러"</div>
-          <div class="comparison-reason">→ 의료인 추천 표현 및 "피부 재생"은 화장품법상 금지 표현</div>
-        </div>
-        <div class="comparison-after">
-          <div class="comparison-label">✓ 수정 후</div>
-          <div class="comparison-text">"피부과학 연구 성분으로 개발된 케어 세럼"</div>
-          <div class="comparison-reason">→ 과학적 배경 강조, 의료인 추천 표현 삭제, 화장품 효능 범위 내 유지</div>
-        </div>
-      </div>
-    </div>
+    <div>
+      <div class="sec-title">개선 권고사항</div>
 
-    <div class="comparison-item">
-      <div class="comparison-header">
-        <span class="comparison-claim-num">CLAIM ③ — HIGH RISK</span>
-        <span class="risk-badge high">즉시수정</span>
-      </div>
-      <div class="comparison-body">
-        <div class="comparison-before">
-          <div class="comparison-label">✕ 수정 전</div>
-          <div class="comparison-text">"100% 자연 유래 성분으로 피부 주름을 99% 개선"</div>
-          <div class="comparison-reason">→ 수치 과장 표현, "99% 개선"은 의약품 수준 효능 주장에 해당</div>
-        </div>
-        <div class="comparison-after">
-          <div class="comparison-label">✓ 수정 후</div>
-          <div class="comparison-text">"식물 유래 성분 중심 포뮬러로 피부 결 개선에 도움"</div>
-          <div class="comparison-reason">→ 성분 기원 명시, 효능은 "도움" 수준으로 완화, 수치 삭제</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="comparison-item">
-      <div class="comparison-header">
-        <span class="comparison-claim-num">CLAIM ⑤ — CAUTION</span>
-        <span class="risk-badge mid">주의</span>
-      </div>
-      <div class="comparison-body">
-        <div class="comparison-before">
-          <div class="comparison-label">✕ 수정 전</div>
-          <div class="comparison-text">"FDA 승인 원료 함유로 즉각적인 피부 개선"</div>
-          <div class="comparison-reason">→ FDA는 화장품 성분을 승인하지 않음 — 허위 인상 유발 표현</div>
-        </div>
-        <div class="comparison-after">
-          <div class="comparison-label">✓ 수정 후</div>
-          <div class="comparison-text">"미국 FDA 등록 시설에서 제조된 안심 성분"</div>
-          <div class="comparison-reason">→ "승인" → "등록 시설"로 정정, 과장 없이 신뢰감 유지 가능</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="page-footer">
-    <div class="page-footer-left">TRUSTA Cosmetic Compliance Report — Confidential</div>
-    <div class="page-num">04</div>
-  </div>
-</div>
-
-
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     PAGE 5 — COUNTRY REGULATIONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<div class="page page-inner">
-  <div class="page-header">
-    <div class="page-header-logo">TRUST<span>A</span></div>
-    <div class="page-header-info">
-      아쿠아 비타민C 세럼 | LUMIX BEAUTY CO.<br>
-      보고서 번호 TRS-2026-0412
-    </div>
-  </div>
-
-  <div class="page-body">
-    <div class="section-label">
-      <div class="section-num">04</div>
-      <div>
-        <div class="section-title">국가별 규제 주의사항</div>
-        <div class="section-sub">Country-Specific Regulatory Notes</div>
-      </div>
-    </div>
-
-    <table class="country-table" style="margin-bottom:32px;">
-      <thead>
-        <tr>
-          <th style="width:110px;">국가</th>
-          <th style="width:90px;">① 미백</th>
-          <th style="width:90px;">② 의사권장</th>
-          <th style="width:90px;">③ 99%개선</th>
-          <th style="width:90px;">④ 무자극</th>
-          <th style="width:90px;">⑤ FDA원료</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>🇰🇷 한국</td>
-          <td><span class="status-dot dot-red"></span>위반</td>
-          <td><span class="status-dot dot-red"></span>위반</td>
-          <td><span class="status-dot dot-red"></span>위반</td>
-          <td><span class="status-dot dot-orange"></span>주의</td>
-          <td><span class="status-dot dot-orange"></span>주의</td>
-        </tr>
-        <tr>
-          <td>🇺🇸 미국</td>
-          <td><span class="status-dot dot-red"></span>위반</td>
-          <td><span class="status-dot dot-orange"></span>주의</td>
-          <td><span class="status-dot dot-orange"></span>주의</td>
-          <td><span class="status-dot dot-orange"></span>주의</td>
-          <td><span class="status-dot dot-red"></span>위반</td>
-        </tr>
-        <tr>
-          <td>🇪🇺 EU</td>
-          <td><span class="status-dot dot-orange"></span>주의</td>
-          <td><span class="status-dot dot-red"></span>위반</td>
-          <td><span class="status-dot dot-orange"></span>주의</td>
-          <td><span class="status-dot dot-orange"></span>주의</td>
-          <td><span class="status-dot dot-green"></span>양호</td>
-        </tr>
-        <tr>
-          <td>🇯🇵 일본</td>
-          <td><span class="status-dot dot-orange"></span>주의</td>
-          <td><span class="status-dot dot-red"></span>위반</td>
-          <td><span class="status-dot dot-red"></span>위반</td>
-          <td><span class="status-dot dot-green"></span>양호</td>
-          <td><span class="status-dot dot-green"></span>양호</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div style="margin-bottom:28px;">
-      <div class="section-label" style="margin-bottom:20px;">
-        <div class="section-num" style="font-size:10px;background:var(--slate);">KR</div>
-        <div><div class="section-title" style="font-size:16px;">한국 — 화장품법 주요 규제</div></div>
-      </div>
-      <div class="score-bar-row">
-        <div class="score-bar-label">광고 문구 제한 강도</div>
-        <div class="score-bar-track"><div class="score-bar-fill" style="width:90%;background:var(--red);"></div></div>
-        <div class="score-bar-val">매우높음</div>
-      </div>
-      <div class="score-bar-row">
-        <div class="score-bar-label">기능성 화장품 규제</div>
-        <div class="score-bar-track"><div class="score-bar-fill" style="width:85%;background:var(--orange);"></div></div>
-        <div class="score-bar-val">높음</div>
-      </div>
-      <div class="basis-text" style="margin-top:12px;padding:12px;background:var(--off-white);border-radius:6px;line-height:1.8;">
-        화장품법 제13조: 의약품으로 혼동 우려 표현 금지 / 의사·약사 추천 표현 금지 / 기능성화장품 범위 초과 효능 표현 금지.
-        시행규칙 별표5: 금지 표현 목록 57종 수록. 위반 시 영업정지 6개월 또는 과징금 최대 1억원.
-      </div>
-    </div>
-
-    <div style="margin-bottom:28px;">
-      <div class="section-label" style="margin-bottom:20px;">
-        <div class="section-num" style="font-size:10px;background:var(--slate);">US</div>
-        <div><div class="section-title" style="font-size:16px;">미국 — FDA / FTC 규제</div></div>
-      </div>
-      <div class="score-bar-row">
-        <div class="score-bar-label">광고 문구 제한 강도</div>
-        <div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:var(--orange);"></div></div>
-        <div class="score-bar-val">높음</div>
-      </div>
-      <div class="basis-text" style="margin-top:12px;padding:12px;background:var(--off-white);border-radius:6px;line-height:1.8;">
-        FD&amp;C Act: 화장품이 약품 효능 주장 시 "drug" 분류 전환. FTC Act §5: 허위·오도적 광고 금지,
-        실증 없는 수치 표현 금지. MoCRA(2022): 제조사 책임 강화, 안전성 보고 의무화.
-      </div>
-    </div>
-  </div>
-
-  <div class="page-footer">
-    <div class="page-footer-left">TRUSTA Cosmetic Compliance Report — Confidential</div>
-    <div class="page-num">05</div>
-  </div>
-</div>
-
-
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     PAGE 6 — FINAL RECOMMENDATIONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<div class="page page-inner">
-  <div class="page-header">
-    <div class="page-header-logo">TRUST<span>A</span></div>
-    <div class="page-header-info">
-      아쿠아 비타민C 세럼 | LUMIX BEAUTY CO.<br>
-      보고서 번호 TRS-2026-0412
-    </div>
-  </div>
-
-  <div class="page-body">
-    <div class="section-label">
-      <div class="section-num">05</div>
-      <div>
-        <div class="section-title">최종 권고사항 및 조치 계획</div>
-        <div class="section-sub">Final Recommendations &amp; Action Plan</div>
-      </div>
-    </div>
-
-    <ul class="rec-list">
-      <li class="rec-item">
-        <div class="rec-priority p1">1</div>
+      <div class="rec-item">
+        <div class="rec-tag em">긴급</div>
         <div class="rec-content">
-          <h5>광고 문구 ①②③ 즉각 집행 중단 및 수정</h5>
-          <p>현재 운영 중인 모든 채널(홈페이지, SNS, 오픈마켓 상세페이지)에서 고위험 문구 3건을 즉시 비공개 처리하고,
-          본 보고서 제안 수정안으로 교체하십시오. 미집행 광고물은 교체 완료 전 론칭을 보류하십시오.</p>
-          <div class="rec-meta">
-            <span class="rec-tag">즉시 조치</span>
-            <span class="rec-tag">마케팅팀</span>
-            <span class="rec-tag">D+3일 이내</span>
-          </div>
+          <p>문구 ①②③ 즉각 집행중단 및 수정안으로 교체</p>
+          <div class="rec-meta">담당: 마케팅팀 &nbsp;&middot;&nbsp; 기한: D+3일</div>
         </div>
-      </li>
-      <li class="rec-item">
-        <div class="rec-priority p1">2</div>
-        <div class="rec-content">
-          <h5>법무팀 또는 식약처 전문 컨설턴트 검토 의뢰</h5>
-          <p>수정된 문구에 대해 화장품법 전문 법무법인 또는 식약처 인증 컨설턴트에게 최종 법적 검토를 요청하십시오.
-          TRUSTA 진단은 AI 기반 사전 스크리닝으로, 법적 효력을 위해서는 전문가 서명 검토가 필요합니다.</p>
-          <div class="rec-meta">
-            <span class="rec-tag">단기 조치</span>
-            <span class="rec-tag">법무팀</span>
-            <span class="rec-tag">D+7일 이내</span>
-          </div>
-        </div>
-      </li>
-      <li class="rec-item">
-        <div class="rec-priority p2">3</div>
-        <div class="rec-content">
-          <h5>"무자극" 주장 뒷받침 인체적용시험 실시</h5>
-          <p>④번 문구의 "모든 피부 타입 안전" 주장을 유지하려면 피부과학적 근거가 필요합니다.
-          공인 피부과학연구소(예: 더마프루프, 피부과학연구소)에서 인체적용시험을 진행하고 데이터를 확보하십시오.</p>
-          <div class="rec-meta">
-            <span class="rec-tag">중기 조치</span>
-            <span class="rec-tag">R&amp;D팀</span>
-            <span class="rec-tag">D+30일 이내</span>
-          </div>
-        </div>
-      </li>
-      <li class="rec-item">
-        <div class="rec-priority p2">4</div>
-        <div class="rec-content">
-          <h5>광고 문구 사전 검수 프로세스 수립</h5>
-          <p>향후 신제품 출시 또는 광고 캠페인 전에 TRUSTA를 활용한 정기 사전 검수 프로세스를 도입하여
-          동일한 법적 리스크가 반복되지 않도록 체계화하십시오. TRUSTA API 연동을 통한 자동 검수도 가능합니다.</p>
-          <div class="rec-meta">
-            <span class="rec-tag">장기 조치</span>
-            <span class="rec-tag">마케팅팀 전사</span>
-            <span class="rec-tag">Q3 2026</span>
-          </div>
-        </div>
-      </li>
-      <li class="rec-item">
-        <div class="rec-priority p3">5</div>
-        <div class="rec-content">
-          <h5>미국·일본 수출 대비 별도 광고 문구 버전 관리</h5>
-          <p>국가별 규제 차이를 반영한 국가별 광고 문구 버전 관리 체계를 수립하십시오.
-          특히 일본 수출 시 약기법(薬機法)에 의한 별도 허가 사항 및 경품표시법 준수 여부를 추가 확인하십시오.</p>
-          <div class="rec-meta">
-            <span class="rec-tag">글로벌 대응</span>
-            <span class="rec-tag">해외사업팀</span>
-            <span class="rec-tag">Q4 2026</span>
-          </div>
-        </div>
-      </li>
-    </ul>
+      </div>
 
-    <div class="highlight-box" style="margin-top:32px;">
-      <h3>TRUSTA 서비스 안내</h3>
-      <p>
-        본 진단 보고서는 TRUSTA AI 엔진이 생성한 사전 스크리닝 결과입니다.
-        정기 구독을 통해 신규 광고 문구의 실시간 검수, 국가별 규제 업데이트 알림,
-        전문 법무팀 연결 서비스를 이용하실 수 있습니다.
-        문의: <strong>contact@trusta.ai</strong>
-      </p>
+      <div class="rec-item">
+        <div class="rec-tag st">단기</div>
+        <div class="rec-content">
+          <p>화장품법 전문 법무팀 최종 검토 수령</p>
+          <div class="rec-meta">담당: 법무팀 &nbsp;&middot;&nbsp; 기한: D+7일</div>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-tag md">중기</div>
+        <div class="rec-content">
+          <p>"무자극" 주장 인체적용시험 실시</p>
+          <div class="rec-meta">담당: R&amp;D팀 &nbsp;&middot;&nbsp; 기한: D+30일</div>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-tag lg">장기</div>
+        <div class="rec-content">
+          <p>TRUSTA 정기검수 + 국가별 버전관리 체계 구축</p>
+          <div class="rec-meta">담당: 전사 &nbsp;&middot;&nbsp; 기한: Q3 2026</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="page-footer">
-    <div class="page-footer-left">TRUSTA Cosmetic Compliance Report — Confidential</div>
-    <div class="page-num">06</div>
-  </div>
 </div>
+
+<footer>
+  <div class="fl">TRUSTA Cosmetic Compliance AI &nbsp;&middot;&nbsp; TRS-2026-0412 &nbsp;&middot;&nbsp; Style 1 — Professional Consulting</div>
+  <div class="fr">본 보고서는 AI 분석 결과이며 법적 효력을 갖지 않습니다. 최종 판단은 전문 법무팀에 의뢰하십시오.</div>
+</footer>
 
 </body>
 </html>
