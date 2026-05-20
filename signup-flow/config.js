@@ -1,4 +1,4 @@
-// config.js — Supabase client configuration for the static HTML demo.
+// config.js — Supabase client configuration for the static HTML app.
 //
 // To go live:
 //   1. Open Supabase project → Settings → API
@@ -14,6 +14,8 @@ window.__TRUSTA__ = {
   SUPABASE_URL:      "https://YOUR-PROJECT-REF.supabase.co",
   SUPABASE_ANON_KEY: "YOUR-ANON-PUBLIC-KEY",
 
-  SOURCE:        "landing_main_cta",
-  THANK_YOU_URL: "thank-you.html",
+  SOURCE:            "landing_main_cta",
+  THANK_YOU_URL:     "thank-you.html",
+  DASHBOARD_URL:     "../dashboard.html",
+  TRIAL_EXPIRED_URL: "../trial-expired.html",
 };

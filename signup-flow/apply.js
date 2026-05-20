@@ -1,115 +1,200 @@
-// apply.js — signup form handler
-// Enables submit when required fields + privacy_agreed are valid,
-// submits to Supabase `leads` table, redirects to thank-you on success.
+// apply.js — TRUSTA Auth (Signup + Login)
+// Uses Supabase Auth. User profile + trial timer is created via DB trigger.
 
 (function () {
-  const cfg  = window.__TRUSTA__ || {};
-  const form = document.getElementById('apply-form');
-  if (!form) return;
+  const cfg = window.__TRUSTA__ || {};
 
-  const fields = {
-    email:     document.getElementById('f-email'),
-    brand:     document.getElementById('f-brand'),
-    contact:   document.getElementById('f-contact'),
-    website:   document.getElementById('f-url'),
-    sample:    document.getElementById('f-sample'),
-    privacy:   document.getElementById('f-privacy'),
-    marketing: document.getElementById('f-marketing'),
+  // ----- Supabase client (lazy) -----
+  function getSB() {
+    if (!window.supabase || !cfg.SUPABASE_URL || cfg.SUPABASE_URL.includes('YOUR-PROJECT-REF')) {
+      return null;
+    }
+    return window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+  }
+
+  // ----- Tab switch -----
+  window.switchTab = function (tab) {
+    const isSignup = tab === 'signup';
+    const sf = document.getElementById('signup-form');
+    const lf = document.getElementById('login-form');
+    const ts = document.getElementById('tab-signup');
+    const tl = document.getElementById('tab-login');
+    const err = document.getElementById('auth-error');
+
+    if (sf) sf.style.display = isSignup ? '' : 'none';
+    if (lf) lf.style.display = isSignup ? 'none' : '';
+    if (ts) {
+      ts.classList.toggle('active', isSignup);
+      ts.setAttribute('aria-selected', isSignup ? 'true' : 'false');
+    }
+    if (tl) {
+      tl.classList.toggle('active', !isSignup);
+      tl.setAttribute('aria-selected', !isSignup ? 'true' : 'false');
+    }
+    if (err) {
+      err.classList.remove('is-shown');
+      err.textContent = '';
+    }
   };
-  const submitBtn   = document.getElementById('submit-btn');
-  const submitError = document.getElementById('submit-error');
 
+  // ----- Helpers -----
   const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
 
-  function validate() {
-    const okEmail   = isValidEmail(fields.email.value);
-    const okBrand   = fields.brand.value.trim().length > 0;
-    const okContact = fields.contact.value.trim().length > 0;
-    const okSample  = fields.sample.value.trim().length > 0;
-    const okPrivacy = fields.privacy.checked === true;
-    const allOk = okEmail && okBrand && okContact && okSample && okPrivacy;
-    submitBtn.disabled = !allOk;
-    submitBtn.classList.toggle('is-disabled', !allOk);
-    return { okEmail, okBrand, okContact, okSample, okPrivacy, allOk };
+  function showError(msg) {
+    const el = document.getElementById('auth-error');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('is-shown');
   }
 
-  function reflectConsent(id) {
-    const wrap = document.getElementById(id);
-    const cb   = wrap.querySelector('input[type="checkbox"]');
-    wrap.classList.toggle('checked', cb.checked);
+  function clearError() {
+    const el = document.getElementById('auth-error');
+    if (!el) return;
+    el.classList.remove('is-shown');
+    el.textContent = '';
   }
 
-  ['email', 'brand', 'contact', 'sample'].forEach((k) => {
-    fields[k].addEventListener('input', validate);
-    fields[k].addEventListener('blur', () => {
-      const v = validate();
-      const fieldEl = fields[k].closest('.field');
-      const ok = { email: v.okEmail, brand: v.okBrand, contact: v.okContact, sample: v.okSample };
-      fieldEl.classList.toggle('error', !ok[k] && fields[k].value.trim().length > 0);
+  function setBtnLoading(btn, loadingText) {
+    if (!btn) return null;
+    const labelEl = btn.querySelector('.label');
+    const orig = labelEl ? labelEl.textContent : null;
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+    if (labelEl && loadingText) labelEl.textContent = loadingText;
+    return orig;
+  }
+
+  function clearBtnLoading(btn, origText) {
+    if (!btn) return;
+    const labelEl = btn.querySelector('.label');
+    btn.classList.remove('is-loading');
+    btn.disabled = false;
+    if (labelEl && origText) labelEl.textContent = origText;
+  }
+
+  // ----- Live validation for Signup -----
+  function validateSignup() {
+    const email = document.getElementById('s-email')?.value.trim() || '';
+    const pw    = document.getElementById('s-pw')?.value || '';
+    const pw2   = document.getElementById('s-pw2')?.value || '';
+    const priv  = document.getElementById('s-privacy')?.checked;
+
+    const ok = isValidEmail(email) && pw.length >= 8 && pw === pw2 && priv;
+    const btn = document.getElementById('signup-btn');
+    if (btn) {
+      btn.disabled = !ok;
+      btn.classList.toggle('is-disabled', !ok);
+    }
+    return ok;
+  }
+
+  // Bind live-validation listeners
+  ['s-email', 's-pw', 's-pw2'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', validateSignup);
+  });
+
+  // Consent checkbox visual + validation
+  ['s-privacy', 's-marketing'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('change', () => {
+      const wrap = el.closest('.consent');
+      if (wrap) wrap.classList.toggle('checked', el.checked);
+      validateSignup();
     });
   });
 
-  fields.privacy.addEventListener('change',   () => { reflectConsent('c-privacy');   validate(); });
-  fields.marketing.addEventListener('change', () => { reflectConsent('c-marketing'); });
+  // ----- Signup submit -----
+  const signupForm = document.getElementById('signup-form');
+  if (signupForm) {
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
 
-  function buildPayload() {
-    return {
-      email:            fields.email.value.trim(),
-      brand_name:       fields.brand.value.trim(),
-      contact_name:     fields.contact.value.trim(),
-      website_url:      fields.website.value.trim() || null,
-      sample_text:      fields.sample.value.trim(),
-      privacy_agreed:   fields.privacy.checked,
-      marketing_agreed: fields.marketing.checked,
-      source:           cfg.SOURCE || 'landing_main_cta',
-    };
+      const sb = getSB();
+      if (!sb) {
+        showError('Supabase 설정이 필요합니다. signup-flow/config.js를 확인해 주세요.');
+        return;
+      }
+
+      const email     = document.getElementById('s-email').value.trim();
+      const pw        = document.getElementById('s-pw').value;
+      const pw2       = document.getElementById('s-pw2').value;
+      const privacy   = document.getElementById('s-privacy').checked;
+      const marketing = document.getElementById('s-marketing').checked;
+
+      if (!isValidEmail(email)) { showError('올바른 이메일 형식을 입력해 주세요.'); return; }
+      if (pw.length < 8)        { showError('비밀번호는 8자 이상으로 입력해 주세요.'); return; }
+      if (pw !== pw2)           { showError('비밀번호가 일치하지 않습니다.'); return; }
+      if (!privacy)             { showError('개인정보 수집·이용 동의에 체크해 주세요.'); return; }
+
+      const btn = document.getElementById('signup-btn');
+      const origText = setBtnLoading(btn, '처리 중…');
+
+      try {
+        const { data, error } = await sb.auth.signUp({
+          email,
+          password: pw,
+          options: {
+            data: {
+              privacy_agreed: privacy,
+              marketing_agreed: marketing,
+            },
+          },
+        });
+        if (error) throw error;
+
+        // Profile + trial 타이머는 DB trigger(handle_new_user)가 생성.
+        window.location.href = cfg.THANK_YOU_URL || 'thank-you.html';
+      } catch (err) {
+        const raw = (err && err.message) ? err.message : '';
+        const msg = (raw.includes('already registered') || raw.includes('User already registered'))
+          ? '이미 가입된 이메일입니다. 로그인 탭을 이용해 주세요.'
+          : (raw || '회원가입 중 오류가 발생했습니다.');
+        showError(msg);
+        clearBtnLoading(btn, origText);
+      }
+    });
   }
 
-  async function submitLead(payload) {
-    if (!window.supabase || !cfg.SUPABASE_URL || cfg.SUPABASE_URL.includes('YOUR-PROJECT-REF')) {
-      throw new Error('Supabase config missing. Edit config.js with your project URL + anon key.');
-    }
-    const sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
-    const { error } = await sb.from('leads').insert(payload);
-    if (error) throw error;
+  // ----- Login submit -----
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+
+      const sb = getSB();
+      if (!sb) {
+        showError('Supabase 설정이 필요합니다. signup-flow/config.js를 확인해 주세요.');
+        return;
+      }
+
+      const email = document.getElementById('l-email').value.trim();
+      const pw    = document.getElementById('l-pw').value;
+
+      if (!isValidEmail(email)) { showError('올바른 이메일 형식을 입력해 주세요.'); return; }
+      if (!pw)                  { showError('비밀번호를 입력해 주세요.'); return; }
+
+      const btn = document.getElementById('login-btn');
+      const origText = setBtnLoading(btn, '로그인 중…');
+
+      try {
+        const { data, error } = await sb.auth.signInWithPassword({ email, password: pw });
+        if (error) throw error;
+        window.location.href = cfg.DASHBOARD_URL || '../dashboard.html';
+      } catch (err) {
+        const raw = (err && err.message) ? err.message : '';
+        const msg = raw.includes('Invalid login credentials')
+          ? '이메일 또는 비밀번호가 올바르지 않습니다.'
+          : (raw || '로그인 중 오류가 발생했습니다.');
+        showError(msg);
+        clearBtnLoading(btn, origText);
+      }
+    });
   }
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const v = validate();
-    if (!v.allOk) return;
-
-    if (!fields.privacy.checked) {
-      submitError.textContent = '개인정보 수집·이용 동의에 체크해 주세요.';
-      submitError.classList.add('is-shown');
-      return;
-    }
-
-    submitBtn.classList.add('is-loading');
-    submitBtn.disabled = true;
-    submitError.classList.remove('is-shown');
-
-    const labelEl = submitBtn.querySelector('.label');
-    const origLabel = labelEl ? labelEl.textContent : null;
-    if (labelEl) labelEl.textContent = '신청 중…';
-
-    try {
-      await submitLead(buildPayload());
-      window.location.href = cfg.THANK_YOU_URL || 'thank-you.html';
-    } catch (err) {
-      console.error('[TRUSTA submit error]', err);
-      submitError.textContent =
-        (err && err.message)
-          ? `신청 처리 중 오류: ${err.message}`
-          : '신청 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
-      submitError.classList.add('is-shown');
-      submitBtn.classList.remove('is-loading');
-      submitBtn.disabled = false;
-      if (labelEl && origLabel) labelEl.textContent = origLabel;
-    }
-  });
-
-  validate();
-  reflectConsent('c-privacy');
-  reflectConsent('c-marketing');
+  // Initial state
+  validateSignup();
 })();

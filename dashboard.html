@@ -3,216 +3,105 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TRUSTA · 대시보드</title>
+<title>TRUSTA — 대시보드</title>
 <link rel="stylesheet" href="design-system/colors_and_type.css" />
 <link rel="stylesheet" href="styles.css" />
-<style>
-  .trial-bar {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--yellow);
-    color: var(--ink);
-    font-weight: var(--w-bold);
-    font-size: var(--fs-16);
-    padding: 10px 22px;
-    border-radius: var(--r-pill);
-    border: 2.5px solid var(--yellow-edge);
-  }
-  .trial-bar.warning {
-    background: #FFD9DB;
-    color: var(--warn-red);
-    border-color: var(--warn-red);
-  }
-  .placeholder-block {
-    background: var(--paper-2);
-    border: 2px dashed var(--paper-3);
-    border-radius: var(--r-md);
-    padding: 48px 24px;
-    text-align: center;
-    color: var(--ink-3);
-  }
-  .info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--paper-3);
-    font-size: var(--fs-16);
-  }
-  .info-row:last-child { border-bottom: none; }
-  .info-label { font-weight: var(--w-semi); color: var(--ink); }
-  .info-value { font-weight: var(--w-bold); color: var(--ink); }
-</style>
 </head>
 <body>
-<main class="page">
+<main class="page" style="min-height: 100vh; display: flex; flex-direction: column;">
 
-<!-- Topbar -->
-<div class="topbar" style="display: flex; justify-content: space-between; align-items: center;">
-  <span>
-    <span class="accent">TRUSTA</span>
+  <div class="topbar">
+    <span>K-뷰티 해외 콘텐츠 RegTech SaaS</span>
     <span class="dot">●</span>
-    <span id="user-email" style="font-size: var(--fs-12);">로딩 중…</span>
-  </span>
-  <button id="logout-btn"
-          style="background: none; border: none; color: var(--yellow); font-weight: 700;
-                 cursor: pointer; font-size: var(--fs-12); padding: 0; letter-spacing: 0.02em;">
-    로그아웃
-  </button>
-</div>
+    <span class="accent" id="trial-badge">무료체험 중</span>
+  </div>
 
-<!-- 로딩 상태 -->
-<div id="loading" style="min-height: 60vh; display: flex; align-items: center; justify-content: center;">
-  <p style="color: var(--ink-3); font-size: 16px;">인증 확인 중…</p>
-</div>
-
-<!-- 본문 (인증 확인 후 표시) -->
-<div id="content" style="display: none;">
-
-  <!-- Hero -->
-  <section class="center">
+  <section class="center" style="padding-bottom: var(--s-40);">
     <div class="pill lg">TRUSTA</div>
-
-    <div id="trial-bar" class="trial-bar" style="margin-top: 24px;">
-      무료체험 D-<span id="days-left">–</span>
-    </div>
-
-    <h1 class="h-section" style="margin-top: 20px;">
-      안녕하세요,<br />
-      <span class="hl-thick" id="greeting-name">브랜드</span>님 👋
-    </h1>
-
-    <p class="text-2" style="margin-top: 16px; font-size: 15px; line-height: 1.75;">
-      K-뷰티 해외 문구 리스크 진단 서비스입니다.<br />
-      무료체험 기간 동안 자유롭게 이용해 보세요.
-    </p>
+    <h1 class="h-hero" style="margin-top: 28px;" id="welcome-msg">안녕하세요.</h1>
   </section>
 
-  <!-- Risk Scanner placeholder -->
-  <section class="bg-paper2">
-    <div class="center">
-      <div class="pill sm">RISK SCANNER</div>
-      <h2 class="h-section" style="margin-top: 16px;">문구 리스크 진단</h2>
-      <p class="text-3" style="margin-top: 12px; font-size: 14px;">
-        제품 설명·SNS 카피를 붙여넣으면 고위험 표현을 분석합니다.
-      </p>
-    </div>
+  <section style="padding-top: 0; flex: 1;">
 
-    <div class="placeholder-block" style="margin-top: 28px;">
-      <div style="font-size: 40px; margin-bottom: 16px;">🔍</div>
-      <h3 class="h-card" style="color: var(--ink-3);">곧 오픈됩니다</h3>
-      <p style="margin-top: 10px; font-size: 14px; line-height: 1.6;">
-        문구 리스크 진단 기능이 무료체험 기간 내에 사용 가능합니다.<br />
-        오픈 알림을 받으시려면 마케팅 수신에 동의해 주세요.
-      </p>
-    </div>
-  </section>
-
-  <!-- 내 무료체험 현황 -->
-  <section>
-    <div class="card">
+    <!-- 체험 상태 카드 -->
+    <div class="card" style="margin-bottom: 24px;" id="trial-card">
       <span class="plus">+</span>
-      <h3 class="h-card">내 무료체험 현황</h3>
-
-      <div style="margin-top: 20px;">
-        <div class="info-row">
-          <span class="info-label">플랜</span>
-          <span class="chip-risk low" id="plan-badge"
-                style="font-size: 13px; padding: 4px 14px;">무료체험</span>
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <div style="flex: 1; min-width: 200px;">
+          <h3 class="h-card" id="trial-title">무료체험 진행 중</h3>
+          <p class="text-2 small" style="margin-top: 6px;" id="trial-desc">남은 기간을 확인하세요.</p>
         </div>
-        <div class="info-row">
-          <span class="info-label">상태</span>
-          <span class="info-value" id="status-badge" style="color: #1F8A4F;">활성</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">체험 시작일</span>
-          <span class="info-value" id="trial-start">–</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">체험 만료일</span>
-          <span class="info-value" id="trial-end">–</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">남은 기간</span>
-          <span class="info-value" id="days-remaining"
-                style="font-family: var(--font-display); font-size: 22px; color: var(--yellow-edge);">–일</span>
+        <div class="score-card" style="flex: 0 0 auto; min-width: 120px; text-align: center;">
+          <div class="label">D-DAY</div>
+          <div class="value" id="trial-days-left" style="font-size: 40px;">—</div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- 플랜 업그레이드 안내 -->
-  <section class="bg-paper2">
-    <div class="center">
-      <div class="pill sm">PLAN</div>
-      <h2 class="h-section" style="margin-top: 16px;">
-        무료체험 이후에도<br />
-        계속 이용하려면?
-      </h2>
-      <p class="text-2" style="margin-top: 14px; font-size: 15px; line-height: 1.7;">
-        TRUSTA 플랜을 신청하면<br />
-        제한 없이 문구 리스크 진단과<br />
-        현지어 콘텐츠 변환을 이용할 수 있습니다.
+    <!-- 안내 카드 -->
+    <div class="card" style="margin-bottom: 24px;">
+      <span class="plus">+</span>
+      <h3 class="h-card">문구 점검 서비스</h3>
+      <p class="text-2" style="margin-top: 10px; line-height: 1.65;">
+        현재 베타 서비스를 준비 중입니다.<br />
+        무료체험 기간 동안 <b>샘플 진단 신청</b>을 통해 먼저 이용해 보세요.
       </p>
-      <a href="mailto:hello@trusta.ai?subject=TRUSTA 플랜 문의"
-         class="cta yellow" style="margin-top: 28px; text-decoration: none;">
-        플랜 신청 문의하기 <span class="arrow" style="color: var(--ink);">→</span>
+      <a href="signup-flow/signup.html" class="cta" style="margin-top: 20px;">
+        샘플 진단 신청하기 <span class="arrow">→</span>
       </a>
     </div>
+
+    <!-- 로그아웃 -->
+    <button class="cta ghost" id="logout-btn" style="margin-top: 12px;">
+      로그아웃 <span class="arrow" style="color: var(--yellow-edge);">→</span>
+    </button>
   </section>
 
-</div><!-- /#content -->
-
-<footer style="background: #0a0a0a; color: var(--ink-4); padding: 28px 32px; text-align: center; font-size: 12px; line-height: 1.7;">
-  <div style="color: var(--yellow); font-family: var(--font-display); font-weight: 900; font-size: 16px; letter-spacing: 0.04em;">TRUSTA</div>
-  <p style="margin-top: 8px; color: #555; font-size: 11px;">© 2026 TRUSTA. K-Beauty Overseas Content RegTech SaaS</p>
-</footer>
+  <footer style="background: #0a0a0a; color: var(--ink-4); padding: 36px 32px; text-align: center; font-size: 12px; line-height: 1.7;">
+    <div style="color: var(--yellow); font-family: var(--font-display); font-weight: 900; font-size: 18px; letter-spacing: 0.04em;">TRUSTA</div>
+    <p style="margin-top: 12px;">
+      K-뷰티 브랜드의 해외 콘텐츠 문장 안전망<br />
+      K-Beauty Overseas Content RegTech SaaS
+    </p>
+    <p style="margin-top: 16px; color: #555; font-size: 11px;">© 2026 TRUSTA.</p>
+  </footer>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="js/trusta-config.js"></script>
-<script src="js/trusta-auth.js"></script>
+<script src="signup-flow/config.js"></script>
+<script src="auth-check.js"></script>
 <script>
-(async function () {
-  const sb = window.TRUSTA.getClient();
-  if (!sb) return;
+(async () => {
+  const result = await initAuthCheck();
+  if (!result) return; // redirected
 
-  // 인증 + 무료체험 유효 여부 확인 (실패 시 자동 리다이렉트)
-  const profile = await window.TRUSTA.checkTrial();
-  if (!profile) return;
+  const { sb, session, profile } = result;
 
-  // 인증 통과 → 콘텐츠 표시
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('content').style.display  = 'block';
+  // 인사 메시지
+  const emailLocal = (session.user.email || '').split('@')[0];
+  document.getElementById('welcome-msg').textContent =
+    '안녕하세요, ' + emailLocal + '님.';
 
-  // 사용자 정보 채우기
-  const { data: { session } } = await sb.auth.getSession();
-  const email = session?.user?.email || '';
-  document.getElementById('user-email').textContent  = email;
-  document.getElementById('greeting-name').textContent = email.split('@')[0];
+  // 남은 일수 계산
+  const now = new Date();
+  const ends = new Date(profile.trial_ends_at);
+  const daysLeft = Math.max(0, Math.ceil((ends - now) / (1000 * 60 * 60 * 24)));
 
-  // 무료체험 현황 채우기
-  const left = window.TRUSTA.daysLeft(profile);
-  document.getElementById('days-left').textContent      = left;
-  document.getElementById('days-remaining').textContent = left + '일';
+  document.getElementById('trial-days-left').textContent = daysLeft;
+  document.getElementById('trial-desc').textContent =
+    '무료체험이 ' + ends.toLocaleDateString('ko-KR') + '에 종료됩니다.';
 
-  if (left <= 1) {
-    document.getElementById('trial-bar').classList.add('warning');
+  if (daysLeft === 0) {
+    document.getElementById('trial-title').textContent = '오늘 무료체험이 종료됩니다';
+    document.getElementById('trial-badge').textContent = '만료 D-0';
+  } else if (daysLeft === 1) {
+    document.getElementById('trial-badge').textContent = '체험 D-1';
   }
-
-  const fmt = (d) => d ? new Date(d).toLocaleDateString('ko-KR') : '–';
-  document.getElementById('trial-start').textContent = fmt(profile.trial_started_at);
-  document.getElementById('trial-end').textContent   = fmt(profile.trial_ends_at);
-
-  const planLabel = { free_trial: '무료체험', standard: '스탠다드', growth: '그로스', admin: '관리자' };
-  document.getElementById('plan-badge').textContent  = planLabel[profile.plan] || profile.plan;
-  document.getElementById('status-badge').textContent = profile.trial_status === 'active' ? '활성' : profile.trial_status;
 
   // 로그아웃
   document.getElementById('logout-btn').addEventListener('click', async () => {
     await sb.auth.signOut();
-    window.location.href = '/index.html';
+    window.location.href = 'index.html';
   });
 })();
 </script>
