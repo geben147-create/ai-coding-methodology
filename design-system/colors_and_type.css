@@ -1,37 +1,27 @@
 /* =========================================================================
    Wolcheon Design System — Colors, Type, Spacing, Radii, Shadow
-   =========================================================================
-   See README.md for the why. This file is the single source of truth for
-   visual foundations. Import into any page:
-
-     <link rel="stylesheet" href="colors_and_type.css">
-
    ========================================================================= */
 
-/* Pretendard — primary face. Korean + Latin, weights 100–900.
-   Loaded from the official CDN. Substitute for Gmarket Sans / Black-weight
-   Korean sans seen in the source landing pages. */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
 
 :root {
   /* ---------- COLOR ---------- */
-  --ink:         #111111;  /* headlines, CTA pills, footer slab, + badge */
-  --ink-2:       #222222;  /* body */
-  --ink-3:       #6B6B6B;  /* sub-copy, footnote labels */
-  --ink-4:       #9A9A9A;  /* disabled, dividers on dark */
+  --ink:         #111111;
+  --ink-2:       #222222;
+  --ink-3:       #6B6B6B;
+  --ink-4:       #9A9A9A;
 
-  --paper:       #FFFFFF;  /* page background */
-  --paper-2:     #F4F4F4;  /* section dividers, image-block backdrops */
-  --paper-3:     #EFEFEF;  /* soft photo gel */
+  --paper:       #FFFFFF;
+  --paper-2:     #F4F4F4;
+  --paper-3:     #EFEFEF;
 
-  --yellow:      #FFE600;  /* primary brand accent — price, highlights, + glyph */
-  --yellow-soft: #FFF59A;  /* highlight-bar fill behind text */
-  --yellow-edge: #F5C400;  /* card stroke + chunky drop shadow */
+  --yellow:      #FFE600;
+  --yellow-soft: #FFF59A;
+  --yellow-edge: #F5C400;
 
-  --info-blue:   #3B82F6;  /* sub-callout under headlines */
-  --warn-red:    #E11D48;  /* sparingly: urgent strikethroughs */
+  --info-blue:   #3B82F6;
+  --warn-red:    #E11D48;
 
-  /* Semantic aliases */
   --fg-1: var(--ink);
   --fg-2: var(--ink-2);
   --fg-3: var(--ink-3);
@@ -43,9 +33,8 @@
   /* ---------- TYPE ---------- */
   --font-sans: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
                "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
-  --font-display: var(--font-sans); /* same family, used at heavier weight */
+  --font-display: var(--font-sans);
 
-  /* Weights */
   --w-regular: 400;
   --w-medium:  500;
   --w-semi:    600;
@@ -53,7 +42,6 @@
   --w-extra:   800;
   --w-black:   900;
 
-  /* Sizes (rem, base 16) */
   --fs-12: 0.75rem;
   --fs-14: 0.875rem;
   --fs-16: 1rem;
@@ -67,12 +55,10 @@
   --fs-56: 3.5rem;
   --fs-64: 4rem;
 
-  /* Line heights */
   --lh-tight: 1.15;
   --lh-snug:  1.3;
   --lh-body:  1.55;
 
-  /* Tracking (letter-spacing) */
   --tr-tight: -0.03em;
   --tr-snug:  -0.015em;
   --tr-zero:   0;
@@ -96,21 +82,18 @@
   /* ---------- RADII ---------- */
   --r-sm:    8px;
   --r-md:    16px;
-  --r-lg:    24px;   /* yellow-stroke cards */
+  --r-lg:    24px;
   --r-xl:    32px;
-  --r-pill:  9999px; /* package badge, CTA pills */
+  --r-pill:  9999px;
 
   /* ---------- BORDERS ---------- */
-  --bw-card:   2.5px; /* yellow stroke on cards */
+  --bw-card:   2.5px;
   --bw-thick:  3px;
   --bw-focus:  2px;
 
   /* ---------- SHADOWS ---------- */
-  /* Chunky cartoon shadow under yellow cards — offset down, no blur. */
   --shadow-card-yellow: 0 6px 0 rgba(245, 196, 0, 0.22);
-  /* Soft hover lift. */
   --shadow-hover:       0 10px 24px rgba(0, 0, 0, 0.08), 0 4px 0 rgba(245, 196, 0, 0.22);
-  /* Black slab inset for the price footer (none — kept flat). */
   --shadow-slab:        none;
 
   /* ---------- MOTION ---------- */
@@ -120,13 +103,10 @@
   --t-slow:   320ms;
 
   /* ---------- LAYOUT ---------- */
-  --col-max:  720px;  /* the long-form landing column */
+  --col-max:  720px;
   --gutter:   24px;
 }
 
-/* =========================================================================
-   Base + semantic elements
-   ========================================================================= */
 html, body {
   margin: 0;
   padding: 0;
@@ -139,7 +119,6 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-/* Headlines — the heaviest weight the brand uses. Tight, two-line bias. */
 h1, .h-display {
   font-family: var(--font-display);
   font-weight: var(--w-black);
@@ -185,29 +164,11 @@ p, .body {
   margin: 0;
 }
 
-.body-strong {
-  font-weight: var(--w-bold);
-  color: var(--ink);
-}
+.body-strong { font-weight: var(--w-bold); color: var(--ink); }
+.body-sub    { font-size: var(--fs-14); color: var(--ink-3); }
+.eyebrow     { font-size: var(--fs-14); font-weight: var(--w-medium); color: var(--ink-2); }
+.caption     { font-size: var(--fs-12); color: var(--ink-3); line-height: var(--lh-snug); }
 
-.body-sub {
-  font-size: var(--fs-14);
-  color: var(--ink-3);
-}
-
-.eyebrow {
-  font-size: var(--fs-14);
-  font-weight: var(--w-medium);
-  color: var(--ink-2);
-}
-
-.caption {
-  font-size: var(--fs-12);
-  color: var(--ink-3);
-  line-height: var(--lh-snug);
-}
-
-/* Price reveal — the single biggest, heaviest piece of type in the system. */
 .price {
   font-family: var(--font-display);
   font-weight: var(--w-black);
@@ -216,11 +177,7 @@ p, .body {
   color: var(--yellow);
   line-height: 1;
 }
-.price .won {
-  font-weight: var(--w-extra);
-  font-size: 0.7em;
-  margin-left: 0.05em;
-}
+.price .won { font-weight: var(--w-extra); font-size: 0.7em; margin-left: 0.05em; }
 .price-strike {
   font-weight: var(--w-medium);
   font-size: var(--fs-16);
@@ -229,18 +186,12 @@ p, .body {
   text-decoration-thickness: 1.5px;
 }
 
-/* Highlight bar (yellow underline behind a phrase). */
 .hl {
   background: linear-gradient(transparent 60%, var(--yellow) 60%);
   padding: 0 0.05em;
 }
 
-/* Sub-callout under a headline, e.g. "임대계약서 제공시 19만원 추가" */
-.callout-blue {
-  color: var(--info-blue);
-  font-weight: var(--w-bold);
-  font-size: var(--fs-14);
-}
+.callout-blue { color: var(--info-blue); font-weight: var(--w-bold); font-size: var(--fs-14); }
 
 code, pre, .mono {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
