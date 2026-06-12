@@ -1,0 +1,45 @@
+{
+  "project_title": "역대급 귀여운 동물 눈치게임 TOP3",
+  "license": {
+    "name": "Pexels License",
+    "url": "https://www.pexels.com/license/",
+    "checked_on": "2026-06-12",
+    "allows_modification": true,
+    "allows_social_media": true
+  },
+  "sources": [
+    {
+      "rank": 3,
+      "subject": "meerkats",
+      "page_url": "https://www.pexels.com/video/cute-meerkats-7008038/",
+      "creator": "Anna Tarazevich",
+      "local_file": "sources/03_meerkats.mp4",
+      "source_in": 0.0,
+      "source_out": 8.36,
+      "timeline_in": 0.0,
+      "timeline_out": 9.5
+    },
+    {
+      "rank": 2,
+      "subject": "cat",
+      "page_url": "https://www.pexels.com/video/cat-playing-on-carpet-5335581/",
+      "creator": "Pixabay",
+      "local_file": "sources/02_cat.mp4",
+      "source_in": 14.0,
+      "source_out": 25.0,
+      "timeline_in": 9.5,
+      "timeline_out": 20.5
+    },
+    {
+      "rank": 1,
+      "subject": "otters",
+      "page_url": "https://www.pexels.com/video/bamboo-trees-surrounded-by-otters-7008037/",
+      "creator": "Anna Tarazevich",
+      "local_file": "sources/01_otters.mp4",
+      "source_in": 1.8,
+      "source_out": 14.8,
+      "timeline_in": 20.5,
+      "timeline_out": 33.5
+    }
+  ]
+}

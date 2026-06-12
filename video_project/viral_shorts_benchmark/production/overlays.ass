@@ -1,0 +1,27 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding
+Style: Title,Malgun Gothic,58,&H00FFFFFF,&H00FFFFFF,&H00000000,&H9A000000,-1,0,0,0,100,100,0,0,3,3,0,8,35,35,55,1
+Style: Rank,Malgun Gothic,48,&H00FFFFFF,&H00FFFFFF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,3,3,0,7,45,35,280,1
+Style: Caption,Malgun Gothic,62,&H00FFFFFF,&H00FFFFFF,&H00000000,&H88000000,-1,0,0,0,100,100,0,0,3,4,1,2,70,70,215,1
+Style: CTA,Malgun Gothic,68,&H0000FFFF,&H0000FFFF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,3,4,1,2,50,50,220,1
+
+[Events]
+Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text
+Dialogue: 0,0:00:00.00,0:00:33.50,Title,,0,0,0,,역대급 귀여운 동물 눈치게임 TOP3
+Dialogue: 0,0:00:00.00,0:00:09.50,Rank,,0,0,0,,{\c&H00FF66&}3. 미어캣{\c&HFFFFFF&}\N2. 고양이\N1. 수달
+Dialogue: 0,0:00:09.50,0:00:20.50,Rank,,0,0,0,,3. 미어캣\N{\c&H00FFFF&}2. 고양이{\c&HFFFFFF&}\N1. 수달
+Dialogue: 0,0:00:20.50,0:00:33.50,Rank,,0,0,0,,3. 미어캣\N2. 고양이\N{\c&H5555FF&}1. 수달
+Dialogue: 1,0:00:00.10,0:00:03.20,Caption,,0,0,0,,웃음 참기 힘든\N귀여운 동물 TOP3
+Dialogue: 1,0:00:03.30,0:00:05.55,Caption,,0,0,0,,3위, 미어캣 경호팀
+Dialogue: 1,0:00:05.55,0:00:09.45,Caption,,0,0,0,,한 마리가 돌면\N둘이 동시에 경계합니다
+Dialogue: 1,0:00:09.80,0:00:12.50,Caption,,0,0,0,,2위, 장난감을 발견한 고양이
+Dialogue: 1,0:00:12.50,0:00:16.35,Caption,,0,0,0,,모른 척하다 결국\N몸이 먼저 반응하죠
+Dialogue: 1,0:00:20.80,0:00:24.00,Caption,,0,0,0,,1위, 수달들의 단체 눈치게임
+Dialogue: 1,0:00:24.00,0:00:27.45,Caption,,0,0,0,,한 마리가 움직이면\N전부 따라갑니다
+Dialogue: 2,0:00:27.45,0:00:30.10,CTA,,0,0,0,,여러분의 1위는 몇 번인가요?
