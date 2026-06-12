@@ -1,0 +1,12 @@
+{
+  "purpose": "CapCut-friendly private-review project structure",
+  "generated_only_after_approval": true,
+  "folders": [
+    "media",
+    "audio",
+    "captions",
+    "exports"
+  ],
+  "required_export": "../private_review.mp4",
+  "required_subtitles": "../private_review.srt"
+}

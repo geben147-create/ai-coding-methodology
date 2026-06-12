@@ -1,0 +1,100 @@
+{
+  "mode": "VIRAL_SOURCE_CUT_PRIVATE_REVIEW",
+  "format": "TOP3",
+  "target_duration_seconds": 41,
+  "private_review_approved": false,
+  "render_private_review": false,
+  "publish_safe_requested": false,
+  "stock_fallback_used": false,
+  "approval": null,
+  "clips": [
+    {
+      "rank": 3,
+      "source_candidate_id": "C02",
+      "source_url": "https://www.youtube.com/watch?v=JZllfrHRc4g",
+      "platform": "youtube-longform",
+      "source_priority": 3,
+      "source_in": 0.0,
+      "source_out": 10.5,
+      "timeline_in": 3.5,
+      "timeline_out": 14.0,
+      "metrics": {
+        "views": 8496510,
+        "comments": 1200,
+        "shares": "확인 불가",
+        "uploaded_at": "2026-01-04",
+        "checked_at": "2026-06-13"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "medium",
+      "timing_confidence": "approximate",
+      "beats": {
+        "setup": 2.0,
+        "action": 5.0,
+        "reaction": 2.5,
+        "tail": 1.0
+      }
+    },
+    {
+      "rank": 2,
+      "source_candidate_id": "C04",
+      "source_url": "https://www.youtube.com/watch?v=bPSLMX_V38E",
+      "platform": "youtube-longform",
+      "source_priority": 3,
+      "source_in": 5.0,
+      "source_out": 16.0,
+      "timeline_in": 14.5,
+      "timeline_out": 25.5,
+      "metrics": {
+        "views": 5520660,
+        "comments": 2500,
+        "shares": "확인 불가",
+        "uploaded_at": "2025-09-22",
+        "checked_at": "2026-06-13"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "medium",
+      "timing_confidence": "approximate",
+      "beats": {
+        "setup": 2.0,
+        "action": 5.5,
+        "reaction": 2.5,
+        "tail": 1.0
+      }
+    },
+    {
+      "rank": 1,
+      "source_candidate_id": "C01",
+      "source_url": "https://www.youtube.com/watch?v=srPz8TRpZ_8",
+      "platform": "youtube-longform",
+      "source_priority": 3,
+      "source_in": 0.0,
+      "source_out": 11.0,
+      "timeline_in": 26.0,
+      "timeline_out": 37.0,
+      "metrics": {
+        "views": 21947877,
+        "comments": 2300,
+        "shares": "확인 불가",
+        "uploaded_at": "2026-04-23",
+        "checked_at": "2026-06-13"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "medium",
+      "timing_confidence": "approximate",
+      "beats": {
+        "setup": 2.0,
+        "action": 5.5,
+        "reaction": 2.5,
+        "tail": 1.0
+      }
+    }
+  ]
+}
+

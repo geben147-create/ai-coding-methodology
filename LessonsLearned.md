@@ -73,3 +73,12 @@
   page even when DOM rendering, responsive layout, interactions, and console
   logs are healthy. Verify layout dimensions and interaction states directly
   in the browser when capture alone is unavailable.
+- On Windows, complex Firecrawl search queries containing nested quotation
+  marks may be split into multiple CLI arguments. Use one double-quoted plain
+  query string and keep exact-phrase verification in a follow-up search.
+- Xiaohongshu can expose the public search shell while withholding individual
+  result links and engagement metrics from logged-out web sessions. Record the
+  access limitation and exclude those posts instead of fabricating candidates.
+- An official creator channel is strong originality evidence but not a reuse
+  license. Even likely-original Unitree uploads remain `permission-required`
+  until the exact cut and publication rights are granted.
