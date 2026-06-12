@@ -1,0 +1,32 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Header,Malgun Gothic,72,&H0000F4FF,&H0000F4FF,&H00000000,&H78000000,-1,0,0,0,100,100,0,0,1,6,2,8,55,55,150,1
+Style: Caption,Malgun Gothic,62,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,-1,0,0,0,100,100,0,0,1,6,2,2,65,65,205,1
+Style: Source,Malgun Gothic,30,&H00D8D8D8,&H00D8D8D8,&H00000000,&H78000000,0,0,0,0,100,100,0,0,1,3,1,1,35,35,45,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:03.00,Header,,0,0,0,,견인하다 벌어진\N미친 상황 TOP 5
+Dialogue: 0,0:00:00.00,0:00:03.00,Caption,,0,0,0,,견인하다 벌어진 미친 상황\N다섯 가지
+Dialogue: 0,0:00:03.00,0:00:10.00,Header,,0,0,0,,1. 트럭 앞에 드러눕기
+Dialogue: 0,0:00:03.00,0:00:10.00,Caption,,0,0,0,,차를 막겠다며 트럭 앞에\N그대로 드러눕습니다
+Dialogue: 0,0:00:10.00,0:00:17.00,Header,,0,0,0,,2. 방망이까지 등장
+Dialogue: 0,0:00:10.00,0:00:17.00,Caption,,0,0,0,,이번에는 차주가\N방망이까지 들고 나왔습니다
+Dialogue: 0,0:00:17.00,0:00:24.00,Header,,0,0,0,,3. 견인차 운전석 문까지
+Dialogue: 0,0:00:17.00,0:00:24.00,Caption,,0,0,0,,견인차 운전석 문을 열고\N직접 막아섭니다
+Dialogue: 0,0:00:24.00,0:00:31.00,Header,,0,0,0,,4. 견인 장비 앞에서 버티기
+Dialogue: 0,0:00:24.00,0:00:31.00,Caption,,0,0,0,,견인 장비 앞을 막고\N절대 못 가져간다고 버팁니다
+Dialogue: 0,0:00:31.00,0:00:37.00,Header,,0,0,0,,5. 몸싸움 직전
+Dialogue: 0,0:00:31.00,0:00:37.00,Caption,,0,0,0,,결국 몸싸움 직전까지\N번졌습니다
+Dialogue: 0,0:00:37.00,0:00:44.00,Header,,0,0,0,,그리고 가장 위험했던 순간
+Dialogue: 0,0:00:37.00,0:00:44.00,Caption,,0,0,0,,동네 사람들이 기사 한 명을\N전부 에워쌌습니다
+Dialogue: 0,0:00:44.00,0:00:47.00,Header,,0,0,0,,견인한다 VS 포기한다
+Dialogue: 0,0:00:44.00,0:00:47.00,Caption,,0,0,0,,여러분이라면\N그래도 견인하시겠습니까?
+Dialogue: 0,0:00:00.00,0:00:47.00,Source,,0,0,0,,출처: Life Wit Eb · PRIVATE REVIEW CUT
