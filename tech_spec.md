@@ -1,26 +1,46 @@
-# 47-Second Tow-Repossession Compilation Short
+# Viral Korean Ranking Shorts Benchmark Skill
 
 ## Goal
 
-Create a review-only vertical short from six licensed-source candidate clips
-showing escalating reactions during vehicle repossessions.
+Analyze at least ten Shorts from the same channel as the two user-provided
+reference videos and turn the transferable findings into a reusable Codex
+skill for developing original multilingual short-form videos.
+
+Reference Shorts:
+
+- `https://youtube.com/shorts/2gyj5Koh7k8`
+- `https://youtube.com/shorts/bnN_4w8grco`
 
 ## Requirements
 
-- Output: MP4, 1080x1920, approximately 47 seconds
-- Structure: rapid hook, five escalating examples, main incident, comment CTA
-- Sources: the confirmed original video and five related Life Wit Eb videos
-- Korean narration generated with the local Microsoft Heami voice
-- Burned-in Korean emphasis captions plus a separate SRT file
-- Preserve useful original location audio under the narration
-- Crop landscape footage for a mobile-first vertical frame
-- Avoid showing graphic impact; cut away before visible violence
-- Save all new project and output files under `video_project/**`
-- Treat the output as private review material until source licensing is granted
+- Include both reference Shorts in the analysis set.
+- Analyze at least ten videos from the same channel in detail.
+- Capture available public metadata such as title, publication date, duration,
+  views, likes, comments, and channel identity.
+- Determine whether channel narration exists. Where speech is present, analyze
+  its language, wording, tone, sentence density, hook, escalation, payoff, CTA,
+  and total coverage without mistaking source dialogue for channel narration.
+- Inspect visible text with OCR and distinguish on-screen copy from narration.
+- Create a timestamped visual breakdown covering character design, facial
+  expressions, body language, hand gestures, image style, camera movement,
+  animation, effects, and transition cadence.
+- Create a timestamped audio breakdown covering voice qualities, music,
+  original audio, sound effects, placement, and frequency.
+- Separate directly observed evidence from inference when explaining popularity.
+- Describe reusable source-selection rules, including clip length, setup,
+  highlight, reaction, and tail requirements.
+- Support adaptation into Japanese, Korean, English, and other languages without
+  copying distinctive scripts or creator-specific expression.
+- End the skill with complete original example scripts.
+- Store all new analysis and skill files under `video_project/**`.
+- Treat third-party footage as research-only unless reuse rights are documented.
 
 ## Non-Goals
 
-- Publishing or uploading the result
-- Claiming fair use or granting redistribution rights
-- Installing a new video editor or paid TTS service
-- Modifying the previously generated 15-second cartoon proof of concept
+- Reproducing the channel's scripts verbatim or closely imitating distinctive
+  creator expression.
+- Downloading, editing, publishing, or monetizing footage whose reuse rights
+  are unknown.
+- Bypassing platform access controls, DRM, login gates, or creator restrictions.
+- Guaranteeing future views or engagement.
+- Modifying the previously completed tow-repossession compilation.

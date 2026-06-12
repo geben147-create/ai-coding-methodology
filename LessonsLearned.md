@@ -30,3 +30,26 @@
 - Keep the 70-115 second 3D narrative format separate from the 20-50 second
   TOP-N compilation format. They share fast hooks but require different source
   rights, pacing, and payoff structures.
+- YouTube public storyboard formats can support roughly one-second visual
+  contact sheets without downloading the underlying third-party video. They
+  are suitable for OCR, composition, gesture, and approximate boundary study,
+  but not frame-accurate edit or audio claims.
+- A newly posted Short should not be labeled a failure from cumulative views
+  alone. Record the publication date and separate early like rate, comment
+  rate, view velocity, and structural observations.
+- The `윌리랭킹` samples primarily use source dialogue, music, and Korean
+  translation or reaction cards rather than a stable channel narrator. Treat
+  source speech and creator-authored narration as separate evidence classes.
+- This workspace does not currently expose a `ruff` executable through PATH or
+  `uv run`. Record the unavailable lint check and still run focused tests,
+  Python compilation, and the official skill validator.
+- For the `윌리랭킹` benchmark, the 12-video median was 9.54 seconds per ranked
+  item. Videos above three million views had a median of 10.17 seconds per
+  item, so use 9-12 seconds instead of the five-second pace in the 2026-06-11
+  skate reference.
+- Generate ranking TTS as separate files and verify `delay + duration` against
+  the next segment start. If speech is too long, shorten the script before
+  raising Korean TTS speed beyond 12%.
+- Pexels source pages may be Cloudflare-protected while licensed media files
+  remain available. Record the asset page, creator, license URL, and check date
+  in a manifest before editing.

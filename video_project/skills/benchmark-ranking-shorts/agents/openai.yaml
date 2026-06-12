@@ -1,0 +1,4 @@
+interface:
+  display_name: "Benchmark Ranking Shorts"
+  short_description: "Analyze ranking Shorts and design original multilingual scripts"
+  default_prompt: "Use $benchmark-ranking-shorts to analyze reference Shorts and create an original multilingual production blueprint."
