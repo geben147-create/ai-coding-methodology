@@ -1,46 +1,41 @@
-# Viral Korean Ranking Shorts Benchmark Skill
+# Viral Source Highlight Editor Skill
 
 ## Goal
 
-Analyze at least ten Shorts from the same channel as the two user-provided
-reference videos and turn the transferable findings into a reusable Codex
-skill for developing original multilingual short-form videos.
-
-Reference Shorts:
-
-- `https://youtube.com/shorts/2gyj5Koh7k8`
-- `https://youtube.com/shorts/bnN_4w8grco`
+Create a new global Codex skill named `viral-source-highlight-editor` for
+researching already-viral source videos and planning or producing Korean
+ranking-style highlight edits.
 
 ## Requirements
 
-- Include both reference Shorts in the analysis set.
-- Analyze at least ten videos from the same channel in detail.
-- Capture available public metadata such as title, publication date, duration,
-  views, likes, comments, and channel identity.
-- Determine whether channel narration exists. Where speech is present, analyze
-  its language, wording, tone, sentence density, hook, escalation, payoff, CTA,
-  and total coverage without mistaking source dialogue for channel narration.
-- Inspect visible text with OCR and distinguish on-screen copy from narration.
-- Create a timestamped visual breakdown covering character design, facial
-  expressions, body language, hand gestures, image style, camera movement,
-  animation, effects, and transition cadence.
-- Create a timestamped audio breakdown covering voice qualities, music,
-  original audio, sound effects, placement, and frequency.
-- Separate directly observed evidence from inference when explaining popularity.
-- Describe reusable source-selection rules, including clip length, setup,
-  highlight, reaction, and tail requirements.
-- Support adaptation into Japanese, Korean, English, and other languages without
-  copying distinctive scripts or creator-specific expression.
-- End the skill with complete original example scripts.
-- Store all new analysis and skill files under `video_project/**`.
-- Treat third-party footage as research-only unless reuse rights are documented.
+- Preserve the existing `rights-safe-shorts-editor` unchanged.
+- Install the new skill under
+  `C:\Users\llorr\.codex\skills\viral-source-highlight-editor\`.
+- Use `VIRAL_SOURCE_CUT_PRIVATE_REVIEW` as the default mode.
+- Search actual viral originals before considering stock footage.
+- Prioritize original long-form uploads, earliest uploaders, high-view
+  long-form sources, then TikTok, Douyin, Xiaohongshu, and Shorts.
+- Record unavailable engagement metrics as `확인 불가`; never estimate them.
+- Separate private-review editing from public-upload rights clearance.
+- Require explicit user approval before rendering `private_review.mp4`.
+- Never remove watermarks, conceal attribution, bypass access controls, evade
+  copyright detection, or claim unknown-rights footage is publish-safe.
+- Produce templates and validation for:
+  `source_candidates.md`, `cut_manifest.json`, `edit_plan.md`,
+  `script_ko.txt`, `rights_report.md`, `private_review.mp4`,
+  and `publish_safe_plan.md`.
+- Use TOP3 31-45 seconds or TOP5 45-60 seconds, normally 8-12 seconds per item.
+- Require setup, action, reaction, and tail beats.
+- Permit Pexels, Pixabay, or stock footage only when the user explicitly
+  requests a publish-safe version, with the required fallback disclosure.
+- Output MP4, SRT, and a CapCut-friendly project folder when rendering is
+  approved.
+- Include deterministic validation scripts and test them.
+- Validate the completed skill with the official skill-creator validator.
 
 ## Non-Goals
 
-- Reproducing the channel's scripts verbatim or closely imitating distinctive
-  creator expression.
-- Downloading, editing, publishing, or monetizing footage whose reuse rights
-  are unknown.
-- Bypassing platform access controls, DRM, login gates, or creator restrictions.
-- Guaranteeing future views or engagement.
-- Modifying the previously completed tow-repossession compilation.
+- Editing a new private-review video during this task.
+- Downloading any third-party viral footage.
+- Declaring private-review footage safe for public upload.
+- Modifying or deleting the existing rights-safe skill.

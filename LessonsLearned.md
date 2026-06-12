@@ -53,3 +53,15 @@
 - Pexels source pages may be Cloudflare-protected while licensed media files
   remain available. Record the asset page, creator, license URL, and check date
   in a manifest before editing.
+- Treat private-review approval and public-upload clearance as independent
+  states. Approval to create a local review MP4 must never change a source from
+  `허가 필요`, `공개 업로드 불가`, or `확인 불가` to publish-safe.
+- For viral-source research, require exact visible engagement values or the
+  literal marker `확인 불가`; do not normalize abbreviated counters into
+  invented exact numbers.
+- Stock footage must not replace viral-source research. Use Pexels, Pixabay, or
+  stock only after the user explicitly requests a publish-safe version, and
+  disclose `원본 바이럴 소스를 못 써서 대체함`.
+- On Windows PowerShell, Korean `--interface` arguments passed to the skill
+  metadata generator may be written with mojibake even with `PYTHONUTF8=1`.
+  Use ASCII UI metadata when the generated YAML does not preserve Korean.
