@@ -21,3 +21,12 @@
   long narrow faces, large glassy eyes, smooth waxy skin, thin limbs, stiff
   poses, simple textures, and flat daylight. Polished cinematic game rendering
   is the wrong direction for this series.
+- On Windows, the skill-creator Python tools may read UTF-8 Japanese files with
+  the `cp949` locale and fail. Set `$env:PYTHONUTF8='1'` before running
+  `generate_openai_yaml.py` or `quick_validate.py`.
+- YouTube automatic captions are useful for narration timing, sentence density,
+  and broad music markers, but they cannot verify the exact identity or count
+  of sound effects. Analyze exact audio cues only from a rights-cleared source.
+- Keep the 70-115 second 3D narrative format separate from the 20-50 second
+  TOP-N compilation format. They share fast hooks but require different source
+  rights, pacing, and payoff structures.

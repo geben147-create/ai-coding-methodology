@@ -1,0 +1,4 @@
+interface:
+  display_name: "다라다라 3D 스토리 쇼츠"
+  short_description: "일본어 중심 다국어 3D 반전 쇼츠 제작과 랭킹 벤치마킹"
+  default_prompt: "Use $daradara-story-shorts to create an original Japanese-first 3D story short with a timed visual and audio plan."
