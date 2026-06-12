@@ -65,3 +65,11 @@
 - On Windows PowerShell, Korean `--interface` arguments passed to the skill
   metadata generator may be written with mojibake even with `PYTHONUTF8=1`.
   Use ASCII UI metadata when the generated YAML does not preserve Korean.
+- Korean UTF-8 attachment text may look corrupted under the default PowerShell
+  console encoding even when the file itself is valid. Set
+  `[Console]::OutputEncoding` to UTF-8 and read with `Get-Content -Encoding
+  UTF8` before treating the source as damaged.
+- The in-app browser screenshot command can time out on a long animated static
+  page even when DOM rendering, responsive layout, interactions, and console
+  logs are healthy. Verify layout dimensions and interaction states directly
+  in the browser when capture alone is unavailable.
