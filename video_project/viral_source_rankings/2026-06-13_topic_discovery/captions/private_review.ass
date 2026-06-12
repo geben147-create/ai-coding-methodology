@@ -1,0 +1,45 @@
+[Script Info]
+Title: Humanoid Robot Viral TOP3 Private Review
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: TopTitle,Malgun Gothic,54,&H0000D7FF,&H0000D7FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,4,1,8,20,20,24,1
+Style: TopSub,Malgun Gothic,44,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,4,1,8,20,20,84,1
+Style: RankRed,Malgun Gothic,48,&H002929FF,&H002929FF,&H00000000,&H90000000,-1,0,0,0,100,100,0,0,3,3,0,7,0,0,0,1
+Style: RankGray,Malgun Gothic,41,&H00E8E8E8,&H00E8E8E8,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,3,3,0,7,0,0,0,1
+Style: Punch,Malgun Gothic,54,&H00FFFFFF,&H00FFFFFF,&H00000000,&HC0000000,-1,0,0,0,100,100,0,0,3,4,0,5,80,80,0,1
+Style: Narration,Malgun Gothic,45,&H00FFFFFF,&H00FFFFFF,&H00000000,&HB0000000,-1,0,0,0,100,100,0,0,3,3,0,2,65,65,145,1
+Style: Source,Malgun Gothic,25,&H00E0E0E0,&H00E0E0E0,&H00000000,&H60000000,0,0,0,0,100,100,0,0,3,2,0,2,20,20,35,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:42.30,TopTitle,,0,0,0,,역대급 휴머노이드 모먼트
+Dialogue: 0,0:00:00.00,0:00:42.30,TopSub,,0,0,0,,랭킹 TOP3
+Dialogue: 0,0:00:00.20,0:00:04.60,Punch,,0,0,0,,{\pos(540,850)}진짜 사람이 아니라고?
+Dialogue: 0,0:00:00.10,0:00:04.70,Narration,,0,0,0,,사람보다 더 사람 같은 로봇.\N조회수 폭발, TOP3.
+Dialogue: 0,0:00:04.80,0:00:15.30,RankRed,,0,0,0,,{\pos(45,265)}3. 훈련
+Dialogue: 0,0:00:04.80,0:00:15.30,RankGray,,0,0,0,,{\pos(45,325)}2. 복귀
+Dialogue: 0,0:00:04.80,0:00:15.30,RankGray,,0,0,0,,{\pos(45,380)}1. 바퀴
+Dialogue: 0,0:00:06.80,0:00:10.80,Punch,,0,0,0,,{\pos(540,850)}배속 아닌데 이 속도?
+Dialogue: 0,0:00:11.60,0:00:15.10,Punch,,0,0,0,,{\pos(540,850)}착지까지 완벽
+Dialogue: 0,0:00:04.90,0:00:14.10,Narration,,0,0,0,,3위, 사람과 함께 훈련하는 휴머노이드.\N배속도 아닌데 마지막 착지까지 완벽하죠.
+Dialogue: 0,0:00:15.80,0:00:26.80,RankGray,,0,0,0,,{\pos(45,265)}3. 훈련
+Dialogue: 0,0:00:15.80,0:00:26.80,RankRed,,0,0,0,,{\pos(45,325)}2. 복귀
+Dialogue: 0,0:00:15.80,0:00:26.80,RankGray,,0,0,0,,{\pos(45,380)}1. 바퀴
+Dialogue: 0,0:00:17.00,0:00:21.70,Punch,,0,0,0,,{\pos(540,850)}넘어져도 바로 복귀
+Dialogue: 0,0:00:22.20,0:00:26.40,Punch,,0,0,0,,{\pos(540,850)}중심을 다시 잡는다
+Dialogue: 0,0:00:15.90,0:00:24.50,Narration,,0,0,0,,2위, 넘어뜨려도 바로 일어나는 G1.\N중심을 다시 잡고 다음 동작으로 돌아옵니다.
+Dialogue: 0,0:00:27.30,0:00:38.30,RankGray,,0,0,0,,{\pos(45,265)}3. 훈련
+Dialogue: 0,0:00:27.30,0:00:38.30,RankGray,,0,0,0,,{\pos(45,325)}2. 복귀
+Dialogue: 0,0:00:27.30,0:00:38.30,RankRed,,0,0,0,,{\pos(45,380)}1. 바퀴
+Dialogue: 0,0:00:28.20,0:00:32.60,Punch,,0,0,0,,{\pos(540,850)}두 발 대신 바퀴
+Dialogue: 0,0:00:33.50,0:00:38.00,Punch,,0,0,0,,{\pos(540,850)}한쪽 휠로 균형까지
+Dialogue: 0,0:00:27.40,0:00:36.70,Narration,,0,0,0,,1위, 이제는 두 발 대신 바퀴입니다.\N한쪽 바퀴로 균형까지 잡습니다.
+Dialogue: 0,0:00:38.50,0:00:42.10,Punch,,0,0,0,,{\pos(540,850)}여러분의 1위는?
+Dialogue: 0,0:00:38.50,0:00:41.60,Narration,,0,0,0,,어느 장면이 가장 현실 같았나요?
+Dialogue: 0,0:00:00.00,0:00:42.30,Source,,0,0,0,,출처: Unitree Robotics · 비공개 검토용 · 공개 업로드 금지

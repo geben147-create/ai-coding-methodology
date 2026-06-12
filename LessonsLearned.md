@@ -82,3 +82,10 @@
 - An official creator channel is strong originality evidence but not a reuse
   license. Even likely-original Unitree uploads remain `permission-required`
   until the exact cut and publication rights are granted.
+- FFmpeg's ASS filter on Windows can scan every file in `C:\Windows\Fonts` and
+  emit noisy bitmap-font warnings. The render can still be valid when the log
+  confirms `MalgunGothic` selection; verify the burned captions from extracted
+  frames instead of treating unrelated font warnings as a render failure.
+- Keep generated private-review source media and MP4 files local. Do not push
+  uncleared third-party footage to GitHub merely to satisfy a general backup
+  routine, because that would turn a local review artifact into distribution.

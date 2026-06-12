@@ -6,6 +6,8 @@
 - [✅] Research the two reference Shorts, discover at least ten actual viral
       source candidates for a different topic, and create a validated Korean
       TOP3 cut, script, edit, and rights package without rendering media.
+- [x] Render and verify the explicitly approved private-review robot TOP3 MP4,
+      Korean SRT, and CapCut import package, then open the result locally.
 
 ## Allowed Files
 
@@ -70,3 +72,11 @@ Completed on 2026-06-13:
 - Kept source media, audio, captions, output, MP4, and SRT absent because the
   private-review approval phrase has not been given.
 - Passed the viral-source project contract validator and JSON/language checks.
+
+Private-review render completed on 2026-06-13:
+
+- Rendered a 42.3-second 1080x1920 H.264 TOP3 MP4 with Korean TTS and SRT.
+- Added fixed ranking graphics, Korean reaction captions, and source warning.
+- Assembled a CapCut-friendly local import package and opened the result.
+- Kept source media, narration audio, and the private-review MP4 out of Git.
+- Public-upload clearance remains separate; all three sources require permission.

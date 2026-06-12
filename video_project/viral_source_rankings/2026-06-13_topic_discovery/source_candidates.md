@@ -1,63 +1,26 @@
 # 바이럴 원본 후보
 
-주제: 휴머노이드 로봇의 예상 밖 모먼트 TOP3  
+주제: Unitree 휴머노이드 로봇 하이라이트
 확인일: 2026-06-13
-
-조회수·댓글·공유 수치는 확인일 당시 공개 페이지 또는 공개
-메타데이터에 표시된 값만 기록했다. TikTok과 Douyin에서 조회수가
-노출되지 않은 경우 좋아요 수를 조회수로 바꾸지 않고 `확인 불가`로
-남겼다.
+모드: `VIRAL_SOURCE_CUT_PRIVATE_REVIEW`
 
 | ID | 링크 | 플랫폼 | 제작자 | 조회수 | 댓글수 | 공유수 | 업로드일 | 확인일 | 원본 가능성 | 재업로드 금지 | 후보 구간 | 위험도 |
 |---|---|---|---|---:|---:|---:|---|---|---|---|---|---|
-| C01 | https://www.youtube.com/watch?v=srPz8TRpZ_8 | YouTube Longform | Unitree Robotics | 21947877 | 2300 | 확인 불가 | 2026-04-23 | 2026-06-13 | 높음-공식 채널 | 확인 필요 | 00:00.0-00:11.0 | 중간 |
-| C02 | https://www.youtube.com/watch?v=JZllfrHRc4g | YouTube Longform | Unitree Robotics | 8496510 | 1200 | 확인 불가 | 2026-01-04 | 2026-06-13 | 높음-공식 채널 | 확인 필요 | 00:00.0-00:10.5 | 중간 |
-| C03 | https://www.youtube.com/watch?v=Ykiuz1ZdGBc | YouTube Longform | Unitree Robotics | 6406235 | 1600 | 확인 불가 | 2026-02-16 | 2026-06-13 | 높음-공식 채널 | 확인 필요 | 00:12.0-00:23.0 | 중간 |
-| C04 | https://www.youtube.com/watch?v=bPSLMX_V38E | YouTube Longform | Unitree Robotics | 5520660 | 2500 | 확인 불가 | 2025-09-22 | 2026-06-13 | 높음-공식 채널 | 확인 필요 | 00:05.0-00:16.0 | 중간 |
-| C05 | https://www.youtube.com/watch?v=GzX1qOIO1bE | YouTube Longform | Unitree Robotics | 2092889 | 2100 | 확인 불가 | 2024-05-13 | 2026-06-13 | 높음-공식 채널 | 확인 필요 | 00:07.0-00:18.0 | 중간 |
-| C06 | https://www.youtube.com/watch?v=iMb8G5Hsi90 | YouTube Longform | DPCcars | 249718 | 858 | 확인 불가 | 2026-02-16 | 2026-06-13 | 낮음-2차 해설 | 확인 필요 | 00:10.0-00:21.0 | 높음 |
-| C07 | https://www.youtube.com/watch?v=zqgc9C3cC6U | YouTube Longform | CGTN | 57285 | 118 | 확인 불가 | 2026-04-19 | 2026-06-13 | 중간-공식 중계 | 확인 필요 | 하이라이트 재확인 필요 | 중간 |
-| C08 | https://www.tiktok.com/@cheddar/video/7541413460370820382 | TikTok | Cheddar | 확인 불가 | 1845 | 확인 불가 | 확인 불가 | 2026-06-13 | 낮음-미디어 재편집 | 확인 필요 | 확인 불가 | 높음 |
-| C09 | https://www.tiktok.com/@unitreerobotics_official/video/7552825037435194679 | TikTok | Unitree Robotics | 확인 불가 | 6058 | 확인 불가 | 확인 불가 | 2026-06-13 | 높음-공식 계정 | 확인 필요 | 확인 불가 | 중간 |
-| C10 | https://www.tiktok.com/@unitreerobotics_official/video/7641538701050301709 | TikTok | Unitree Robotics | 확인 불가 | 605 | 확인 불가 | 확인 불가 | 2026-06-13 | 높음-공식 계정 | 확인 필요 | 확인 불가 | 중간 |
-| C11 | https://www.tiktok.com/@cgtneurope/video/7561057607474040096 | TikTok | CGTN Europe | 확인 불가 | 548 | 확인 불가 | 확인 불가 | 2026-06-13 | 중간-미디어 계정 | 확인 필요 | 확인 불가 | 높음 |
-| C12 | https://www.douyin.com/video/7537541168068021564 | Douyin | 미상-세계로봇대회 검색 노출 | 확인 불가 | 확인 불가 | 확인 불가 | 확인 불가 | 2026-06-13 | 미확인 | 확인 필요 | 확인 불가 | 높음 |
-| C13 | https://www.douyin.com/shipin/7472921096822114338 | Douyin | 央视网 | 확인 불가 | 390 | 905 | 2025-02-19 | 2026-06-13 | 중간-공식 미디어 | 확인 필요 | 확인 불가 | 높음 |
-| C14 | https://www.youtube.com/shorts/4gx6ffSltjc | YouTube Shorts | XRoboHub | 74875 | 217 | 확인 불가 | 2026-04-23 | 2026-06-13 | 낮음-공식 영상 재편집 | 확인 필요 | 00:00.0-00:11.0 | 높음 |
-| C15 | https://www.youtube.com/shorts/h5jIKQhX2oY | YouTube Shorts | Kalil 4.0 | 22020 | 17 | 확인 불가 | 2025-12-28 | 2026-06-13 | 낮음-2차 재편집 | 확인 필요 | 00:00.0-00:10.0 | 높음 |
+| C01 | https://www.youtube.com/watch?v=srPz8TRpZ_8 | YouTube Longform | Unitree Robotics | 21947877 | 2300 | 확인 불가 | 2026-04-23 | 2026-06-13 | 높음 | 확인 불가 | 00:00.0-00:11.0 | 중간 |
+| C02 | https://www.youtube.com/watch?v=JZllfrHRc4g | YouTube Longform | Unitree Robotics | 8496510 | 1200 | 확인 불가 | 2026-01-04 | 2026-06-13 | 높음 | 확인 불가 | 00:00.0-00:10.5 | 중간 |
+| C03 | https://www.youtube.com/watch?v=Ykiuz1ZdGBc | YouTube Longform | Unitree Robotics | 6406235 | 1600 | 확인 불가 | 2026-02-16 | 2026-06-13 | 높음 | 확인 불가 | 00:12.0-00:23.0 | 중간 |
+| C04 | https://www.youtube.com/watch?v=bPSLMX_V38E | YouTube Longform | Unitree Robotics | 5520660 | 2500 | 확인 불가 | 2025-09-22 | 2026-06-13 | 높음 | 확인 불가 | 00:05.0-00:16.0 | 중간 |
+| C05 | https://www.youtube.com/watch?v=GzX1qOIO1bE | YouTube Longform | Unitree Robotics | 2092889 | 2100 | 확인 불가 | 2024-05-13 | 2026-06-13 | 높음 | 확인 불가 | 00:07.0-00:18.0 | 중간 |
+| C06 | https://www.youtube.com/watch?v=iMb8G5Hsi90 | YouTube Longform | DPCcars | 249718 | 858 | 확인 불가 | 2026-02-16 | 2026-06-13 | 낮음 | 확인 불가 | 00:10.0-00:21.0 | 높음 |
+| C07 | https://www.youtube.com/watch?v=zqgc9C3cC6U | YouTube Longform | CGTN | 57285 | 118 | 확인 불가 | 2026-04-19 | 2026-06-13 | 낮음 | 확인 불가 | 확인 불가 | 높음 |
+| C08 | https://www.tiktok.com/@cheddar/video/7541413460370820382 | TikTok | Cheddar | 확인 불가 | 1845 | 확인 불가 | 확인 불가 | 2026-06-13 | 낮음 | 확인 불가 | 확인 불가 | 높음 |
+| C09 | https://www.tiktok.com/@unitreerobotics_official/video/7552825037435194679 | TikTok | Unitree Robotics | 확인 불가 | 6058 | 확인 불가 | 확인 불가 | 2026-06-13 | 높음 | 확인 불가 | 확인 불가 | 중간 |
+| C10 | https://www.youtube.com/shorts/4gx6ffSltjc | YouTube Shorts | XRoboHub | 74875 | 217 | 확인 불가 | 2026-04-23 | 2026-06-13 | 낮음 | 확인 불가 | 00:00.0-00:11.0 | 높음 |
 
 ## 후보별 근거
 
-- C01은 제작사 공식 YouTube 채널의 바퀴형 G1 영상이다. 2,194만 회로
-  후보 중 조회수가 가장 높고, 첫 11초에 소개 문구, 주행, 방향 전환,
-  균형 회복이 모두 들어간다.
-- C02는 공식 채널의 일상 훈련 영상이다. 첫 10.5초에 사람과의 거리,
-  발차기, 회전, 착지까지 한 동작 단위가 완성된다.
-- C04는 공식 설명에 넘어져도 빠르게 일어나는 `Anti-Gravity` 모드라고
-  명시되어 있다. 5-16초 구간은 외력, 낙하, 회복을 한 흐름으로 보여준다.
-- C03과 C05는 원본 가능성과 지표가 강하지만, C01·C02·C04보다 한 컷
-  안에서 설정-행동-반응이 덜 선명해 예비 후보로 남겼다.
-- C06은 원본 영상이 아니라 2차 해설 가능성이 높아 조회수와 댓글이
-  있어도 최종 컷에서 제외했다.
-- C07은 2026년 4월 19일의 공식 중계지만 2시간이 넘고, 프레임 단위
-  검증 없이 임의 구간을 지정하지 않았다.
-- C08은 공개 검색 결과에 좋아요 13.09만 개와 댓글 1,845개가
-  표시됐지만 조회수는 표시되지 않았다.
-- C09는 공개 검색 결과에서 댓글 6,058개가 확인된 공식 TikTok
-  업로드다. 조회수와 업로드일은 확인할 수 없었다.
-- C10은 공개 검색 결과에 좋아요 22.66만 개와 댓글 605개가 표시된
-  공식 TikTok 업로드다. 표에는 좋아요를 조회수로 기록하지 않았다.
-- C11은 공개 검색 결과에 좋아요 1.34만 개와 댓글 548개가 표시됐다.
-- C12와 C13은 Douyin 직접 링크가 검색됐지만 C12의 공개 지표는
-  확인되지 않았다. C13은 2025-02-19 게시물이며 댓글 390개와 공유
-  905개가 공개 검색 결과에 표시됐다.
-- C14와 C15는 실제 YouTube Shorts 후보지만 공식 원본보다 조회수와
-  원본성이 낮다. 같은 장면의 공식 Unitree 업로드가 있어 최종 컷에는
-  쓰지 않는다.
-
-## Xiaohongshu 확인 결과
-
-`https://www.xiaohongshu.com/search_result?keyword=人形机器人+摔倒&type=51`
-검색 결과까지는 접근됐지만, 2026-06-13 비로그인 웹 화면에서는 개별
-게시물 링크와 반응 수치가 노출되지 않았다. 개별 영상인 것처럼 링크나
-숫자를 만들어 넣지 않았으며 최종 TOP3에서도 제외했다.
+- C01, C02, C03, C04, C05는 Unitree Robotics 공식 채널 업로드라 원본 가능성이 높다.
+- 공식 채널이라는 사실은 재사용 허가를 의미하지 않는다. 모두 공개 게시 전 별도 허가가 필요하다.
+- C06, C07, C10은 재편집 또는 보도 성격일 가능성이 있어 원본 후보보다 위험도가 높다.
+- C08, C09에서 공개 화면으로 확인되지 않은 수치와 날짜는 추정하지 않고 `확인 불가`로 남겼다.
+- 실제 비공개 검토본에는 C02, C04, C01만 사용했다.
