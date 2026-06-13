@@ -89,3 +89,36 @@
 - Keep generated private-review source media and MP4 files local. Do not push
   uncleared third-party footage to GitHub merely to satisfy a general backup
   routine, because that would turn a local review artifact into distribution.
+- UTF-8 Korean files can look garbled in PowerShell even when the file is fine.
+  Re-read with an explicit UTF-8 decode before assuming the content is broken.
+- For ranking hooks, inspect two-second contact sheets around the presumed
+  action peak. Broad storyboard sampling can place the opening on an empty
+  setup frame even when the selected source range contains a strong payoff.
+- For a selection-first workflow, deliver both a tight 7-9 second core cut and
+  a version with one-second handles on each side. Do not burn ranking labels or
+  final captions until the user chooses the winning clips.
+- VoiceBox 0.5.0 on Windows may initially start its bundled CPU backend even
+  when an NVIDIA GPU is present. A Qwen CustomVoice model download can outlive
+  the first server process; restart `voicebox-server.exe`, resume the same
+  download, and verify `/models/status` before generating.
+- Windows PowerShell can replace Korean characters in JSON request bodies.
+  Write the request as a UTF-8 file and send it with `curl.exe --data-binary`
+  plus `Content-Type: application/json; charset=utf-8`.
+- Windows PowerShell 5 also decodes a BOM-less `.ps1` file as the active ANSI
+  code page. Do not embed Korean narration literals in a generated PowerShell
+  build script; read them from a UTF-8 text file with
+  `Get-Content -Encoding UTF8`, then call `.ToString()` before
+  `ConvertTo-Json` so PowerShell does not serialize the string's extended
+  file-provider properties. VoiceBox `/generate` returns a queued
+  generation, so poll `/history/{id}` and download `/audio/{id}` only after
+  the status is `completed`.
+- The 2026-06-13 stunt combined preview used Edge TTS
+  `ko-KR-InJoonNeural` at rate `-2%` and pitch `-2Hz`; the VoiceBox `Sohee`
+  sample was generated separately and was not mixed into that MP4. For future
+  selection packages, keep individual cuts on source audio and use VoiceBox
+  Qwen CustomVoice 0.6B `Sohee` for combined-preview narration. Treat Edge TTS
+  as an explicitly approved fallback only.
+- A Korean file can be valid UTF-8 while PowerShell displays mojibake under
+  the wrong console encoding. Re-read with `Get-Content -Encoding UTF8`,
+  validate the decoded text, and deliver original source URLs as clickable
+  Markdown links both in the selection manifest and in the final response.

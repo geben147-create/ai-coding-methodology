@@ -1,13 +1,15 @@
 # Plan
 
-- [✅] Create and validate the global `viral-source-highlight-editor` skill with
-      its private-review approval gate, required artifact templates, source
-      priority rules, and deterministic validators.
-- [✅] Research the two reference Shorts, discover at least ten actual viral
-      source candidates for a different topic, and create a validated Korean
-      TOP3 cut, script, edit, and rights package without rendering media.
-- [x] Render and verify the explicitly approved private-review robot TOP3 MP4,
-      Korean SRT, and CapCut import package, then open the result locally.
+- [✅] Create and validate the global `viral-source-highlight-editor` skill with its private-review approval gate, required artifact templates, source priority rules, and deterministic validators.
+- [✅] Research the two reference Shorts, discover at least ten actual viral source candidates for a different topic, and create a validated Korean TOP package without rendering media.
+- [✅] Render and verify the explicitly approved private-review robot TOP3 MP4, Korean SRT, and CapCut import package, then open the result locally.
+- [✅] Research, edit, render, and verify a new Korean TOP7 viral-animal private-review MP4 with a stronger cold open, dynamic reframing, natural Korean TTS, SRT, and CapCut package.
+- [✅] Produce seven individually reviewable 8-second stunt highlight cuts, 10-second handle cuts, a combined preview, and source/timing manifest without ranking labels.
+- [✅] Evaluate the official `jamiepine/voicebox` local TTS workflow and generate one additional narration sample with a permitted built-in voice.
+- [✅] Upgrade `viral-source-highlight-editor` with the successful selection-first workflow, stronger visual-hook ordering, dynamic vertical reframing, and VoiceBox Sohee narration for the combined preview.
+- [✅] Require clickable original-source links in both selection artifacts and final delivery, and reject garbled Korean text.
+- [✅] Add recency-balanced sourcing and educational narration requirements to `viral-source-highlight-editor`, then produce a private-review adult pole-dance TOP7 selection package.
+- [??] Build and browser-verify the responsive TRUSTA overseas-patient marketing homepage from the user-provided Korean copy.
 
 ## Allowed Files
 
@@ -17,66 +19,23 @@
 - `C:\Users\llorr\.codex\skills\viral-source-highlight-editor\**`
 - `.firecrawl\viral-source-highlight-editor\**`
 - `video_project\viral_source_rankings\2026-06-13_topic_discovery\**`
+- `video_project\viral_source_rankings\2026-06-13_animal_top7\**`
+- `video_project\viral_source_rankings\2026-06-13_stunt_selects\**`
+- `video_project\viral_source_rankings\2026-06-14_pole_dance_top7\**`
+- `voicebox-local\**`
+- `trusta-medical-growth\**`
 
 ## Handoff Notes
 
-Task approved by the user on 2026-06-13.
-
-The existing
-`C:\Users\llorr\.codex\skills\rights-safe-shorts-editor\`
-must remain unchanged.
-
-Do not download or edit viral third-party footage in this task. The new skill
-must require explicit approval before it creates a private-review MP4 and must
-keep public-upload clearance in a separate rights report.
-
-Completed on 2026-06-13:
-
-- Created
-  `C:\Users\llorr\.codex\skills\viral-source-highlight-editor\`.
-- Kept `rights-safe-shorts-editor` unchanged.
-- Added project templates for all required research, cut, narration, rights,
-  publish-safe, SRT, output, and CapCut folder artifacts.
-- Added deterministic TOP3/TOP5 initialization and project validation scripts.
-- Added explicit private-review and publish-safe stock-fallback gates.
-- Passed fourteen unit tests, Python compilation, template negative validation,
-  and the official skill-creator validator.
-
-New task approved by the user on 2026-06-13:
-
-- Analyze the two supplied Willie Ranking reference Shorts.
-- Trace likely original or earliest source uploads using public evidence.
-- Research at least ten actual viral candidates across the requested
-  platforms and select a different topic for a TOP3 package.
-- Produce the research, timing, Korean narration, edit, rights, and
-  publish-safe replacement plans.
-- Do not download third-party footage or render MP4/SRT until the user says
-  `비공개 검토용 제작 승인`.
-- Do not substitute stock footage during this research task.
-
-Completed on 2026-06-13:
-
-- Confirmed both reference Shorts are multi-source compilations rather than
-  cuts from a single original long-form video.
-- Recorded current reference metrics and approximate item boundaries from
-  public metadata and one-second YouTube storyboards.
-- Researched fifteen direct viral-video candidates across YouTube Longform,
-  YouTube Shorts, TikTok,
-  and Douyin. Xiaohongshu individual result links and metrics were unavailable
-  without login and were not invented.
-- Selected three likely-original Unitree uploads with 5.5M-21.9M views for a
-  41-second Korean TOP3 package.
-- Created and validated `source_candidates.md`, `reference_analysis.md`,
-  `cut_manifest.json`, `edit_plan.md`, `script_ko.txt`, `rights_report.md`,
-  and `publish_safe_plan.md`.
-- Kept source media, audio, captions, output, MP4, and SRT absent because the
-  private-review approval phrase has not been given.
-- Passed the viral-source project contract validator and JSON/language checks.
-
-Private-review render completed on 2026-06-13:
-
-- Rendered a 42.3-second 1080x1920 H.264 TOP3 MP4 with Korean TTS and SRT.
-- Added fixed ranking graphics, Korean reaction captions, and source warning.
-- Assembled a CapCut-friendly local import package and opened the result.
-- Kept source media, narration audio, and the private-review MP4 out of Git.
-- Public-upload clearance remains separate; all three sources require permission.
+- The viral-source package now lives in `video_project/viral_source_rankings/2026-06-13_topic_discovery/`.
+- The approved private-review TOP3 is rendered as a 42.3-second 1080x1920 H.264 MP4 with Korean TTS and SRT.
+- CapCut-ready media, narration tracks, and captions are in the package's `capcut_import/` directory.
+- Public-upload clearance remains separate from private-review readiness.
+- The new TOP7 animal package is in `video_project/viral_source_rankings/2026-06-13_animal_top7/`.
+- It renders a 59-second 1080x1920 H.264 private-review MP4 with dynamic crop/zoom, Korean neural TTS, SRT, and CapCut media.
+- Seven stunt review selects are in `video_project/viral_source_rankings/2026-06-13_stunt_selects/`: seven 8-second core cuts, seven 10-second handle cuts, and one 56-second combined preview.
+- VoiceBox 0.5.0 is installed locally. Its Qwen CustomVoice 0.6B `Sohee` preset generated the additional Korean sample at `video_project/viral_source_rankings/2026-06-13_stunt_selects/audio/voicebox_sohee_extra.wav`.
+- The global `viral-source-highlight-editor` now defaults to seven selection-first cuts, highest-hook-first ordering, 8-second cores plus 10-second handles, dynamic centered reframing, and VoiceBox `Sohee` narration only in the combined preview.
+- The skill now requires every selected original URL in `selection_manifest.md` and in the final response, and its validator rejects known Korean mojibake or replacement characters.
+- The skill now requires a recent/legacy viral source mix and one scene-relevant educational or technical narration point per clip; it explicitly states that old uploads are not a copyright-avoidance mechanism.
+- The pole-dance TOP7 package is in `video_project/viral_source_rankings/2026-06-14_pole_dance_top7/`: seven 8-second core cuts, seven 10-second handle cuts, seven VoiceBox Sohee WAV files, Korean SRT/ASS, a 56.01-second 1080x1920 combined MP4, QA montages, and a CapCut-ready folder.

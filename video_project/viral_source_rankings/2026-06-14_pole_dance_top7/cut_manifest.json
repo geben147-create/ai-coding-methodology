@@ -1,0 +1,315 @@
+{
+  "mode": "VIRAL_SOURCE_CUT_PRIVATE_REVIEW",
+  "workflow_stage": "selection",
+  "selection_count": 7,
+  "source_mix": {
+    "recent_cutoff": "2025-06-14",
+    "minimum_recent": 3,
+    "minimum_legacy_viral": 3
+  },
+  "narration": {
+    "enabled": true,
+    "engine": "voicebox-qwen-customvoice",
+    "model_size": "0.6B",
+    "voice": "Sohee",
+    "edge_tts_fallback_approved": false
+  },
+  "private_review_approved": true,
+  "render_selects": true,
+  "publish_safe_requested": false,
+  "stock_fallback_used": false,
+  "approval": {
+    "approved_by": "user",
+    "approved_at": "2026-06-14T00:00:00+09:00",
+    "scope": "private review only"
+  },
+  "clips": [
+    {
+      "order": 1,
+      "source_candidate_id": "C01",
+      "source_url": "https://www.youtube.com/watch?v=ZHhePoJhs8g",
+      "platform": "youtube-longform",
+      "source_priority": 1,
+      "core_in": 303.0,
+      "core_out": 311.0,
+      "handle_in": 302.0,
+      "handle_out": 312.0,
+      "metrics": {
+        "views": 9414827,
+        "comments": "확인 불가",
+        "shares": "확인 불가",
+        "uploaded_at": "2018-02-25",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": true,
+      "hook": {
+        "shock": 5,
+        "surprise": 5,
+        "cute": 0,
+        "beauty": 5,
+        "adult_glamour": 2,
+        "motion": 5,
+        "clarity": 5,
+        "payoff": 5,
+        "total": 32
+      },
+      "beats": {
+        "setup": 0.8,
+        "action": 5.2,
+        "reaction": 1.2,
+        "tail": 0.8
+      }
+    },
+    {
+      "order": 2,
+      "source_candidate_id": "C02",
+      "source_url": "https://www.youtube.com/watch?v=oawEi97c65w",
+      "platform": "youtube-longform",
+      "source_priority": 1,
+      "core_in": 207.5,
+      "core_out": 215.5,
+      "handle_in": 206.5,
+      "handle_out": 216.5,
+      "metrics": {
+        "views": 118760,
+        "comments": "확인 불가",
+        "shares": "확인 불가",
+        "uploaded_at": "2026-01-01",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": true,
+      "hook": {
+        "shock": 3,
+        "surprise": 4,
+        "cute": 0,
+        "beauty": 5,
+        "adult_glamour": 4,
+        "motion": 5,
+        "clarity": 5,
+        "payoff": 5,
+        "total": 31
+      },
+      "beats": {
+        "setup": 1.0,
+        "action": 5.0,
+        "reaction": 1.2,
+        "tail": 0.8
+      }
+    },
+    {
+      "order": 3,
+      "source_candidate_id": "C03",
+      "source_url": "https://www.youtube.com/watch?v=iU7vnUh2eaI",
+      "platform": "youtube-longform",
+      "source_priority": 1,
+      "core_in": 224.0,
+      "core_out": 232.0,
+      "handle_in": 223.0,
+      "handle_out": 233.0,
+      "metrics": {
+        "views": 1824959,
+        "comments": "확인 불가",
+        "shares": "확인 불가",
+        "uploaded_at": "2023-07-19",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": true,
+      "hook": {
+        "shock": 3,
+        "surprise": 4,
+        "cute": 0,
+        "beauty": 5,
+        "adult_glamour": 2,
+        "motion": 5,
+        "clarity": 5,
+        "payoff": 5,
+        "total": 29
+      },
+      "beats": {
+        "setup": 0.8,
+        "action": 5.4,
+        "reaction": 1.0,
+        "tail": 0.8
+      }
+    },
+    {
+      "order": 4,
+      "source_candidate_id": "C04",
+      "source_url": "https://www.youtube.com/watch?v=wgsbpMrFjAE",
+      "platform": "youtube-longform",
+      "source_priority": 1,
+      "core_in": 127.0,
+      "core_out": 135.0,
+      "handle_in": 126.0,
+      "handle_out": 136.0,
+      "metrics": {
+        "views": 3987421,
+        "comments": "확인 불가",
+        "shares": "확인 불가",
+        "uploaded_at": "2022-10-16",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": true,
+      "hook": {
+        "shock": 4,
+        "surprise": 5,
+        "cute": 0,
+        "beauty": 3,
+        "adult_glamour": 0,
+        "motion": 4,
+        "clarity": 5,
+        "payoff": 5,
+        "total": 26
+      },
+      "beats": {
+        "setup": 1.0,
+        "action": 4.8,
+        "reaction": 1.4,
+        "tail": 0.8
+      }
+    },
+    {
+      "order": 5,
+      "source_candidate_id": "C05",
+      "source_url": "https://www.youtube.com/watch?v=awcrkc_0cKo",
+      "platform": "youtube-longform",
+      "source_priority": 1,
+      "core_in": 33.0,
+      "core_out": 41.0,
+      "handle_in": 32.0,
+      "handle_out": 42.0,
+      "metrics": {
+        "views": 2240835,
+        "comments": "확인 불가",
+        "shares": "확인 불가",
+        "uploaded_at": "2022-07-17",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": true,
+      "hook": {
+        "shock": 2,
+        "surprise": 3,
+        "cute": 0,
+        "beauty": 5,
+        "adult_glamour": 4,
+        "motion": 4,
+        "clarity": 4,
+        "payoff": 4,
+        "total": 26
+      },
+      "beats": {
+        "setup": 1.2,
+        "action": 4.8,
+        "reaction": 1.2,
+        "tail": 0.8
+      }
+    },
+    {
+      "order": 6,
+      "source_candidate_id": "C06",
+      "source_url": "https://www.tiktok.com/@monnika_n/video/7630820577996967200",
+      "platform": "tiktok",
+      "source_priority": 4,
+      "core_in": 2.4,
+      "core_out": 10.4,
+      "handle_in": 1.4,
+      "handle_out": 11.4,
+      "metrics": {
+        "views": 109600,
+        "comments": "확인 불가",
+        "shares": "확인 불가",
+        "uploaded_at": "2026-04-20",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": false,
+      "hook": {
+        "shock": 2,
+        "surprise": 5,
+        "cute": 0,
+        "beauty": 4,
+        "adult_glamour": 0,
+        "motion": 4,
+        "clarity": 5,
+        "payoff": 5,
+        "total": 25
+      },
+      "beats": {
+        "setup": 2.2,
+        "action": 4.2,
+        "reaction": 0.8,
+        "tail": 0.8
+      }
+    },
+    {
+      "order": 7,
+      "source_candidate_id": "C07",
+      "source_url": "https://www.tiktok.com/@stephbuntt/video/7577612168657521938",
+      "platform": "tiktok",
+      "source_priority": 4,
+      "core_in": 28.0,
+      "core_out": 36.0,
+      "handle_in": 27.0,
+      "handle_out": 37.0,
+      "metrics": {
+        "views": 60500,
+        "comments": "확인 불가",
+        "shares": "확인 불가",
+        "uploaded_at": "2025-11-28",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": false,
+      "hook": {
+        "shock": 2,
+        "surprise": 3,
+        "cute": 0,
+        "beauty": 4,
+        "adult_glamour": 0,
+        "motion": 4,
+        "clarity": 4,
+        "payoff": 4,
+        "total": 21
+      },
+      "beats": {
+        "setup": 1.8,
+        "action": 4.4,
+        "reaction": 1.0,
+        "tail": 0.8
+      }
+    }
+  ]
+}
