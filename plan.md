@@ -10,6 +10,7 @@
 - [✅] Require clickable original-source links in both selection artifacts and final delivery, and reject garbled Korean text.
 - [✅] Add recency-balanced sourcing and educational narration requirements to `viral-source-highlight-editor`, then produce a private-review adult pole-dance TOP7 selection package.
 - [✅] Create the global `video-editing-compliance-skill` from the supplied specification without deleting or shortening it; implement the Phase 1 structure, schemas, rights checker, tests, README, and restart schedule for the pole-dance package.
+- [✅] Install Ruff and mypy, validate the compliance skill, create the existing pole-dance TOP7 rights manifest, replace every blocked clip, and render the rights-cleared replacement MP4.
 - [??] Build and browser-verify the responsive TRUSTA overseas-patient marketing homepage from the user-provided Korean copy.
 
 ## Allowed Files
@@ -43,4 +44,9 @@
 - The pole-dance TOP7 package is in `video_project/viral_source_rankings/2026-06-14_pole_dance_top7/`: seven 8-second core cuts, seven 10-second handle cuts, seven VoiceBox Sohee WAV files, Korean SRT/ASS, a 56.01-second 1080x1920 combined MP4, QA montages, and a CapCut-ready folder.
 - The global `video-editing-compliance-skill` is installed at `C:\Users\llorr\.codex\skills\video-editing-compliance-skill\`. Its Phase 1 fail-closed rights checker, four config files, README, templates, test suite, and audit-log behavior are implemented.
 - All 733 lines from the supplied compliance specification are preserved in order in the new `SKILL.md`; only the missing bold marker and Phase 1 numbering were corrected, checklist row 01 and section 7 were added.
-- The pole-dance TOP7 rebuild is scheduled but not rerendered yet. The next task is to create its source-by-source rights manifest and replace or exclude every `unknown` or `prohibited` source before Phase 2 rendering.
+- The original pole-dance TOP7 sources are recorded in `rights.manifest.original.json` and correctly fail the render gate because all seven reuse permissions remain unknown.
+- Seven blocked originals were replaced with exact Mixkit Free License asset pages, documented in `source_replacement_table.md` and `rights.manifest.replacement.json`.
+- The replacement render is `video_project/viral_source_rankings/2026-06-14_pole_dance_top7/pole_aerial_top7_publish_safe.mp4`: 56 seconds, 1080x1920, 30 fps H.264, 48 kHz AAC, VoiceBox Qwen CustomVoice `Sohee`, and project-generated BGM.
+- The replacement package includes seven individual clips, narration WAVs, original generated BGM, Korean SRT/ASS, QA frames, and a CapCut import folder under `publish_safe/`.
+- Render rights pass, while the publish operation remains fail-closed until separate final human approval is recorded.
+- Ruff 0.15.17 and mypy 2.1.0 are installed in the user Python environment. Invoke them reliably as `python -m ruff` and `python -m mypy` because the user Scripts directory is not on PATH.

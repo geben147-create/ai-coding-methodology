@@ -1,0 +1,129 @@
+{
+  "project_id": "2026-06-14-pole-aerial-top7-publish-safe",
+  "checked_at": "2026-06-14T12:30:00+09:00",
+  "sources": [
+    {
+      "source_id": "replacement-01-fire-sword",
+      "source_type": "video",
+      "source_path": "publish_safe/source_media/01_fire_sword.mp4",
+      "source_url": "https://mixkit.co/free-stock-video/woman-doing-a-dance-with-a-fire-sword-43666/",
+      "rights_status": "licensed",
+      "license_type": "Mixkit Stock Video Free License",
+      "license_document": "https://mixkit.co/license/#videoFree",
+      "allowed_usage": ["edit", "commercial", "publish", "monetize", "derivative"],
+      "render_allowed": true,
+      "attribution_required": false,
+      "notes": "Exact asset page states commercial or personal use under the free video license."
+    },
+    {
+      "source_id": "replacement-02-aerial-aerobics",
+      "source_type": "video",
+      "source_path": "publish_safe/source_media/02_aerial_aerobics.mp4",
+      "source_url": "https://mixkit.co/free-stock-video/man-and-woman-doing-aerial-aerobics-949/",
+      "rights_status": "licensed",
+      "license_type": "Mixkit Stock Video Free License",
+      "license_document": "https://mixkit.co/license/#videoFree",
+      "allowed_usage": ["edit", "commercial", "publish", "monetize", "derivative"],
+      "render_allowed": true,
+      "attribution_required": false,
+      "notes": "Exact asset page states commercial or personal use under the free video license."
+    },
+    {
+      "source_id": "replacement-03-circus-ropes",
+      "source_type": "video",
+      "source_path": "publish_safe/source_media/03_circus_ropes.mp4",
+      "source_url": "https://mixkit.co/free-stock-video/couple-performing-on-circus-ropes-952/",
+      "rights_status": "licensed",
+      "license_type": "Mixkit Stock Video Free License",
+      "license_document": "https://mixkit.co/license/#videoFree",
+      "allowed_usage": ["edit", "commercial", "publish", "monetize", "derivative"],
+      "render_allowed": true,
+      "attribution_required": false,
+      "notes": "Exact asset page states commercial or personal use under the free video license."
+    },
+    {
+      "source_id": "replacement-04-rope-performers",
+      "source_type": "video",
+      "source_path": "publish_safe/source_media/04_rope_performers.mp4",
+      "source_url": "https://mixkit.co/free-stock-video/circus-performers-on-ropes-951/",
+      "rights_status": "licensed",
+      "license_type": "Mixkit Stock Video Free License",
+      "license_document": "https://mixkit.co/license/#videoFree",
+      "allowed_usage": ["edit", "commercial", "publish", "monetize", "derivative"],
+      "render_allowed": true,
+      "attribution_required": false,
+      "notes": "Exact asset page states commercial or personal use under the free video license."
+    },
+    {
+      "source_id": "replacement-05-neon-dancer",
+      "source_type": "video",
+      "source_path": "publish_safe/source_media/05_neon_dancer.mp4",
+      "source_url": "https://mixkit.co/free-stock-video/neon-spotlight-and-a-dancer-50432/",
+      "rights_status": "licensed",
+      "license_type": "Mixkit Stock Video Free License",
+      "license_document": "https://mixkit.co/license/#videoFree",
+      "allowed_usage": ["edit", "commercial", "publish", "monetize", "derivative"],
+      "render_allowed": true,
+      "attribution_required": false,
+      "notes": "Exact asset page states commercial or personal use under the free video license."
+    },
+    {
+      "source_id": "replacement-06-silhouette-duet",
+      "source_type": "video",
+      "source_path": "publish_safe/source_media/06_silhouette_duet.mp4",
+      "source_url": "https://mixkit.co/free-stock-video/silhouettes-of-two-dancers-during-a-performance-41414/",
+      "rights_status": "licensed",
+      "license_type": "Mixkit Stock Video Free License",
+      "license_document": "https://mixkit.co/license/#videoFree",
+      "allowed_usage": ["edit", "commercial", "publish", "monetize", "derivative"],
+      "render_allowed": true,
+      "attribution_required": false,
+      "notes": "Exact asset page states commercial or personal use under the free video license."
+    },
+    {
+      "source_id": "replacement-07-abandoned-dance",
+      "source_type": "video",
+      "source_path": "publish_safe/source_media/07_abandoned_dance.mp4",
+      "source_url": "https://mixkit.co/free-stock-video/contemporary-dance-in-an-abandoned-place-43207/",
+      "rights_status": "licensed",
+      "license_type": "Mixkit Stock Video Free License",
+      "license_document": "https://mixkit.co/license/#videoFree",
+      "allowed_usage": ["edit", "commercial", "publish", "monetize", "derivative"],
+      "render_allowed": true,
+      "attribution_required": false,
+      "notes": "Exact asset page states commercial or personal use under the free video license."
+    },
+    {
+      "source_id": "original-generated-bgm",
+      "source_type": "music",
+      "source_path": "publish_safe/audio/original_bgm.wav",
+      "rights_status": "owned",
+      "license_type": "Project-owned procedural audio",
+      "license_document": "publish_safe/README.md",
+      "allowed_usage": ["edit", "commercial", "publish", "monetize", "derivative"],
+      "render_allowed": true,
+      "attribution_required": false,
+      "notes": "Generated locally from FFmpeg sine and noise sources; no external samples."
+    },
+    {
+      "source_id": "qwen3-tts-sohee",
+      "source_type": "tts",
+      "source_path": "publish_safe/audio/narration.wav",
+      "source_url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
+      "rights_status": "licensed",
+      "license_type": "Apache License 2.0",
+      "license_document": "https://github.com/QwenLM/Qwen3-TTS/blob/main/LICENSE",
+      "allowed_usage": ["edit", "commercial", "publish", "monetize", "derivative"],
+      "render_allowed": true,
+      "attribution_required": true,
+      "attribution_text": "Narration generated with Qwen3-TTS-12Hz-0.6B-CustomVoice (Sohee), Apache-2.0.",
+      "notes": "Uses the model's built-in Sohee speaker; no real-person voice clone was used."
+    }
+  ],
+  "approval": {
+    "human_approved": false,
+    "approved_by": null,
+    "approved_at": null,
+    "scope": "Local replacement render is requested; public publication requires a separate final human approval."
+  }
+}

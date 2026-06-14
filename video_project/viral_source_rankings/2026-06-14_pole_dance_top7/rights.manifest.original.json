@@ -1,0 +1,96 @@
+{
+  "project_id": "2026-06-14-pole-dance-top7-originals",
+  "checked_at": "2026-06-14T12:30:00+09:00",
+  "sources": [
+    {
+      "source_id": "original-01",
+      "source_type": "video",
+      "source_url": "https://www.youtube.com/watch?v=ZHhePoJhs8g",
+      "rights_status": "unknown",
+      "license_type": null,
+      "license_document": null,
+      "allowed_usage": ["edit"],
+      "render_allowed": false,
+      "attribution_required": false,
+      "notes": "Likely-original upload, but no reuse or redistribution permission was verified."
+    },
+    {
+      "source_id": "original-02",
+      "source_type": "video",
+      "source_url": "https://www.youtube.com/watch?v=oawEi97c65w",
+      "rights_status": "unknown",
+      "license_type": null,
+      "license_document": null,
+      "allowed_usage": ["edit"],
+      "render_allowed": false,
+      "attribution_required": false,
+      "notes": "No explicit reuse license or creator permission was verified."
+    },
+    {
+      "source_id": "original-03",
+      "source_type": "video",
+      "source_url": "https://www.youtube.com/watch?v=iU7vnUh2eaI",
+      "rights_status": "unknown",
+      "license_type": null,
+      "license_document": null,
+      "allowed_usage": ["edit"],
+      "render_allowed": false,
+      "attribution_required": false,
+      "notes": "No explicit reuse license or creator permission was verified."
+    },
+    {
+      "source_id": "original-04",
+      "source_type": "video",
+      "source_url": "https://www.youtube.com/watch?v=wgsbpMrFjAE",
+      "rights_status": "unknown",
+      "license_type": null,
+      "license_document": null,
+      "allowed_usage": ["edit"],
+      "render_allowed": false,
+      "attribution_required": false,
+      "notes": "Broadcaster footage has no verified third-party reuse permission."
+    },
+    {
+      "source_id": "original-05",
+      "source_type": "video",
+      "source_url": "https://www.youtube.com/watch?v=awcrkc_0cKo",
+      "rights_status": "unknown",
+      "license_type": null,
+      "license_document": null,
+      "allowed_usage": ["edit"],
+      "render_allowed": false,
+      "attribution_required": false,
+      "notes": "No explicit reuse license or creator permission was verified."
+    },
+    {
+      "source_id": "original-06",
+      "source_type": "video",
+      "source_url": "https://www.tiktok.com/@monnika_n/video/7630820577996967200",
+      "rights_status": "unknown",
+      "license_type": null,
+      "license_document": null,
+      "allowed_usage": ["edit"],
+      "render_allowed": false,
+      "attribution_required": false,
+      "notes": "A public TikTok post is not a redistribution license."
+    },
+    {
+      "source_id": "original-07",
+      "source_type": "video",
+      "source_url": "https://www.tiktok.com/@stephbuntt/video/7577612168657521938",
+      "rights_status": "unknown",
+      "license_type": null,
+      "license_document": null,
+      "allowed_usage": ["edit"],
+      "render_allowed": false,
+      "attribution_required": false,
+      "notes": "A public TikTok post is not a redistribution license."
+    }
+  ],
+  "approval": {
+    "human_approved": false,
+    "approved_by": null,
+    "approved_at": null,
+    "scope": "Original sources remain blocked from the replacement render."
+  }
+}

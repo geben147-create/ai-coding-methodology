@@ -1,0 +1,37 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,Malgun Gothic,70,&H00FFFFFF,&H00FFFFFF,&H00101010,&H00000000,-1,0,0,0,100,100,0,0,1,5,1,8,40,40,62,1
+Style: List,Malgun Gothic,38,&H00FFFFFF,&H00FFFFFF,&H00101010,&H80000000,-1,0,0,0,100,100,0,0,3,3,1,7,38,700,235,1
+Style: Reaction,Malgun Gothic,78,&H00FFFFFF,&H00FFFFFF,&H00101010,&HA0000000,-1,0,0,0,100,100,-1,0,3,5,2,5,90,90,0,1
+Style: Info,Malgun Gothic,50,&H00FFFFFF,&H00FFFFFF,&H00101010,&HA0000000,-1,0,0,0,100,100,-1,0,3,4,1,2,75,75,150,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:56.00,Title,,0,0,0,,{\c&H0000FFFF&}폴·에어리얼 퍼포먼스{\c&H00FFFFFF&}  랭킹 TOP7
+Dialogue: 0,0:00:00.00,0:00:08.00,List,,0,0,0,,{\c&H000000FF&}1  FIRE SWORD{\c&H00FFFFFF&}\N2  AERIAL DUO\N3  SILK SPIN\N4  SLOW FLIGHT\N5  NEON FLOOR\N6  SHADOW DUET\N7  SPACE DANCE
+Dialogue: 0,0:00:08.00,0:00:16.00,List,,0,0,0,,1  FIRE SWORD\N{\c&H000000FF&}2  AERIAL DUO{\c&H00FFFFFF&}\N3  SILK SPIN\N4  SLOW FLIGHT\N5  NEON FLOOR\N6  SHADOW DUET\N7  SPACE DANCE
+Dialogue: 0,0:00:16.00,0:00:24.00,List,,0,0,0,,1  FIRE SWORD\N2  AERIAL DUO\N{\c&H000000FF&}3  SILK SPIN{\c&H00FFFFFF&}\N4  SLOW FLIGHT\N5  NEON FLOOR\N6  SHADOW DUET\N7  SPACE DANCE
+Dialogue: 0,0:00:24.00,0:00:32.00,List,,0,0,0,,1  FIRE SWORD\N2  AERIAL DUO\N3  SILK SPIN\N{\c&H000000FF&}4  SLOW FLIGHT{\c&H00FFFFFF&}\N5  NEON FLOOR\N6  SHADOW DUET\N7  SPACE DANCE
+Dialogue: 0,0:00:32.00,0:00:40.00,List,,0,0,0,,1  FIRE SWORD\N2  AERIAL DUO\N3  SILK SPIN\N4  SLOW FLIGHT\N{\c&H000000FF&}5  NEON FLOOR{\c&H00FFFFFF&}\N6  SHADOW DUET\N7  SPACE DANCE
+Dialogue: 0,0:00:40.00,0:00:48.00,List,,0,0,0,,1  FIRE SWORD\N2  AERIAL DUO\N3  SILK SPIN\N4  SLOW FLIGHT\N5  NEON FLOOR\N{\c&H000000FF&}6  SHADOW DUET{\c&H00FFFFFF&}\N7  SPACE DANCE
+Dialogue: 0,0:00:48.00,0:00:56.00,List,,0,0,0,,1  FIRE SWORD\N2  AERIAL DUO\N3  SILK SPIN\N4  SLOW FLIGHT\N5  NEON FLOOR\N6  SHADOW DUET\N{\c&H000000FF&}7  SPACE DANCE{\c&H00FFFFFF&}
+Dialogue: 1,0:00:00.15,0:00:03.20,Reaction,,0,0,0,,첫 장면부터 불꽃이라고?
+Dialogue: 1,0:00:08.15,0:00:11.30,Reaction,,0,0,0,,두 사람이 공중에서 회전!
+Dialogue: 1,0:00:16.15,0:00:19.30,Reaction,,0,0,0,,이건 팔힘만으로 안 됩니다
+Dialogue: 1,0:00:24.15,0:00:27.30,Reaction,,0,0,0,,느린데 더 아찔합니다
+Dialogue: 1,0:00:32.15,0:00:35.30,Reaction,,0,0,0,,네온 한 줄이 무대를 바꾼다
+Dialogue: 1,0:00:40.15,0:00:43.30,Reaction,,0,0,0,,표정 없이도 감정이 보인다
+Dialogue: 1,0:00:48.15,0:00:51.30,Reaction,,0,0,0,,마지막은 공간까지 춤춘다
+Dialogue: 1,0:00:03.30,0:00:07.70,Info,,0,0,0,,불꽃은 회전 반경이 커질수록\N끝부분의 속도가 더 빨라집니다.
+Dialogue: 1,0:00:11.30,0:00:15.70,Info,,0,0,0,,서로 반대 방향으로 무게를 써야\N회전축이 안정됩니다.
+Dialogue: 1,0:00:19.30,0:00:23.70,Info,,0,0,0,,천을 감는 락과 코어가\N몸의 하중을 나눕니다.
+Dialogue: 1,0:00:27.30,0:00:31.70,Info,,0,0,0,,느린 회전은 몸의 선과 균형을\N더 또렷하게 보여줍니다.
+Dialogue: 1,0:00:35.30,0:00:39.70,Info,,0,0,0,,작은 움직임도 빛의 대비로\N훨씬 크게 보입니다.
+Dialogue: 1,0:00:43.30,0:00:47.70,Info,,0,0,0,,표정 대신 몸의 선과 타이밍이\N감정을 전달합니다.
+Dialogue: 1,0:00:51.30,0:00:55.70,Info,,0,0,0,,넓은 롱숏은 작은 동작의 궤적도\N크게 보이게 만듭니다.

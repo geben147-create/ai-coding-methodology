@@ -130,3 +130,21 @@
   rendering even when `render_allowed` is mistakenly true. Public publishing
   additionally requires per-source `publish` permission and explicit human
   approval, with every decision written to a UTF-8 audit log.
+- A helper that returns `bool` does not automatically narrow an `Any | None`
+  value for mypy. Before passing JSON values to a compiled regex, use an
+  explicit `isinstance(value, str)` guard so the type checker and runtime
+  share the same safety condition.
+- VoiceBox preset profiles can disappear after an application reset even when
+  the Qwen CustomVoice model remains downloaded. Resolve the preset profile at
+  build time and recreate the built-in `Sohee` profile when absent instead of
+  persisting a profile UUID.
+- Windows PowerShell 5 can preserve a REST JSON array as one nested
+  `System.Object[]` when it is wrapped again with `@(...)`. Do not add the
+  extra array wrapper before filtering VoiceBox profiles.
+- Build long FFmpeg filter graphs in a single variable before passing them to
+  an argument array. Inline `+` concatenation inside `@(...)` can become
+  separate command arguments and make FFmpeg interpret filter fragments as
+  output filenames.
+- Force final short-form AAC audio to 48 kHz. FFmpeg may otherwise negotiate a
+  higher sample rate that plays correctly but is less predictable in mobile
+  editors such as CapCut.
