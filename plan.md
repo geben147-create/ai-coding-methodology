@@ -9,6 +9,7 @@
 - [✅] Upgrade `viral-source-highlight-editor` with the successful selection-first workflow, stronger visual-hook ordering, dynamic vertical reframing, and VoiceBox Sohee narration for the combined preview.
 - [✅] Require clickable original-source links in both selection artifacts and final delivery, and reject garbled Korean text.
 - [✅] Add recency-balanced sourcing and educational narration requirements to `viral-source-highlight-editor`, then produce a private-review adult pole-dance TOP7 selection package.
+- [✅] Create the global `video-editing-compliance-skill` from the supplied specification without deleting or shortening it; implement the Phase 1 structure, schemas, rights checker, tests, README, and restart schedule for the pole-dance package.
 - [??] Build and browser-verify the responsive TRUSTA overseas-patient marketing homepage from the user-provided Korean copy.
 
 ## Allowed Files
@@ -17,6 +18,7 @@
 - `plan.md`
 - `LessonsLearned.md`
 - `C:\Users\llorr\.codex\skills\viral-source-highlight-editor\**`
+- `C:\Users\llorr\.codex\skills\video-editing-compliance-skill\**`
 - `.firecrawl\viral-source-highlight-editor\**`
 - `video_project\viral_source_rankings\2026-06-13_topic_discovery\**`
 - `video_project\viral_source_rankings\2026-06-13_animal_top7\**`
@@ -39,3 +41,6 @@
 - The skill now requires every selected original URL in `selection_manifest.md` and in the final response, and its validator rejects known Korean mojibake or replacement characters.
 - The skill now requires a recent/legacy viral source mix and one scene-relevant educational or technical narration point per clip; it explicitly states that old uploads are not a copyright-avoidance mechanism.
 - The pole-dance TOP7 package is in `video_project/viral_source_rankings/2026-06-14_pole_dance_top7/`: seven 8-second core cuts, seven 10-second handle cuts, seven VoiceBox Sohee WAV files, Korean SRT/ASS, a 56.01-second 1080x1920 combined MP4, QA montages, and a CapCut-ready folder.
+- The global `video-editing-compliance-skill` is installed at `C:\Users\llorr\.codex\skills\video-editing-compliance-skill\`. Its Phase 1 fail-closed rights checker, four config files, README, templates, test suite, and audit-log behavior are implemented.
+- All 733 lines from the supplied compliance specification are preserved in order in the new `SKILL.md`; only the missing bold marker and Phase 1 numbering were corrected, checklist row 01 and section 7 were added.
+- The pole-dance TOP7 rebuild is scheduled but not rerendered yet. The next task is to create its source-by-source rights manifest and replace or exclude every `unknown` or `prohibited` source before Phase 2 rendering.

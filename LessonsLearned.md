@@ -122,3 +122,11 @@
   the wrong console encoding. Re-read with `Get-Content -Encoding UTF8`,
   validate the decoded text, and deliver original source URLs as clickable
   Markdown links both in the selection manifest and in the final response.
+- When a user requires a long supplied skill specification to remain intact,
+  preserve it line-for-line, limit corrections to an explicit allowlist, and
+  verify that every corrected source line remains an ordered subsequence of
+  the final `SKILL.md`. Record the source SHA-256 and line count separately.
+- A rights gate should fail closed: `unknown` and `prohibited` must block
+  rendering even when `render_allowed` is mistakenly true. Public publishing
+  additionally requires per-source `publish` permission and explicit human
+  approval, with every decision written to a UTF-8 audit log.
