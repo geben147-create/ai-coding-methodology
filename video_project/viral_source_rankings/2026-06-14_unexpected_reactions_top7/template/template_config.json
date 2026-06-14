@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "background": "#070909",
+    "safe_margin": 48
+  },
+  "palette": {
+    "yellow": "#FFD735",
+    "white": "#FFFDF6",
+    "red": "#FF3B30",
+    "ink": "#080A0A",
+    "muted": "#B8B9B4",
+    "panel": "rgba(7, 9, 9, 0.72)"
+  },
+  "title": {
+    "text": "예상 못한 리액션",
+    "x": 72,
+    "y": 72,
+    "width": 936,
+    "font_size": 72,
+    "color": "#FFD735"
+  },
+  "ranking_label": {
+    "text": "랭킹 TOP7",
+    "x": 72,
+    "y": 162,
+    "font_size": 48,
+    "color": "#FFFDF6"
+  },
+  "video_frame": {
+    "x": 42,
+    "y": 276,
+    "width": 996,
+    "height": 1320,
+    "corner_radius": 42
+  },
+  "rank_stack": {
+    "x": 58,
+    "y": 430,
+    "gap": 82,
+    "font_size": 44,
+    "current_rank": 1
+  },
+  "reaction_caption": {
+    "text": "표정이 한 번에 풀렸다",
+    "x": 130,
+    "y": 1450,
+    "width": 820,
+    "font_size": 70,
+    "max_lines": 2
+  },
+  "character": {
+    "enabled": false,
+    "source": "assets/character/character.png",
+    "processed_source": "assets/character/character_processed.png",
+    "x": 710,
+    "y": 930,
+    "width": 300,
+    "height": 420,
+    "opacity": 0.8,
+    "shadow": "0 24px 64px rgba(0,0,0,0.55)",
+    "placement": "middle-right",
+    "avoid": [
+      "faces",
+      "reaction_caption",
+      "source_attribution",
+      "payoff"
+    ]
+  },
+  "footer": {
+    "text": "다음 반응은 더 놀랍습니다",
+    "x": 72,
+    "y": 1770,
+    "width": 936,
+    "font_size": 38
+  }
+}

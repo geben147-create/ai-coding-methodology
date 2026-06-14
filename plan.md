@@ -13,6 +13,7 @@
 - [✅] Install Ruff and mypy, validate the compliance skill, create the existing pole-dance TOP7 rights manifest, replace every blocked clip, and render the rights-cleared replacement MP4.
 - [✅] Upgrade `viral-source-highlight-editor` for TikTok-first source tracing and produce a separate unexpected-reaction TOP7 private-review package with exact source links, timings, YouTube duplicate checks, and licensed audio planning.
 - [??] Build and browser-verify the responsive TRUSTA overseas-patient marketing homepage from the user-provided Korean copy.
+- [✅] Audit the unexpected-reaction TOP7 against the existing video Skills, patch only missing reusable rules, and generate the audit and Shorts template packages.
 
 ## Allowed Files
 
@@ -56,3 +57,7 @@
 - It includes 22 researched TikTok candidates, exact source and YouTube duplicate evidence, seven 8-second cores, seven 10-second handles, a 56.021-second 1080x1920 H.264/AAC private-review MP4, Korean SRT, QA montages, and a CapCut-ready folder.
 - The ranking uses original dialogue and reaction audio with no added TTS. `Never Coming Down` by The Soundlings was verified in the logged-in YouTube Studio Audio Library and mixed quietly beneath the source audio.
 - All seven TikTok clips remain `permission-required`; the render is approved only for local private review and is not cleared for public upload.
+- The unexpected-reaction package now includes four audit reports, 21 manual reverse-search frames, and a reusable 1080x1920 HTML/PNG/JSON Shorts template under `audit/` and `template/`.
+- The global `viral-source-highlight-editor` was patched without deleting existing text. It now requires per-cut rationale, accessible top-comment evidence, SFX naming, per-source watermark decisions, multi-query YouTube checks, reverse-search frames, visual-emphasis and flip decision logs, numeric rule audits, and channel template outputs.
+- `video-editing-compliance-skill` was intentionally left unchanged because its existing zoom, offset, speed, color, J/L-cut, freeze-frame, arrow, rights, and production-log clauses already cover those areas.
+- The audit verdict is `SOURCE_RIGHTS_RISK`: all seven TikTok clips still require permission, and the existing render also needs comment evidence, multi-query duplicate checks, manual reverse-image review, varied emphasis decisions, and numeric-rule reconciliation before a future edit can be called complete.

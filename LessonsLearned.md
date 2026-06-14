@@ -160,3 +160,13 @@
 - For reaction rankings, a one-second contact sheet around the suspected peak
   can materially improve the cut. The grandma-prank payoff was complete at
   176-184 seconds, not the initially estimated 195-203 seconds.
+- A local `file://` HTML preview can be blocked by the in-app browser URL
+  policy. Do not bypass that control; render deterministic 1080x1920 template
+  previews from the same JSON with Pillow and keep the HTML as the editable
+  layout source.
+- Pillow pixel APIs expose broad union types to mypy even after converting an
+  image to RGBA. Normalize every pixel through an explicit tuple conversion
+  helper instead of suppressing the type error.
+- Reverse-search frame generation is not reverse-search completion. Label the
+  package `NEEDS_HUMAN_REVIEW` until a person or supported image-search tool
+  records the query time, matching URLs, and reviewer.
