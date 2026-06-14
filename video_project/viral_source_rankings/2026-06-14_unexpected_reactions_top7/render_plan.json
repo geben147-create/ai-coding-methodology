@@ -1,0 +1,76 @@
+{
+  "topic": "예상 못한 리액션",
+  "subtitle": "랭킹 TOP7",
+  "clips": [
+    {
+      "order": 1,
+      "id": "C01",
+      "source": "7582341708541709598.mp4",
+      "core_in": 10.5,
+      "handle_in": 9.5,
+      "slug": "mom_found",
+      "caption_a": "엄마 찾은 순간",
+      "caption_b": "표정이 한 번에 풀렸다"
+    },
+    {
+      "order": 2,
+      "id": "C06",
+      "source": "7446418529995312415.mp4",
+      "core_in": 6.0,
+      "handle_in": 5.0,
+      "slug": "baby_news",
+      "caption_a": "아기 온대요",
+      "caption_b": "그 자리에서 주저앉음"
+    },
+    {
+      "order": 3,
+      "id": "C09",
+      "source": "7585689673687698701.mp4",
+      "core_in": 8.0,
+      "handle_in": 7.0,
+      "slug": "baby_smile",
+      "caption_a": "뽀뽀 한 번에",
+      "caption_b": "표정이 사르르"
+    },
+    {
+      "order": 4,
+      "id": "C02",
+      "source": "7452398830911229227.mp4",
+      "core_in": 5.5,
+      "handle_in": 4.5,
+      "slug": "mother_in_law",
+      "caption_a": "누가 그렇게 키웠어?",
+      "caption_b": "시어머니가 바로 편들었다"
+    },
+    {
+      "order": 5,
+      "id": "C13",
+      "source": "7551907106681539853.mp4",
+      "core_in": 10.0,
+      "handle_in": 9.0,
+      "slug": "rock_price",
+      "caption_a": "이 돌을 돈 주고 샀다고?",
+      "caption_b": "표정으로 이미 대답함"
+    },
+    {
+      "order": 6,
+      "id": "C10",
+      "source": "7553290452938640670.mp4",
+      "core_in": 16.0,
+      "handle_in": 15.0,
+      "slug": "morning_mood",
+      "caption_a": "나한테 아침 인사하지 마",
+      "caption_b": "아침형 인간은 아님"
+    },
+    {
+      "order": 7,
+      "id": "C07",
+      "source": "7451355930031033646_muxed.mp4",
+      "core_in": 176.0,
+      "handle_in": 175.0,
+      "slug": "grandma_frog",
+      "caption_a": "잠깐, 그거 내 건데?",
+      "caption_b": "선물의 정체를 알아챘다"
+    }
+  ]
+}

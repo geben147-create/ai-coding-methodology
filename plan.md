@@ -11,6 +11,7 @@
 - [✅] Add recency-balanced sourcing and educational narration requirements to `viral-source-highlight-editor`, then produce a private-review adult pole-dance TOP7 selection package.
 - [✅] Create the global `video-editing-compliance-skill` from the supplied specification without deleting or shortening it; implement the Phase 1 structure, schemas, rights checker, tests, README, and restart schedule for the pole-dance package.
 - [✅] Install Ruff and mypy, validate the compliance skill, create the existing pole-dance TOP7 rights manifest, replace every blocked clip, and render the rights-cleared replacement MP4.
+- [✅] Upgrade `viral-source-highlight-editor` for TikTok-first source tracing and produce a separate unexpected-reaction TOP7 private-review package with exact source links, timings, YouTube duplicate checks, and licensed audio planning.
 - [??] Build and browser-verify the responsive TRUSTA overseas-patient marketing homepage from the user-provided Korean copy.
 
 ## Allowed Files
@@ -25,6 +26,7 @@
 - `video_project\viral_source_rankings\2026-06-13_animal_top7\**`
 - `video_project\viral_source_rankings\2026-06-13_stunt_selects\**`
 - `video_project\viral_source_rankings\2026-06-14_pole_dance_top7\**`
+- `video_project\viral_source_rankings\2026-06-14_unexpected_reactions_top7\**`
 - `voicebox-local\**`
 - `trusta-medical-growth\**`
 
@@ -50,3 +52,7 @@
 - The replacement package includes seven individual clips, narration WAVs, original generated BGM, Korean SRT/ASS, QA frames, and a CapCut import folder under `publish_safe/`.
 - Render rights pass, while the publish operation remains fail-closed until separate final human approval is recorded.
 - Ruff 0.15.17 and mypy 2.1.0 are installed in the user Python environment. Invoke them reliably as `python -m ruff` and `python -m mypy` because the user Scripts directory is not on PATH.
+- The TikTok-first unexpected-reaction package is in `video_project/viral_source_rankings/2026-06-14_unexpected_reactions_top7/`.
+- It includes 22 researched TikTok candidates, exact source and YouTube duplicate evidence, seven 8-second cores, seven 10-second handles, a 56.021-second 1080x1920 H.264/AAC private-review MP4, Korean SRT, QA montages, and a CapCut-ready folder.
+- The ranking uses original dialogue and reaction audio with no added TTS. `Never Coming Down` by The Soundlings was verified in the logged-in YouTube Studio Audio Library and mixed quietly beneath the source audio.
+- All seven TikTok clips remain `permission-required`; the render is approved only for local private review and is not cleared for public upload.

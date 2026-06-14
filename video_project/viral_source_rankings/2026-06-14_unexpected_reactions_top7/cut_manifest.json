@@ -1,0 +1,393 @@
+{
+  "mode": "VIRAL_SOURCE_CUT_PRIVATE_REVIEW",
+  "workflow_stage": "selection",
+  "format_type": "ranking-dialogue",
+  "selection_count": 7,
+  "source_mix": {
+    "recent_cutoff": "2025-06-14",
+    "minimum_recent": 4,
+    "minimum_legacy_viral": 3
+  },
+  "narration": {
+    "enabled": false,
+    "engine": "voicebox-qwen-customvoice",
+    "model_size": "0.6B",
+    "voice": "Sohee",
+    "edge_tts_fallback_approved": false
+  },
+  "private_review_approved": true,
+  "render_selects": true,
+  "publish_safe_requested": false,
+  "stock_fallback_used": false,
+  "approval": {
+    "approved_by": "user",
+    "approved_at": "2026-06-14T13:43:26.6704462+09:00",
+    "scope": "local private review only; no public upload clearance"
+  },
+  "clips": [
+    {
+      "order": 1,
+      "source_candidate_id": "C01",
+      "source_url": "https://www.tiktok.com/@mariamsilver/video/7582341708541709598",
+      "platform": "tiktok",
+      "source_priority": 1,
+      "source_duration": 23.933,
+      "core_in": 10.5,
+      "core_out": 18.5,
+      "handle_in": 9.5,
+      "handle_out": 19.5,
+      "transition_at": 18.5,
+      "acquisition_method": "public-platform-url",
+      "youtube_duplicate_check": {
+        "status": "no-match-found",
+        "checked_at": "2026-06-14",
+        "query": "mariamsilver sweetest moment showing up matters",
+        "evidence_urls": [
+          "https://www.youtube.com/results?search_query=mariamsilver+sweetest+moment+showing+up+matters"
+        ]
+      },
+      "metrics": {
+        "views": 106600000,
+        "comments": 60000,
+        "shares": 847100,
+        "uploaded_at": "2025-12-10",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": false,
+      "hook": {
+        "shock": 2,
+        "surprise": 5,
+        "cute": 5,
+        "beauty": 5,
+        "adult_glamour": 0,
+        "motion": 4,
+        "clarity": 5,
+        "payoff": 5,
+        "total": 31
+      },
+      "beats": {
+        "setup": 1.5,
+        "action": 2.0,
+        "reaction": 3.5,
+        "tail": 1.0
+      }
+    },
+    {
+      "order": 2,
+      "source_candidate_id": "C06",
+      "source_url": "https://www.tiktok.com/@liviwalker/video/7446418529995312415",
+      "platform": "tiktok",
+      "source_priority": 1,
+      "source_duration": 32.5,
+      "core_in": 6.0,
+      "core_out": 14.0,
+      "handle_in": 5.0,
+      "handle_out": 15.0,
+      "transition_at": 14.0,
+      "acquisition_method": "public-platform-url",
+      "youtube_duplicate_check": {
+        "status": "no-match-found",
+        "checked_at": "2026-06-14",
+        "query": "liviwalker best surprise baby announcement",
+        "evidence_urls": [
+          "https://www.youtube.com/results?search_query=liviwalker+best+surprise+baby+announcement"
+        ]
+      },
+      "metrics": {
+        "views": 33400000,
+        "comments": 14200,
+        "shares": 43500,
+        "uploaded_at": "2024-12-09",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": true,
+      "hook": {
+        "shock": 4,
+        "surprise": 5,
+        "cute": 2,
+        "beauty": 2,
+        "adult_glamour": 0,
+        "motion": 4,
+        "clarity": 5,
+        "payoff": 5,
+        "total": 27
+      },
+      "beats": {
+        "setup": 1.5,
+        "action": 1.5,
+        "reaction": 4.0,
+        "tail": 1.0
+      }
+    },
+    {
+      "order": 3,
+      "source_candidate_id": "C09",
+      "source_url": "https://www.tiktok.com/@shelbywold/video/7585689673687698701",
+      "platform": "tiktok",
+      "source_priority": 1,
+      "source_duration": 24.967,
+      "core_in": 8.0,
+      "core_out": 16.0,
+      "handle_in": 7.0,
+      "handle_out": 17.0,
+      "transition_at": 16.0,
+      "acquisition_method": "public-platform-url",
+      "youtube_duplicate_check": {
+        "status": "no-match-found",
+        "checked_at": "2026-06-14",
+        "query": "shelbywold first kiss big brother baby",
+        "evidence_urls": [
+          "https://www.youtube.com/results?search_query=shelbywold+first+kiss+big+brother+baby"
+        ]
+      },
+      "metrics": {
+        "views": 17500000,
+        "comments": 8927,
+        "shares": 327100,
+        "uploaded_at": "2025-12-19",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": false,
+      "hook": {
+        "shock": 1,
+        "surprise": 4,
+        "cute": 5,
+        "beauty": 3,
+        "adult_glamour": 0,
+        "motion": 2,
+        "clarity": 5,
+        "payoff": 5,
+        "total": 25
+      },
+      "beats": {
+        "setup": 1.5,
+        "action": 1.5,
+        "reaction": 4.0,
+        "tail": 1.0
+      }
+    },
+    {
+      "order": 4,
+      "source_candidate_id": "C02",
+      "source_url": "https://www.tiktok.com/@keely1123/video/7452398830911229227",
+      "platform": "tiktok",
+      "source_priority": 1,
+      "source_duration": 73.567,
+      "core_in": 5.5,
+      "core_out": 13.5,
+      "handle_in": 4.5,
+      "handle_out": 14.5,
+      "transition_at": 13.5,
+      "acquisition_method": "public-platform-url",
+      "youtube_duplicate_check": {
+        "status": "no-match-found",
+        "checked_at": "2026-06-14",
+        "query": "keelygaffney best mother in law couple prank",
+        "evidence_urls": [
+          "https://www.youtube.com/results?search_query=keelygaffney+best+mother+in+law+couple+prank"
+        ]
+      },
+      "metrics": {
+        "views": 66300000,
+        "comments": 28400,
+        "shares": 368600,
+        "uploaded_at": "2024-12-25",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": true,
+      "hook": {
+        "shock": 4,
+        "surprise": 5,
+        "cute": 1,
+        "beauty": 1,
+        "adult_glamour": 0,
+        "motion": 2,
+        "clarity": 5,
+        "payoff": 5,
+        "total": 23
+      },
+      "beats": {
+        "setup": 1.5,
+        "action": 1.5,
+        "reaction": 4.0,
+        "tail": 1.0
+      }
+    },
+    {
+      "order": 5,
+      "source_candidate_id": "C13",
+      "source_url": "https://www.tiktok.com/@phoebeadams112/video/7551907106681539853",
+      "platform": "tiktok",
+      "source_priority": 1,
+      "source_duration": 53.817,
+      "core_in": 10.0,
+      "core_out": 18.0,
+      "handle_in": 9.0,
+      "handle_out": 19.0,
+      "transition_at": 18.0,
+      "acquisition_method": "public-platform-url",
+      "youtube_duplicate_check": {
+        "status": "no-match-found",
+        "checked_at": "2026-06-14",
+        "query": "phoebeadams112 Anthropologie rock collection",
+        "evidence_urls": [
+          "https://www.youtube.com/results?search_query=phoebeadams112+Anthropologie+rock+collection"
+        ]
+      },
+      "metrics": {
+        "views": 9000000,
+        "comments": 4053,
+        "shares": 69100,
+        "uploaded_at": "2025-09-19",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": true,
+      "hook": {
+        "shock": 2,
+        "surprise": 5,
+        "cute": 1,
+        "beauty": 2,
+        "adult_glamour": 0,
+        "motion": 4,
+        "clarity": 4,
+        "payoff": 4,
+        "total": 22
+      },
+      "beats": {
+        "setup": 2.0,
+        "action": 2.0,
+        "reaction": 3.0,
+        "tail": 1.0
+      }
+    },
+    {
+      "order": 6,
+      "source_candidate_id": "C10",
+      "source_url": "https://www.tiktok.com/@quianacreates/video/7553290452938640670",
+      "platform": "tiktok",
+      "source_priority": 1,
+      "source_duration": 36.503,
+      "core_in": 16.0,
+      "core_out": 24.0,
+      "handle_in": 15.0,
+      "handle_out": 25.0,
+      "transition_at": 24.0,
+      "acquisition_method": "public-platform-url",
+      "youtube_duplicate_check": {
+        "status": "no-match-found",
+        "checked_at": "2026-06-14",
+        "query": "quianacreates toddler not a morning person",
+        "evidence_urls": [
+          "https://www.youtube.com/results?search_query=quianacreates+toddler+not+a+morning+person"
+        ]
+      },
+      "metrics": {
+        "views": 12000000,
+        "comments": 24100,
+        "shares": 424900,
+        "uploaded_at": "2025-09-23",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": false,
+      "hook": {
+        "shock": 1,
+        "surprise": 3,
+        "cute": 5,
+        "beauty": 1,
+        "adult_glamour": 0,
+        "motion": 2,
+        "clarity": 4,
+        "payoff": 4,
+        "total": 20
+      },
+      "beats": {
+        "setup": 1.5,
+        "action": 2.5,
+        "reaction": 3.0,
+        "tail": 1.0
+      }
+    },
+    {
+      "order": 7,
+      "source_candidate_id": "C07",
+      "source_url": "https://www.tiktok.com/@kaylee.marina/video/7451355930031033646",
+      "platform": "tiktok",
+      "source_priority": 1,
+      "source_duration": 253.287,
+      "core_in": 176.0,
+      "core_out": 184.0,
+      "handle_in": 175.0,
+      "handle_out": 185.0,
+      "transition_at": 184.0,
+      "acquisition_method": "public-platform-url",
+      "youtube_duplicate_check": {
+        "status": "no-match-found",
+        "checked_at": "2026-06-14",
+        "query": "kaylee marina grandma frog Christmas prank",
+        "evidence_urls": [
+          "https://www.youtube.com/results?search_query=kaylee+marina+grandma+frog+Christmas+prank"
+        ]
+      },
+      "metrics": {
+        "views": 26900000,
+        "comments": 37900,
+        "shares": 444300,
+        "uploaded_at": "2024-12-22",
+        "checked_at": "2026-06-14"
+      },
+      "originality": "likely-original",
+      "reupload_prohibition": "unknown",
+      "rights_status": "permission-required",
+      "risk": "high",
+      "timing_confidence": "verified",
+      "adult_subject_confirmed": true,
+      "hook": {
+        "shock": 1,
+        "surprise": 4,
+        "cute": 3,
+        "beauty": 1,
+        "adult_glamour": 0,
+        "motion": 2,
+        "clarity": 4,
+        "payoff": 4,
+        "total": 19
+      },
+      "beats": {
+        "setup": 1.5,
+        "action": 2.0,
+        "reaction": 3.5,
+        "tail": 1.0
+      }
+    }
+  ]
+}

@@ -148,3 +148,15 @@
 - Force final short-form AAC audio to 48 kHz. FFmpeg may otherwise negotiate a
   higher sample rate that plays correctly but is less predictable in mobile
   editors such as CapCut.
+- TikTok's highest-resolution format can occasionally contain video only even
+  when the extractor advertises AAC. Check streams with `ffprobe`; when timing
+  matches, mux the 1080p video stream with AAC from a lower H.264 rendition
+  before selecting dialogue-dependent cuts.
+- A Chrome-controlled YouTube Studio download can remain an extension-managed
+  temporary file and disappear after the browser event ends. Preserve the
+  Studio UI evidence separately, record the exact track identity, and disclose
+  any alternate file-retrieval path instead of claiming the temporary file was
+  retained.
+- For reaction rankings, a one-second contact sheet around the suspected peak
+  can materially improve the cut. The grandma-prank payoff was complete at
+  176-184 seconds, not the initially estimated 195-203 seconds.
