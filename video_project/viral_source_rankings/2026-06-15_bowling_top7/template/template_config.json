@@ -1,0 +1,40 @@
+{
+  "canvas": {"width": 1080, "height": 1920},
+  "title": {
+    "text": "전설의 볼링 기술;;",
+    "color": "#ffd735",
+    "font_size": 68
+  },
+  "ranking_label": {"text": "조회수 TOP7", "color": "#ffffff"},
+  "video_frame": {
+    "x": 72,
+    "y": 250,
+    "width": 936,
+    "height": 1120,
+    "corner_radius": 44
+  },
+  "rank_stack": {
+    "x": 88,
+    "y": 420,
+    "gap": 82,
+    "current_rank": 1,
+    "values": [1, 2, 3, 4, 5, 6, 7],
+    "current_color": "#ff3b30"
+  },
+  "reaction_caption": {
+    "text": "회전축이 끝까지 살아 있습니다",
+    "x": 130,
+    "y": 1430,
+    "font_size": 58,
+    "color": "#ffffff"
+  },
+  "character": {
+    "enabled": false,
+    "x": 760,
+    "y": 1190,
+    "width": 250,
+    "height": 350,
+    "opacity": 0.8
+  },
+  "footer": {"text": "source attribution safe zone"}
+}

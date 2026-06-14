@@ -170,3 +170,30 @@
 - Reverse-search frame generation is not reverse-search completion. Label the
   package `NEEDS_HUMAN_REVIEW` until a person or supported image-search tool
   records the query time, matching URLs, and reviewer.
+- TikTok discovery feeds and tag extraction may fail while individual TikTok
+  URLs still resolve through `yt-dlp`. Use web search to build the candidate
+  pool, then verify each direct URL with `yt-dlp` metadata.
+- When a selected source starts or ends exactly at the action boundary, create
+  review handles by explicitly cloning the first and last frames. Record the
+  synthetic padding instead of pretending the source contains unavailable
+  footage.
+- A file renamed from `.jpg` to `.png` is still JPEG data and will fail binary
+  format validation. Convert it with FFmpeg or Pillow so the header and
+  extension agree.
+- Public comment counts can be available even when comment bodies are not.
+  Preserve the counts, mark comment text `확인 불가`, and never invent viewer
+  reactions.
+- Finding an exact official YouTube original improves provenance but does not
+  grant reuse rights. Keep the source `permission-required` until written
+  authorization is recorded.
+- The installed VoiceBox executable can spend roughly 10-15 seconds importing
+  Torch before binding. Poll `/health` on port 8000 instead of declaring
+  startup failure from an early connection refusal; avoid launching a second
+  copy once one healthy listener exists.
+- PowerShell 5 rejects a pipeline placed directly after a completed
+  `foreach` block in some compound one-liners. Assign the loop output to a
+  variable and pipe the variable afterward.
+- Concatenating independently encoded AAC selection clips with stream copy can
+  produce non-monotonic DTS warnings at clip boundaries. Keep H.264 video copy
+  when compatible, but re-encode final AAC with
+  `aresample=async=1:first_pts=0`.

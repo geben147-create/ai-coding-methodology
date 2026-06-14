@@ -1,0 +1,396 @@
+{
+  "source_directory": ".firecrawl\\viral-source-highlight-editor\\bowling-top7\\transient_captions",
+  "video_count": 12,
+  "videos": [
+    {
+      "id": "ZvWYcvDYnPU",
+      "title": "은퇴한지 20년된 프로볼러 아빠에게 볼링대결 신청했습니다",
+      "url": "https://www.youtube.com/watch?v=ZvWYcvDYnPU",
+      "view_count": 10057033,
+      "like_count": 279054,
+      "comment_count": 1000,
+      "duration": 60.0,
+      "upload_date": "2024-01-24",
+      "word_count": 138,
+      "character_count": 431,
+      "characters_per_second": 7.18,
+      "ending_counts": {
+        "입니다": 0,
+        "인데요": 0,
+        "습니다": 3,
+        "합니다": 3,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 1,
+        "네요": 0,
+        "죠": 0
+      },
+      "title_features": {
+        "double_semicolon": false,
+        "extreme_term": null,
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "ZvWYcvDYnPU.ko-orig.vtt"
+    },
+    {
+      "id": "-r85pEObrkY",
+      "title": "1타 3피;; 전설의 볼링 기술",
+      "url": "https://www.youtube.com/watch?v=-r85pEObrkY",
+      "view_count": 6261110,
+      "like_count": 79997,
+      "comment_count": 510,
+      "duration": 34.0,
+      "upload_date": "2024-01-18",
+      "word_count": 77,
+      "character_count": 229,
+      "characters_per_second": 6.74,
+      "ending_counts": {
+        "입니다": 1,
+        "인데요": 2,
+        "습니다": 0,
+        "합니다": 1,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 1,
+        "네요": 0,
+        "죠": 0
+      },
+      "title_features": {
+        "double_semicolon": true,
+        "extreme_term": "전설",
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "-r85pEObrkY.ko-orig.vtt"
+    },
+    {
+      "id": "L7gKjR6KdNs",
+      "title": "23년 전 그만둔 볼링;; 다시 시작하면 생기는 일",
+      "url": "https://www.youtube.com/watch?v=L7gKjR6KdNs",
+      "view_count": 2785037,
+      "like_count": 50345,
+      "comment_count": 139,
+      "duration": 47.0,
+      "upload_date": "2024-02-01",
+      "word_count": 110,
+      "character_count": 307,
+      "characters_per_second": 6.53,
+      "ending_counts": {
+        "입니다": 1,
+        "인데요": 0,
+        "습니다": 2,
+        "합니다": 4,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 0,
+        "네요": 1,
+        "죠": 0
+      },
+      "title_features": {
+        "double_semicolon": true,
+        "extreme_term": null,
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "L7gKjR6KdNs.ko-orig.vtt"
+    },
+    {
+      "id": "foTHp5fIQxQ",
+      "title": "불효자는 웁니다ㅠ",
+      "url": "https://www.youtube.com/watch?v=foTHp5fIQxQ",
+      "view_count": 2177453,
+      "like_count": 58341,
+      "comment_count": 225,
+      "duration": 51.0,
+      "upload_date": "2024-02-09",
+      "word_count": 117,
+      "character_count": 364,
+      "characters_per_second": 7.14,
+      "ending_counts": {
+        "입니다": 0,
+        "인데요": 0,
+        "습니다": 1,
+        "합니다": 3,
+        "됩니다": 1,
+        "거든요": 0,
+        "건데요": 0,
+        "네요": 1,
+        "죠": 0
+      },
+      "title_features": {
+        "double_semicolon": false,
+        "extreme_term": null,
+        "question_mark": false,
+        "emotional_symbol": true
+      },
+      "caption_source": "foTHp5fIQxQ.ko-orig.vtt"
+    },
+    {
+      "id": "VrX9K7ZlAKM",
+      "title": "그날 신은 스트라이크를 허락하지 않았다",
+      "url": "https://www.youtube.com/watch?v=VrX9K7ZlAKM",
+      "view_count": 1068493,
+      "like_count": 18781,
+      "comment_count": 138,
+      "duration": 32.0,
+      "upload_date": "2024-01-19",
+      "word_count": 76,
+      "character_count": 200,
+      "characters_per_second": 6.25,
+      "ending_counts": {
+        "입니다": 2,
+        "인데요": 0,
+        "습니다": 2,
+        "합니다": 1,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 0,
+        "네요": 0,
+        "죠": 0
+      },
+      "title_features": {
+        "double_semicolon": false,
+        "extreme_term": null,
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "VrX9K7ZlAKM.ko-orig.vtt"
+    },
+    {
+      "id": "NO0KkTGknCA",
+      "title": "레인을 작살낼 뻔했던 전설의 볼링 기술;;",
+      "url": "https://www.youtube.com/watch?v=NO0KkTGknCA",
+      "view_count": 962362,
+      "like_count": 20849,
+      "comment_count": 141,
+      "duration": 37.0,
+      "upload_date": "2024-01-22",
+      "word_count": 66,
+      "character_count": 208,
+      "characters_per_second": 5.62,
+      "ending_counts": {
+        "입니다": 2,
+        "인데요": 1,
+        "습니다": 1,
+        "합니다": 1,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 1,
+        "네요": 0,
+        "죠": 0
+      },
+      "title_features": {
+        "double_semicolon": true,
+        "extreme_term": "전설",
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "NO0KkTGknCA.ko-orig.vtt"
+    },
+    {
+      "id": "KdYnoBtXpIs",
+      "title": "시간차 공격을 시도하는 볼링 레전드",
+      "url": "https://www.youtube.com/watch?v=KdYnoBtXpIs",
+      "view_count": 844140,
+      "like_count": 19949,
+      "comment_count": 62,
+      "duration": 42.0,
+      "upload_date": "2024-01-21",
+      "word_count": 97,
+      "character_count": 266,
+      "characters_per_second": 6.33,
+      "ending_counts": {
+        "입니다": 2,
+        "인데요": 1,
+        "습니다": 1,
+        "합니다": 1,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 1,
+        "네요": 0,
+        "죠": 0
+      },
+      "title_features": {
+        "double_semicolon": false,
+        "extreme_term": null,
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "KdYnoBtXpIs.ko-orig.vtt"
+    },
+    {
+      "id": "U8PlHRC58zU",
+      "title": "볼링대회를 습격한 취권 고수;;",
+      "url": "https://www.youtube.com/watch?v=U8PlHRC58zU",
+      "view_count": 737340,
+      "like_count": 12617,
+      "comment_count": 82,
+      "duration": 33.0,
+      "upload_date": "2024-01-23",
+      "word_count": 81,
+      "character_count": 233,
+      "characters_per_second": 7.06,
+      "ending_counts": {
+        "입니다": 0,
+        "인데요": 0,
+        "습니다": 0,
+        "합니다": 0,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 1,
+        "네요": 0,
+        "죠": 2
+      },
+      "title_features": {
+        "double_semicolon": true,
+        "extreme_term": "고수",
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "U8PlHRC58zU.ko-orig.vtt"
+    },
+    {
+      "id": "XF5Mv4BM5wY",
+      "title": "평생을 거꾸로 볼링친 남자",
+      "url": "https://www.youtube.com/watch?v=XF5Mv4BM5wY",
+      "view_count": 737225,
+      "like_count": 12853,
+      "comment_count": 122,
+      "duration": 35.0,
+      "upload_date": "2024-02-04",
+      "word_count": 87,
+      "character_count": 243,
+      "characters_per_second": 6.94,
+      "ending_counts": {
+        "입니다": 1,
+        "인데요": 1,
+        "습니다": 0,
+        "합니다": 0,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 1,
+        "네요": 0,
+        "죠": 3
+      },
+      "title_features": {
+        "double_semicolon": false,
+        "extreme_term": null,
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "XF5Mv4BM5wY.ko-orig.vtt"
+    },
+    {
+      "id": "yuQtN_omVcA",
+      "title": "광기의 스트라이크",
+      "url": "https://www.youtube.com/watch?v=yuQtN_omVcA",
+      "view_count": 602388,
+      "like_count": 12095,
+      "comment_count": 105,
+      "duration": 33.0,
+      "upload_date": "2024-01-28",
+      "word_count": 67,
+      "character_count": 199,
+      "characters_per_second": 6.03,
+      "ending_counts": {
+        "입니다": 1,
+        "인데요": 0,
+        "습니다": 0,
+        "합니다": 1,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 1,
+        "네요": 1,
+        "죠": 0
+      },
+      "title_features": {
+        "double_semicolon": false,
+        "extreme_term": "광기",
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "yuQtN_omVcA.ko-orig.vtt"
+    },
+    {
+      "id": "guuCCIj4pxI",
+      "title": "하다하다 이젠 수건으로 볼링 치는 고인물;;",
+      "url": "https://www.youtube.com/watch?v=guuCCIj4pxI",
+      "view_count": 216398,
+      "like_count": 3421,
+      "comment_count": 29,
+      "duration": 32.0,
+      "upload_date": "2024-01-29",
+      "word_count": 70,
+      "character_count": 198,
+      "characters_per_second": 6.19,
+      "ending_counts": {
+        "입니다": 1,
+        "인데요": 1,
+        "습니다": 0,
+        "합니다": 1,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 0,
+        "네요": 0,
+        "죠": 1
+      },
+      "title_features": {
+        "double_semicolon": true,
+        "extreme_term": "고인물",
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "guuCCIj4pxI.ko-orig.vtt"
+    },
+    {
+      "id": "_4AH-BOeu4I",
+      "title": "볼 컨트롤이 극한으로 단련된 선수의 볼링 기술;;",
+      "url": "https://www.youtube.com/watch?v=_4AH-BOeu4I",
+      "view_count": 100393,
+      "like_count": 2110,
+      "comment_count": 10,
+      "duration": 33.0,
+      "upload_date": "2024-01-26",
+      "word_count": 66,
+      "character_count": 192,
+      "characters_per_second": 5.82,
+      "ending_counts": {
+        "입니다": 1,
+        "인데요": 0,
+        "습니다": 1,
+        "합니다": 0,
+        "됩니다": 0,
+        "거든요": 0,
+        "건데요": 2,
+        "네요": 0,
+        "죠": 0
+      },
+      "title_features": {
+        "double_semicolon": true,
+        "extreme_term": "극한",
+        "question_mark": false,
+        "emotional_symbol": false
+      },
+      "caption_source": "_4AH-BOeu4I.ko-orig.vtt"
+    }
+  ],
+  "aggregate": {
+    "median_duration_seconds": 34.5,
+    "median_characters_per_second": 6.43,
+    "median_word_count": 79.0,
+    "titles_with_double_semicolon": 6,
+    "titles_with_extreme_term": 6,
+    "ending_totals": {
+      "입니다": 12,
+      "인데요": 6,
+      "습니다": 11,
+      "합니다": 16,
+      "됩니다": 1,
+      "거든요": 0,
+      "건데요": 9,
+      "네요": 3,
+      "죠": 6
+    }
+  }
+}

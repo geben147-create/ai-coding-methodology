@@ -14,6 +14,9 @@
 - [✅] Upgrade `viral-source-highlight-editor` for TikTok-first source tracing and produce a separate unexpected-reaction TOP7 private-review package with exact source links, timings, YouTube duplicate checks, and licensed audio planning.
 - [??] Build and browser-verify the responsive TRUSTA overseas-patient marketing homepage from the user-provided Korean copy.
 - [✅] Audit the unexpected-reaction TOP7 against the existing video Skills, patch only missing reusable rules, and generate the audit and Shorts template packages.
+- [✅] Research, edit, render, and audit a new Korean perfect-timing TOP4 private-review package with scene-specific emphasis decisions, then report the applied checklist in chat.
+- [✅] Build a new owl-impression TOP7 viral-source package with fresh sources, selection artifacts, and a local private-review render.
+- [✅] Benchmark the Trick Bowler channel's highest-view Shorts, research recent high-view TikTok bowling sources, upgrade the reusable channel-style rules, and produce an audited Korean bowling TOP7 private-review video.
 
 ## Allowed Files
 
@@ -28,6 +31,8 @@
 - `video_project\viral_source_rankings\2026-06-13_stunt_selects\**`
 - `video_project\viral_source_rankings\2026-06-14_pole_dance_top7\**`
 - `video_project\viral_source_rankings\2026-06-14_unexpected_reactions_top7\**`
+- `video_project\viral_source_rankings\2026-06-15_perfect_timing_top4\**`
+- `video_project\viral_source_rankings\2026-06-15_bowling_top7\**`
 - `voicebox-local\**`
 - `trusta-medical-growth\**`
 
@@ -61,3 +66,17 @@
 - The global `viral-source-highlight-editor` was patched without deleting existing text. It now requires per-cut rationale, accessible top-comment evidence, SFX naming, per-source watermark decisions, multi-query YouTube checks, reverse-search frames, visual-emphasis and flip decision logs, numeric rule audits, and channel template outputs.
 - `video-editing-compliance-skill` was intentionally left unchanged because its existing zoom, offset, speed, color, J/L-cut, freeze-frame, arrow, rights, and production-log clauses already cover those areas.
 - The audit verdict is `SOURCE_RIGHTS_RISK`: all seven TikTok clips still require permission, and the existing render also needs comment evidence, multi-query duplicate checks, manual reverse-image review, varied emphasis decisions, and numeric-rule reconciliation before a future edit can be called complete.
+- The new owl-impression TOP7 package now lives in `video_project/viral_source_rankings/2026-06-15_owl_impression_top7/`.
+- It includes 20 researched candidates, seven selected owl-impression clips, a 55.621-second 1080x1920 H.264/AAC private-review MP4, Korean SRT, QA montage, and CapCut-ready import folders.
+- The ranking favors recent meme energy over shock value: `hoist the colours`, `pitbull`, `Best owl impression EVER`, accented owl bits, a noisy group impression, a school owl gag, and a Sydney Sweeney parody.
+- All seven selected sources remain `permission-required`; the package is for local private review only.
+- The perfect-timing TOP4 package is in `video_project/viral_source_rankings/2026-06-15_perfect_timing_top4/`.
+- It includes 25 TikTok-first candidates, four selected 7-9 second core clips, four handle clips, 12 reverse-search frames, clickable source and original-trace links, multi-query YouTube duplicate evidence, Korean SRT/ASS, a 32.2-second 1080x1920 H.264/AAC MP4, QA montages, and a CapCut-ready folder.
+- The integrated video uses no TTS and no source audio. Its pulse bed and transition hits are generated locally from mathematical waveforms, so no external music or SFX samples are included.
+- The global `viral-source-highlight-editor` initialization and validators now support TOP4 alongside TOP3, TOP5, and TOP7. All 35 skill tests pass.
+- C01 has an exact Matt Jones/Red Bull YouTube original; C02-C04 did not return an exact YouTube duplicate in the documented search range. All four clips remain `permission-required`, so the render is local private review only.
+- The bowling TOP7 package is in `video_project/viral_source_rankings/2026-06-15_bowling_top7/`.
+- It benchmarks all 12 public Trick Bowler Shorts without reproducing full scripts, records a 34.5-second median duration and 6.43 Korean characters per second, and adds reusable reference-channel style rules to the global skill.
+- The selected TikTok clips were checked on 2026-06-15 and rank from 2.9 million to 6,244 views. The package includes seven 7-second cores, seven 9-second handles, seven VoiceBox Sohee narrations, a 49.04-second 1080x1920 H.264/AAC private-review MP4, SRT/ASS captions, 21 reverse-search frames, a CapCut import folder, QA montage, audit reports, and a reusable template.
+- All seven source clips remain `permission-required`. The render preserves source marks and does not apply Content ID/YPP evasion, fingerprint manipulation, creator voice cloning, horizontal flipping, speed changes, or VFR conversion.
+- Project validation, audit validation, five local render/template tests, all 35 global skill tests, FFprobe, and UTF-8 scanning pass.

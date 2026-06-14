@@ -1,0 +1,13 @@
+source_media/
+selects/
+combined/
+output/
+audio/
+capcut_import/
+capcut_project/
+work/
+private_review.mp4
+qa/
+audit/reverse_search_frames/*.png
+__pycache__/
+.pytest_cache/
