@@ -24,6 +24,7 @@
 - [✅] Upgrade Graphify with PDF, Office, and Ollama support; protect query logs; add a scoped `.graphifyignore`; generate and validate the first local knowledge graph; and reinstall the Git hook without exposing ignored secrets or binary archives.
 - [✅] Add the transcreation asset contract inside the existing `TRUSTA_AI_CONTENT_BRAIN`: Locale-aware YAML schema, lifecycle folders, human-only approval gates, approved-only Few-shot rules, deterministic compliance policy, and Golden Set regression fixtures with tests written first.
 - [✅] Build, import, and validate the local Docker+n8n transcreation workflows against the Vault contract, with deterministic preflight checks, local LLM review, human approval gates, approved-only learning, regression checks, and no embedded secrets.
+- [✅] Repair the TRUSTA Korean-native generation path, connect approved Few-shot JSONL back into generation, add the locked Wadiz detail-page structure profile, deploy the updated n8n workflow, and verify it with a local Korean smoke request.
 - [ ] Produce the 2026-06-17 Korean mussel/nacre 90-95s local private-review MP4 with VoiceBox Sohee narration, three-second source highlights, rights report, SRT, QA frames, and local open.
 
 ## Allowed Files
@@ -125,3 +126,4 @@
 - Three TRUSTA workflows are active: generation `3LLXIMOTjw7zLo5P`, independent compliance `RucdTsP4VJ3odFqy`, and human approval/package `gtn64uSAeQRkV6bH`. Their deployed definitions match the versioned JSON at commit `acfc8f1`.
 - End-to-end smoke verification produced three local candidates, routed them through the scheduled qwen3:14b compliance review, rejected the synthetic asset through the form, created no approval/Few-shot record, removed the test asset, and verified a final HTTP 422 human-data gate. All 20 tests pass at 92% production coverage.
 - Four secret-like literals remain in inactive, unrelated legacy YouTube workflows. They were not modified; their external keys must be rotated and moved to n8n Credentials before those old workflows are reused.
+- On 2026-06-21, `ko-KR` same-locale rewriting, merged approved YAML+JSONL Few-shot retrieval, pre-queue claim/number guards, advisory-vs-blocking compliance routing, and the Wadiz locked-structure validator were deployed. The Korean smoke asset used ten approved examples and reached `human_review` at meaning 0.90, naturalness 0.95, brand voice 0.92, and low risk. The active generation/compliance versions are recorded in `ledger/n8n_transcreation_status.md`; `ja-JP` still needs human-approved examples.

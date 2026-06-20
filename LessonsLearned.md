@@ -271,3 +271,17 @@
   argument such as `--output=(...)` is not PowerShell expression evaluation and
   can send the full workflow export to stdout. Also avoid `$host` as a local
   variable because PowerShell reserves `$Host`.
+- A workflow can append approved examples to `approved_examples.jsonl` while
+  silently continuing to read only `approved_examples.yml`. Load, validate, and
+  merge both stores or the human-approval learning loop never reaches generation.
+- Same-locale Korean rewriting must be a separate mode. Injecting full
+  detail-page structure into a short copy rewrite can make a small local model
+  invent an unrelated product and evidence. Isolate modes and block unsupported
+  numbers before writing a queue file.
+- Independent LLM review comments need blocking and advisory classes. High
+  naturalness and meaning-preservation scores with minor style comments should
+  proceed to human review; deterministic claim failures, low scores, and high
+  risk should remain fail-closed.
+- Running the Vault transcreation tests from PowerShell requires
+  `$env:PYTHONPATH='.'`; without it, package imports can fail during collection
+  even though the package is present at the repository root.
