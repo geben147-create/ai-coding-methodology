@@ -18,6 +18,8 @@
 - [✅] Build a new owl-impression TOP7 viral-source package with fresh sources, selection artifacts, and a local private-review render.
 - [✅] Benchmark the Trick Bowler channel's highest-view Shorts, research recent high-view TikTok bowling sources, upgrade the reusable channel-style rules, and produce an audited Korean bowling TOP7 private-review video.
 - [✅] Secure the `SecondBrain_ThoughtEngine` Vault by rotating the tracked Local REST API key, disabling Google Drive Sync without deleting its data, excluding plugin secrets, removing the secret file from reachable Git history, and verifying that all unrelated working files remain intact.
+- [✅] Create a private `geben147-create/SecondBrain_ThoughtEngine` GitHub repository, connect the sanitized Vault without staging unrelated working files, push `master`, and verify repository visibility and remote parity.
+- [ ] Install and configure Obsidian Git for the `SecondBrain_ThoughtEngine` Vault with pull-on-startup and automatic pull disabled, 15-minute automatic commit/push enabled, and a verified manual backup cycle that does not stage ignored plugin secrets.
 
 ## Allowed Files
 
@@ -39,6 +41,7 @@
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.gitignore`
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.obsidian\community-plugins.json`
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.obsidian\plugins\obsidian-local-rest-api\data.json`
+- `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.obsidian\plugins\obsidian-git\**`
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.git\**`
 - `C:\Users\llorr\Documents\SecondBrain_Git_Backups\**`
 
@@ -88,4 +91,7 @@
 - Project validation, audit validation, five local render/template tests, all 35 global skill tests, FFprobe, and UTF-8 scanning pass.
 - The `SecondBrain_ThoughtEngine` Vault security cleanup completed on 2026-06-20. Google Drive Sync is disabled without deleting its plugin folder, Local REST API credentials and cryptography were regenerated, plugin `data.json` files are ignored, and the former secret path and API key are absent from reachable Git history.
 - A verified pre-rewrite Git bundle is stored outside OneDrive at `C:\Users\llorr\Documents\SecondBrain_Git_Backups\SecondBrain_before_secret_cleanup_20260620-150218.bundle` with SHA-256 `5F60CD624C378341F17456DC78C1A3E910A6613E3F6BBA939F3733CBA5672F5A`. It contains the revoked historical credential and must remain private.
-- The sanitized Vault commit is `cbb1f09 fix: secure Obsidian Vault credentials`. The Vault still has no Git remote, so creating and pushing a private GitHub repository is the next separate task.
+- The sanitized Vault commit is `cbb1f09 fix: secure Obsidian Vault credentials`; it is now the verified head of both local and remote `master`.
+- The private repository is available at `https://github.com/geben147-create/SecondBrain_ThoughtEngine`. Its `master` branch and local Vault both resolve to `cbb1f091354b088db03d61f6c7d3eb0af9a6cc2e`, and repository visibility was verified as `PRIVATE`.
+- The initial push included only the 267 tracked files in sanitized history. Forty-nine pre-existing modified or untracked working-tree entries remain local and were not staged or pushed.
+- The pre-push scan covered all six reachable commits and found zero high-confidence token/private-key patterns, zero sensitive tracked filenames, zero tracked plugin `data.json` files, and zero blobs over 50 MB.

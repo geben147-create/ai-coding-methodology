@@ -211,3 +211,8 @@
 - This workstation installs Obsidian at `C:\Program Files\Obsidian\Obsidian.exe`,
   not under `%LOCALAPPDATA%\Programs`. Discover the executable before launching
   it for plugin-regeneration checks.
+- A missing repository is the expected negative result when checking a future
+  GitHub name with `gh repo view`, but `gh` writes the GraphQL message to
+  stderr. Under strict PowerShell error handling, capture and evaluate the
+  native exit code instead of allowing that expected lookup miss to terminate
+  the workflow.
