@@ -216,3 +216,58 @@
   stderr. Under strict PowerShell error handling, capture and evaluate the
   native exit code instead of allowing that expected lookup miss to terminate
   the workflow.
+- Obsidian Git 2.38.5 merges in-memory defaults when `data.json` is absent but
+  does not necessarily persist that file on first load. Read the release's
+  bundled default-settings object and create a minimal versioned-schema local
+  settings file when deterministic automation is required.
+- PowerShell 5 can prepend a UTF-8 BOM even when text is piped to `curl --config
+  -`, causing curl to parse `url` as an unknown BOM-prefixed option. For the
+  Local REST API, use `HttpWebRequest` with TLS 1.2 and a scoped certificate
+  callback so bearer credentials stay out of process arguments and temp files.
+- Obsidian Git's `commit-and-sync` command can return HTTP 204 and finish the
+  local commit before its queued push is observable remotely. Poll remote
+  `master` separately until its SHA matches local HEAD before declaring the
+  backup cycle complete.
+- Graphify deep extraction with `qwen3:14b` can exceed the 900-second request
+  timeout on an RTX 4070 Laptop even when the model is actively computing.
+  `qwen3:8b` with a 16K context fits fully in VRAM and completed comparable
+  chunks in roughly 40-165 seconds.
+- Ollama's OpenAI-compatible endpoint may ignore request-level
+  `options.num_ctx`. Create a lightweight derived model with `PARAMETER
+  num_ctx 16384` and verify `/api/ps` reports the expected context before a
+  long Graphify run.
+- Terminating the yielded shell cell does not necessarily stop Graphify's
+  child Python processes on Windows. Match only the exact `graphify extract`
+  command lines, stop those process IDs, and verify none remain before retrying.
+- Graphify 0.8.44 `cluster-only` can retain token counts in
+  `.graphify_analysis.json` while rendering zero in `GRAPH_REPORT.md`, and a
+  headless run can leave an empty manifest. Restore the report from analysis
+  tokens and call `save_manifest(..., kind="semantic", root=root)` so hooks and
+  incremental updates have portable hashes.
+- Graphify's exported NetworkX JSON stores graph edges under `links`, while
+  `diagnose multigraph` reports them as edges. Validators should count
+  `links`, not a non-existent `edges` array.
+- When Ruff and mypy are absent from `PATH` in a Vault-only Python workspace,
+  `uvx ruff` and `uvx mypy` provide reproducible isolated checks. Run mypy on
+  production modules unless the test environment also includes third-party
+  type stubs; never hide missing-stub errors with ignore directives.
+- Docker Desktop can auto-start an existing n8n Compose project while a PM2
+  n8n process still owns port 5678. Snapshot both data directories, stop and
+  persist the PM2 process as stopped, bind Docker to `127.0.0.1`, then verify
+  the listener PID and container health instead of trusting `docker ps` alone.
+- n8n 2.1.4 CLI workflow import requires `versionId` but does not create the
+  matching workflow-history row, so CLI-imported workflows cannot be
+  published. Create or patch workflows through the authenticated local REST
+  API, which saves history, then activate the returned version ID.
+- n8n Form Trigger production submissions require multipart fields named
+  `field-0`, `field-1`, and so on; the Code node receives the configured human
+  labels rather than custom `fieldName` values. Normalize both labels and
+  machine keys, then test an actual multipart submission.
+- A `responseNode` webhook can return an empty HTTP 200 when an upstream Code
+  node throws before the response node. Route missing human governance files
+  through an explicit IF branch and Respond-to-Webhook node with HTTP 422 so
+  the fail-closed state is visible to callers.
+- For n8n CLI exports, construct a literal `--output=<path>` argument. A native
+  argument such as `--output=(...)` is not PowerShell expression evaluation and
+  can send the full workflow export to stdout. Also avoid `$host` as a local
+  variable because PowerShell reserves `$Host`.

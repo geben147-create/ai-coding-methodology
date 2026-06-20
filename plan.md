@@ -17,9 +17,14 @@
 - [✅] Research, edit, render, and audit a new Korean perfect-timing TOP4 private-review package with scene-specific emphasis decisions, then report the applied checklist in chat.
 - [✅] Build a new owl-impression TOP7 viral-source package with fresh sources, selection artifacts, and a local private-review render.
 - [✅] Benchmark the Trick Bowler channel's highest-view Shorts, research recent high-view TikTok bowling sources, upgrade the reusable channel-style rules, and produce an audited Korean bowling TOP7 private-review video.
+- [✅] Research recent high-view TikTok wingsuit sources, apply every production-schedule step from `viral-source-highlight-editor`, and produce an audited Korean wingsuit TOP7 private-review video with original Korean captions, exact timings, duplicate checks, and a full audit checklist reported in chat.
 - [✅] Secure the `SecondBrain_ThoughtEngine` Vault by rotating the tracked Local REST API key, disabling Google Drive Sync without deleting its data, excluding plugin secrets, removing the secret file from reachable Git history, and verifying that all unrelated working files remain intact.
 - [✅] Create a private `geben147-create/SecondBrain_ThoughtEngine` GitHub repository, connect the sanitized Vault without staging unrelated working files, push `master`, and verify repository visibility and remote parity.
-- [ ] Install and configure Obsidian Git for the `SecondBrain_ThoughtEngine` Vault with pull-on-startup and automatic pull disabled, 15-minute automatic commit/push enabled, and a verified manual backup cycle that does not stage ignored plugin secrets.
+- [✅] Install and configure Obsidian Git for the `SecondBrain_ThoughtEngine` Vault with pull-on-startup and automatic pull disabled, 15-minute automatic commit/push enabled, and a verified manual backup cycle that does not stage ignored plugin secrets.
+- [✅] Upgrade Graphify with PDF, Office, and Ollama support; protect query logs; add a scoped `.graphifyignore`; generate and validate the first local knowledge graph; and reinstall the Git hook without exposing ignored secrets or binary archives.
+- [✅] Add the transcreation asset contract inside the existing `TRUSTA_AI_CONTENT_BRAIN`: Locale-aware YAML schema, lifecycle folders, human-only approval gates, approved-only Few-shot rules, deterministic compliance policy, and Golden Set regression fixtures with tests written first.
+- [✅] Build, import, and validate the local Docker+n8n transcreation workflows against the Vault contract, with deterministic preflight checks, local LLM review, human approval gates, approved-only learning, regression checks, and no embedded secrets.
+- [ ] Produce the 2026-06-17 Korean mussel/nacre 90-95s local private-review MP4 with VoiceBox Sohee narration, three-second source highlights, rights report, SRT, QA frames, and local open.
 
 ## Allowed Files
 
@@ -36,6 +41,8 @@
 - `video_project\viral_source_rankings\2026-06-14_unexpected_reactions_top7\**`
 - `video_project\viral_source_rankings\2026-06-15_perfect_timing_top4\**`
 - `video_project\viral_source_rankings\2026-06-15_bowling_top7\**`
+- `video_project\viral_source_rankings\2026-06-15_wingsuit_top7\**`
+- `video_project\viral_source_rankings\2026-06-17_mussel_nacre_private_review\**`
 - `voicebox-local\**`
 - `trusta-medical-growth\**`
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.gitignore`
@@ -43,7 +50,13 @@
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.obsidian\plugins\obsidian-local-rest-api\data.json`
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.obsidian\plugins\obsidian-git\**`
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.git\**`
+- `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\**`
+- `C:\Users\llorr\.graphify\**`
+- `C:\Users\llorr\.codex\skills\graphify\**`
 - `C:\Users\llorr\Documents\SecondBrain_Git_Backups\**`
+- `C:\Users\llorr\n8n_selfhost\compose.yml`
+- `C:\Users\llorr\n8n_selfhost\local-files\transcreation\**`
+- `C:\Users\llorr\Documents\n8n_backups\**`
 
 ## Handoff Notes
 
@@ -89,9 +102,26 @@
 - The selected TikTok clips were checked on 2026-06-15 and rank from 2.9 million to 6,244 views. The package includes seven 7-second cores, seven 9-second handles, seven VoiceBox Sohee narrations, a 49.04-second 1080x1920 H.264/AAC private-review MP4, SRT/ASS captions, 21 reverse-search frames, a CapCut import folder, QA montage, audit reports, and a reusable template.
 - All seven source clips remain `permission-required`. The render preserves source marks and does not apply Content ID/YPP evasion, fingerprint manipulation, creator voice cloning, horizontal flipping, speed changes, or VFR conversion.
 - Project validation, audit validation, five local render/template tests, all 35 global skill tests, FFprobe, and UTF-8 scanning pass.
+- The wingsuit TOP7 package is in `video_project/viral_source_rankings/2026-06-15_wingsuit_top7/`.
+- It researched 11 YouTube/wingsuit candidates (TikTok direct URL unavailable), applied Trick Bowler channel style (인데요/합니다 endings, 6-7 chars/sec), and selected seven clips spanning 2015-2025 including Red Bull official, GoPro, and Chris Finck.
+- Sources include the world's fastest wingsuit record (6.4M views, 2025), Maldives flyover (16.9M views), Täschhorn 4491m (16.1M views), GoPro Graham Dickinson POV (4.2M), Italian cave flight (2.87M), active volcano (2.27M), and family flyover (2.32M, 2025).
+- The package includes seven 7-second cores, seven edge-tts ko-KR-SunHiNeural narrations, Korean SRT/ASS captions, a 49.03-second 1080x1920 H.264/AAC 45MB private-review MP4, and audit reports.
+- All seven sources remain `permission-required`. edge-tts was used as explicit VoiceBox-offline fallback. No Content ID evasion, voice cloning, watermark removal, or horizontal flipping applied.
 - The `SecondBrain_ThoughtEngine` Vault security cleanup completed on 2026-06-20. Google Drive Sync is disabled without deleting its plugin folder, Local REST API credentials and cryptography were regenerated, plugin `data.json` files are ignored, and the former secret path and API key are absent from reachable Git history.
 - A verified pre-rewrite Git bundle is stored outside OneDrive at `C:\Users\llorr\Documents\SecondBrain_Git_Backups\SecondBrain_before_secret_cleanup_20260620-150218.bundle` with SHA-256 `5F60CD624C378341F17456DC78C1A3E910A6613E3F6BBA939F3733CBA5672F5A`. It contains the revoked historical credential and must remain private.
 - The sanitized Vault commit is `cbb1f09 fix: secure Obsidian Vault credentials`; it is now the verified head of both local and remote `master`.
 - The private repository is available at `https://github.com/geben147-create/SecondBrain_ThoughtEngine`. Its `master` branch and local Vault both resolve to `cbb1f091354b088db03d61f6c7d3eb0af9a6cc2e`, and repository visibility was verified as `PRIVATE`.
 - The initial push included only the 267 tracked files in sanitized history. Forty-nine pre-existing modified or untracked working-tree entries remain local and were not staged or pushed.
 - The pre-push scan covered all six reachable commits and found zero high-confidence token/private-key patterns, zero sensitive tracked filenames, zero tracked plugin `data.json` files, and zero blobs over 50 MB.
+- Obsidian Git 2.38.5 was installed from the official release with all three asset SHA-256 digests verified. Its local settings run commit-and-push every 15 minutes while startup pull, periodic pull, and pull-before-push remain disabled.
+- Git backup now tracks text and code assets while OneDrive retains binary originals. Local UI state, plugin binaries/settings, crawler caches, generated outputs, images, PDFs, Office files, media, and archives are ignored.
+- Local REST API exposed 42 Obsidian Git commands. Executing `obsidian-git:push` created `ae49765 vault backup: 2026-06-20 15:30:56`, left the working tree clean, and produced exact local/remote `master` parity.
+- Graphify 0.8.44 with PDF, Office, and Ollama extras is installed. Query logging is disabled at user scope, and Codex plus post-commit/post-checkout integration is active.
+- The first fully local graph used `qwen3-graphify:8b` with a 16,384-token context over 22 curated documents. It contains 121 nodes, 113 edges, and 19 communities with zero secret patterns, absolute source paths, or duplicate endpoint edges.
+- Graphify input/output was 61,906/51,787 tokens at $0.00. The query smoke test connected LLM seeding, E-E-A-T, and TRUSTA rules while leaving the query log untouched. Commit `a23143a` is pushed and the hook updated `built_at_commit` to the same SHA.
+- The governed transcreation contract is committed and pushed as `4c1b486`. Its JSON Schema, deterministic validator, lifecycle folders, approved-only Few-shot libraries, human-input templates, and not-ready Golden Set are covered by 14 passing tests at 92% production-code coverage; Ruff and production mypy checks pass.
+- Docker n8n 2.1.4 is now the sole localhost service on `127.0.0.1:5678`; the duplicate PM2 n8n is stopped, both data stores have private pre-change snapshots, the Vault is mounted at `/vault`, and container health plus read/write access are verified.
+- The forgotten n8n owner login was reset without deleting the 31 existing workflows. A new owner was created and its user-only recovery note is outside OneDrive at `C:\Users\llorr\Documents\n8n_backups\LOCAL_N8N_OWNER_RECOVERY.txt`.
+- Three TRUSTA workflows are active: generation `3LLXIMOTjw7zLo5P`, independent compliance `RucdTsP4VJ3odFqy`, and human approval/package `gtn64uSAeQRkV6bH`. Their deployed definitions match the versioned JSON at commit `acfc8f1`.
+- End-to-end smoke verification produced three local candidates, routed them through the scheduled qwen3:14b compliance review, rejected the synthetic asset through the form, created no approval/Few-shot record, removed the test asset, and verified a final HTTP 422 human-data gate. All 20 tests pass at 92% production coverage.
+- Four secret-like literals remain in inactive, unrelated legacy YouTube workflows. They were not modified; their external keys must be rotated and moved to n8n Credentials before those old workflows are reused.
