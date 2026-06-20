@@ -17,6 +17,7 @@
 - [✅] Research, edit, render, and audit a new Korean perfect-timing TOP4 private-review package with scene-specific emphasis decisions, then report the applied checklist in chat.
 - [✅] Build a new owl-impression TOP7 viral-source package with fresh sources, selection artifacts, and a local private-review render.
 - [✅] Benchmark the Trick Bowler channel's highest-view Shorts, research recent high-view TikTok bowling sources, upgrade the reusable channel-style rules, and produce an audited Korean bowling TOP7 private-review video.
+- [✅] Secure the `SecondBrain_ThoughtEngine` Vault by rotating the tracked Local REST API key, disabling Google Drive Sync without deleting its data, excluding plugin secrets, removing the secret file from reachable Git history, and verifying that all unrelated working files remain intact.
 
 ## Allowed Files
 
@@ -35,6 +36,11 @@
 - `video_project\viral_source_rankings\2026-06-15_bowling_top7\**`
 - `voicebox-local\**`
 - `trusta-medical-growth\**`
+- `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.gitignore`
+- `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.obsidian\community-plugins.json`
+- `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.obsidian\plugins\obsidian-local-rest-api\data.json`
+- `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.git\**`
+- `C:\Users\llorr\Documents\SecondBrain_Git_Backups\**`
 
 ## Handoff Notes
 
@@ -80,3 +86,6 @@
 - The selected TikTok clips were checked on 2026-06-15 and rank from 2.9 million to 6,244 views. The package includes seven 7-second cores, seven 9-second handles, seven VoiceBox Sohee narrations, a 49.04-second 1080x1920 H.264/AAC private-review MP4, SRT/ASS captions, 21 reverse-search frames, a CapCut import folder, QA montage, audit reports, and a reusable template.
 - All seven source clips remain `permission-required`. The render preserves source marks and does not apply Content ID/YPP evasion, fingerprint manipulation, creator voice cloning, horizontal flipping, speed changes, or VFR conversion.
 - Project validation, audit validation, five local render/template tests, all 35 global skill tests, FFprobe, and UTF-8 scanning pass.
+- The `SecondBrain_ThoughtEngine` Vault security cleanup completed on 2026-06-20. Google Drive Sync is disabled without deleting its plugin folder, Local REST API credentials and cryptography were regenerated, plugin `data.json` files are ignored, and the former secret path and API key are absent from reachable Git history.
+- A verified pre-rewrite Git bundle is stored outside OneDrive at `C:\Users\llorr\Documents\SecondBrain_Git_Backups\SecondBrain_before_secret_cleanup_20260620-150218.bundle` with SHA-256 `5F60CD624C378341F17456DC78C1A3E910A6613E3F6BBA939F3733CBA5672F5A`. It contains the revoked historical credential and must remain private.
+- The sanitized Vault commit is `cbb1f09 fix: secure Obsidian Vault credentials`. The Vault still has no Git remote, so creating and pushing a private GitHub repository is the next separate task.

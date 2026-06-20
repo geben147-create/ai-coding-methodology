@@ -197,3 +197,17 @@
   produce non-monotonic DTS warnings at clip boundaries. Keep H.264 video copy
   when compatible, but re-encode final AAC with
   `aresample=async=1:first_pts=0`.
+- On Windows PowerShell, `git bundle verify` can emit its successful
+  `bundle is okay` message on stderr. Judge success by `$LASTEXITCODE` instead
+  of treating any stderr record as a failure under `ErrorActionPreference=Stop`.
+- `git filter-branch` creates `refs/original/*`, so an immediate `git log
+  --all` secret-history check can correctly find the preserved pre-rewrite
+  reference. Delete those temporary refs, expire reflogs, run garbage
+  collection, and then verify all reachable refs and blobs.
+- After repointing a dirty repository to sanitized history, a secret settings
+  file can differ from both HEAD and the index. Use `git rm --cached -f` only
+  after verifying the working file exists; this removes it from the index
+  without deleting the rotated local settings.
+- This workstation installs Obsidian at `C:\Program Files\Obsidian\Obsidian.exe`,
+  not under `%LOCALAPPDATA%\Programs`. Discover the executable before launching
+  it for plugin-regeneration checks.
