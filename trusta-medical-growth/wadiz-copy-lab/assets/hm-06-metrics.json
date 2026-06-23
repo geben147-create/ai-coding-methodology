@@ -1,0 +1,22 @@
+{
+  "reference": {
+    "id": "wadiz-175816",
+    "url": "https://www.wadiz.kr/web/campaign/detail/175816",
+    "measurement": "non_whitespace_visible_copy",
+    "blocks": 35,
+    "total": 8857,
+    "per_block": [156, 308, 302, 321, 244, 167, 343, 257, 219, 274, 263, 302, 266, 368, 263, 112, 256, 333, 330, 370, 213, 408, 364, 229, 212, 132, 212, 275, 184, 144, 184, 393, 397, 52, 4]
+  },
+  "target": {
+    "file": "../variants/hm-06.html",
+    "blocks": 35,
+    "total": 9016,
+    "difference_percent": 1.8,
+    "per_block": [169, 319, 314, 324, 245, 165, 345, 258, 238, 279, 251, 315, 283, 385, 239, 109, 268, 351, 352, 370, 206, 405, 380, 242, 218, 137, 219, 278, 179, 144, 187, 413, 373, 52, 4]
+  },
+  "guardrails": {
+    "per_block_tolerance_percent": 10,
+    "total_tolerance_percent": 2,
+    "result": "pass"
+  }
+}

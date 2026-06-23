@@ -1,8 +1,50 @@
 from pathlib import Path
+from collections import Counter
+from html.parser import HTMLParser
 import re
 
 
 LAB = Path(__file__).parents[1] / "trusta-medical-growth" / "wadiz-copy-lab"
+
+
+REFERENCE_NON_WS = [
+    156, 308, 302, 321, 244, 167, 343, 257, 219, 274,
+    263, 302, 266, 368, 263, 112, 256, 333, 330, 370,
+    213, 408, 364, 229, 212, 132, 212, 275, 184, 144,
+    184, 393, 397, 52, 4,
+]
+
+
+class BlockCopyParser(HTMLParser):
+    VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.active = False
+        self.depth = 0
+        self.current: list[str] = []
+        self.blocks: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        classes = dict(attrs).get("class", "") or ""
+        if not self.active and "block-copy" in classes.split():
+            self.active = True
+            self.depth = 1
+            self.current = []
+        elif self.active and tag not in self.VOID_TAGS:
+            self.depth += 1
+
+    def handle_endtag(self, tag: str) -> None:
+        if not self.active:
+            return
+        self.depth -= 1
+        if self.depth == 0:
+            self.blocks.append("".join(self.current))
+            self.active = False
+
+    def handle_data(self, data: str) -> None:
+        if self.active:
+            self.current.append(data)
 
 
 def read(path: Path) -> str:
@@ -38,7 +80,16 @@ def test_variants_are_responsive_and_contain_priority_evidence() -> None:
         html = read(path)
         assert '<meta name="viewport"' in html
         assert '<main' in html
-        for copy in required:
+        expected = required
+        if path.name == "hm-06.html":
+            expected = (
+                "세계로 확장하는 경로",
+                "국내와 세계 시장 비교",
+                "현지화 Before / After",
+                "하나의 콘텐츠, 모든 채널로",
+                "성과가 다시 기획으로 돌아오는 루프",
+            )
+        for copy in expected:
             assert copy in html
 
 
@@ -75,3 +126,53 @@ def test_no_marketing_claim_is_presented_as_a_legal_guarantee() -> None:
     forbidden = ("법적으로 완벽", "100% 안전", "매출 보장", "해외 진출 보장", "무조건 성장")
     for phrase in forbidden:
         assert phrase not in combined
+
+
+def test_hm06_rebuild_matches_japan_reference_contract() -> None:
+    html = read(LAB / "variants" / "hm-06.html")
+    css = read(LAB / "assets" / "hm-06-white.css")
+    assert len(re.findall(r'<section[^>]+data-block="\d{2}"', html)) == 35
+    roles = re.findall(r'data-role="([A-Za-z_]+)"', html)
+    assert Counter(roles) == Counter(
+        {
+            "Hook": 2,
+            "Agitation": 2,
+            "Solution": 5,
+            "Evidence": 7,
+            "FAQ": 3,
+            "Brand_Story": 3,
+            "Feature": 2,
+            "Price": 6,
+            "Mixed": 3,
+            "Visual_Only": 2,
+        }
+    )
+
+    parser = BlockCopyParser()
+    parser.feed(html)
+    assert len(parser.blocks) == 35
+    actual = [len(re.sub(r"\s+", "", block)) for block in parser.blocks]
+    for index, (target, value) in enumerate(zip(REFERENCE_NON_WS, actual), start=1):
+        assert abs(value - target) / target <= 0.10, (index, target, value)
+    assert abs(sum(actual) - sum(REFERENCE_NON_WS)) / sum(REFERENCE_NON_WS) <= 0.02
+
+    assert "background: #ffffff" in css
+    assert "max-width: 1200px" in css
+    assert "padding: 96px 0" in css
+    assert "padding: 56px 0" in css
+    assert "grid-template-columns: 45fr 55fr" in css
+    assert "aspect-ratio: 16 / 9" in css
+    assert "aspect-ratio: 4 / 3" in css
+
+
+def test_hm06_contains_real_visual_evidence_and_disclosures() -> None:
+    html = read(LAB / "variants" / "hm-06.html")
+    assert len(re.findall(r'<svg[^>]+data-chart=', html)) >= 4
+    assert "세계로 확장하는 경로" in html
+    assert "현지화 Before / After" in html
+    assert "TRUSTA 직접 수행 성과가 아닌 해외 파트너 운영 데이터" in html
+    assert "내부 목표·가정" in html
+    assert "경영학석사(MBA)" in html
+    assert "김 연 하" not in html
+    assert "1987 . 4 . 22" not in html
+    assert "XDC9-6F10-04FF-2AFE" not in html

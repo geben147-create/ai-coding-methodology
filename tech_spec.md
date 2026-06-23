@@ -1,4 +1,36 @@
-# Active Task — TRUSTA Wadiz Copy & Evidence Lab
+# Active Task — TRUSTA Wadiz 175816 Single-Reference Rebuild
+
+## Goal
+
+Replace only `variants/hm-06.html` with one white-background TRUSTA overseas-
+growth detail page that benchmarks Wadiz 175816's 35-block role order and copy
+density while using the broader Wadiz corpus only for Korean-language tone
+retrieval.
+
+## Requirements
+
+- Preserve 35 blocks and the source role distribution.
+- Keep every block within 10% of the source non-whitespace length and the full
+  page within 2%.
+- Use white, navy, gold, mint, and blue based on the supplied references.
+- Draw official statistics, expansion, risk, and Before/After evidence directly
+  in HTML/CSS/SVG.
+- Label Facebook Ads screenshots as overseas-partner operating data, not TRUSTA
+  direct results.
+- Show the MBA credential without readable personal identifiers.
+- Place the supplied 5.0X visual last and label it as an internal target or
+  assumption, not a verified performance result.
+- Do not change routing, state, APIs, data structures, or the other nine HM files.
+
+## Non-Goals
+
+- Reusing another Wadiz campaign's flow, distinctive copy, or visual identity.
+- Presenting partner results, internal projections, or credentials as guaranteed
+  customer outcomes.
+
+---
+
+# Previous Task — TRUSTA Wadiz Copy & Evidence Lab
 
 ## Goal
 
