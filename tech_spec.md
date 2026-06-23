@@ -1,4 +1,49 @@
-# Viral Source Ranking Research Package
+# Active Task — TRUSTA Wadiz Copy & Evidence Lab
+
+## Goal
+
+Build an isolated, responsive TRUSTA Wadiz-style research and preview package
+that analyzes the Obsidian Vault, compares five conversion-copy flows, produces
+two Korean tone variants per flow, and visualizes verified market/evidence
+claims without changing the existing TRUSTA application's routing, state,
+API calls, or data structures.
+
+## Requirements
+
+- Treat this task as completely unrelated to the viral-video work below.
+- Analyze the 20 user-supplied reference captures as layout patterns, not as
+  assets to copy.
+- Produce 5 flow structures x 2 Korean tone variants = 10 standalone HTML
+  previews plus one comparison dashboard.
+- Include 20 reusable evidence-layout patterns and the supplied universal
+  evidence-section contract.
+- Prioritize a world-map/global-opportunity hero, Korean-vs-global market
+  evidence, Korean company overseas-growth evidence, foreign-patient spend,
+  Before/After localization, one-source-to-all-SNS distribution, and a closed
+  marketing feedback loop.
+- Use a five-stage evidence pipeline: source verification, Obsidian knowledge
+  check, Graphify relationship check, local-language/legal check, and final
+  human approval. Do not present multiple generative models as independent
+  legal verification.
+- Every number must have a visible source and verification status. Unsupported
+  values must be labeled as unverified and excluded from persuasive copy.
+- Generate data charts in deterministic HTML/SVG. AI-generated raster imagery
+  may provide only non-numeric conceptual backgrounds.
+- Keep the output responsive at 1180–1200px desktop width and one-column mobile
+  layouts using the user's spacing, type, grid, and aspect-ratio constraints.
+- Do not change existing product functionality, routing, state management, API
+  calls, or existing data structures.
+
+## Non-Goals
+
+- Publishing the page or changing production integrations.
+- Claiming legal safety, guaranteed revenue, guaranteed overseas growth, or an
+  unverified 7–8 million KRW foreign-patient spend value.
+- Copying FastCampus or other reference designs pixel-for-pixel.
+
+---
+
+# Previous Unrelated Spec — Viral Source Ranking Research Package
 
 ## Goal
 
