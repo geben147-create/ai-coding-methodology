@@ -1,4 +1,47 @@
-# Active Task — TRUSTA Wadiz 175816 Single-Reference Rebuild
+# Active Task — Six-Reference Ad Benchmark Report
+
+## Goal
+
+Analyze the six user-supplied YouTube references as advertising structures,
+extract or transcribe their spoken content with timestamps, identify complete
+highlight beats, and deliver a Korean responsive HTML report containing
+rights-safe Higgsfield generation prompts and original adaptations for needle
+shot, home skincare device, and investment ads.
+
+## Requirements
+
+- Preserve a direct source link, uploader, duration, transcript provenance,
+  and rights status for every reference.
+- Distinguish source-provided captions from automatic captions or local speech
+  recognition and label uncertain wording.
+- Identify benchmarkable structure, hook, pacing, visual grammar, and complete
+  setup/action/reaction/tail highlight ranges rather than isolated peak frames.
+- Use YouTube's visible most-replayed heatmap as the primary highlight signal
+  where the platform provides it, preserve the peak evidence, and disclose when
+  no heatmap is available before using transcript/scene analysis as fallback.
+- Treat every supplied YouTube video as analysis-only unless explicit
+  commercial reuse permission is verified.
+- Rebuild creative beats with original or licensed imagery; never instruct the
+  user to download, crop, watermark-remove, or republish the source footage.
+- Mark user-changeable prompt variables with a red emoji and provide image and
+  video prompts suitable for Higgsfield.
+- Provide two or three distinct concepts and sample lines for each of needle
+  shot, home skincare device, and investment advertising.
+- Deliver a self-contained responsive Korean HTML report with timelines,
+  comparison visuals, prompt cards, and visible evidence/uncertainty labels.
+
+## Non-Goals
+
+- Copying a source video's distinctive dialogue, identity, or sequence
+  shot-for-shot.
+- Claiming YouTube availability grants commercial reuse rights.
+- Making guaranteed medical, cosmetic, or investment-performance claims.
+- Publishing, uploading, or rendering an advertisement without separate human
+  approval and cleared production assets.
+
+---
+
+# Previous Task — TRUSTA Wadiz 175816 Single-Reference Rebuild
 
 ## Goal
 

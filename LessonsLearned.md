@@ -27,6 +27,13 @@
 - YouTube automatic captions are useful for narration timing, sentence density,
   and broad music markers, but they cannot verify the exact identity or count
   of sound effects. Analyze exact audio cues only from a rights-cleared source.
+- YouTube metadata can expose a normalized 100-bucket most-replayed heatmap.
+  Use its highest bucket as the primary highlight signal, then expand the cut
+  to include setup, action, reaction, and tail; the bucket value is relative,
+  not an absolute viewer count.
+- In a self-contained report, do not reuse a generic class such as `.video`
+  for both content articles and prompt-mode tabs. Validate the expected graph
+  count and page-owned console errors in a fresh browser tab after rendering.
 - Keep the 70-115 second 3D narrative format separate from the 20-50 second
   TOP-N compilation format. They share fast hooks but require different source
   rights, pacing, and payoff structures.
