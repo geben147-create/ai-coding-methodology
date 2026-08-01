@@ -27,6 +27,7 @@
 - [✅] Repair the TRUSTA Korean-native generation path, connect approved Few-shot JSONL back into generation, add the locked Wadiz detail-page structure profile, deploy the updated n8n workflow, and verify it with a local Korean smoke request.
 - [ ] Produce the 2026-06-17 Korean mussel/nacre 90-95s local private-review MP4 with VoiceBox Sohee narration, three-second source highlights, rights report, SRT, QA frames, and local open.
 - [✅] Analyze the six user-supplied YouTube references, extract or transcribe their dialogue with timestamps, use YouTube's most-replayed heatmap as the primary highlight signal where available, identify reusable structural benchmark points and complete highlight beats, create rights-safe Higgsfield prompts plus three-category ad adaptations, and deliver a verified responsive Korean HTML report without reusing the source footage.
+- [✅] Create and verify one A5-landscape 300 dpi 3x3 portfolio PNG from the nine supplied images in filename order, preserving every original image without cropping or generative alteration.
 
 ## Allowed Files
 
@@ -48,6 +49,7 @@
 - `video_project\benchmark_ads\2026-07-26_youtube_6_reference\**`
 - `voicebox-local\**`
 - `trusta-medical-growth\**`
+- `output\portfolio\**`
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.gitignore`
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.obsidian\community-plugins.json`
 - `C:\Users\llorr\OneDrive\문서\★옵시디언\SecondBrain_ThoughtEngine\.obsidian\plugins\obsidian-local-rest-api\data.json`
@@ -64,6 +66,7 @@
 ## Handoff Notes
 
 - The six-reference ad benchmark is delivered at `video_project/benchmark_ads/2026-07-26_youtube_6_reference/benchmark_report.html`. It contains six normalized YouTube most-replayed graphs, six complete highlight recommendations, timestamped caption digests, twelve Higgsfield prompts with red changeable variables, and nine original adaptations across needle shot, home skincare devices, and investment. Fresh-tab browser verification found six rendered graphs, six prompt modules, nine idea cards, no horizontal overflow, and no page-owned console errors. Raw automatic-caption JSON was removed after analysis so only the transformed report remains.
+- The nine supplied Notty Curly portfolio images were assembled in filename order into `output/portfolio/notty_curly_portfolio_3x3_a5_landscape.png`, a verified 2480x1748 A5-landscape PNG at 300 dpi. All source images were fit without cropping, and their SHA-256 hashes remained unchanged.
 - The viral-source package now lives in `video_project/viral_source_rankings/2026-06-13_topic_discovery/`.
 - The approved private-review TOP3 is rendered as a 42.3-second 1080x1920 H.264 MP4 with Korean TTS and SRT.
 - CapCut-ready media, narration tracks, and captions are in the package's `capcut_import/` directory.
